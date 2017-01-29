@@ -1,0 +1,2752 @@
+{
+    "theorems": [
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 1,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 2,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 3,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 4,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 5,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 6,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 7,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 8,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 9,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 10,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 11,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 12,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 13,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 14,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 15,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 16,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 17,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 18,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 19,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 20,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 21,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 22,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 23,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 24,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 25,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 26,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 27,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 28,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 29,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 30,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 31,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 32,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 33,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 34,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 35,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 36,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 37,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 38,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 39,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 40,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 41,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 42,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 43,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 44,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 45,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 46,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 47,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 48,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 49,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 50,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 51,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 52,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 53,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 54,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 55,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 56,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 57,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 58,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 59,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 60,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 61,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 62,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 63,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 64,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 65,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 66,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 67,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 68,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 69,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 70,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 71,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 72,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 73,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 74,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 75,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 76,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 77,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 78,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 79,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 80,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 81,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 82,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 83,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 84,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 85,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 86,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 87,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 88,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 89,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 90,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 91,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 92,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 93,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 94,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 95,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 96,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 97,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 98,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 99,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 100,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 101,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 102,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 103,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 104,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 105,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 106,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 107,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 108,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 109,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 110,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 111,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 112,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 113,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 114,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 115,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 116,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 117,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 118,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 119,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 120,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 121,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 122,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 123,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 124,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 125,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 126,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 127,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 128,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 129,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 130,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 131,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 132,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 133,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 134,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 135,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 136,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 137,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 138,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 139,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 140,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 141,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 142,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 143,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 144,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 145,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 146,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 147,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 148,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 149,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 150,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 151,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 152,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 153,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 154,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 155,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 156,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 157,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 158,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 159,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 160,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 161,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 162,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 163,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 164,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 165,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 166,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 167,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 168,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 169,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 170,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 171,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 172,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 173,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 174,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 175,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 176,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 177,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 178,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 179,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 180,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 181,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 182,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 183,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 184,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 185,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 186,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 187,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 188,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 189,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 190,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 191,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 192,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 193,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 194,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 195,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 196,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 197,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 198,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 199,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 200,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 201,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 202,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 203,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 204,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 205,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 206,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 207,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 208,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 209,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 210,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 211,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 212,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 213,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 214,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 215,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 216,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 217,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 218,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 219,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 220,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 221,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 222,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 223,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 224,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 225,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 226,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 227,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 228,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 229,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 230,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 231,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 232,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 233,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 234,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 235,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 236,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 237,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 238,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 239,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 240,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 241,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 242,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 243,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 244,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 245,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 246,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 247,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 248,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 249,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 250,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 251,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 252,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 253,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 254,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 255,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 256,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 257,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 258,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 259,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 260,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 261,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 262,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 263,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 264,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 265,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 266,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 267,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 268,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 269,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 270,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 271,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 272,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 273,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 274,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 275,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 276,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 277,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 278,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 279,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 280,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 281,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 282,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 283,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 284,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 285,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 286,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 287,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 288,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 289,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 290,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 291,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 292,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 293,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 294,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 295,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 296,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 297,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 298,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 299,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 300,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 301,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 302,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 303,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 304,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 305,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 306,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 307,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 308,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 309,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 310,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 311,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 312,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 313,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 314,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 315,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 316,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 317,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 318,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 319,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 320,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 321,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 322,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 323,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 324,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 325,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 326,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 327,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 328,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 329,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 330,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 331,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 332,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 333,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 334,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 335,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 336,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 337,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 338,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 339,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 340,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 341,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 342,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 343,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 344,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 345,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 346,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 347,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 348,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 349,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 350,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 351,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 352,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 353,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 354,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 355,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 356,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 357,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 358,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 359,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 360,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 361,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 362,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 363,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 364,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 365,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 366,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 367,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 368,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 369,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 370,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 371,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 372,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 373,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 374,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 375,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 376,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 377,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 378,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 379,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 380,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 381,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 382,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 383,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 384,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 385,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 386,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 387,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 388,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 389,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 390,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 391,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 392,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 393,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 394,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 395,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 396,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 397,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 398,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 399,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 400,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 401,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 402,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 403,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 404,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 405,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 406,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 407,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 408,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 409,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 410,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 411,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 412,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 413,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 414,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 415,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 416,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 417,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 418,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 419,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 420,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 421,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 422,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 423,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 424,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 425,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 426,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 427,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 428,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 429,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 430,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 431,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 432,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 433,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 434,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 435,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 436,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 437,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 438,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 439,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 440,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 441,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 442,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 443,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 444,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 445,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 446,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 447,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 448,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 449,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 450,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 451,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 452,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 453,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 454,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 455,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 456,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 457,
+            "disp": ""
+        },
+        {
+            "text": "theta1 <= p**2/4;",
+            "name": "Theorem",
+            "idnum": 458,
+            "disp": ""
+        }
+    ]
+}
