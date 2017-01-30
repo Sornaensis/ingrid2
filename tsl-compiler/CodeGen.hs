@@ -17,6 +17,8 @@ import System.IO (hPutStrLn, hGetLine, hFlush)
 import Data.Aeson (FromJSON(..), ToJSON(..))
 import GHC.Generics
 
+import Prelude hiding ((<$>))
+
 infixl 4 <$>
 f <$> m = fmap f m
 
@@ -169,7 +171,7 @@ generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr r exp))) =
                   generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr RelGte exp)))
         _      -> ["return"]
     where 
-    make m =        -- This line will be replaced with invariant analysis
+    make m =        
       let invars = map (\i -> (swap m (exprAnalysis exp i), i)) . S.toList . getExprInvolves $ exp  
       in (invars >>= 
           \(b, i) -> [i ++ " = ingrid_obj.get(\'" ++ i ++ "\', ind=\'" ++ show b ++ "\')"]) 

@@ -6,6 +6,8 @@ import CodeGen
 import Data.Aeson (decode)
 import qualified Data.ByteString.Lazy.Char8 as C 
 
+import Prelude hiding ((<$>))
+
 main :: IO ()
 main = 
   do input <- decode . C.pack <$> getContents  
