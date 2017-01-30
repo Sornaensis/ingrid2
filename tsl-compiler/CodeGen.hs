@@ -231,6 +231,12 @@ valueAnalysis (Function _ exps) s f              = let fxprs = L.nub $ map (`exp
                                                        else if length fxprs > 1
                                                              then Complex
                                                              else head fxprs
+valueAnalysis (Paren p)         s f              = let an = exprAnalysis p s
+                                                   in if f == Flip True 
+                                                       then flipbound an 
+                                                       else if f == Complex && an /= NotFound 
+                                                             then Complex
+                                                             else an
 valueAnalysis _                 _ _              = NotFound
 
 generateIfStmt' :: IfStmt -> [[String]]
