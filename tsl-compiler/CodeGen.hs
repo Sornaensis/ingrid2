@@ -330,7 +330,7 @@ replTermFuncs (Term a) vals p =
 
 replFactorFuncs :: Factor -> [Value] -> Bool -> (Factor, [(Value, Value)])
 replFactorFuncs (Pow a b)                vals  p = 
-    let (fa, avs) = replFactorFuncs a vals False
+    let (fa, avs) = replFactorFuncs a vals True
         (fb, bvs) = replFactorFuncs b (drop (length avs) vals) False
     in (Pow fa fb, avs ++ bvs)
 replFactorFuncs (Value f@(Function _ _)) (v:_) _ = (Value v, [(v, f)])
