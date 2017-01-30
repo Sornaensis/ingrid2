@@ -102,7 +102,7 @@ class Invariant:
             if abs(val - round(val)) < 0.0001:
                 val = int(round(val))
             else:
-                val = int(math.ceil(val))
+                val = int(val)
             
         # a change occurs
         if thm_id == -1 and self.value['Min'] != val:
@@ -149,7 +149,7 @@ class Invariant:
             if abs(val - round(val)) < 0.0001:
                 val = int(round(val))
             else:
-                val = int(math.floor(val))
+                val = int(val)+1
             
         # a change occurs
         
