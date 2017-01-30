@@ -8,7 +8,7 @@ import Parser
 import Debug.Trace
 
 import qualified Data.List as L
-import Control.Monad (liftM2)
+import Control.Monad (liftM2, replicateM)
 import Control.Monad.Fix (fix)
 
 import System.Process (createProcess, CreateProcess(..), StdStream(CreatePipe), proc, waitForProcess)
@@ -173,14 +173,24 @@ generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr r exp))) =
     where 
     make m =        
       let invars = map (\i -> (swap m (exprAnalysis exp i), i)) . S.toList . getExprInvolves $ exp  
-      in (invars >>= 
-          \(b, i) -> [i ++ " = ingrid_obj.get(\'" ++ i ++ "\', ind=\'" ++ show b ++ "\')"]) 
-         ++ if not . null $ assertNotUdts invars then ("if " ++ assertNotUdts invars ++ ":") : indent (result m) else result m
-             
+      in 
+         if any (\(_,i) -> exprAnalysis exp i == Complex) invars 
+            then iterateBounds invars m
+            else setBound invars m
+         
     result m = [ "try:"
                , "\tingrid_obj.set(\'" ++ v ++ "\', " ++ exprToSrc exp ++ ", ind=\'" ++ show m ++ "\')"
                , "except:"
                , "\tpass"]
+
+    setBound invars m = 
+            (invars >>= 
+                \(b, i) -> [i ++ " = ingrid_obj.get(\'" ++ i ++ "\', ind=\'" ++ show b ++ "\')"])
+                            ++ if not . null $ assertNotUdts invars then ("if " ++ assertNotUdts invars ++ ":") : indent (result m) else result m
+    iterateBounds ivars m = let  cplx_vars = filter (\(b,i) -> exprAnalysis exp i == Complex) ivars
+                                 reg_vars  = filter (\(b,i) -> exprAnalysis exp i /= Complex) ivars 
+                                 cplx_perms = map (\x -> zipWith (\b (_,i) -> (b,i)) x cplx_vars ++ reg_vars) (replicateM (length cplx_vars) [Min,Max])
+                            in concatMap (`setBound` m) cplx_perms
 generateIExpr _ = []
 
 swap :: Bound -> InvarBoundSwitch -> Bound
