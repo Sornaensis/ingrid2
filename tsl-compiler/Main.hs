@@ -15,9 +15,9 @@ main =
        Nothing                 -> error "Invalid input"
        (Just (TSLInput tls))   -> 
             do theorems <- mapM genTheorem tls
-               mapM_ (putStrLn . unlines . generatePythonClass) theorems
+               mapM_ (putStrLn . unlines . generatePythonClass) $ theorems
   where
   genTheorem t@(TSLInputTheorem n code d i) = 
        do ts <- generateIneq . theoremParser . lexer $ code
-          return $ TSLTheorem (TSLInputTheorem (n ++ show i) code d i) ts
+          return $ TSLTheorem (TSLInputTheorem (n ++ show i) code d i) $! ts
             
