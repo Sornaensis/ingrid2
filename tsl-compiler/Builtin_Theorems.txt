@@ -181,31 +181,31 @@
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "chromaticNum <= (nodes + 1 )**2/(4*nodeCliqueCover);",
             "name": "Theorem",
             "idnum": 31,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "chromaticNum >= 2*nodes**(1/2)-nodeCliqueCover;",
             "name": "Theorem",
             "idnum": 32,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "domination <= nodes + 1 - (1+2*edges)**(1/2);",
             "name": "Theorem",
             "idnum": 33,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if nodeConnec > 0 and not tree then { girth <= 2*diameter+1 };",
             "name": "Theorem",
             "idnum": 34,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if planar and maxClique < 3 then { nodeInd >= (1/3)*(nodes+1), nodeCover <= (2*nodes-1)/3 } else if planar then { maxClique >= 3 }; ",
             "name": "Theorem",
             "idnum": 35,
             "disp": ""
