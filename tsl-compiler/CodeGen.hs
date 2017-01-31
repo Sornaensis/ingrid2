@@ -51,6 +51,8 @@ getInvarExprInvolves (InvarAnd a b)         = S.union (getInvarExprInvolves a) (
 getInvarExprInvolves (InvarExpr a Nothing)  = getValueInvolves a 
 getInvarExprInvolves (InvarExpr a (Just b)) = S.union (getValueInvolves a) (getInvarRelExprInvolves b)
 getInvarExprInvolves (InvarExprNot a)       = getValueInvolves a
+getInvarExprInvolves (InvarExprEven a)       = getValueInvolves a
+getInvarExprInvolves (InvarExprOdd a)       = getValueInvolves a
 
 getValueInvolves :: Value -> Set String
 getValueInvolves (Invar i) = S.singleton i
@@ -84,6 +86,8 @@ getInvarExprListInvolves (InvarExprList l) = foldr (S.union . getInvarExprInvolv
 getCondInvolves :: Cond -> Set String
 getCondInvolves (CondOr a b)        = S.union (getCondInvolves a) (getCondInvolves b)
 getCondInvolves (CondAnd a b)       = S.union (getCondInvolves a) (getCondInvolves b)
+getCondInvolves (CondOdd v)         = getValueInvolves v
+getCondInvolves (CondEven v)         = getValueInvolves v
 getCondInvolves (CondNot v)         = getValueInvolves v
 getCondInvolves (Cond ex (Just cr)) = S.union (getValueInvolves ex) (getCondRelInvolves cr)
 getCondInvolves (Cond ex Nothing)   = getValueInvolves ex
@@ -268,6 +272,14 @@ generateCond (CondOr a b)  = junction a b "or"
 generateCond (CondAnd a b) = junction a b "and" 
 generateCond (CondNot (Local "True")) =
     ["", "(True)"]
+generateCond (CondEven (Invar v)) =
+    [v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')",
+     v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')",
+     "(even(" ++ v ++ "_Min) and even(" ++ v ++ "_Max))"]
+generateCond (CondOdd (Invar v)) =
+    [v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')",
+     v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')",
+     "(odd(" ++ v ++ "_Min) and odd(" ++ v ++ "_Max))"]
 generateCond (CondNot (Invar v)) = 
     [v ++ " = ingrid_obj.get(\'" ++ v ++ "\')",
      "(" ++ v ++ " == False)"]
