@@ -88,6 +88,8 @@ Condand : Cond1   { $1 }
 
 Cond1 : Invar CondRel     { Cond $1 $2 }
       | not Invar        { CondNot $2 }
+      | even Invar       { CondEven $2 }
+      | odd Invar        { CondOdd $2 }
       | '(' Cond ')'     { $2 }
 
 CondRel : Relation Expr  { Just $ CondRel $1 (Expr $2) }
@@ -146,6 +148,8 @@ data IfStmt = If Cond InvarExprList (Maybe IfStmt)
 data Cond = CondOr Cond Cond
           | CondAnd Cond Cond
           | CondNot Value
+          | CondEven Value
+          | CondOdd Value
           | Cond Value (Maybe CondRel)
     deriving (Show)
 
@@ -279,10 +283,10 @@ lexVar cs =
    case span (\c -> isAlpha c || isDigit c || c == '_') cs of
       ("then",rest) -> TokenThen : lexer rest
       ("else",rest)  -> TokenElse : lexer rest
-      ("even",rest)  -> TokenElse : lexer rest
+      ("even",rest)  -> TokenEven : lexer rest
       ("and",rest)  -> TokenAnd : lexer rest
       ("not",rest)  -> TokenNot : lexer rest
-      ("odd",rest)  -> TokenNot : lexer rest
+      ("odd",rest)  -> TokenOdd : lexer rest
       ("if",rest) -> TokenIf : lexer rest
       ("or",rest)  -> TokenOr : lexer rest
       ('_':var,rest)   -> TokenLocalName ('_':var) : lexer rest
