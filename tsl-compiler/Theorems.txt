@@ -4,7 +4,7 @@
     "name": "Theorem",
     "disp": "",
     "idnum": 1,
-    "text": "if connected and radius <= min(2,nodes/2) then { edges <= (1/2)*nodes*(nodes-radius) } else if connected and radius >= 3 and radius <= nodes/2 then { edges <= (1/2)*(nodes**2+4*radius*nodes+5*nodes+4*radius**2-6*radius) };" 
+    "text": "if forest and connected then { tree }; if tree then { forest and connected };" 
  } 
  ]
 }

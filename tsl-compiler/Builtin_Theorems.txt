@@ -211,55 +211,55 @@
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if not planar then { maxdeg >= 3, nodes >= 5, edges >= 9, edgeInd >= 2, nodeCover >= 3, edgeCover >= 3, bandwidth >= 4 };",
             "name": "Theorem",
             "idnum": 36,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edges <= numOfComponents - 1 + (1/2)*(p+2-2*numOfComponents)*(nodes+1-2*numOfComponents);",
             "name": "Theorem",
             "idnum": 37,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "domination >= nodes / (maxdeg + 1)",
             "name": "Theorem",
             "idnum": 38,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if girth >= 4 then { maxClique <= 2 }; if maxClique <= 2 then { girth >= 4 };",
             "name": "Theorem",
             "idnum": 39,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if complete then { mindeg == nodes - 1, nodeInd == 1, nodeCliqueCover == 1, edgeCliqueCover == 1, diameter == 1}; if mindeg == nodes - 1 then { complete, nodeInd == 1, nodeCliqueCover == 1, edgeCliqueCover == 1, diameter == 1}; if nodeInd == 1 then { complete, mindeg == nodes - 1, nodeCliqueCover == 1, edgeCliqueCover == 1, diameter == 1}; if nodeCliqueCover == 1 then { complete, mindeg == nodes - 1, nodeInd == 1, edgeCliqueCover == 1, diameter == 1 }; if edgeCliqueCover == 1 then { complete, mindeg == nodes - 1, nodeInd == 1, nodeCliqueCover == 1, diameter == 1 }; if diameter == 1 then { complete, mindeg == nodes - 1, nodeInd == 1, nodeCliqueCover == 1, edgeCliqueCover == 1 };",
             "name": "Theorem",
             "idnum": 40,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if chromaticNum <= 2 then { bipartite }; if bipartite then { chromaticNum <= 2 };",
             "name": "Theorem",
             "idnum": 41,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if radius == 1 then { maxdeg == nodes - 1 }; if maxdeg == nodes - 1 then { radius == 1};",
             "name": "Theorem",
             "idnum": 42,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if forest and connected then { tree }; if tree then { forest and connected };",
             "name": "Theorem",
             "idnum": 43,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "",
             "name": "Theorem",
             "idnum": 44,
             "disp": ""
