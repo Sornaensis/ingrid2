@@ -1,79 +1,79 @@
 {
     "theorems": [
-        {
-            "text": "theta1 <= p**2/4;",
+        { 
             "name": "Theorem",
+            "disp": "",
             "idnum": 1,
-            "disp": ""
+            "text": "edges <= (1/2)*(nodes-1)*(nodes-2)+nodeConnec;" 
         },
-        {
-            "text": "theta1 <= p**2/4;",
+        { 
             "name": "Theorem",
+            "disp": "",
             "idnum": 2,
-            "disp": ""
-        },
-        {
-            "text": "theta1 <= p**2/4;",
+            "text": "chromaticNum <= (1/2)*(nodeCover+maxClique+1);" 
+        }, 
+        { 
             "name": "Theorem",
+            "disp": "",
             "idnum": 3,
-            "disp": ""
+            "text": "spectralRadius >= 2*edges/nodes;" 
         },
-        {
-            "text": "theta1 <= p**2/4;",
+        { 
             "name": "Theorem",
+            "disp": "",
             "idnum": 4,
-            "disp": ""
-        },
-        {
-            "text": "theta1 <= p**2/4;",
+            "text": "spectralRadius <= (2*edges*nodeCover/(nodeCover+1))**(1/2);" 
+        }, 
+        { 
             "name": "Theorem",
+            "disp": "",
             "idnum": 5,
-            "disp": ""
-        },
-        {
-            "text": "theta1 <= p**2/4;",
+            "text": "maxClique >= nodes**2/(nodes**2-2*edges);" 
+        }, 
+        { 
             "name": "Theorem",
+            "disp": "",
             "idnum": 6,
-            "disp": ""
-        },
-        {
-            "text": "theta1 <= p**2/4;",
+            "text": "spectralRadius <= maxdeg;" 
+        }, 
+        { 
             "name": "Theorem",
+            "disp": "",
             "idnum": 7,
-            "disp": ""
-        },
-        {
-            "text": "theta1 <= p**2/4;",
+            "text": "if mindeg > 3*nodeConnec - 1 then { nodes >= 1 + mindeg + diameter*nodeConnec + (diameter/3)*(mindeg - 3*nodeConnec + 1) } else { nodes >= nodeConnec * (diameter-3) + 2*mindeg + 2 };" 
+        }, 
+        { 
             "name": "Theorem",
+            "disp": "",
             "idnum": 8,
-            "disp": ""
-        },
-        {
-            "text": "theta1 <= p**2/4;",
+            "text": "nodes >= maxdeg + 1 + (mindeg + 1)*(numOfComponents - 1);" 
+        }, 
+        { 
             "name": "Theorem",
+            "disp": "",
             "idnum": 9,
-            "disp": ""
-        },
-        {
-            "text": "theta1 <= p**2/4;",
+            "text": "edgeCliqueCover <= nodes**2/4;" 
+        }, 
+        { 
             "name": "Theorem",
+            "disp": "",
             "idnum": 10,
-            "disp": ""
-        },
-        {
-            "text": "theta1 <= p**2/4;",
+            "text": "diameter <= 2*radius;" 
+        }, 
+        { 
             "name": "Theorem",
+            "disp": "",
             "idnum": 11,
-            "disp": ""
-        },
-        {
-            "text": "theta1 <= p**2/4;",
+            "text": "edgeInd <= nodes / 2;" 
+        }, 
+        { 
             "name": "Theorem",
+            "disp": "",
             "idnum": 12,
-            "disp": ""
-        },
+            "text": "edgeInd >= nodes/(maxdeg + 1);" 
+        }, 
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if g == 2*d + 1 then { regular };",
             "name": "Theorem",
             "idnum": 13,
             "disp": ""
@@ -82,100 +82,100 @@
             "text": "theta1 <= p**2/4;",
             "name": "Theorem",
             "idnum": 14,
-            "disp": ""
+            "disp": "chromaticNum >= nodes / (nodes - spectralRadius);"
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if mindeg >= 3 then { edges >= 2**(girth/2) + nodes - numOfComponents };",
             "name": "Theorem",
             "idnum": 15,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if nodeConnec == 0 then { edgeConnec == 0 }; if edgeConnec == 0 then { nodeConnec == 0};",
             "name": "Theorem",
             "idnum": 16,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edges <= (1/2)*(edgeCliqueCover*maxClique*(maxClique-1));",
             "name": "Theorem",
             "idnum": 17,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "chromaticNum <= (1/2)*(7+(1+48*genus)**(1/2));",
             "name": "Theorem",
             "idnum": 18,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if maxClique == 2 then { maxdeg <= nodeInd, edges <= nodeCover * nodeInd };",
             "name": "Theorem",
             "idnum": 19,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if chromaticNum == 2 then { edgeInd == nodeCover, nodeInd == nodeCliqueCover, edgeChromatic == maxDeg, even girth, even circumference }; if chromaticNum == 2 and nodes > 2 then { not complete };",
             "name": "Theorem",
             "idnum": 20,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "genus <= ((nodes-3)*(nodes-4)+11)/12;",
             "name": "Theorem",
             "idnum": 21,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if edges  > maxdeg*edgeInd then { edgeChromatic == maxdeg + 1 };",
             "name": "Theorem",
             "idnum": 22,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edgeCliqueCover <= edgeCover * edgeInd;",
             "name": "Theorem",
             "idnum": 23,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if mindeg >= 3 and odd girth then { nodes >= (mindeg*(mindeg - 1)**((girth - 1)/2) - 2)/(mindeg - 2) } else { nodes >= (2*(mindeg - 1)**(girth/3) - 2)/(mindeg - 2) } ;",
             "name": "Theorem",
             "idnum": 24,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edgeCover >= (1/2)*nodes;",
             "name": "Theorem",
             "idnum": 25,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edges <= (1/2)*(nodes - 1)*(nodes-2)+nodes/domination - 1;",
             "name": "Theorem",
             "idnum": 26,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edgeCover <= nodes*maxdeg/(1 + maxdeg);",
             "name": "Theorem",
             "idnum": 27,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if diameter <= 3 then { maxdeg <= nodes - diamaeter + 1 } else { maxdeg <= nodes - nodeConnec*(diameter - 4)-3 };",
             "name": "Theorem",
             "idnum": 28,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edgeCliqueCover <= edges - (1/2)*maxClique(maxClique - 1)+1;",
             "name": "Theorem",
             "idnum": 29,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if connected and radius <= min(2,nodes/2) then { edges <= (1/2)*nodes*(nodes-radius) } else if connected and radius >= 3 and radius <= nodes/2 then { edges <= (1/2)*(nodes**2+4*radius*nodes+5*nodes+4*radius**2-6*radius) };",
             "name": "Theorem",
             "idnum": 30,
             "disp": ""
