@@ -183,7 +183,7 @@ generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr r exp))) =
             else setBound invars m
          
     result m = [ "try:"
-               , "\tingrid_obj.set(\'" ++ v ++ "\', " ++ exprToSrc exp ++ ", ind=\'" ++ show m ++ "\')"
+               , "\tingrid_obj.set(\'" ++ v ++ "\', " ++ (if m == Max then "ceil" else "floor") ++ "(" ++ exprToSrc exp ++ "), ind=\'" ++ show m ++ "\')"
                , "except:"
                , "\tpass"]
 
