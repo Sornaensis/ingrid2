@@ -113,7 +113,7 @@ exprToSrc (Expr ts) = L.intercalate "+" $ map termToSrc ts
 termToSrc :: Term -> String
 termToSrc (Mul a b) = termToSrc a ++ "*" ++ termToSrc b
 termToSrc (Div a b) = termToSrc a ++ "/" ++ termToSrc b
-termToSrc (Neg a)   = "-" ++ termToSrc a 
+termToSrc (Neg a)   = "-(" ++ termToSrc a ++ ")" 
 termToSrc (Term a)  = factorToSrc a 
 
 factorToSrc :: Factor -> String
