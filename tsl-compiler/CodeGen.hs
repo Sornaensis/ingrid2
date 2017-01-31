@@ -356,7 +356,7 @@ replFactorFuncs (Value (Paren expr))     vals  p =
     let (p', vs') = replAllExprFuncs expr vals p
     in (Value $ Paren p', vs')
 replFactorFuncs (Value n@(Number _))     (v:_) p = 
-    if p then (Value v, [(v, n)]) else (Value n, [])
+    {-if p then (Value v, [(v, n)]) else-} (Value n, [])
 replFactorFuncs v                        _     _ = (v, [])
 
 
