@@ -179,14 +179,22 @@ generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr r exp))) =
       let invars = map (\i -> (swap m (exprAnalysis exp i), i)) . S.toList . getExprInvolves $ exp  
       in 
          if any (\(_,i) -> exprAnalysis exp i == Complex) invars 
-            then iterateBounds invars m
+            then setBound invars m --"result = []" : iterateBounds invars m
             else setBound invars m
          
+    resultList m = [ "\tingrid_obj.set(\'" ++ v ++ "\', " ++ (if m == Max then "max" else "min") ++ "(result), ind=\'" ++ show m ++ "\')" ]
+
     result m = [ "try:"
                , "\tingrid_obj.set(\'" ++ v ++ "\', " ++ (if m == Max then "ceil" else "floor") ++ "(" ++ exprToSrc exp ++ "), ind=\'" ++ show m ++ "\')"
                , "except:"
                , "\tpass"]
 
+    setTryBound invars = 
+            (invars >>= 
+                \(b, i) -> [i ++ " = ingrid_obj.get(\'" ++ i ++ "\', ind=\'" ++ show b ++ "\')"])
+                            ++ if not . null $ assertNotUdts invars 
+                                then ("if " ++ assertNotUdts invars ++ ":") : indent ["try:","\tresult.append(" ++ exprToSrc exp ++ ")","except:","\tpass"] 
+                                else ["try:","\tresult.append(" ++ exprToSrc exp ++ ")","except:","\tpass"]
     setBound invars m = 
             (invars >>= 
                 \(b, i) -> [i ++ " = ingrid_obj.get(\'" ++ i ++ "\', ind=\'" ++ show b ++ "\')"])
@@ -194,7 +202,7 @@ generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr r exp))) =
     iterateBounds ivars m = let  cplx_vars = filter (\(b,i) -> exprAnalysis exp i == Complex) ivars
                                  reg_vars  = filter (\(b,i) -> exprAnalysis exp i /= Complex) ivars 
                                  cplx_perms = map (\x -> zipWith (\b (_,i) -> (b,i)) x cplx_vars ++ reg_vars) (replicateM (length cplx_vars) [Min,Max])
-                            in concatMap (`setBound` m) cplx_perms
+                            in concatMap setTryBound cplx_perms ++ resultList m
 generateIExpr _ = []
 
 swap :: Bound -> InvarBoundSwitch -> Bound
@@ -224,12 +232,12 @@ termAnalysis (Neg a) inv f   = termAnalysis a inv (flipbound f)
 termAnalysis (Term a) inv f  = factorAnalysis a inv f
 
 factorAnalysis :: Factor -> String -> InvarBoundSwitch -> [InvarBoundSwitch]
-factorAnalysis (Pow a b) inv _ = factorAnalysis a inv Complex ++ factorAnalysis b inv Complex 
+factorAnalysis (Pow a b) inv f = factorAnalysis a inv f ++ factorAnalysis b inv f
 factorAnalysis (Value v) inv f = return $ valueAnalysis v inv f
 
 valueAnalysis :: Value -> String -> InvarBoundSwitch -> InvarBoundSwitch
 valueAnalysis (Invar v)         s f | s == v     = f
-valueAnalysis (Function _ exps) s f              = let fxprs = L.nub $ map (`exprAnalysis` s) exps 
+valueAnalysis (Function _ exps) s f              = let fxprs = map (`exprAnalysis` s) exps 
                                                    in if null fxprs 
                                                        then NotFound
                                                        else if length fxprs > 1
