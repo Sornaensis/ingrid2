@@ -22,7 +22,7 @@
             "name": "Theorem",
             "disp": "",
             "idnum": 4,
-            "text": "spectralRadius <= (2*edges*nodeCover/(nodeCover+1))**(1/2);" 
+            "text": "edges >= spectralRadius**2*(nodeCover+1)/(2*nodeCover);" 
         }, 
         { 
             "name": "Theorem",
