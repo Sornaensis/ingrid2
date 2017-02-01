@@ -185,7 +185,7 @@ generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr r exp))) =
     resultList m = [ "\tingrid_obj.set(\'" ++ v ++ "\', " ++ (if m == Max then "max" else "min") ++ "(result), ind=\'" ++ show m ++ "\')" ]
 
     result m = [ "try:"
-               , "\tingrid_obj.set(\'" ++ v ++ "\', " ++ (if m == Max then "ceil" else "floor") ++ "(" ++ exprToSrc exp ++ "), ind=\'" ++ show m ++ "\')"
+               , "\tingrid_obj.set(\'" ++ v ++ "\', " ++ exprToSrc exp ++ ", ind=\'" ++ show m ++ "\')"
                , "except:"
                , "\tpass"]
 
@@ -364,7 +364,7 @@ replFactorFuncs (Value (Paren expr))     vals  p =
     let (p', vs') = replAllExprFuncs expr vals p
     in (Value $ Paren p', vs')
 replFactorFuncs (Value n@(Number _))     (v:_) p = 
-    {-if p then (Value v, [(v, n)]) else-} (Value n, [])
+    if p then (Value v, [(v, n)]) else (Value n, [])
 replFactorFuncs v                        _     _ = (v, [])
 
 
