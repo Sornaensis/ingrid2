@@ -749,11 +749,7 @@
             "disp": ""
         },
         {
-<<<<<<< Updated upstream
             "text": "if genus >= 1 and congruent(girth, 3, 4) then { nodes >= 9*(girth-1)/4 + 1 } else { nodes >= 9*(girth-1)/4 };",
-=======
-            "text": "if true ;",
->>>>>>> Stashed changes
             "name": "Theorem",
             "idnum": 125,
             "disp": ""
