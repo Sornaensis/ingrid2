@@ -1429,13 +1429,13 @@
             "disp": ""
         },
         {
-            "text": "DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME ",
+            "text": "nodes == nodeCover + nodeInd",
             "name": "Theorem",
             "idnum": 239,
             "disp": ""
         },
         {
-            "text": "DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME DO ME ",
+            "text": "nodes == edgeCover + edgeInd",
             "name": "Theorem",
             "idnum": 240,
             "disp": ""
