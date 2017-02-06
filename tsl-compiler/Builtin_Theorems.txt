@@ -595,11 +595,7 @@
             "disp": ""
         },
         {
-<<<<<<< Updated upstream
-            "text": "if nodeInd >= edgeInd then { edgeCliqueCover <= nodeCover*nodeInd };",
-=======
             "text": "if nodeInd >= edgeInd then { edgeCliqueCover <= nodeCover * nodeInd } ;",
->>>>>>> Stashed changes
             "name": "Theorem",
             "idnum": 100,
             "disp": ""
