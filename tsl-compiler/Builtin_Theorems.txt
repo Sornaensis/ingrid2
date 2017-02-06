@@ -595,157 +595,165 @@
             "disp": ""
         },
         {
+<<<<<<< Updated upstream
             "text": "if nodeInd >= edgeInd then { edgeCliqueCover <= nodeCover*nodeInd };",
+=======
+            "text": "if nodeInd >= edgeInd then { edgeCliqueCover <= nodeCover * nodeInd } ;",
+>>>>>>> Stashed changes
             "name": "Theorem",
             "idnum": 100,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if connected or odd nodes then {nodeCover <= (nodes-1)*(nodes+1)/2, edgeCover <= (nodes-1)*(nodes+1)/2 } else {nodeCover <= (nodes-2)*(nodes+2)/2, edgeCover <= (nodes-2)*(nodes+2)/2 };",
             "name": "Theorem",
             "idnum": 101,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edgeChromatic <= 2*bandwidth;",
             "name": "Theorem",
             "idnum": 102,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "circumference >= maxClique*mindeg/(maxClique - 1);",
             "name": "Theorem",
             "idnum": 103,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "circumference >= maxClique*(chromaticNum-1)/(maxClique-1)",
             "name": "Theorem",
             "idnum": 104,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if maxClique == 2 and chromaticNum >= 3 then { circumference >= 2*chromaticNum - 1 };",
             "name": "Theorem",
             "idnum": 105,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edges <= nodeCover*(nodeInd + nodeCover*(chromaticNum-1)/(2*chromaticNum));",
             "name": "Theorem",
             "idnum": 106,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "mindeg<=maxdeg",
             "name": "Theorem",
             "idnum": 107,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "nodeCliqueCover <= (nodes + nodeInd - maxClique + 1)/2",
             "name": "Theorem",
             "idnum": 108,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "nodeCover <= 2*edgeInd;",
             "name": "Theorem",
             "idnum": 109,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if mindeg >= 4 and girth >= 5 then { circumference >= (girth-2)(mindeg-2)+5 };",
             "name": "Theorem",
             "idnum": 110,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if connected then { diameter <= 2*nodeInd - 1 };",
             "name": "Theorem",
             "idnum": 111,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if connected and nodeInd <= mindeg then { mindeg >= (nodes+2)/3 };",
             "name": "Theorem",
             "idnum": 112,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edges >= nodeInd*mindeg + (maxClique-1)*(maxClique-2)/2;",
             "name": "Theorem",
             "idnum": 113,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edges >= nodeCover + (maxClique-1)*(maxClique-2)/2;",
             "name": "Theorem",
             "idnum": 114,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edges >= chromaticNum*(chromaticNum-3)/2 + nodes - numOfComponents + 1;",
             "name": "Theorem",
             "idnum": 115,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if bipartite and even nodes then {genus <= ((nodes-4)**2 + 15)/16}; if bipartite and odd nodes then { ((nodes-3)*(nodes-5)+15)/16};",
             "name": "Theorem",
             "idnum": 116,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if not complete then { nodeConnec >= 2*mindeg - nodes + 2 };",
             "name": "Theorem",
             "idnum": 117,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if (nodes>=6 and even nodes and edges >= (nodes**2)/4 +1) or (nodes>=7 and odd(nodes) and edges>=(nodes-1)**2/4 +1+mindeg) then circumference>=5;",
             "name": "Theorem",
             "idnum": 118,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if chromaticNum >= maxClique then {mindeg <= (3*maxClique - 4)*nodes / (3*maxClique-1))};",
             "name": "Theorem",
             "idnum": 119,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if hamiltonian and p>=chromaticNum-1 and chromaticNum >= 4 then { e>= (chromaticNum-1)*(chromaticNum-2)/2 + nodes }; if hamiltonian and chromaticNum==3 and even nodes then {edges >= nodes +1};",
             "name": "Theorem",
             "idnum": 120,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "chromaticNum <= nodes - nodeConnec*(diameter - 3) - 2;",
             "name": "Theorem",
             "idnum": 121,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if edges >= nodes**2/4 then {edgeCliqueCover <= ((1/2)*nodes*(nodes-1) - edges) + (1 + sqrt(1 + 4*((1/2)*nodes*(nodes-1) - edges)))};",
             "name": "Theorem",
             "idnum": 122,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if nodes <= 2*edges then {mindeg == edgeConnec};",
             "name": "Theorem",
             "idnum": 123,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if connected then { bandwidth >= (nodes-1)/diameter };",
             "name": "Theorem",
             "idnum": 124,
             "disp": ""
         },
         {
+<<<<<<< Updated upstream
             "text": "if genus >= 1 and congruent(girth, 3, 4) then { nodes >= 9*(girth-1)/4 + 1 } else { nodes >= 9*(girth-1)/4 };",
+=======
+            "text": "if true ;",
+>>>>>>> Stashed changes
             "name": "Theorem",
             "idnum": 125,
             "disp": ""
