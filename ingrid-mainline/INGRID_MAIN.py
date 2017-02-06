@@ -133,10 +133,9 @@ def run_mainline_old(json_obj, thm_file_name):
         ingrid.go(json_dict.copy(), all_thms)
         new_dict = ingrid.create_dict()
         return new_dict
-        
-        
+    
 
-def run_mainline(json_obj, thm_file_name, addenda):
+def run_mainline(json_obj, thm_file_name, addenda_list):
     json_dict = json.loads(json_obj)
     # sends the initialization json to the server
     if json_dict == {}:
@@ -146,7 +145,7 @@ def run_mainline(json_obj, thm_file_name, addenda):
     # runs ingrid with given non-empty json dictionary
     else:
         base_thms = get_base_thms(thm_file_name)
-        all_thms = base_thms + addenda
+        all_thms = base_thms + addenda_list
         # runs ingrid
         ingrid = IngridObj()
         ingrid.go(json_dict.copy(), all_thms)

@@ -4,7 +4,7 @@ class Invariant:
     """
     This is the Invariant object. It will store the value, name, type, and trace of an invariant.
     """
-    def __init__(self, name, stype, trace, val):
+    def __init__(self, name, stype, val, trace=[]):
         """
 
         Initializes the Invariant object
@@ -347,7 +347,7 @@ class IngridObj:
         self.original_json = inv_dict.copy()
         invars = inv_dict['Invariants'].copy()
         for key in invars.keys():
-            self.invariants[key] = Invariant(name=invars[key]['Name'], stype=invars[key]['Type'], trace=invars[key]['Trace'], val=invars[key]['Value'])
+            self.invariants[key] = Invariant(name=invars[key]['Name'], stype=invars[key]['Type'], val=invars[key]['Value'])#, trace=invars[key]['Trace'])
             success = True
             if invars[key]['Changed'] == 'True':
                 success = self.invariants[key].check_conflict()
