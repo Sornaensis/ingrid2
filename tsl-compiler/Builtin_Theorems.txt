@@ -793,7 +793,7 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "nodeInd >= (nodes - (2*edges + (2*edges/nodes))/(1+2*edges/nodes)) + (1+2*edges/nodes + nodes - (nodes - 2*edges/(1 + 2*edges/nodes))*(1 + 2*edges/nodes))/(2 + 2*edges/nodes);",
             "name": "Theorem",
             "idnum": 133,
             "disp": ""
