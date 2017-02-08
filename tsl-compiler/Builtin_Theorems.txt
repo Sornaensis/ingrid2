@@ -1591,7 +1591,7 @@
             "disp": ""
         },
         {
-            "text": "if diameter >= 2 and maxdeg >= 3 then {maxdeg >= ciel((nodes-1)/mindeg)**(1/(diameter-1))};",
+            "text": "if diameter >= 2 and maxdeg >= 3 then {maxdeg >= ceil((nodes-1)/mindeg)**(1/(diameter-1))};",
             "name": "Theorem",
             "idnum": 266,
             "disp": ""
@@ -1633,7 +1633,7 @@
             "disp": ""
         },
         {
-            "text": "if tree then {radius == ceil(diameter/2)};",
+            "text": "if tree then {radius == floor((diameter+1)/2)};",
             "name": "Theorem",
             "idnum": 273,
             "disp": ""
@@ -1927,7 +1927,7 @@
             "disp": ""
         },
         {
-            "text": "if connected and regular and mindeg <= 4 and not complete and (nodes == 7 or congruent(nodes, 3, 5)) and nodes != 13 and nodes != 18 then {edgeCliqueCover >= ciel(3*nodes/5) + 1} else if connected and regular and mindeg <= 4 and not complete then {edgeCliqueCover >= ciel(3*nodes/5)};",
+            "text": "if connected and regular and mindeg <= 4 and not complete and (nodes == 7 or congruent(nodes, 3, 5)) and nodes != 13 and nodes != 18 then {edgeCliqueCover >= floor((3*nodes+4)/5) + 1} else if connected and regular and mindeg <= 4 and not complete then {edgeCliqueCover >= floor((3*nodes+4)/5)};",
             "name": "Theorem",
             "idnum": 322,
             "disp": ""
@@ -1951,7 +1951,7 @@
             "disp": ""
         },
         {
-            "text": "if bipartite and odd(nodes) then {thickness <= ciel((nodes*nodes - 1)/(2*(nodes - 2)))};",
+            "text": "if bipartite and odd(nodes) then {thickness <= ceil((nodes*nodes - 1)/(2*(nodes - 2)))};",
             "name": "Theorem",
             "idnum": 326,
             "disp": ""
@@ -2671,79 +2671,79 @@
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if maxClique <= and maxdeg <= 3 then {edges >= 14*nodeCover - 15*nodes/2};",
             "name": "Theorem",
             "idnum": 446,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if maxClique <= 2 and maxdeg <= 2 then {edges >= 15*nodeCover - 8*nodes};",
             "name": "Theorem",
             "idnum": 447,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edges <= ((nodes - nodeCliqueCover)*(nodeCliqueCover + maxdeg - 1) + mindeg)/2;",
             "name": "Theorem",
             "idnum": 448,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if nodeInd == 2 and mindeg >= nodes - 5 then {edges <= nodes*(nodes-13)/2 + 13*maxClique};",
             "name": "Theorem",
             "idnum": 449,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if nodeInd < nodeCliqueCover and nodeCliqueCover = nodes - mindeg - 1 and mindeg <= nodes - 10 then {nodes <= 2*mindeg + 2} else if nodeInd < nodeCliqueCover and nodeCliqueCover == nodes - mindeg - 1 and mindeg >= nodes - 10 then {nodes <= 2*mindeg + 3};",
             "name": "Theorem",
             "idnum": 450,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if mindeg <= min(nodes-7, nodes - nodeInd - 2) then {mindeg <= ((nodes - 1)*(maxClique - 1) - 2)/maxClique};",
             "name": "Theorem",
             "idnum": 451,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if nodeInd == 2 then {maxClique >= nodes*((nodes - 1 - 2*edges/nodes)*ln(nodes - 1 - 2*edges/nodes) - (nodes - 2 - 2*edges/nodes)**2)/(nodes - 2 - 2*edges/nodes)**2};",
             "name": "Theorem",
             "idnum": 452,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edges <= nodes*(nodes - 1)/2 - floor((nodes-nodeConnec)/(maxClique-1))*(nodes-nodeConnec) - nodeConnec*(nodeConnec - 1)/2 + (maxClique - 1)*floor((nodes-nodeConnec)/(maxClique-1))*(floor((nodes-nodeConnec)/(maxClique-1))+1)/2;",
             "name": "Theorem",
             "idnum": 453,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if nodeInd <= 2 and mindeg >= nodes - 4 then {edges <= nodes*(nodes - 14)/2 + 14*maxClique};",
             "name": "Theorem",
             "idnum": 454,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if nodeInd <= 2 and mindeg >= nodes - 3 then {edges <= nodes*(nodes - 15)/2 + 15*maxClique};",
             "name": "Theorem",
             "idnum": 455,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if maxClique == 2 then {chromaticNum <= 1 + 3*(nodeCover + 12)/16};",
             "name": "Theorem",
             "idnum": 456,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if maxClique == 2 then {chromaticNum <= (3*nodes - 3*nodeInd + 52)/16};",
             "name": "Theorem",
             "idnum": 457,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if nodeInd == 2 then {nodeCliqueCover <= (3*nodes - 3*maxClique + 52)/16};",
             "name": "Theorem",
             "idnum": 458,
             "disp": ""
