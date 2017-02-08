@@ -2497,175 +2497,175 @@
             "disp": ""
         },
         {
-            "text": "",
+            "text": "if maxClique <= 2 and maxdeg <= 3 then {edges >= 13*nodes/2 - 14*nodeInd};",
             "name": "Theorem",
             "idnum": 417,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if maxClique <= 2 and maxdeg <= 2 then {edges >= 7*nodes - 15*nodeInd};",
             "name": "Theorem",
             "idnum": 418,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if maxClique <= 2 and nodeCover <= 3*nodes/5 then {nodeCover <= (3*nodes - sqrt(5*edges - nodes**2))/5};",
             "name": "Theorem",
             "idnum": 419,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if maxClique <= 2 and nodeInd <= 2*nodes/5 then {nodeInd >= (2*nodes + sqrt(5*edges - nodes**2))/5};",
             "name": "Theorem",
             "idnum": 420,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if nodeInd == 2 and maxClique >= 2*nodes/5 then {maxClique >= (2*nodes + sqrt(nodes*(3*nodes-5)/2 - 5*edges))/5};",
             "name": "Theorem",
             "idnum": 421,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if not forest then {bandwidth >= (2*nodeCover*(girth - 2) - nodes*(girth-3))/(2*(nodes-nodeCover))};",
             "name": "Theorem",
             "idnum": 422,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "nodeCover <= nodes - maxdeg / (chromaticNum - 1);",
             "name": "Theorem",
             "idnum": 423,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if connected and (not cycle or (cycle and isset nodes and even nodes)) and (edges >= nodes or maxdeg > 2 or (isset nodes and odd nodes)) then {nodeCover <= (nodes * (maxdeg**2 + maxdeg - 1))/(maxdeg*(maxdeg+1)) - nodes**2/(nodes+2*edges)};",
             "name": "Theorem",
             "idnum": 424,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if planar then {mindeg <= nodes - nodeCover + 2};",
             "name": "Theorem",
             "idnum": 425,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edges <= max((nodes-edgeCover)*(2*nodes - 2*edgeCover + 1), (nodes-edgeCover)*(nodes+edgeCover-1)/2);",
             "name": "Theorem",
             "idnum": 426,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 427,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if mindeg == 3 and maxdeg == 3 then {edgeCover <= nodes/2 + (nodes+3)/18 + (numOfComponents + 4)/6};",
             "name": "Theorem",
             "idnum": 428,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if maxClique == 2 and maxdeg <= 4 then {edges >= 13*nodeCover - 7*nodes};",
             "name": "Theorem",
             "idnum": 429,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if nodeConnec >= 2 and nodeCover <= nodes - 2 then {circumference >= (2*(2*nodes - nodeCover - 2)/(nodes - nodeCover))};",
             "name": "Theorem",
             "idnum": 430,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if girth >= 6 then {nodeCover <= nodes*maxdeg**2 / (maxdeg**2 + 2*maxdeg -1)};",
             "name": "Theorem",
             "idnum": 431,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if mindeg == maxdeg and mindeg == 2 and girth >= 8 then {nodeCover <= 33*nodes/53} else if mindeg==maxdeg and mindeg==2 and girth >= 6 then {nodeCover <= 33*nodes/52};",
             "name": "Theorem",
             "idnum": 432,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if regular and nodes < 2*nodeCover then {edgeChromatic == maxdeg + 1};",
             "name": "Theorem",
             "idnum": 433,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if regular then {edgeCover <= nodes*(maxdeg +2)/(2*(maxdeg+1))};",
             "name": "Theorem",
             "idnum": 434,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if regular and nodes == 2*maxdeg + 1 then {nodeCover >= nodes - nodeConnec};",
             "name": "Theorem",
             "idnum": 435,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 436,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 437,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "nodeInd >= (2*nodes - edges + edgeInd)/4;",
             "name": "Theorem",
             "idnum": 438,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "nodeCover <= (nodes +edges + edgeCover)/4;",
             "name": "Theorem",
             "idnum": 439,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "nodeInd >= (3*nodes - edges - edgeCover)/4",
             "name": "Theorem",
             "idnum": 440,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if maxdeg >= 6 and maxClique <= maxdeg - 1 then {nodeCover <=  (nodes * (maxdeg - 1) -1)/maxdeg};",
             "name": "Theorem",
             "idnum": 441,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if maxClique == 2 then {nodeCover <= nodes *(1 - ((2*edges)/nodes * log(2*edges/nodes) - (2*edges/nodes) +1)/(2*edges/nodes -1)**2)};",
             "name": "Theorem",
             "idnum": 442,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "bandwidth <= nodes - (mindeg + 1)*(numOfComponents -1) - 1 - (nodes - nodeCover - numOfComponents + 1)/2",
             "name": "Theorem",
             "idnum": 443,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 444,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 445,
             "disp": ""
