@@ -1621,7 +1621,7 @@
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 271,
             "disp": ""
@@ -1699,7 +1699,7 @@
             "disp": ""
         },
         {
-            "text": "",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 284,
             "disp": ""
@@ -1723,7 +1723,7 @@
             "disp": ""
         },
         {
-            "text": "",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 288,
             "disp": ""
@@ -1747,7 +1747,7 @@
             "disp": ""
         },
         {
-            "text": "",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 292,
             "disp": ""
@@ -1819,7 +1819,7 @@
             "disp": ""
         },
         {
-            "text": "",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 304,
             "disp": ""
@@ -1903,13 +1903,13 @@
             "disp": ""
         },
         {
-            "text": "",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 318,
             "disp": "HELP - WTF IS A CATALAN NUMBER"
         },
         {
-            "text": "",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 319,
             "disp": ""
@@ -1921,10 +1921,10 @@
             "disp": ""
         },
         {
-            "text": "if connected and regular and not complete and mindeg <= 3 then {edgeCliqueCover >= 3*nodes/(mindeg+1)} else if connected and regular and not complete and mindeg >= 5 then {edgeCliqueCover >= mindeg*nodes/(mindeg+1)*(mindeg-2)};",
+            "text": "if connected and regular and not complete and mindeg <= 3 then {edgeCliqueCover >= 3*nodes/(mindeg+1)} else if connected and regular and not complete and mindeg >= 5 then {edgeCliqueCover >= mindeg*nodes/((mindeg+1)*(mindeg-2))};",
             "name": "Theorem",
             "idnum": 321,
-            "disp": "HELP - Ensure that the second statement is correct"
+            "disp": ""
         },
         {
             "text": "if connected and regular and mindeg <= 4 and not complete and (nodes == 7 or congruent(nodes, 3, 5)) and nodes != 13 and nodes != 18 then {edgeCliqueCover >= ciel(3*nodes/5) + 1} else if connected and regular and mindeg <= 4 and not complete then {edgeCliqueCover >= ciel(3*nodes/5)};",
@@ -2401,103 +2401,103 @@
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if planar and edges == 3*nodes - 6 and maxdeg <= mindeg + 1 then {mindeg == nodeConnec};",
             "name": "Theorem",
             "idnum": 401,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "bandwidth <= nodes - (mindeg + 1)*(numOfComponents -1) - 1 - (nodeInd - numOfComponents + 1)/2;",
             "name": "Theorem",
             "idnum": 402,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 403,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if mindeg >edgeConnec and edgeConnec == nodeConnec then nodes >= mindeg + maxdeg;",
             "name": "Theorem",
             "idnum": 404,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if mindeg > edgeConnec and edgeConnec == nodeConnec and nodeConnec > 0 and diam == 3 then {domination <= edgeConnec + 1};",
             "name": "Theorem",
             "idnum": 405,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if (nodes - 1)**2 < 4*edges and edges <= (nodes-1)*(nodes-2)/2 then {mindeg <= edgeConnec - 1 + (nodes - sqrt(4*edges + 2*nodes - nodes**2))/2};",
             "name": "Theorem",
             "idnum": 406,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "domination <= (nodes - maxdeg - 1)*(nodes - mindeg - 2)/(nodes - 1) + 2;",
             "name": "Theorem",
             "idnum": 407,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 408,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if nodes >= 4 and maxClique == 2 and hamiltonian then {edges <= (nodes - 4)*nodes/4 + 2};",
             "name": "Theorem",
             "idnum": 409,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "spectralRadius >= mindeg;",
             "name": "Theorem",
             "idnum": 410,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if connected and nodes >= 2*mindeg + 2 and congruent(nodes, mindeg+1, 0) then {diam <= 3*nodes/(mindeg+1) - 3} else if connected and nodes >= 2*mindeg + 2 and congruent(nodes, mindeg+1, 1) then {diam <= 3*nodes/(mindeg+1)+2} else if connected and nodes >= 2*mindeg + 2 then {diam <= 3*nodes/(mindeg+1) - 1};",
             "name": "Theorem",
             "idnum": 411,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 412,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "edges >= (nodes - chromaticNum)**2/(nodeInd-1) + chromaticNum *(chromaticNum - 1)/2 - (nodeInd-1)*((nodes-chromaticNum)/(nodeInd-1)) * ((nodes-chromaticNum)/*(nodeInd-1))/2;",
             "name": "Theorem",
             "idnum": 413,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if diam <= 4 then {edges <= ((nodes-2)*(nodes - 3) - 2(nodes-2)*(diam-4)*nodeConnec - 4 * nodeConnec * (nodeConnec+1) + nodeConnec**2*(diam-2)*(diam-3))/2};",
             "name": "Theorem",
             "idnum": 414,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "domination <= (nodes + 2 - mindeg)/2;",
             "name": "Theorem",
             "idnum": 415,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if even nodes and maxdeg == nodes - 2 and edgeChromatic == maxdeg + 1 then {edges >= (nodes - 2)**2 / 2 + 1 + mindeg}; if even nodes and maxdeg == nodes - 2 and edges >= (nodes-2)**2 / 2 + 1 + mindeg then {maxdeg == nodes - 2};",
             "name": "Theorem",
             "idnum": 416,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "",
             "name": "Theorem",
             "idnum": 417,
             "disp": ""
