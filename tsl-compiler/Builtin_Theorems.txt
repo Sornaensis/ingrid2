@@ -2341,61 +2341,61 @@
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if circumference <= nodes - mindeg then {edges <= nodes * (nodes - 1)/2 - mindeg *(nodes - mindeg - 1)};",
             "name": "Theorem",
             "idnum": 391,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if girth == 5 and mindeg >= 6 then {nodes >= 40} else if girth == 5 and mindeg == 5 then {nodes >= 5} else if girth == 5 and mindeg == 4 then {nodes >= 19};",
             "name": "Theorem",
             "idnum": 392,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if girth == 6 and mindeg >= 7 and regular then {nodes >= 90} else if girth == 6 and mindeg >= 7 and not regular then {nodes >= 93};",
             "name": "Theorem",
             "idnum": 393,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if maxClique == 2 then {nodeInd >= nodes *(2*edges/nodes * ln(2*edges/nodes) - 2*edges/nodes +1)/((2*edges/nodes - 1)**2)};",
             "name": "Theorem",
             "idnum": 394,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 395,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 396,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if girth >= 5+ log(max(1,genus),3) then {arboricity <= 2};",
             "name": "Theorem",
             "idnum": 397,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if mindeg >= 2 then {nodes >= girth * numOfComponents + maxdeg - 2};",
             "name": "Theorem",
             "idnum": 398,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "if nodeConnec > 0 then {nodeConnec >= (nodes *(maxdeg - 2))/((maxdeg-1)**diam + maxdeg - 3)};",
             "name": "Theorem",
             "idnum": 399,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 400,
             "disp": ""
