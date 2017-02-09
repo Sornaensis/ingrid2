@@ -1,6 +1,14 @@
 {-# LANGUAGE DeriveGeneric, OverloadedStrings #-}
 module CodeGen ((<$>), generatePythonClass, generateIneq, TSLInput(..), TSLInputTheorem(..), TSLTheorem(..)) where
 
+import qualified Data.Text as T
+
+import qualified CPython as Py
+import qualified CPython.Protocols.Object as Py
+import qualified CPython.Types as Py
+import qualified CPython.Types.Unicode as Py
+import qualified CPython.Types.Module as Py
+
 import qualified Data.Set as S
 import Data.Set (Set)
 import Parser
@@ -52,8 +60,9 @@ getInvarExprInvolves (InvarAnd a b)         = S.union (getInvarExprInvolves a) (
 getInvarExprInvolves (InvarExpr a Nothing)  = getValueInvolves a 
 getInvarExprInvolves (InvarExpr a (Just b)) = S.union (getValueInvolves a) (getInvarRelExprInvolves b)
 getInvarExprInvolves (InvarExprNot a)       = getValueInvolves a
-getInvarExprInvolves (InvarExprEven a)       = getValueInvolves a
+getInvarExprInvolves (InvarExprEven a)      = getValueInvolves a
 getInvarExprInvolves (InvarExprOdd a)       = getValueInvolves a
+getInvarExprInvolves (InvarExprUndefined a) = getValueInvolves a
 
 getValueInvolves :: Value -> Set String
 getValueInvolves (Invar i) = S.singleton i
@@ -150,6 +159,9 @@ generateIExpr (InvarExpr (Invar v) Nothing) =
     return ("ingrid_obj.set(\'" ++ v ++ "\', True)")
 generateIExpr (InvarExprNot (Invar v)) = 
     return ("ingrid_obj.set(\'" ++ v ++ "\', False)")
+generateIExpr (InvarExprUndefined (Invar v)) = 
+    [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')-1"
+    , "\tingrid_obj.set(\'" ++ v ++ "\', \'undt\', ind=\'Max\')"]
 generateIExpr (InvarExprEven (Invar v)) = 
     [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')-1"
     , v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')+1" 
@@ -173,7 +185,7 @@ generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr r exp))) =
         RelEq  -> generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr RelLte exp))) 
                     ++
                   generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr RelGte exp)))
-        _      -> ["return"]
+        _      -> [""]
     where 
     make m =        
       let invars = map (\i -> (swap m (exprAnalysis exp i), i)) . S.toList . getExprInvolves $ exp  
@@ -464,18 +476,19 @@ genIExprIneq e@(InvarExpr _ (Just (InvarRelExpr _ _))) =
              invars                                            = v : S.toList (getExprInvolves exp)
         in fmap (map (replaceAllInvar func_remap . replaceAllInvar invar_remap) . theoremParser . lexer . concat) . sequence $ 
                invars
-                >>= \inv -> return $
-                               fix (\loop c ->
-                               do (Just stdin, Just stdout, _, solver) <- createProcess (proc "python2" ["solver.py"]) 
-                                                                           { std_in = CreatePipe, std_out = CreatePipe }
-                                  hPutStrLn stdin $ "{\"invariants\":" ++ show invars ++ 
-                                                    ", \"target_invariant\":" ++ show inv ++ 
-                                                    ", \"inequality\":" ++ show inequality ++ "}"
-                                  hFlush stdin
-                                  ec <- waitForProcess solver
-                                  case ec of
-                                   (ExitFailure _) -> if c < 10 then loop (c+1) else hGetLine stdout
-                                   _               -> hGetLine stdout) 0
+                >>= \inv -> return $ 
+                   do Py.initialize
+                      equation <- Py.toUnicode . T.pack $ inequality
+                      variables <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) invars
+                      target  <- Py.toUnicode . T.pack $ inv
+                      ms <- Py.importModule "mystic.symbolic"
+                      solver <- Py.getAttribute ms =<< Py.toUnicode "simplify"
+                      pyout <- Py.callArgs solver [Py.toObject equation, Py.toObject variables, Py.toObject target]
+                      rewrite <- Py.cast pyout :: IO (Maybe Py.Unicode)
+                      case rewrite of 
+                       (Just eqn) -> (++";") . T.unpack <$> Py.fromUnicode eqn
+                       _          -> return inequality
+
 genIExprIneq e = return [IExpr e]
                
 containsInvar :: Expr -> Bool
