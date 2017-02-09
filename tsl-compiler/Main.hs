@@ -6,6 +6,8 @@ import CodeGen
 import Data.Aeson (decode)
 import qualified Data.ByteString.Lazy.Char8 as C 
 
+import Debug.Trace
+
 import Prelude hiding ((<$>))
 
 main :: IO ()
@@ -18,6 +20,6 @@ main =
                mapM_ (putStrLn . unlines . generatePythonClass) $ theorems
   where
   genTheorem t@(TSLInputTheorem n code d i) = 
-       do ts <- generateIneq . theoremParser . lexer $ code
+       do ts <- generateIneq . theoremParser . lexer $ trace code code
           return $ TSLTheorem (TSLInputTheorem (n ++ show i) code d i) $! ts
             
