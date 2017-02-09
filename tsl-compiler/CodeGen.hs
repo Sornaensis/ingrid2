@@ -44,6 +44,7 @@ instance ToJSON TSLInputTheorem
 getInvolves :: Theorem -> [String]
 getInvolves (IExpr i)  = S.toList $ getInvarExprInvolves i
 getInvolves (IfStmt i) = S.toList $ getIfStmtInvolves i
+getInvolves NullBody   = []
 
 getInvarExprInvolves :: InvarExpr -> Set String
 getInvarExprInvolves (InvarOr a b)          = S.union (getInvarExprInvolves a) (getInvarExprInvolves b)
@@ -81,14 +82,12 @@ getIfStmtInvolves (If c iexpl (Just i)) = S.union (getCondInvolves c) (S.union (
 getIfStmtInvolves (If c iexpl Nothing) = S.union (getCondInvolves c) (getInvarExprListInvolves iexpl)
 
 getInvarExprListInvolves :: InvarExprList -> Set String
-getInvarExprListInvolves (InvarExprList l) = foldr (S.union . getInvarExprInvolves) S.empty l
+getInvarExprListInvolves (InvarExprList l) = foldr (flip (\r -> S.union r . S.fromList . getInvolves)) S.empty l
 
 getCondInvolves :: Cond -> Set String
 getCondInvolves (CondOr a b)        = S.union (getCondInvolves a) (getCondInvolves b)
 getCondInvolves (CondAnd a b)       = S.union (getCondInvolves a) (getCondInvolves b)
-getCondInvolves (CondOdd v)         = getValueInvolves v
-getCondInvolves (CondEven v)         = getValueInvolves v
-getCondInvolves (CondNot v)         = getValueInvolves v
+getCondInvolves (CondSpec _ v)      = getValueInvolves v
 getCondInvolves (Cond ex (Just cr)) = S.union (getValueInvolves ex) (getCondRelInvolves cr)
 getCondInvolves (Cond ex Nothing)   = getValueInvolves ex
 
@@ -136,11 +135,12 @@ generatePythonClass (TSLTheorem (TSLInputTheorem name text disp idnum) ts)  =
                 indent ["super(" ++ name ++ ", self).__init__(" ++ L.intercalate ", " [show idnum, show text, show disp] ++")"]
              ,("def involves(self, str_invar):" :) $ 
                 indent ["return str_invar in " ++ show (L.nub . concatMap getInvolves $ ts)]
-             , "def run(self, ingrid_obj):" : concatMap (indent . generatePython) ts]
+             , ("def run(self, ingrid_obj):" : concatMap (indent . generatePython) ts) ++ ["\treturn"]]
 
 generatePython :: Theorem -> [String]
-generatePython (IExpr i) =  generateIExpr i 
+generatePython (IExpr i)  =  generateIExpr i 
 generatePython (IfStmt i) = generateIfStmt i 
+generatePython NullBody   = []
 
 generateIExpr :: InvarExpr -> [String]
 generateIExpr (InvarOr a b) = undefined
@@ -208,6 +208,7 @@ generateIExpr _ = []
 swap :: Bound -> InvarBoundSwitch -> Bound
 swap Max (Flip True) = Min
 swap Min (Flip True) = Max
+swap Min Maximize    = Max
 swap b   _           = b
 
 flipbound :: InvarBoundSwitch -> InvarBoundSwitch
@@ -215,7 +216,7 @@ flipbound (Flip a) = Flip $ not a
 flipbound NotFound = Flip True
 flipbound a        = a
 
-data InvarBoundSwitch = Flip Bool | NotFound | Complex deriving Eq
+data InvarBoundSwitch = Flip Bool | NotFound | Complex | Maximize | Minimize deriving Eq
 
 exprAnalysis :: Expr -> String -> InvarBoundSwitch
 exprAnalysis (Expr exps) inv = let analysis = L.nub $ filter (/=NotFound) . concatMap (\x -> termAnalysis x inv (Flip False)) $ exps
@@ -236,13 +237,27 @@ factorAnalysis (Pow a b) inv f = factorAnalysis a inv f ++ factorAnalysis b inv 
 factorAnalysis (Value v) inv f = return $ valueAnalysis v inv f
 
 valueAnalysis :: Value -> String -> InvarBoundSwitch -> InvarBoundSwitch
-valueAnalysis (Invar v)         s f | s == v     = f
-valueAnalysis (Function _ exps) s f              = let fxprs = map (`exprAnalysis` s) exps 
+valueAnalysis (Invar v)         s f   | s == v     = f
+valueAnalysis (Function fun exps) s f | fun `L.elem` specialFunctions
+                                                  = let fxprs = map (`exprAnalysis` s) exps
+                                                    in if null fxprs 
+                                                        then NotFound
+                                                        else 
+                                                            let f' = head fxprs in
+                                                            case fun of
+                                                              "max" -> if f' == Flip True then Minimize else Maximize
+                                                              "min" -> if f' == Flip True then Maximize else Minimize 
+                                                              _     -> f'
+                                      | otherwise = let fxprs = map (`exprAnalysis` s) exps 
                                                    in if null fxprs 
                                                        then NotFound
                                                        else if length fxprs > 1
                                                              then Complex
-                                                             else head fxprs
+                                                             else if f == Flip True
+                                                                   then flipbound $ head fxprs
+                                                                   else head fxprs
+                                      where 
+                                      specialFunctions = ["min","max"]
 valueAnalysis (Paren p)         s f              = let an = exprAnalysis p s
                                                    in if f == Flip True 
                                                        then flipbound an 
@@ -254,7 +269,7 @@ valueAnalysis _                 _ _              = NotFound
 generateIfStmt' :: IfStmt -> [[String]]
 generateIfStmt' (If c (InvarExprList is) Nothing) 
     = let cond = generateCond c in
-       init cond : [last cond ++ ":"] : [indent (concatMap generateIExpr is)]
+       init cond : [last cond ++ ":"] : [indent (concatMap generatePython is)]
 
 generateIfStmt :: IfStmt -> [String]
 generateIfStmt i@(If c (InvarExprList is) _)
@@ -278,17 +293,27 @@ junction a b condis =
 generateCond :: Cond -> [String]
 generateCond (CondOr a b)  = junction a b "or"
 generateCond (CondAnd a b) = junction a b "and" 
-generateCond (CondNot (Local "True")) =
+generateCond (CondSpec "undefined" (Invar v)) =
+    [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind = \'Max\')",
+     "(" ++ v ++ "_Max == \'undt\')"]
+generateCond (CondSpec "defined" (Invar v)) =
+    [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind = \'Max\')",
+     "(" ++ v ++ "_Max != \'undt\')"]
+generateCond (CondSpec "isset" (Invar v)) =
+    [v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind = \'Min\')",
+     v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind = \'Max\')",
+     "(" ++ v ++ "_Min" ++ " == " ++ v ++ "_Max)"]
+generateCond (CondSpec "not" (Local "True")) =
     ["", "(True)"]
-generateCond (CondEven (Invar v)) =
+generateCond (CondSpec "even" (Invar v)) =
     [v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')",
      v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')",
      "(even(" ++ v ++ "_Min) and even(" ++ v ++ "_Max))"]
-generateCond (CondOdd (Invar v)) =
+generateCond (CondSpec "odd" (Invar v)) =
     [v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')",
      v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')",
      "(odd(" ++ v ++ "_Min) and odd(" ++ v ++ "_Max))"]
-generateCond (CondNot (Invar v)) = 
+generateCond (CondSpec "not" (Invar v)) = 
     [v ++ " = ingrid_obj.get(\'" ++ v ++ "\')",
      "(" ++ v ++ " == False)"]
 generateCond (Cond (Invar v) Nothing) = 
@@ -359,7 +384,9 @@ replFactorFuncs (Pow a b)                vals  p =
     let (fa, avs) = replFactorFuncs a vals True
         (fb, bvs) = replFactorFuncs b (drop (length avs) vals) False
     in (Pow fa fb, avs ++ bvs)
-replFactorFuncs (Value f@(Function _ _)) (v:_) _ = (Value v, [(v, f)])
+replFactorFuncs fv@(Value f@(Function fun _)) (v:_) _ | fun `L.elem` solveableFunctions 
+                                                                  = (fv, [])
+                                                      | otherwise = (Value v, [(v, f)])
 replFactorFuncs (Value (Paren expr))     vals  p = 
     let (p', vs') = replAllExprFuncs expr vals p
     in (Value $ Paren p', vs')
@@ -397,6 +424,8 @@ replaceValueInvar m i@(Invar _)     = case lookup i m of
 replaceValueInvar m (Function f es) = Function f $ map (replaceExprInvar m) es
 replaceValueInvar m (Paren e)       = Paren . replaceExprInvar m $ e
 replaceValueInvar _ v               = v
+
+solveableFunctions = ["log","ln","sqrt","cos","sin"]
                                            
 generateIneq :: [Theorem] -> IO [Theorem]
 generateIneq = 
@@ -404,11 +433,12 @@ generateIneq =
           case t of
            (IExpr e)  -> genIExprIneq e
            (IfStmt i) -> return . IfStmt <$> genIfStmtIneq i
+           t'         -> return [t']
         )
 
 genIfStmtIneq :: IfStmt -> IO IfStmt
 genIfStmtIneq (If c (InvarExprList iexpl) Nothing) = 
-    fmap ((\il -> If c (InvarExprList il) Nothing) . concat) . mapM genInvarExprIneq $ iexpl
+    fmap (\il -> If c (InvarExprList il) Nothing) . generateIneq $ iexpl
 genIfStmtIneq (If c (InvarExprList iexpl) (Just i)) = 
     let elsestmt = genIfStmtIneq i
         ifstmt   = If c (InvarExprList iexpl) Nothing
