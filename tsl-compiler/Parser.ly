@@ -18,6 +18,7 @@ import Data.Char
       if             { TokenIf }
       then           { TokenThen }
       else           { TokenElse }
+      null           { TokenNull }
       and            { TokenAnd }
       or             { TokenOr }
       not            { TokenNot }
@@ -48,6 +49,7 @@ import Data.Char
 
 Theorem : Invarexpr ';' Theorem    { IExpr $1 : $3 }
          | Ifstmt ';' Theorem      { IfStmt $1 : $3 }
+         | null ';'                { NullBody }
          | {- empty -}             { [] }
 
 Invarexpr : Invarexpror               { $1 }
@@ -139,6 +141,7 @@ Val : Func   { $1 }
 -- A theorem is a list of theorems
 data Theorem = IExpr InvarExpr
              | IfStmt IfStmt
+             | NullBody
     deriving (Show)
 
 -- If statements may be nested
@@ -219,6 +222,7 @@ parseError _ = error "Parse error"
 data Token
       = TokenIf
       | TokenThen
+      | TokenNull
       | TokenElse
       | TokenNum Double
       | TokenGlobalName String
@@ -281,15 +285,16 @@ lexNum cs = TokenNum num : lexer rest
 
 lexVar cs =
    case span (\c -> isAlpha c || isDigit c || c == '_') cs of
-      ("then",rest) -> TokenThen : lexer rest
-      ("else",rest)  -> TokenElse : lexer rest
-      ("even",rest)  -> TokenEven : lexer rest
-      ("and",rest)  -> TokenAnd : lexer rest
-      ("not",rest)  -> TokenNot : lexer rest
-      ("odd",rest)  -> TokenOdd : lexer rest
-      ("if",rest) -> TokenIf : lexer rest
-      ("or",rest)  -> TokenOr : lexer rest
-      ('_':var,rest)   -> TokenLocalName ('_':var) : lexer rest
-      (var,rest)   -> TokenGlobalName var : lexer rest
+      ("then",rest)   -> TokenThen : lexer rest
+      ("null",rest)   -> TokenNull : lexer rest
+      ("else",rest)   -> TokenElse : lexer rest
+      ("even",rest)   -> TokenEven : lexer rest
+      ("and",rest)    -> TokenAnd : lexer rest
+      ("not",rest)    -> TokenNot : lexer rest
+      ("odd",rest)    -> TokenOdd : lexer rest
+      ("if",rest)     -> TokenIf : lexer rest
+      ("or",rest)     -> TokenOr : lexer rest
+      ('_':var,rest)  -> TokenLocalName ('_':var) : lexer rest
+      (var,rest)      -> TokenGlobalName var : lexer rest
 
 }
