@@ -139,7 +139,7 @@
             "disp": ""
         },
         {
-            "text": "if mindeg >= 3 and odd girth then { nodes >= (mindeg*(mindeg - 1)**((girth - 1)/2) - 2)/(mindeg - 2) } else { nodes >= (2*(mindeg - 1)**(girth/3) - 2)/(mindeg - 2) } ;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 24,
             "disp": ""
