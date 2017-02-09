@@ -25,6 +25,9 @@ import Data.Char
       odd            { TokenOdd }
       even           { TokenEven }
       number         { TokenNum $$ }
+      defined        { TokenDefined }
+      undefined      { TokenUndefined }
+      isset          { TokenIsset }
       global         { TokenGlobalName $$ }
       local          { TokenLocalName $$ }
       '=='           { TokenEq }
@@ -49,7 +52,7 @@ import Data.Char
 
 Theorem : Invarexpr ';' Theorem    { IExpr $1 : $3 }
          | Ifstmt ';' Theorem      { IfStmt $1 : $3 }
-         | null ';'                { NullBody }
+         | null ';'                { [NullBody] }
          | {- empty -}             { [] }
 
 Invarexpr : Invarexpror               { $1 }
@@ -71,8 +74,10 @@ Invarel : Relation Expr { Just $ InvarRelExpr $1 (Expr $2) }
 
 Invarexprlist : '{' Invarexprlist1 '}'      { InvarExprList (reverse $2) }
 
-Invarexprlist1 : Invarexpr                      { [$1] }
-               | Invarexprlist1 ',' Invarexpr   { $3 : $1 } 
+Invarexprlist1 : Invarexpr                      { [IExpr $1] }
+               | Ifstmt                         { [IfStmt $1] }
+               | Invarexprlist1 ',' Invarexpr   { (IExpr $3) : $1 } 
+               | Invarexprlist1 ',' Ifstmt      { (IfStmt $3) : $1 } 
 
 Ifstmt : if Cond then Invarexprlist Elsestmt { If $2 $4 $5 }
 
@@ -80,7 +85,7 @@ Elsestmt : else Elsestmt1 { Just $2 }
          |                { Nothing }
 
 Elsestmt1 : Ifstmt           { $1 }
-          | Invarexprlist    { If (CondNot (Local "True")) $1 Nothing }
+          | Invarexprlist    { If (CondSpec "not" (Local "True")) $1 Nothing }
 
 Cond : Condand    { $1 }
      | Cond or Condand { CondOr $1 $3 }
@@ -89,9 +94,12 @@ Condand : Cond1   { $1 }
         | Condand and Cond1 { CondAnd $1 $3 }
 
 Cond1 : Invar CondRel     { Cond $1 $2 }
-      | not Invar        { CondNot $2 }
-      | even Invar       { CondEven $2 }
-      | odd Invar        { CondOdd $2 }
+      | not Invar        { CondSpec "not" $2 }
+      | even Invar       { CondSpec "even" $2 }
+      | odd Invar        { CondSpec "odd" $2 }
+      | isset Invar      { CondSpec "isset" $2 }
+      | defined Invar    { CondSpec "defined" $2 }
+      | undefined Invar  { CondSpec "undefined" $2 }
       | '(' Cond ')'     { $2 }
 
 CondRel : Relation Expr  { Just $ CondRel $1 (Expr $2) }
@@ -150,16 +158,14 @@ data IfStmt = If Cond InvarExprList (Maybe IfStmt)
 
 data Cond = CondOr Cond Cond
           | CondAnd Cond Cond
-          | CondNot Value
-          | CondEven Value
-          | CondOdd Value
+          | CondSpec String Value
           | Cond Value (Maybe CondRel)
     deriving (Show)
 
 data CondRel = CondRel Relation Expr
     deriving (Show)
 
-data InvarExprList = InvarExprList [InvarExpr]
+data InvarExprList = InvarExprList [Theorem]
     deriving (Show)
 
 data InvarExpr = InvarOr InvarExpr InvarExpr
@@ -224,6 +230,9 @@ data Token
       | TokenThen
       | TokenNull
       | TokenElse
+      | TokenDefined
+      | TokenUndefined
+      | TokenIsset
       | TokenNum Double
       | TokenGlobalName String
       | TokenLocalName String
@@ -285,16 +294,19 @@ lexNum cs = TokenNum num : lexer rest
 
 lexVar cs =
    case span (\c -> isAlpha c || isDigit c || c == '_') cs of
-      ("then",rest)   -> TokenThen : lexer rest
-      ("null",rest)   -> TokenNull : lexer rest
-      ("else",rest)   -> TokenElse : lexer rest
-      ("even",rest)   -> TokenEven : lexer rest
-      ("and",rest)    -> TokenAnd : lexer rest
-      ("not",rest)    -> TokenNot : lexer rest
-      ("odd",rest)    -> TokenOdd : lexer rest
-      ("if",rest)     -> TokenIf : lexer rest
-      ("or",rest)     -> TokenOr : lexer rest
-      ('_':var,rest)  -> TokenLocalName ('_':var) : lexer rest
-      (var,rest)      -> TokenGlobalName var : lexer rest
+      ("undefined",rest) -> TokenUndefined : lexer rest
+      ("defined",rest)   -> TokenDefined : lexer rest
+      ("isset",rest)     -> TokenIsset : lexer rest
+      ("then",rest)      -> TokenThen : lexer rest
+      ("null",rest)      -> TokenNull : lexer rest
+      ("else",rest)      -> TokenElse : lexer rest
+      ("even",rest)      -> TokenEven : lexer rest
+      ("and",rest)       -> TokenAnd : lexer rest
+      ("not",rest)       -> TokenNot : lexer rest
+      ("odd",rest)       -> TokenOdd : lexer rest
+      ("if",rest)        -> TokenIf : lexer rest
+      ("or",rest)        -> TokenOr : lexer rest
+      ('_':var,rest)     -> TokenLocalName ('_':var) : lexer rest
+      (var,rest)         -> TokenGlobalName var : lexer rest
 
 }
