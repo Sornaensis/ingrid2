@@ -1,0 +1,124 @@
+
+{
+    "theorems":[
+{
+            "text": "if nodeCliqueCover > nodeInd then { maxdeg >= 3*nodes/(3*nodeInd - 1) - 1 };",
+            "name": "Theorem",
+            "idnum": 181,
+            "disp": ""
+        },
+        {
+            "text": "maxClique >= 2*nodes/(nodes-mindeg+nodeInd);",
+            "name": "Theorem",
+            "idnum": 182,
+            "disp": ""
+        },
+        {
+            "text": "if nodeInd <= 2 then { maxClique >= (1/2)*(sqrt(9+8*nodes)-3) };",
+            "name": "Theorem",
+            "idnum": 183,
+            "disp": ""
+        },
+        {
+            "text": "edges >= (1/2)*nodes*(nodes-1) - (nodes-maxClique)*(nodes-mindeg-1);",
+            "name": "Theorem",
+            "idnum": 184,
+            "disp": ""
+        },
+        {
+            "text": "if nodeCliqueCover <= 2 then { maxClique == chromaticNum };",
+            "name": "Theorem",
+            "idnum": 185,
+            "disp": ""
+        },
+        {
+            "text": "if nodeInd == 2 and nodeCliqueCover >= 4 then { nodes >= 11 };",
+            "name": "Theorem",
+            "idnum": 186,
+            "disp": ""
+        },
+        {
+            "text": "if regular and maxdeg <= nodes - 2 then { maxClique <= (1/2)*nodes-(nodeInd - 1)*(nodeInd - 2)/(2*(nodes - maxdeg - 1)) };",
+            "name": "Theorem",
+            "idnum": 187,
+            "disp": ""
+        },
+        {
+            "text": "if undefined girth then { thickness == 1 } else { thickness >= edges*(1-2/girth)/(nodes - 2) };",
+            "name": "Theorem",
+            "idnum": 188,
+            "disp": ""
+        },
+        {
+            "text": "if nodes > 10 or nodes < 9 then { thickness <= (nodes+7)/6 } else if nodes == 9 or nodes == 10 then { thickness <= 3 };",
+            "name": "Theorem",
+            "idnum": 189,
+            "disp": ""
+        },
+        {
+            "text": "thickness <= (1/2)*(edgeChromatic + 1);",
+            "name": "Theorem",
+            "idnum": 190,
+            "disp": ""
+        },
+        {
+            "text": "thickness <= max(bandwidth/2,1);",
+            "name": "Theorem",
+            "idnum": 191,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 then { nodeInd >= mindeg * (diameter+4)/4 };",
+            "name": "Theorem",
+            "idnum": 192,
+            "disp": ""
+        },
+        {
+            "text": "thickness <= (1/2)*(nodeCover+1);",
+            "name": "Theorem",
+            "idnum": 193,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 9 or maxClique == 10 then { thickness >= 3 } else { thickness >= (maxClique + 7)/6 };",
+            "name": "Theorem",
+            "idnum": 194,
+            "disp": ""
+        },
+        {
+            "text": "maxClique >= nodes + (1/2)*(nodeInd-1)*(nodeInd-2)+(nodes/2)*(nodes-1)+edges;",
+            "name": "Theorem",
+            "idnum": 195,
+            "disp": ""
+        },
+        {
+            "text": "edges <= (nodes/2)*(nodes-1)-maxClique*(nodes-maxdeg-1)-(1/2)*(nodeInd-1)*(nodeInd-2);",
+            "name": "Theorem",
+            "idnum": 196,
+            "disp": ""
+        },
+        {
+            "text": "if nodes >= 3 then { edgeCliqueCover <= thickness*(2*nodes-numOfComponents-3) };",
+            "name": "Theorem",
+            "idnum": 197,
+            "disp": ""
+        },
+        {
+            "text": "edgeCover <= nodes - nodes/chromaticNum;",
+            "name": "Theorem",
+            "idnum": 198,
+            "disp": ""
+        },
+        {
+            "text": "bandwidth <= nodes - 1 - (nodes - nodeCover)/2;",
+            "name": "Theorem",
+            "idnum": 199,
+            "disp": ""
+        },
+        {
+            "text": "if nodes > 2*edgeInd + 1 then { nodeCover <= 2*edgeInd - nodeConnec };",
+            "name": "Theorem",
+            "idnum": 200,
+            "disp": ""
+        }    ]
+}

@@ -1,0 +1,124 @@
+
+{
+    "theorems":[
+{
+            "text": "circumference >= 2*edges/(nodes-1);",
+            "name": "Theorem",
+            "idnum": 141,
+            "disp": ""
+        },
+        {
+            "text": "if edges >= nodes + 1 + (1/2)*(nodes**(3/2)) then {girth <= 4};",
+            "name": "Theorem",
+            "idnum": 142,
+            "disp": ""
+        },
+        {
+            "text": "nodeCliqueCover <= (1/2) + sqrt(1/4 + nodes**2 - nodes - 2*edges);",
+            "name": "Theorem",
+            "idnum": 143,
+            "disp": ""
+        },
+        {
+            "text": "chromaticNum <= 1/2 + sqrt(1/4 + 2*edges);",
+            "name": "Theorem",
+            "idnum": 144,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 then {nodeInd >= 1/2 * sqrt(8*nodes + 9) - 3};",
+            "name": "Theorem",
+            "idnum": 145,
+            "disp": ""
+        },
+        {
+            "text": "if connected then {bandwidth <= nodes - diam};",
+            "name": "Theorem",
+            "idnum": 146,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 and (maxdeg >= nodes-2 or nodes <= 4) then {chromaticNum <= 2} else if maxClique == 2 and nodes >= 5 and nodes <= 10 then {chromaticNum <= 3} else if maxClique == 2 then {chromaticNum <= (nodes - maxdeg + 10)/4};",
+            "name": "Theorem",
+            "idnum": 147,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == 3 and maxdeg == 3 and planar and edgeConnec >= 2 then {edgeChromatic == maxdeg};",
+            "name": "Theorem",
+            "idnum": 148,
+            "disp": ""
+        },
+        {
+            "text": "if planar and maxdeg >= 8 then {edgeChromatic == maxdeg};",
+            "name": "Theorem",
+            "idnum": 149,
+            "disp": ""
+        },
+        {
+            "text": "if spectralRadius <= maxdeg/2 then {edgeChromatic == maxdeg};",
+            "name": "Theorem",
+            "idnum": 150,
+            "disp": ""
+        },
+        {
+            "text": "if nodes > 2 and regular and nodeConnec == 1 then { edgeChromatic == maxdeg + 1 };",
+            "name": "Theorem",
+            "idnum": 151,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 and nodeInd >= 2*nodes/5 and nodeInd <= nodes/2 then { edges <= nodeInd**2 + 4*(nodes/2 - nodeInd)**2 };",
+            "name": "Theorem",
+            "idnum": 152,
+            "disp": ""
+        },
+        {
+            "text": "bandwidth <= maxdeg*(maxdeg - 1)**(radius - 1);",
+            "name": "Theorem",
+            "idnum": 153,
+            "disp": ""
+        },
+        {
+            "text": "if maxdeg >= 3 then { nodes <= 1 + maxdeg*((maxdeg - 1)**diameter - 1 )/(maxdeg - 2) };",
+            "name": "Theorem",
+            "idnum": 154,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == 2 then { nodes <= (2 + max(4, maxdeg))/edgeInd/2 };",
+            "name": "Theorem",
+            "idnum": 155,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg <= nodes/2 then { edgeInd >= mindeg };",
+            "name": "Theorem",
+            "idnum": 156,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique <= (mindeg - 1)/2 then { chromaticNum <= maxdeg - 1 };",
+            "name": "Theorem",
+            "idnum": 157,
+            "disp": ""
+        },
+        {
+            "text": "if connected and edges <= nodes + 3 then { genus <= 0 } else if connected and edges <= nodes + 6 then { genus <= 1 } else if connected and edges <= nodes + 9 then { genus <= 2 };",
+            "name": "Theorem",
+            "idnum": 158,
+            "disp": ""
+        },
+        {
+            "text": "nodeInd >= (nodes - 1)/(maxdeg + 1) + 1/(mindeg + 1);",
+            "name": "Theorem",
+            "idnum": 159,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 and maxdeg >= 3 then { nodeInd >= nodes/(maxdeg - (1/5)) } else if maxClique == 2 and nodes >= 3 and connected and (not cycle or (cycle and isset nodes and even nodes)) and (edges >= nodes or maxdeg > 2 or (isset nodes and odd nodes)) then { nodeInd >= nodes/maxdeg - 1/(maxdeg+1) + 1/(mindeg + 1) };",
+            "name": "Theorem",
+            "idnum": 160,
+            "disp": ""
+        }    ]
+}

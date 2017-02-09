@@ -1,0 +1,124 @@
+
+{
+    "theorems":[
+{
+            "text": "chromaticNum <= odeCover + 1;",
+            "name": "Theorem",
+            "idnum": 221,
+            "disp": ""
+        },
+        {
+            "text": "edgeInd <= nodeCover;",
+            "name": "Theorem",
+            "idnum": 222,
+            "disp": ""
+        },
+        {
+            "text": "nodeInd <= nodeCliqueCover;",
+            "name": "Theorem",
+            "idnum": 223,
+            "disp": ""
+        },
+        {
+            "text": "nodeCliqueCover <= edgeCliqueCover;",
+            "name": "Theorem",
+            "idnum": 224,
+            "disp": ""
+        },
+        {
+            "text": "radius <= diam;",
+            "name": "Theorem",
+            "idnum": 225,
+            "disp": ""
+        },
+        {
+            "text": "nodeConnec <= edgeConnec;",
+            "name": "Theorem",
+            "idnum": 226,
+            "disp": ""
+        },
+        {
+            "text": "girth <= circumference;",
+            "name": "Theorem",
+            "idnum": 227,
+            "disp": ""
+        },
+        {
+            "text": "chromaticNum <= circumference;",
+            "name": "Theorem",
+            "idnum": 228,
+            "disp": ""
+        },
+        {
+            "text": "genus <= crossing;",
+            "name": "Theorem",
+            "idnum": 229,
+            "disp": ""
+        },
+        {
+            "text": "mindeg <= circumference - 1;",
+            "name": "Theorem",
+            "idnum": 230,
+            "disp": ""
+        },
+        {
+            "text": "chromaticNum <= bandwidth + 1;",
+            "name": "Theorem",
+            "idnum": 231,
+            "disp": ""
+        },
+        {
+            "text": "mindeg <= bandwidth;",
+            "name": "Theorem",
+            "idnum": 232,
+            "disp": ""
+        },
+        {
+            "text": "nodes <= nodeInd * chromaticNum;",
+            "name": "Theorem",
+            "idnum": 233,
+            "disp": ""
+        },
+        {
+            "text": "nodes <= nodeCliqueCover * maxClique;",
+            "name": "Theorem",
+            "idnum": 234,
+            "disp": ""
+        },
+        {
+            "text": "edges <= edgeChromatic * edgeInd;",
+            "name": "Theorem",
+            "idnum": 235,
+            "disp": ""
+        },
+        {
+            "text": "edges <= nodeCover * maxdeg;",
+            "name": "Theorem",
+            "idnum": 236,
+            "disp": ""
+        },
+        {
+            "text": "nodeCover <= bandwidth * nodeInd;",
+            "name": "Theorem",
+            "idnum": 237,
+            "disp": ""
+        },
+        {
+            "text": "chromaticNum <= spectralRadius + 1;",
+            "name": "Theorem",
+            "idnum": 238,
+            "disp": ""
+        },
+        {
+            "text": "nodes == nodeCover + nodeInd",
+            "name": "Theorem",
+            "idnum": 239,
+            "disp": ""
+        },
+        {
+            "text": "nodes == edgeCover + edgeInd",
+            "name": "Theorem",
+            "idnum": 240,
+            "disp": ""
+        }    ]
+}

@@ -1,0 +1,124 @@
+
+{
+    "theorems":[
+{
+            "text": "if genus <= 2 and girth >= 5 then {chromaticNum <= 4};",
+            "name": "Theorem",
+            "idnum": 261,
+            "disp": ""
+        },
+        {
+            "text": "if (genus ==  and girth >= 4) or (genus <= 1 and girth >= 6) or (genus <= 2 and girth >= 7) or (girth >= 9) then {chromaticNum <= 3};",
+            "name": "Theorem",
+            "idnum": 262,
+            "disp": ""
+        },
+        {
+            "text": "maxdeg >= (nodes - 1)^(1/radius);",
+            "name": "Theorem",
+            "idnum": 263,
+            "disp": ""
+        },
+        {
+            "text": "if connected then { diameter <= 3*domination - 1 };",
+            "name": "Theorem",
+            "idnum": 264,
+            "disp": ""
+        },
+        {
+            "text": "if connected and maxdeg >= 3 then {nodes <= 1 + mindeg*((maxdeg-1)^diameter - 1)/(maxdeg-2)};",
+            "name": "Theorem",
+            "idnum": 265,
+            "disp": ""
+        },
+        {
+            "text": "if diameter >= 2 and maxdeg >= 3 then {maxdeg >= ceil((nodes-1)/mindeg)**(1/(diameter-1))};",
+            "name": "Theorem",
+            "idnum": 266,
+            "disp": ""
+        },
+        {
+            "text": "if diameter == radius and radius == 2 then {maxdeg >= 2};",
+            "name": "Theorem",
+            "idnum": 267,
+            "disp": ""
+        },
+        {
+            "text": "if not forest then {bandwidth >= (girth - 1)*(arboricity - 2) + 2};",
+            "name": "Theorem",
+            "idnum": 268,
+            "disp": ""
+        },
+        {
+            "text": "if not forest then {bandwidth >= (girth - 1)*nodes/(2*nodeInd) - girth + 2};",
+            "name": "Theorem",
+            "idnum": 269,
+            "disp": ""
+        },
+        {
+            "text": "if not forest then {domination <= nodes - floor(2*circumference/3)};",
+            "name": "Theorem",
+            "idnum": 270,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 271,
+            "disp": ""
+        },
+        {
+            "text": "if diameter == 2 then {domination <= nodeConnec};",
+            "name": "Theorem",
+            "idnum": 272,
+            "disp": ""
+        },
+        {
+            "text": "if tree then {radius == floor((diameter+1)/2)};",
+            "name": "Theorem",
+            "idnum": 273,
+            "disp": ""
+        },
+        {
+            "text": "if Hamiltonian then {nodes >= (maxdeg - 1)*(girth - 2) + 2};",
+            "name": "Theorem",
+            "idnum": 274,
+            "disp": ""
+        },
+        {
+            "text": "nodeInd >= maxdeg/(chromaticNum-1);",
+            "name": "Theorem",
+            "idnum": 275,
+            "disp": ""
+        },
+        {
+            "text": "maxClique >= (nodes - mindeg - 1)/(nodeCliqueCover-1);",
+            "name": "Theorem",
+            "idnum": 276,
+            "disp": ""
+        },
+        {
+            "text": "if nodes >= 3 and nodeConnec <= 1 then {edgeConnec <= maxdeg/2};",
+            "name": "Theorem",
+            "idnum": 277,
+            "disp": ""
+        },
+        {
+            "text": "if connected and maxdeg >= 3 then {nodes <= 1 + maxdeg*((maxdeg-1)^radius - 1)/(maxdeg-2)};",
+            "name": "Theorem",
+            "idnum": 278,
+            "disp": ""
+        },
+        {
+            "text": "if connected then {nodes >= maxdeg + 2*radius - 2};",
+            "name": "Theorem",
+            "idnum": 279,
+            "disp": ""
+        },
+        {
+            "text": "if forest then {nodes >= 2*(bandwidth + numOfComponents - 1)};",
+            "name": "Theorem",
+            "idnum": 280,
+            "disp": ""
+        }    ]
+}

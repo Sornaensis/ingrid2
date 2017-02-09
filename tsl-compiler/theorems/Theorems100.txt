@@ -1,0 +1,123 @@
+{
+    "theorems":[
+{
+            "text": "if regular then { nodeInd <= nodes/2 + (maxClique**2 + 3*maxClique - 2)/2*mindeg };",
+            "name": "Theorem",
+            "idnum": 81,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg >= nodes/2 then { edgeConnec == mindeg };",
+            "name": "Theorem",
+            "idnum": 82,
+            "disp": ""
+        },
+        {
+            "text": "if genus > 0 then { arboricity <= 9 + (1+48*genus)**(1/2)/4 };",
+            "name": "Theorem",
+            "idnum": 83,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 then { arboricity <= 2 + genus**(1/2) };",
+            "name": "Theorem",
+            "idnum": 84,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 then { chromaticNum <= 3 + 2*genus**(1/2) };",
+            "name": "Theorem",
+            "idnum": 85,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 86,
+            "disp": ""
+        },
+        {
+            "text": "if genus > 0 then { mindeg <= 5 + (1 + 48*genus)**(1/2)/2 };",
+            "name": "Theorem",
+            "idnum": 87,
+            "disp": ""
+        },
+        {
+            "text": "if genus > 0 and maxClique <= 2 then { edgeConnec <= 2 + 2*genus**(1/2) };",
+            "name": "Theorem",
+            "idnum": 88,
+            "disp": ""
+        },
+        {
+            "text": "if genus == 0 and girth == 3 then { edgeConnec <= 5 } else if genus == 0 and (girth == 4 or girth == 5) then { edgeConnec <= 3 } else if genus == 0 and girth >= 6 then { edgeConnec <= 2 };",
+            "name": "Theorem",
+            "idnum": 89,
+            "disp": ""
+        },
+        {
+            "text": "if genus <= 1 and girth == 3 then { edgeConnec <= 6 } else if genus <= 1 and girth == 4 then { edgeConnec <= 4 } else if genus <= 1 and (girth == 5 or girth == 6) then { edgeConnec <= 3 } else if genus <= 1 and girth >= 7 then { edgeConnec <= 2 };",
+            "name": "Theorem",
+            "idnum": 90,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg >= 3 and domination >= 1 and domination == (girth - 1)/4 then { nodes >= girth*(mindeg - 1)**domination };",
+            "name": "Theorem",
+            "idnum": 91,
+            "disp": ""
+        },
+        {
+            "text": "if nodeConnec >= 2 then { circumference >= min(nodes, 2*mindeg) };",
+            "name": "Theorem",
+            "idnum": 92,
+            "disp": ""
+        },
+        {
+            "text": "if diameter == 2 and ((even nodes and even mindeg and nodes >= mindeg**3 + mindeg + 1) or ((odd nodes or odd mindeg) and nodes > mindeg**3 + 1)) then { edges >= ((nodes-1)*(mindeg+1)+1)/2 };",
+            "name": "Theorem",
+            "idnum": 93,
+            "disp": ""
+        },
+        {
+            "text": "if diameter == 2 and (nodeConnec > 2 or nodeConnec < 2) and ((even nodes and even nodeConnec and nodes >= nodeConnec**3 + nodeConnec + 1) or ((odd nodes or odd nodeConnec) and nodes > nodeConnec**3 + 1)) then { edges >= ((nodes-1)*(nodeConnec+1)+1)/2 };",
+            "name": "Theorem",
+            "idnum": 94,
+            "disp": ""
+        },
+        {
+            "text": "if diameter == 2 and ((even nodes and even edgeConnec and nodes >= edgeConnec**3 + edgeConnec + 1) or ((odd nodes or odd edgeConnec) and nodes > edgeConnec**3 + 1)) then { edges >= ((nodes-1)*(edgeConnec+1)+1)/2 };",
+            "name": "Theorem",
+            "idnum": 95,
+            "disp": ""
+        },
+        {
+            "text": "if defined girth then { nodes >= (girth - 1)*(arboricity - 1) + 1 };",
+            "name": "Theorem",
+            "idnum": 96,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 and chromaticNum >= 4 then { nodes >= 11 };",
+            "name": "Theorem",
+            "idnum": 97,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 98,
+            "disp": ""
+        },
+        {
+            "text": "if diameter <= 2 then { edgeConnec == mindeg };",
+            "name": "Theorem",
+            "idnum": 99,
+            "disp": ""
+        },
+        {
+            "text": "if nodeInd >= edgeInd then { edgeCliqueCover <= nodeCover * nodeInd } ;",
+            "name": "Theorem",
+            "idnum": 100,
+            "disp": ""
+        }    ]
+}

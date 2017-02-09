@@ -1,0 +1,124 @@
+
+{
+    "theorems":[
+{
+            "text": "if genus > 2 and girth >= 4 and mindeg >= (5 + (16*genus + 1)**(1/2))/2 and mindeg == (3 + (16*genus + 9)**(1/2))/2 then { regular, hamiltonian, nodes == 2*mindeg+2 } else if genus > 2 and girth >= 4 and mindeg >= (5 + (16*genus + 1)**(1/2))/2 then { regular, hamiltonian, nodes == 2*mindeg }; ",
+            "name": "Theorem",
+            "idnum": 161,
+            "disp": ""
+        },
+        {
+            "text": "if nodeConnec >= 2 and regular and ((even nodes and mindeg >= (nodes-(2*nodes)**(1/2))/2) or (odd nodes and mindeg >= (nodes - nodes**(1/2))/2)) then { hamiltonian };",
+            "name": "Theorem",
+            "idnum": 162,
+            "disp": ""
+        },
+        {
+            "text": "if regular and nodeConnec >= 2 and nodes <= 3*mindeg then { hamiltonian };",
+            "name": "Theorem",
+            "idnum": 163,
+            "disp": ""
+        },
+        {
+            "text": "if spectralRadius > edges**(1/2) then { girth == 3 };",
+            "name": "Theorem",
+            "idnum": 164,
+            "disp": ""
+        },
+        {
+            "text": "spectralRadius >= maxdeg**(1/2);",
+            "name": "Theorem",
+            "idnum": 165,
+            "disp": ""
+        },
+        {
+            "text": "if diameter > 1 and nodeConnec > 1 then { edges >= (nodes*diameter-2*diameter + 1)/(diameter - 1) };",
+            "name": "Theorem",
+            "idnum": 166,
+            "disp": ""
+        },
+        {
+            "text": "if girth >= 5 then { chromaticNum <= (maxdeg + 3)*2/3 };",
+            "name": "Theorem",
+            "idnum": 167,
+            "disp": ""
+        },
+        {
+            "text": "if girth >= 2*maxdeg**2 then { chromaticNum <= (maxdeg + 4)/2 };",
+            "name": "Theorem",
+            "idnum": 168,
+            "disp": ""
+        },
+        {
+            "text": "nodeInd >= nodes**2/(2*edges + nodes);",
+            "name": "Theorem",
+            "idnum": 169,
+            "disp": ""
+        },
+        {
+            "text": "if connected and not complete then { nodeInd >= (nodes**3 + 3*nodes + 1)/(nodes*(2*edges+nodes)) };",
+            "name": "Theorem",
+            "idnum": 170,
+            "disp": ""
+        },
+        {
+            "text": "if genus > 1 and girth >= 4 then { mindeg <= 2 + 2*genus**(1/2) };",
+            "name": "Theorem",
+            "idnum": 171,
+            "disp": ""
+        },
+        {
+            "text": "if connected then { diameter <= 2*nodeCover };",
+            "name": "Theorem",
+            "idnum": 172,
+            "disp": ""
+        },
+        {
+            "text": "nodeInd >= 2*nodes/(maxdeg + maxClique + 1);",
+            "name": "Theorem",
+            "idnum": 173,
+            "disp": ""
+        },
+        {
+            "text": "nodeInd >= (nodes + 2*maxdeg + 1 - maxClique - mindeg)/(maxdeg + 1);",
+            "name": "Theorem",
+            "idnum": 174,
+            "disp": ""
+        },
+        {
+            "text": "bandwidth >= (1/2)*(2*nodes-1-sqrt((2*nodes-1)**2-8*edges));",
+            "name": "Theorem",
+            "idnum": 175,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 then { bandwidth >= (1/2)*(3*mindeg-1) };",
+            "name": "Theorem",
+            "idnum": 176,
+            "disp": ""
+        },
+        {
+            "text": "if tree then { bandwidth <= nodes/2 };",
+            "name": "Theorem",
+            "idnum": 177,
+            "disp": ""
+        },
+        {
+            "text": "nodeCliqueCover <= nodes - mindeg - (nodes - mindeg)/max(4,nodeInd + 1);",
+            "name": "Theorem",
+            "idnum": 178,
+            "disp": ""
+        },
+        {
+            "text": "if domination >= 2 then { edges <= (1/2)*(nodes-nodeInd)*(nodes+nodeInd-2*domination + 2) };",
+            "name": "Theorem",
+            "idnum": 179,
+            "disp": ""
+        },
+        {
+            "text": "if regular and maxdeg >= nodes / 2 and maxdeg <= nodes - 2 and ((odd nodes and even maxdeg) or (odd maxdeg and even nodes)) then { chromaticNum <= min(maxdeg, 3*nodes/5) } else if regular and maxdeg >= nodes/2 and maxdeg <= nodes - 2 then { chromaticNum <= min(maxdeg, (2*(nodes-maxdeg)-3)*nodes/(3*(nodes-maxdeg)-4)) };",
+            "name": "Theorem",
+            "idnum": 180,
+            "disp": ""
+        }    ]
+}

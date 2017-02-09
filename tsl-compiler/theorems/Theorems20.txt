@@ -1,0 +1,123 @@
+{"theorems": [
+         { 
+            "name": "Theorem",
+            "disp": "",
+            "idnum": 1,
+            "text": "edges <= (1/2)*(nodes-1)*(nodes-2)+nodeConnec;" 
+        },
+        { 
+            "name": "Theorem",
+            "disp": "",
+            "idnum": 2,
+            "text": "chromaticNum <= (1/2)*(nodeCover+maxClique+1);" 
+        }, 
+        { 
+            "name": "Theorem",
+            "disp": "",
+            "idnum": 3,
+            "text": "spectralRadius >= 2*edges/nodes;" 
+        },
+        { 
+            "name": "Theorem",
+            "disp": "",
+            "idnum": 4,
+            "text": "spectralRadius <= (2*edges*nodeCover/(nodeCover+1))**(1/2);" 
+        }, 
+        { 
+            "name": "Theorem",
+            "disp": "",
+            "idnum": 5,
+            "text": "maxClique >= nodes**2/(nodes**2-2*edges);" 
+        }, 
+        { 
+            "name": "Theorem",
+            "disp": "",
+            "idnum": 6,
+            "text": "spectralRadius <= maxdeg;" 
+        }, 
+        { 
+            "name": "Theorem",
+            "disp": "",
+            "idnum": 7,
+            "text": "if defined diameter and mindeg > 3*nodeConnec - 1 then { nodes >= 1 + mindeg + diameter*nodeConnec + (diameter/3)*(mindeg - 3*nodeConnec + 1) } else if defined diameter then { nodes >= nodeConnec * (diameter-3) + 2*mindeg + 2 };" 
+        }, 
+        { 
+            "name": "Theorem",
+            "disp": "",
+            "idnum": 8,
+            "text": "nodes >= maxdeg + 1 + (mindeg + 1)*(numOfComponents - 1);" 
+        }, 
+        { 
+            "name": "Theorem",
+            "disp": "",
+            "idnum": 9,
+            "text": "edgeCliqueCover <= nodes**2/4;" 
+        }, 
+        { 
+            "name": "Theorem",
+            "disp": "",
+            "idnum": 10,
+            "text": "diameter <= 2*radius;" 
+        }, 
+        { 
+            "name": "Theorem",
+            "disp": "",
+            "idnum": 11,
+            "text": "edgeInd <= nodes / 2;" 
+        }, 
+        { 
+            "name": "Theorem",
+            "disp": "",
+            "idnum": 12,
+            "text": "edgeInd >= nodes/(maxdeg + 1);" 
+        }, 
+        {
+            "text": "if g == 2*d + 1 then { regular };",
+            "name": "Theorem",
+            "idnum": 13,
+            "disp": ""
+        },
+        {
+            "text": "chromaticNum >= nodes / (nodes - spectralRadius);",
+            "name": "Theorem",
+            "idnum": 14,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg >= 3 then { edges >= 2**(girth/2) + nodes - numOfComponents };",
+            "name": "Theorem",
+            "idnum": 15,
+            "disp": ""
+        },
+        {
+            "text": "if nodeConnec == 0 then { edgeConnec == 0 }; if edgeConnec == 0 then { nodeConnec == 0};",
+            "name": "Theorem",
+            "idnum": 16,
+            "disp": ""
+        },
+        {
+            "text": "edges <= (1/2)*(edgeCliqueCover*maxClique*(maxClique-1));",
+            "name": "Theorem",
+            "idnum": 17,
+            "disp": ""
+        },
+        {
+            "text": "chromaticNum <= (1/2)*(7+(1+48*genus)**(1/2));",
+            "name": "Theorem",
+            "idnum": 18,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 then { maxdeg <= nodeInd, edges <= nodeCover * nodeInd };",
+            "name": "Theorem",
+            "idnum": 19,
+            "disp": ""
+        },
+        {
+            "text": "if chromaticNum == 2 then { edgeInd == nodeCover, nodeInd == nodeCliqueCover, edgeChromatic == maxdeg, even girth, even circumference }; if chromaticNum == 2 and nodes > 2 then { not complete };",
+            "name": "Theorem",
+            "idnum": 20,
+            "disp": ""
+        }   
+]
+}

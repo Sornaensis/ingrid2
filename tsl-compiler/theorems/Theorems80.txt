@@ -1,0 +1,124 @@
+
+{
+    "theorems":[
+{
+            "text": "if genus <= 1 then { edgeCliqueCover <= nodeCover*nodeInd };",
+            "name": "Theorem",
+            "idnum": 61,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg >= nodes/2 then { nodeConnec >= nodeInd };",
+            "name": "Theorem",
+            "idnum": 62,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 63,
+            "disp": ""
+        },
+        {
+            "text": "if nodes >= 3 and nodeConnec >= nodeInd then { hamiltonian };",
+            "name": "Theorem",
+            "idnum": 64,
+            "disp": ""
+        },
+        {
+            "text": "if edges >= (nodes**2 - 3*nodes + 6) then { hamiltonian };",
+            "name": "Theorem",
+            "idnum": 65,
+            "disp": ""
+        },
+        {
+            "text": "if planar and nodeConnec >= 4 then { hamiltonian };",
+            "name": "Theorem",
+            "idnum": 66,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 67,
+            "disp": ""
+        },
+        {
+            "text": "if complete then { regular }; if complete and even nodes then { edgeChromatic == nodes - 1 } else { edgeChromatic == nodes };",
+            "name": "Theorem",
+            "idnum": 68,
+            "disp": ""
+        },
+        {
+            "text": "chromaticNum >= 2*edges/(2*edges - spectralRadius**2);",
+            "name": "Theorem",
+            "idnum": 69,
+            "disp": ""
+        },
+        {
+            "text": "if genus <= 1 and girth == 3 then { chromaticNum <= 7 } else if genus <= 1 and girth >= 4 then { chromaticNum <= 4 };",
+            "name": "Theorem",
+            "idnum": 70,
+            "disp": ""
+        },
+        {
+            "text": "if defined girth then { circumference <= nodes - (numOfComponents - 1)*(mindeg + 1), circumference <= edges - (numOfComponents - 1)*mindeg, maxdeg >= 2 };",
+            "name": "Theorem",
+            "idnum": 71,
+            "disp": ""
+        },
+        {
+            "text": "if hamiltonian or circumference == nodes then { hamiltonian, circumference == nodes };",
+            "name": "Theorem",
+            "idnum": 72,
+            "disp": ""
+        },
+        {
+            "text": "if hamiltonian then { arboricity >= 2, nodeConnec >= 2, nodeInd <= nodes/2, edgeCover <= (nodes + 1)/2, nodeCliqueCover <= (nodes + 1)/2, nodeCover >= nodes/2, edgeInd >= (nodes - 1)/2 };",
+            "name": "Theorem",
+            "idnum": 73,
+            "disp": ""
+        },
+        {
+            "text": "bandwidth <= nodes - nodeInd/2 - 1;",
+            "name": "Theorem",
+            "idnum": 74,
+            "disp": ""
+        },
+        {
+            "text": "edges >= (nodes/nodeInd)*(nodes-nodeInd(nodes/nodeIn+1)/2);",
+            "name": "Theorem",
+            "idnum": 75,
+            "disp": ""
+        },
+        {
+            "text": "edgeCliqueCover <= nodeCliqueCover + nodes*(nodeCliqueCover - 1)/2;",
+            "name": "Theorem",
+            "idnum": 76,
+            "disp": ""
+        },
+        {
+            "text": "if nodes >= 6*mindeg and edges > (1/2)*(nodes-mindeg)*(nodes - mindeg - 1) + mindeg**2 then { hamiltonian };",
+            "name": "Theorem",
+            "idnum": 77,
+            "disp": ""
+        },
+        {
+            "text": "if nodes >= 4 and edges >= 2*nodes - 3 then { girth <= (circumference + 2)/2 };",
+            "name": "Theorem",
+            "idnum": 78,
+            "disp": ""
+        },
+        {
+            "text": "if not forest then { nodeInd >= girth/2, radius >= girth/2, edgeInd >= circumference/2 };",
+            "name": "Theorem",
+            "idnum": 79,
+            "disp": ""
+        },
+        {
+            "text": "if (defined girth and girth >= 4) or (undefined girth and nodes > 2) then { not complete };",
+            "name": "Theorem",
+            "idnum": 80,
+            "disp": ""
+        }    ]
+}
