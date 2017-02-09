@@ -64,10 +64,11 @@ Invarexpror : Invarexprand            { $1 }
 Invarexprand : Invarexpr1        { $1 }
              | '(' Invarexpr ')' { $2 }
 
-Invarexpr1 : not Invar      { InvarExprNot $2 }
-           | even Invar     { InvarExprEven $2}
-           | odd Invar      { InvarExprOdd $2 }
-           | Invar Invarel  { InvarExpr $1 $2 }
+Invarexpr1 : not Invar       { InvarExprNot $2 }
+           | even Invar      { InvarExprEven $2}
+           | odd Invar       { InvarExprOdd $2 }
+           | undefined Invar { InvarExprUndefined $2 }
+           | Invar Invarel   { InvarExpr $1 $2 }
 
 Invarel : Relation Expr { Just $ InvarRelExpr $1 (Expr $2) }
         |               { Nothing }
@@ -93,7 +94,7 @@ Cond : Condand    { $1 }
 Condand : Cond1   { $1 }
         | Condand and Cond1 { CondAnd $1 $3 }
 
-Cond1 : Invar CondRel     { Cond $1 $2 }
+Cond1 : Invar CondRel    { Cond $1 $2 }
       | not Invar        { CondSpec "not" $2 }
       | even Invar       { CondSpec "even" $2 }
       | odd Invar        { CondSpec "odd" $2 }
@@ -174,6 +175,7 @@ data InvarExpr = InvarOr InvarExpr InvarExpr
                | InvarExprNot Value 
                | InvarExprEven Value 
                | InvarExprOdd Value 
+               | InvarExprUndefined Value
     deriving (Show)
 
 data InvarRelExpr = InvarRelExpr Relation Expr
