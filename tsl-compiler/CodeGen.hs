@@ -2,12 +2,14 @@
 module CodeGen ((<$>), generatePythonClass, generateIneq, TSLInput(..), TSLInputTheorem(..), TSLTheorem(..)) where
 
 import qualified Data.Text as T
+import qualified Control.Exception as E
 
 import qualified CPython as Py
 import qualified CPython.Protocols.Object as Py
 import qualified CPython.Types as Py
 import qualified CPython.Types.Unicode as Py
 import qualified CPython.Types.Module as Py
+import qualified CPython.Types.Exception as Py
 
 import qualified Data.Set as S
 import Data.Set (Set)
@@ -21,7 +23,7 @@ import Control.Monad.Fix (fix)
 
 import System.Process (createProcess, CreateProcess(..), StdStream(CreatePipe), proc, waitForProcess)
 import System.Exit
-import System.IO (hPutStrLn, hGetLine, hFlush)
+import System.IO (stdout, hPutStrLn, hGetLine, hFlush)
 import Data.Aeson (FromJSON(..), ToJSON(..))
 import GHC.Generics
 
@@ -305,6 +307,10 @@ junction a b condis =
 generateCond :: Cond -> [String]
 generateCond (CondOr a b)  = junction a b "or"
 generateCond (CondAnd a b) = junction a b "and" 
+generateCond (CondSpecF "istrue" exp) =
+    let setconds = foldr1 CondAnd . map (CondSpec "isset" . Invar) $ involves
+        involves = getExprInvolves exp
+    in generateCond setconds 
 generateCond (CondSpec "undefined" (Invar v)) =
     [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind = \'Max\')",
      "(" ++ v ++ "_Max == \'undt\')"]
@@ -478,16 +484,17 @@ genIExprIneq e@(InvarExpr _ (Just (InvarRelExpr _ _))) =
                invars
                 >>= \inv -> return $ 
                    do Py.initialize
-                      equation <- Py.toUnicode . T.pack $ inequality
-                      variables <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) invars
-                      target  <- Py.toUnicode . T.pack $ inv
-                      ms <- Py.importModule "mystic.symbolic"
-                      solver <- Py.getAttribute ms =<< Py.toUnicode "simplify"
-                      pyout <- Py.callArgs solver [Py.toObject equation, Py.toObject variables, Py.toObject target]
-                      rewrite <- Py.cast pyout :: IO (Maybe Py.Unicode)
-                      case rewrite of 
-                       (Just eqn) -> (++";") . T.unpack <$> Py.fromUnicode eqn
-                       _          -> return inequality
+                      E.handle (\exc -> Py.print (Py.exceptionValue exc) stdout >> return (inequality++":")) $
+                       do  equation <- Py.toUnicode . T.pack $ inequality
+                           variables <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) invars
+                           target  <- Py.toUnicode . T.pack $ inv
+                           ms <- Py.importModule "mystic.symbolic"
+                           solver <- Py.getAttribute ms =<< Py.toUnicode "simplify"
+                           pyout <- Py.callArgs solver [Py.toObject equation, Py.toObject variables, Py.toObject target]
+                           rewrite <- Py.cast pyout :: IO (Maybe Py.Unicode)
+                           case rewrite of 
+                            (Just eqn) -> (++";") . T.unpack <$> Py.fromUnicode eqn
+                            _          -> return inequality
 
 genIExprIneq e = return [IExpr e]
                
