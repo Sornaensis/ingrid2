@@ -1,8 +1,7 @@
 #!/usr/bin/env python2
 
 import mystic.symbolic as ms
-import sys
-import json
+import sys,json
 
 ## STDINa>
 # <python style list of symbols>
