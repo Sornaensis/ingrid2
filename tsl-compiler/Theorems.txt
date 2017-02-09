@@ -40,7 +40,7 @@
             "name": "Theorem",
             "disp": "",
             "idnum": 7,
-            "text": "if mindeg > 3*nodeConnec - 1 then { nodes >= 1 + mindeg + diameter*nodeConnec + (diameter/3)*(mindeg - 3*nodeConnec + 1) } else { nodes >= nodeConnec * (diameter-3) + 2*mindeg + 2 };" 
+            "text": "if defined diameter then { if mindeg > 3*nodeConnec - 1 then { nodes >= 1 + mindeg + diameter*nodeConnec + (diameter/3)*(mindeg - 3*nodeConnec + 1) } else { nodes >= nodeConnec * (diameter-3) + 2*mindeg + 2 } };" 
         }, 
         { 
             "name": "Theorem",
@@ -73,19 +73,19 @@
             "text": "edgeInd >= nodes/(maxdeg + 1);" 
         }, 
         {
-            "text": "if g == 2*d + 1 then { regular };",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 13,
             "disp": ""
         },
         {
-            "text": "theta1 <= p**2/4;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 14,
-            "disp": "chromaticNum >= nodes / (nodes - spectralRadius);"
+            "disp": ""
         },
         {
-            "text": "if mindeg >= 3 then { edges >= 2**(girth/2) + nodes - numOfComponents };",
+            "text": "if mindeg >= 3 then { girth <= 2*log(edges-nodes+numOfComponents, 2) };",
             "name": "Theorem",
             "idnum": 15,
             "disp": ""
@@ -115,7 +115,7 @@
             "disp": ""
         },
         {
-            "text": "if chromaticNum == 2 then { edgeInd == nodeCover, nodeInd == nodeCliqueCover, edgeChromatic == maxDeg, even girth, even circumference }; if chromaticNum == 2 and nodes > 2 then { not complete };",
+            "text": "if chromaticNum == 2 then { edgeInd == nodeCover, nodeInd == nodeCliqueCover, edgeChromatic == maxDeg, even girth, even circumference, if nodes > 2 then { not complete } };",
             "name": "Theorem",
             "idnum": 20,
             "disp": ""
@@ -139,7 +139,7 @@
             "disp": ""
         },
         {
-            "text": "if mindeg >= 3 and odd girth then { nodes >= (mindeg*(mindeg - 1)**((girth - 1)/2) - 2)/(mindeg - 2) } else { nodes >= (2*(mindeg - 1)**(girth/3) - 2)/(mindeg - 2) } ;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 24,
             "disp": ""
