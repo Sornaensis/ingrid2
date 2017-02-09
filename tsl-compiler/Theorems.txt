@@ -1,6 +1,5 @@
 { "theorems" :
- [ 
-        { 
+ [         { 
             "name": "Theorem",
             "disp": "",
             "idnum": 1,
@@ -22,7 +21,7 @@
             "name": "Theorem",
             "disp": "",
             "idnum": 4,
-            "text": "edges >= spectralRadius**2*(nodeCover+1)/(2*nodeCover);" 
+            "text": "spectralRadius <= (2*edges*nodeCover/(nodeCover+1))**(1/2);" 
         }, 
         { 
             "name": "Theorem",
@@ -40,7 +39,7 @@
             "name": "Theorem",
             "disp": "",
             "idnum": 7,
-            "text": "if defined diameter then { if mindeg > 3*nodeConnec - 1 then { nodes >= 1 + mindeg + diameter*nodeConnec + (diameter/3)*(mindeg - 3*nodeConnec + 1) } else { nodes >= nodeConnec * (diameter-3) + 2*mindeg + 2 } };" 
+            "text": "if undefined diameter and mindeg > 3*nodeConnec - 1 then { nodes >= 1 + mindeg + diameter*nodeConnec + (diameter/3)*(mindeg - 3*nodeConnec + 1) } else if undefined diameter then { nodes >= nodeConnec * (diameter-3) + 2*mindeg + 2 };" 
         }, 
         { 
             "name": "Theorem",
@@ -73,19 +72,19 @@
             "text": "edgeInd >= nodes/(maxdeg + 1);" 
         }, 
         {
-            "text": "null;",
+            "text": "if g == 2*d + 1 then { regular };",
             "name": "Theorem",
             "idnum": 13,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "chromaticNum >= nodes / (nodes - spectralRadius);",
             "name": "Theorem",
             "idnum": 14,
             "disp": ""
         },
         {
-            "text": "if mindeg >= 3 then { girth <= 2*log(edges-nodes+numOfComponents, 2) };",
+            "text": "if mindeg >= 3 then { edges >= 2**(girth/2) + nodes - numOfComponents };",
             "name": "Theorem",
             "idnum": 15,
             "disp": ""
@@ -115,7 +114,7 @@
             "disp": ""
         },
         {
-            "text": "if chromaticNum == 2 then { edgeInd == nodeCover, nodeInd == nodeCliqueCover, edgeChromatic == maxDeg, even girth, even circumference, if nodes > 2 then { not complete } };",
+            "text": "if chromaticNum == 2 then { edgeInd == nodeCover, nodeInd == nodeCliqueCover, edgeChromatic == maxdeg, even girth, even circumference }; if chromaticNum == 2 and nodes > 2 then { not complete };",
             "name": "Theorem",
             "idnum": 20,
             "disp": ""
@@ -163,7 +162,7 @@
             "disp": ""
         },
         {
-            "text": "if diameter <= 3 then { maxdeg <= nodes - diamaeter + 1 } else { maxdeg <= nodes - nodeConnec*(diameter - 4)-3 };",
+            "text": "if diameter <= 3 then { maxdeg <= nodes - diameter + 1 } else { maxdeg <= nodes - nodeConnec*(diameter - 4)-3 };",
             "name": "Theorem",
             "idnum": 28,
             "disp": ""
@@ -217,7 +216,7 @@
             "disp": ""
         },
         {
-            "text": "edges <= numOfComponents - 1 + (1/2)*(nodes+2-2*numOfComponents)*(nodes+1-2*numOfComponents);",
+            "text": "edges <= numOfComponents - 1 + (nodes+2-2*numOfComponents)*(nodes+1-2*numOfComponents)/2;",
             "name": "Theorem",
             "idnum": 37,
             "disp": ""
@@ -229,34 +228,76 @@
             "disp": ""
         },
         {
-            "text": "if girth >= 4 then { maxClique <= 2 }; if maxClique <= 2 then { girth >= 4 };",
+            "text": "if girth >= 4 or maxClique <= 2 then { maxClique <= 2, girth >= 4 };",
             "name": "Theorem",
             "idnum": 39,
             "disp": ""
         },
         {
-            "text": "if complete then { mindeg == nodes - 1, nodeInd == 1, nodeCliqueCover == 1, edgeCliqueCover == 1, diameter == 1}; if mindeg == nodes - 1 then { complete, nodeInd == 1, nodeCliqueCover == 1, edgeCliqueCover == 1, diameter == 1}; if nodeInd == 1 then { complete, mindeg == nodes - 1, nodeCliqueCover == 1, edgeCliqueCover == 1, diameter == 1}; if nodeCliqueCover == 1 then { complete, mindeg == nodes - 1, nodeInd == 1, edgeCliqueCover == 1, diameter == 1 }; if edgeCliqueCover == 1 then { complete, mindeg == nodes - 1, nodeInd == 1, nodeCliqueCover == 1, diameter == 1 }; if diameter == 1 then { complete, mindeg == nodes - 1, nodeInd == 1, nodeCliqueCover == 1, edgeCliqueCover == 1 };",
+            "text": "if complete or mindeg == nodes - 1 or nodeInd == 1 or nodeCliqueCover == 1 or edgeCliqueCover == 1 or diameter == 1 then { complete, mindeg == nodes - 1, nodeInd == 1, nodeCliqueCover == 1, edgeCliqueCover == 1, diameter == 1};",
             "name": "Theorem",
             "idnum": 40,
             "disp": ""
         },
         {
-            "text": "if chromaticNum <= 2 then { bipartite }; if bipartite then { chromaticNum <= 2 };",
+            "text": "if chromaticNum <= 2 or bipartite then { bipartite, chromaticNum <= 2 };",
             "name": "Theorem",
             "idnum": 41,
             "disp": ""
         },
         {
-            "text": "if radius == 1 then { maxdeg == nodes - 1 }; if maxdeg == nodes - 1 then { radius == 1};",
+            "text": "if radius == 1 or maxdeg ==  nodes-1 then { maxdeg == nodes - 1, radius == 1};",
             "name": "Theorem",
             "idnum": 42,
             "disp": ""
         },
         {
-            "text": "if forest and connected then { tree }; if tree then { forest and connected };",
+            "text": "if (forest and connected) or tree then { tree, forest and connected };",
             "name": "Theorem",
             "idnum": 43,
             "disp": ""
+        },
+        {
+            "text": "if nodeConnec >= 1 or numOfComponents == 1 or radius <= nodes/2 or diameter <= nodes-1 then { nodeConnec >= 1, numOfComponents == 1, radius <= nodes/2, diameter <= nodes-1 };",
+            "name": "Theorem",
+            "idnum": 44,
+            "disp": ""
+        },
+        {
+            "text": "if cycle or (maxdeg == 2 and mindeg == 2 and connected) then { cycle, maxdeg == 2, mindeg == 2, connected };",
+            "name": "Theorem",
+            "idnum": 45,
+            "disp": ""
+        },
+        {
+            "text": "if regular or mindeg == maxdeg then { regular, mindeg == maxdeg };",
+            "name": "Theorem",
+            "idnum": 46,
+            "disp": ""
+        },
+        {
+            "text": "if genus == 0 or planar or thickness == 1 then { genus == 0, planar, thickness == 1 };",
+            "name": "Theorem",
+            "idnum": 47,
+            "disp": ""
+        },
+        {
+            "text": "if forest then { planar, chromaticNum == 2, mindeg == 2 };",
+            "name": "Theorem",
+            "idnum": 48,
+            "disp": ""
+        },
+        {
+            "text": "if cycle then { planar, not forest, crossing == 0, nodes >= 2, edges >= 3, arboricity == 2, nodeCover == (nodes + 1)/2, edgeCover == (nodes + 1)/2, nodeInd == nodes/2, edgeInd == nodes/2, radius == edgeInd, girth == circumference, circumference == nodes, edgeChromatic == chromaticNum, nodes >= 2*nodeCover-1, nodes <= 2*nodeCover, nodes >= 2*edgeInd, nodes <= 2*edgeInd + 1, nodeConnec == 2, regular, bandwidth == 2 }; if cycle and nodes > 3 then { maxClique == 2 } else { maxClique == 3 }; if cycle and even nodes then { chromaticNum == 2 } else { chromaticNum == 3 }; if cycle and chromaticNum == 2 then { even nodes } else { odd nodes }; if cycle and maxClique == 2 then { nodes >= 4 } else { nodes == 3 }; if cycle and nodes == 3 then { nodeCliqueCover == 1 } else { nodeCliqueCover == nodeCover };",
+            "name": "Theorem",
+            "idnum": 49,
+            "disp": ""
+        },
+        {
+            "text": "if forest or edges == nodes - numOfComponents or arboricity == 1 or undefined girth or undefined circumference then { forest, edges == nodes - numOfComponents, arboricity == 1, undefined girth, undefined circumference };",
+            "name": "Theorem",
+            "idnum": 50,
+            "disp": ""
         }
- ]
+        ]
 }
