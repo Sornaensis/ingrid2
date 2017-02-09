@@ -28,6 +28,8 @@ import Data.Char
       defined        { TokenDefined }
       undefined      { TokenUndefined }
       isset          { TokenIsset }
+      istrue         { TokenIstrue }
+      isfalse        { TokenIsfalse }
       global         { TokenGlobalName $$ }
       local          { TokenLocalName $$ }
       '=='           { TokenEq }
@@ -95,6 +97,8 @@ Condand : Cond1   { $1 }
         | Condand and Cond1 { CondAnd $1 $3 }
 
 Cond1 : Invar CondRel    { Cond $1 $2 }
+      | istrue Expr      { CondSpecF "istrue" $2 }
+      | isfalse Expr     { CondSpecF "isfalse" $2 }
       | not Invar        { CondSpec "not" $2 }
       | even Invar       { CondSpec "even" $2 }
       | odd Invar        { CondSpec "odd" $2 }
@@ -160,6 +164,7 @@ data IfStmt = If Cond InvarExprList (Maybe IfStmt)
 data Cond = CondOr Cond Cond
           | CondAnd Cond Cond
           | CondSpec String Value
+          | CondSpecF String Expr
           | Cond Value (Maybe CondRel)
     deriving (Show)
 
@@ -235,6 +240,8 @@ data Token
       | TokenDefined
       | TokenUndefined
       | TokenIsset
+      | TokenIstrue
+      | TokenIsfalse
       | TokenNum Double
       | TokenGlobalName String
       | TokenLocalName String
@@ -298,6 +305,8 @@ lexVar cs =
    case span (\c -> isAlpha c || isDigit c || c == '_') cs of
       ("undefined",rest) -> TokenUndefined : lexer rest
       ("defined",rest)   -> TokenDefined : lexer rest
+      ("isfalse",rest)   -> TokenIsfalse : lexer rest
+      ("istrue",rest)    -> TokenIstrue : lexer rest
       ("isset",rest)     -> TokenIsset : lexer rest
       ("then",rest)      -> TokenThen : lexer rest
       ("null",rest)      -> TokenNull : lexer rest
