@@ -1,5 +1,124 @@
 
 {
     "theorems":[
-    ]
+{
+            "text": "if nodeConnec >= 2 and nodes <= 3*mindeg and edges <= ((nodes-1)*mindeg - 1)/2 then {Hamiltonian};",
+            "name": "Theorem",
+            "idnum": 281,
+            "disp": ""
+        },
+        {
+            "text": "if even nodes  and not bipartite then {not cycle};",
+            "name": "Theorem",
+            "idnum": 282,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == maxdeg and maxdeg == nodeConnec and nodeConnec == 3 then {circumference >= nodes^(2/3) + 1};",
+            "name": "Theorem",
+            "idnum": 283,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 284,
+            "disp": ""
+        },
+        {
+            "text": "edgeCliqueCover <= nodeCliqueCover + nodes*(maxdeg + 1 - nodes/nodeCliqueCover)/2;",
+            "name": "Theorem",
+            "idnum": 285,
+            "disp": ""
+        },
+        {
+            "text": "edges >= (maxdeg + (chromaticNum - 1)**2 + (nodes -chromaticNum)*mindeg)/2;",
+            "name": "Theorem",
+            "idnum": 286,
+            "disp": ""
+        },
+        {
+            "text": "if planar then {mindeg <= nodeInd + 2};",
+            "name": "Theorem",
+            "idnum": 287,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 288,
+            "disp": ""
+        },
+        {
+            "text": "if connected and not hamiltonian and not tree and circumference >= (nodes - 2)/2 then {domination <= (2*nodes - circumference)/3};",
+            "name": "Theorem",
+            "idnum": 289,
+            "disp": ""
+        },
+        {
+            "text": "if connected and domination >= 3 then { edges <= (nodes - domination + 1)*(nodes - domination)/2 };",
+            "name": "Theorem",
+            "idnum": 290,
+            "disp": ""
+        },
+        {
+            "text": "domination <= nodes*(1 + ln(mindeg))/(mindeg+1);",
+            "name": "Theorem",
+            "idnum": 291,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 292,
+            "disp": ""
+        },
+        {
+            "text": "if connected and maxdeg == 2 and mindeg == 1 then {nodes == diameter + 1} else if connected and maxdeg == 2 and mindeg == 2 then {nodes  >= 2*diameter and nodes <= 2*diameter + 1};",
+            "name": "Theorem",
+            "idnum": 293,
+            "disp": "HELP - ensure this is correct"
+        },
+        {
+            "text": "edgeCliqueCover <= (nodes - maxClique + 2)**2/4;",
+            "name": "Theorem",
+            "idnum": 294,
+            "disp": ""
+        },
+        {
+            "text": "edges <= max(edgeInd*(2*edgeInd + 1), edgeInd*nodes - edgeInd*(edgeInd + 1)/2);",
+            "name": "Theorem",
+            "idnum": 295,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == maxdeg and maxdeg == 3 then {nodeConnec == edgeConnec};",
+            "name": "Theorem",
+            "idnum": 296,
+            "disp": ""
+        },
+        {
+            "text": "if nodeConnec >= 3 and planar and not hamiltonian then {nodes >= 11};",
+            "name": "Theorem",
+            "idnum": 297,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == maxdeg and maxdeg == 3 and not planar and not bipartite then {nodes >= 8};",
+            "name": "Theorem",
+            "idnum": 298,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == maxdeg and maxdeg == 3 and nodeConnec == 1 then {nodes >= 10};",
+            "name": "Theorem",
+            "idnum": 299,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == maxdeg and maxdeg == 3 and nodeConnec == 1 and not planar then {nodes >= 12};",
+            "name": "Theorem",
+            "idnum": 300,
+            "disp": ""
+        }    ]
 }

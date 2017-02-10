@@ -2,7 +2,7 @@
 {
     "theorems":[
 {
-            "text": "if maxClique == 2 then chromaticNum <= 3*(nodes+12)/16;",
+            "text": "if maxClique == 2 then { chromaticNum <= 3*(nodes+12)/16 };",
             "name": "Theorem",
             "idnum": 241,
             "disp": ""
@@ -68,7 +68,7 @@
             "disp": ""
         },
         {
-            "text": "if nodeConnec >= 2 and girth >= 4 and congruent(girth, 1, 4) then {edgeInd >= maxdeg*(girth-1)/4} else if nodeConnec >= 2 and girth >= 4 and (congruent(girth, 2, 4) or (maxdeg == 2 and congruent(girth, 3, 4))) then {edgeInd >= maxdeg*(girth-1)/4 + 1} else if nodeConnec>=2 and girth>=4 and (congruent(g, 0, 4) or (maxdeg>=3 and congruent(g,3,4))) then {edgeInd >= maxdeg*(girth-1)/4 + 2};",
+            "text": "if nodeConnec >= 2 and girth >= 4 and istrue congruent(girth, 1, 4) then {edgeInd >= maxdeg*(girth-1)/4} else if nodeConnec >= 2 and girth >= 4 and (istrue congruent(girth, 2, 4) or (maxdeg == 2 and istrue congruent(girth, 3, 4))) then {edgeInd >= maxdeg*(girth-1)/4 + 1} else if nodeConnec>=2 and girth>=4 and (istrue congruent(g, 0, 4) or (maxdeg>=3 and istrue congruent(g,3,4))) then {edgeInd >= maxdeg*(girth-1)/4 + 2};",
             "name": "Theorem",
             "idnum": 252,
             "disp": ""
@@ -80,7 +80,7 @@
             "disp": ""
         },
         {
-            "text": "if nodeInd == 2 and (mindeg == 1 or nodes <= 4) then {nodeCliqueCover <= 2} else if nodeInd == 2 and (5 <= nodes and nodes <= 10) then {nodeInd <= 3} else if nodeInd == 2 then {nodeCliqueCover <= (mindeg + 11)/4};",
+            "text": "if nodeInd == 2 and (mindeg == 1 or nodes <= 4) then {nodeCliqueCover <= 2} else if nodeInd == 2 and (nodes >= 5 and nodes <= 10) then {nodeInd <= 3} else if nodeInd == 2 then {nodeCliqueCover <= (mindeg + 11)/4};",
             "name": "Theorem",
             "idnum": 254,
             "disp": ""
@@ -104,7 +104,7 @@
             "disp": ""
         },
         {
-            "text": "if ((nodeConnec > 0 and nodes > 2) or mindeg > 1) and not (thickness == 3 and (nodes == 9 or nodes == 10) ) then {genus >= thickness + (edges - 4*nodes - 1)/6};",
+            "text": "if ((nodeConnec > 0 and nodes > 2) or mindeg > 1) and ((thickness > 3 or thickness < 3) and (nodes < 9 or nodes > 10)) then {genus >= thickness + (edges - 4*nodes - 1)/6};",
             "name": "Theorem",
             "idnum": 258,
             "disp": ""
@@ -116,7 +116,7 @@
             "disp": ""
         },
         {
-            "text": "genus <= 1/2 * (edges - nodes + numOfComponents) - (edges - nodes + numOfComponents)/(4*log(edges - nodes + numOfComponents)/log(2));",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 260,
             "disp": ""

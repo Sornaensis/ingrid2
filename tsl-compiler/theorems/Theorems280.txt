@@ -8,7 +8,7 @@
             "disp": ""
         },
         {
-            "text": "if (genus ==  and girth >= 4) or (genus <= 1 and girth >= 6) or (genus <= 2 and girth >= 7) or (girth >= 9) then {chromaticNum <= 3};",
+            "text": "if (genus == 0  and girth >= 4) or (genus <= 1 and girth >= 6) or (genus <= 2 and girth >= 7) or (girth >= 9) then {chromaticNum <= 3};",
             "name": "Theorem",
             "idnum": 262,
             "disp": ""

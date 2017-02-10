@@ -1,5 +1,124 @@
 
 {
     "theorems":[
-    ]
+{
+            "text": "if nodeInd == 2 and maxClique >= 2*nodes/5 then {maxClique >= (2*nodes + sqrt(nodes*(3*nodes-5)/2 - 5*edges))/5};",
+            "name": "Theorem",
+            "idnum": 421,
+            "disp": ""
+        },
+        {
+            "text": "if not forest then {bandwidth >= (2*nodeCover*(girth - 2) - nodes*(girth-3))/(2*(nodes-nodeCover))};",
+            "name": "Theorem",
+            "idnum": 422,
+            "disp": ""
+        },
+        {
+            "text": "nodeCover <= nodes - maxdeg / (chromaticNum - 1);",
+            "name": "Theorem",
+            "idnum": 423,
+            "disp": ""
+        },
+        {
+            "text": "if connected and (not cycle or (cycle and isset nodes and even nodes)) and (edges >= nodes or maxdeg > 2 or (isset nodes and odd nodes)) then {nodeCover <= (nodes * (maxdeg**2 + maxdeg - 1))/(maxdeg*(maxdeg+1)) - nodes**2/(nodes+2*edges)};",
+            "name": "Theorem",
+            "idnum": 424,
+            "disp": ""
+        },
+        {
+            "text": "if planar then {mindeg <= nodes - nodeCover + 2};",
+            "name": "Theorem",
+            "idnum": 425,
+            "disp": ""
+        },
+        {
+            "text": "edges <= max((nodes-edgeCover)*(2*nodes - 2*edgeCover + 1), (nodes-edgeCover)*(nodes+edgeCover-1)/2);",
+            "name": "Theorem",
+            "idnum": 426,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 427,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == 3 and maxdeg == 3 then {edgeCover <= nodes/2 + (nodes+3)/18 + (numOfComponents + 4)/6};",
+            "name": "Theorem",
+            "idnum": 428,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 and maxdeg <= 4 then {edges >= 13*nodeCover - 7*nodes};",
+            "name": "Theorem",
+            "idnum": 429,
+            "disp": ""
+        },
+        {
+            "text": "if nodeConnec >= 2 and nodeCover <= nodes - 2 then {circumference >= (2*(2*nodes - nodeCover - 2)/(nodes - nodeCover))};",
+            "name": "Theorem",
+            "idnum": 430,
+            "disp": ""
+        },
+        {
+            "text": "if girth >= 6 then {nodeCover <= nodes*maxdeg**2 / (maxdeg**2 + 2*maxdeg -1)};",
+            "name": "Theorem",
+            "idnum": 431,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == maxdeg and mindeg == 2 and girth >= 8 then {nodeCover <= 33*nodes/53} else if mindeg==maxdeg and mindeg==2 and girth >= 6 then {nodeCover <= 33*nodes/52};",
+            "name": "Theorem",
+            "idnum": 432,
+            "disp": ""
+        },
+        {
+            "text": "if regular and nodes < 2*nodeCover then {edgeChromatic == maxdeg + 1};",
+            "name": "Theorem",
+            "idnum": 433,
+            "disp": ""
+        },
+        {
+            "text": "if regular then {edgeCover <= nodes*(maxdeg +2)/(2*(maxdeg+1))};",
+            "name": "Theorem",
+            "idnum": 434,
+            "disp": ""
+        },
+        {
+            "text": "if regular and nodes == 2*maxdeg + 1 then {nodeCover >= nodes - nodeConnec};",
+            "name": "Theorem",
+            "idnum": 435,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 436,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 437,
+            "disp": ""
+        },
+        {
+            "text": "nodeInd >= (2*nodes - edges + edgeInd)/4;",
+            "name": "Theorem",
+            "idnum": 438,
+            "disp": ""
+        },
+        {
+            "text": "nodeCover <= (nodes +edges + edgeCover)/4;",
+            "name": "Theorem",
+            "idnum": 439,
+            "disp": ""
+        },
+        {
+            "text": "nodeInd >= (3*nodes - edges - edgeCover)/4;",
+            "name": "Theorem",
+            "idnum": 440,
+            "disp": ""
+        }    ]
 }

@@ -1,5 +1,124 @@
 
 {
     "theorems":[
-    ]
+{
+            "text": "if mindeg == maxdeg and maxdeg == 3 and nodeConnec >= 2 and planar and not hamiltonian and bipartite then {nodes >= 26};",
+            "name": "Theorem",
+            "idnum": 301,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == maxdeg and maxdeg == 3 and nodeConnec >= 2 and planar and not hamiltonian then {nodes >= 14};",
+            "name": "Theorem",
+            "idnum": 302,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == maxdeg and maxdeg == 3 and nodeConnec >= 2 and bipartite and not hamiltonian then {nodes >= 20};",
+            "name": "Theorem",
+            "idnum": 303,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 304,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == maxdeg and maxdeg == 3 then {edgeInd >= nodes/2 - floor((nodes + 3)/18) - floor(numOfComponents + 4)/6};",
+            "name": "Theorem",
+            "idnum": 305,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 and maxdeg <= 4 then {edges >= 6*nodes - 13*nodeInd};",
+            "name": "Theorem",
+            "idnum": 306,
+            "disp": ""
+        },
+        {
+            "text": "if edgeConnec > 0 then { edgeConnec >= min(mindeg, (nodes * (maxdeg - 2))/((maxdeg - 1)**(diameter - 1) + maxdeg*(maxdeg - 2) - 1)) };",
+            "name": "Theorem",
+            "idnum": 307,
+            "disp": ""
+        },
+        {
+            "text": "if nodeConnec >= 2 and nodeInd >= 2 then {circumference >= 2*(nodes - 2)/nodeInd + 2};",
+            "name": "Theorem",
+            "idnum": 308,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == maxdeg and maxdeg == 3 and nodeConnec == 3 and planar then {circumference >= min(nodes, 17)};",
+            "name": "Theorem",
+            "idnum": 309,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == maxdeg and maxdeg == 3 and nodeConnec == 3 and planar and nodes <= 36 then { hamiltonian };",
+            "name": "Theorem",
+            "idnum": 310,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique < chromaticNum and chromaticNum == maxdeg and maxdeg >= 9 then {nodes >= 2*maxdeg} else if maxClique < chromaticNum and chromaticNum == maxdeg and maxdeg <= 8 then {nodes >= 2*maxdeg - 1};",
+            "name": "Theorem",
+            "idnum": 311,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg == maxdeg and maxdeg == 3 and edgeConnec >= 2 then {edgeInd == nodes/2};",
+            "name": "Theorem",
+            "idnum": 312,
+            "disp": ""
+        },
+        {
+            "text": "if planar and nodeConnec >= 3 then {circumference >= min(nodes, 2*mindeg)};",
+            "name": "Theorem",
+            "idnum": 313,
+            "disp": ""
+        },
+        {
+            "text": "if regular and nodeConnec >= 2 and nodes < 3*mindeg + 4 then {circumference >= min(nodes, 3*mindeg)};",
+            "name": "Theorem",
+            "idnum": 314,
+            "disp": ""
+        },
+        {
+            "text": "if regular and nodeConnec >= 2 then {circumference >= min(min(nodes, 3*mindeg), 2*mindeg + 4)};",
+            "name": "Theorem",
+            "idnum": 315,
+            "disp": ""
+        },
+        {
+            "text": "if regular and even nodes  and maxdeg >= 6*nodes/7 then {edgeChromatic == maxdeg};",
+            "name": "Theorem",
+            "idnum": 316,
+            "disp": ""
+        },
+        {
+            "text": "if maxdeg == nodes - 1 and even nodes  and edges <= 2*floor((nodes-1)/2)**2 then {edgeChromatic == maxdeg} else if maxdeg == nodes - 1 and odd nodes  and edges <= 2*floor((nodes-1)/2)**2 + mindeg then {edgeChromatic == maxdeg};",
+            "name": "Theorem",
+            "idnum": 317,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 318,
+            "disp": "HELP - WTF IS A CATALAN NUMBER"
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 319,
+            "disp": ""
+        },
+        {
+            "text": "if connected and regular and odd nodes  and nodes < 5*mindeg/2 then {girth == 3};",
+            "name": "Theorem",
+            "idnum": 320,
+            "disp": ""
+        }    ]
 }

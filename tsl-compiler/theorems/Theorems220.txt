@@ -8,7 +8,7 @@
             "disp": ""
         },
         {
-            "text": "if regular then nodeCover >= nodes/2 + (maxClique-1)*(maxClique-2)/(2*mindeg);",
+            "text": "if regular then { nodeCover >= nodes/2 + (maxClique-1)*(maxClique-2)/(2*mindeg) };",
             "name": "Theorem",
             "idnum": 202,
             "disp": ""
@@ -20,7 +20,7 @@
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 and (1/2)*nodes < nodeCover and nodeCover <= 3*nodes/5 then {nodeCover <= (2*nodes-sqrt(5*edges - nodes**2))/5};",
+            "text": "if maxClique == 2 and nodes < 2*nodeCover and nodeCover <= 3*nodes/5 then {nodeCover <= (2*nodes-sqrt(5*edges - nodes**2))/5};",
             "name": "Theorem",
             "idnum": 204,
             "disp": ""
@@ -44,7 +44,7 @@
             "disp": ""
         },
         {
-            "text": "if connected and not complete then {nodeCover <= (2*edges*nodes*nodes - 3*nodes - 1)/(2*edges*nodes + nodes *nodes)};000",
+            "text": "if connected and not complete then {nodeCover <= (2*edges*nodes*nodes - 3*nodes - 1)/(2*edges*nodes + nodes *nodes)};",
             "name": "Theorem",
             "idnum": 208,
             "disp": ""

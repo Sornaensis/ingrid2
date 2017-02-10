@@ -38,25 +38,25 @@
             "disp": ""
         },
         {
-            "text": "if hamiltonian and even nodes and maxdeg == 3 then {edgeChromatic = maxdeg};",
+            "text": "if hamiltonian and even nodes and maxdeg == 3 then {edgeChromatic == maxdeg};",
             "name": "Theorem",
             "idnum": 127,
             "disp": ""
         },
         {
-            "text": "if nodes >= 2*edgeInd+1 and maxdeg <= 2*edgeInd and nodes <= 2*edgeInd + (edgeInd/((maxdeg+1)/2)) and even maxdeg then {edges <= min(nodes*maxdeg/2, edgeInd*maxdeg + 2*(nodes-edgeInd)/(maxdeg+3) * (maxdeg-1)/2)};    if nodes >= 2*edgeInd+1 and maxdeg <= 2*edgeInd and nodes <= 2*edgeInd + (edgeInd/((maxdeg+1)/2)) and odd maxdeg then {edges<=nodes*maxdeg/2}; if nodes >= 2*edgeInd+1 and maxdeg <= 2*edgeInd and nodes > 2*edgeInd + (edgeInd/((maxdeg+1)/2)) then {edges <= edgeInd*maxdeg + edgeInd/((maxdeg+1)/2)*maxdeg/2}; if nodes >= 2*edgeInd + 1 and maxdeg >= 2*edgeInd +1 and nodes >= edgeInd + maxdeg then {edgeInd * maxdeg}; if nodes >= 2*edgeInd +1 and maxdeg >= 2*edgeInd +1 and nodes < edgeInd + maxdeg then {edge<= max (edgeInd * (2*edgeInd + 1), edgeInd(nodes + maxdeg - edgeInd)/2)};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 128,
             "disp": ""
         },
         {
-            "text": "if defined girth and girth > 3 then {mindeg <= (nodes - diam + 3(diam/3 + 1) -3)/ (diam/3+1)};",
+            "text": "if defined girth and girth > 3 then {mindeg <= (nodes - diam + 3*(diam/3 + 1) -3)/ (diam/3+1)};",
             "name": "Theorem",
             "idnum": 129,
             "disp": ""
         },
         {
-            "text": "diam == 2 and nodes >= maxdeg * maxdeg / 8 then {edges >= nodes *(nodes - 1)/(2 * maxdeg)} else if diam == 2 and nodes < maxdeg * maxdeg /8 then {edges >= maxdeg * nodes * (nodes - 1)/ (maxdeg * maxdeg + 8*nodes)};",
+            "text": "if diam == 2 and nodes >= maxdeg * maxdeg / 8 then {edges >= nodes *(nodes - 1)/(2 * maxdeg)} else if diam == 2 and nodes < maxdeg * maxdeg /8 then {edges >= maxdeg * nodes * (nodes - 1)/ (maxdeg * maxdeg + 8*nodes)};",
             "name": "Theorem",
             "idnum": 130,
             "disp": ""
@@ -68,13 +68,13 @@
             "disp": ""
         },
         {
-            "text": "if congruent(nodes, 3, 4) then {mindeg <= (nodes-1)**2 / (4*(nodes-1-maxdeg))} else {mindeg <= (nodes-3)*(nodes+1)/(4*(nodes-1-maxdeg))};",
+            "text": "if istrue congruent(nodes, 3, 4) then {mindeg <= (nodes-1)**2 / (4*(nodes-1-maxdeg))} else {mindeg <= (nodes-3)*(nodes+1)/(4*(nodes-1-maxdeg))};",
             "name": "Theorem",
             "idnum": 132,
             "disp": ""
         },
         {
-            "text": "nodeInd >= (nodes - (2*edges + (2*edges/nodes))/(1+2*edges/nodes)) + (1+2*edges/nodes + nodes - (nodes - 2*edges/(1 + 2*edges/nodes))*(1 + 2*edges/nodes))/(2 + 2*edges/nodes);",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 133,
             "disp": ""
@@ -116,7 +116,7 @@
             "disp": ""
         },
         {
-            "text": "if edges >= 4*nodes then {crossing >= edges*edges*edges/ (100*nodes*nodes) + 1};",
+            "text": "if edges >= 4*nodes then {crossing >= edges**3/(100*nodes**2) + 1};",
             "name": "Theorem",
             "idnum": 140,
             "disp": ""

@@ -1,5 +1,125 @@
 
 {
     "theorems":[
+{
+            "text": "if mindeg >= 2 and girth >= 7 then {domination >= maxdeg + 1};",
+            "name": "Theorem",
+            "idnum": 341,
+            "disp": ""
+        },
+        {
+            "text": "if girth >= 5 and girth <= nodes/2 then {edges <= (nodes**2 - nodes*girth + 2*girth)/girth};",
+            "name": "Theorem",
+            "idnum": 342,
+            "disp": ""
+        },
+        {
+            "text": "if girth >= 5 then {edges <= nodes*sqrt(nodes - 1)/2};",
+            "name": "Theorem",
+            "idnum": 343,
+            "disp": ""
+        },
+        {
+            "text": "if not forest and nodes >= floor((3*girth-3)/2) then { edges <= nodes*(nodes-1)/((3*girth-5)/2) - numOfComponents + 1 };",
+            "name": "Theorem",
+            "idnum": 344,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 345,
+            "disp": ""
+        },
+        {
+            "text": "if not forest and (nodeConnec > 0 or mindeg > 1) then { genus >= (edges*(1-2/girth-2/mindeg)+2*numOfComponents)/2 };",
+            "name": "Theorem",
+            "idnum": 346,
+            "disp": ""
+        },
+        {
+            "text": "if diameter == 2 then { nodes <= nodeConnec*maxdeg + 1 };",
+            "name": "Theorem",
+            "idnum": 347,
+            "disp": ""
+        },
+        {
+            "text": "if not forest and edges >= nodes + 1 - numOfComponents then { nodes >= 3*girth/2 + 2*numOfComponents - 3 };",
+            "name": "Theorem",
+            "idnum": 348,
+            "disp": ""
+        },
+        {
+            "text": "if not forest and edges >= nodes + 3 then { nodes >= 2*girth + 2*numOfComponents - 4 };",
+            "name": "Theorem",
+            "idnum": 349,
+            "disp": ""
+        },
+        {
+            "text": "if not forest and edges >= nodes + 4 - numOfComponents then { nodes >= 9*girth/4 + 2*numOfComponents - 5 };",
+            "name": "Theorem",
+            "idnum": 350,
+            "disp": ""
+        },
+        {
+            "text": "if girth >= max((nodes+1)/2, 5) and edges >= nodes + 3 then { if girth <= 7 then { girth <= 6 } else { girth <= 8 }, nodes == 2*girth - 1, nodeConnec == 2, edgeConnec == 2, mindeg == 2, edges == nodes + 3, nonplanar };",
+            "name": "Theorem",
+            "idnum": 351,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 352,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 353,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 354,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 355,
+            "disp": ""
+        },
+        {
+            "text": "if regular and edgeInd < nodes/2 then { edgeChromatic == maxdeg + 1 };",
+            "name": "Theorem",
+            "idnum": 356,
+            "disp": ""
+        },
+        {
+            "text": "if regular then { edgeInd >= nodes*maxdeg/(2*(maxdeg + 1)) };",
+            "name": "Theorem",
+            "idnum": 357,
+            "disp": ""
+        },
+        {
+            "text": "if nodeConnec >= 2 and mindeg >= (nodes + nodeConnec)/3 then { hamiltonian };",
+            "name": "Theorem",
+            "idnum": 358,
+            "disp": ""
+        },
+        {
+            "text": "if nodeConnec >= 3 then { circumference >= min(nodes, 3*mindeg - nodeConnec) };",
+            "name": "Theorem",
+            "idnum": 359,
+            "disp": ""
+        },
+        {
+            "text": "if regular and nodes == 2*maxdeg +  1 then { nodeConnec >= nodeInd };",
+            "name": "Theorem",
+            "idnum": 360,
+            "disp": ""
+        }
     ]
 }

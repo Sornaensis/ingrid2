@@ -1,5 +1,124 @@
 
 {
     "theorems":[
-    ]
+{
+            "text": "if planar and edges == 3*nodes - 6 and maxdeg <= mindeg + 1 then {mindeg == nodeConnec};",
+            "name": "Theorem",
+            "idnum": 401,
+            "disp": ""
+        },
+        {
+            "text": "bandwidth <= nodes - (mindeg + 1)*(numOfComponents -1) - 1 - (nodeInd - numOfComponents + 1)/2;",
+            "name": "Theorem",
+            "idnum": 402,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 403,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg >edgeConnec and edgeConnec == nodeConnec then { nodes >= mindeg + maxdeg };",
+            "name": "Theorem",
+            "idnum": 404,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg > edgeConnec and edgeConnec == nodeConnec and nodeConnec > 0 and diam == 3 then {domination <= edgeConnec + 1};",
+            "name": "Theorem",
+            "idnum": 405,
+            "disp": ""
+        },
+        {
+            "text": "if edges > (nodes - 1)**2/4 and edges <= (nodes-1)*(nodes-2)/2 then {mindeg <= edgeConnec - 1 + (nodes - sqrt(4*edges + 2*nodes - nodes**2))/2};",
+            "name": "Theorem",
+            "idnum": 406,
+            "disp": ""
+        },
+        {
+            "text": "domination <= (nodes - maxdeg - 1)*(nodes - mindeg - 2)/(nodes - 1) + 2;",
+            "name": "Theorem",
+            "idnum": 407,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 408,
+            "disp": ""
+        },
+        {
+            "text": "if nodes >= 4 and maxClique == 2 and hamiltonian then {edges <= (nodes - 4)*nodes/4 + 2};",
+            "name": "Theorem",
+            "idnum": 409,
+            "disp": ""
+        },
+        {
+            "text": "spectralRadius >= mindeg;",
+            "name": "Theorem",
+            "idnum": 410,
+            "disp": ""
+        },
+        {
+            "text": "if connected and nodes >= 2*mindeg + 2 and istrue congruent(nodes, mindeg+1, 0) then {diameter <= 3*nodes/(mindeg+1) - 3} else if connected and nodes >= 2*mindeg + 2 and istrue congruent(nodes, mindeg+1, 1) then {diam <= 3*nodes/(mindeg+1)+2} else if connected and nodes >= 2*mindeg + 2 then {diam <= 3*nodes/(mindeg+1) - 1};",
+            "name": "Theorem",
+            "idnum": 411,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 412,
+            "disp": ""
+        },
+        {
+            "text": "edges >= (nodes - chromaticNum)**2/(nodeInd-1) + chromaticNum *(chromaticNum - 1)/2 - (nodeInd-1)*((nodes-chromaticNum)/(nodeInd-1)) * ((nodes-chromaticNum)/(nodeInd-1))/2;",
+            "name": "Theorem",
+            "idnum": 413,
+            "disp": ""
+        },
+        {
+            "text": "if diam <= 4 then {edges <= ((nodes-2)*(nodes - 3) - 2*(nodes-2)*(diam-4)*nodeConnec - 4 * nodeConnec * (nodeConnec+1) + nodeConnec**2*(diam-2)*(diam-3))/2};",
+            "name": "Theorem",
+            "idnum": 414,
+            "disp": ""
+        },
+        {
+            "text": "domination <= (nodes + 2 - mindeg)/2;",
+            "name": "Theorem",
+            "idnum": 415,
+            "disp": ""
+        },
+        {
+            "text": "if even nodes and maxdeg == nodes - 2 and edgeChromatic == maxdeg + 1 then {edges >= (nodes - 2)**2 / 2 + 1 + mindeg}; if even nodes and maxdeg == nodes - 2 and edges >= (nodes-2)**2 / 2 + 1 + mindeg then {maxdeg == nodes - 2};",
+            "name": "Theorem",
+            "idnum": 416,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique <= 2 and maxdeg <= 3 then {edges >= 13*nodes/2 - 14*nodeInd};",
+            "name": "Theorem",
+            "idnum": 417,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique <= 2 and maxdeg <= 2 then {edges >= 7*nodes - 15*nodeInd};",
+            "name": "Theorem",
+            "idnum": 418,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique <= 2 and nodeCover <= 3*nodes/5 then {nodeCover <= (3*nodes - sqrt(5*edges - nodes**2))/5};",
+            "name": "Theorem",
+            "idnum": 419,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique <= 2 and nodeInd <= 2*nodes/5 then {nodeInd >= (2*nodes + sqrt(5*edges - nodes**2))/5};",
+            "name": "Theorem",
+            "idnum": 420,
+            "disp": ""
+        }    ]
 }

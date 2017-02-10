@@ -1,5 +1,112 @@
 
 {
     "theorems":[
-    ]
+{
+            "text": "if maxdeg >= 6 and maxClique <= maxdeg - 1 then {nodeCover <=  (nodes * (maxdeg - 1) -1)/maxdeg};",
+            "name": "Theorem",
+            "idnum": 441,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 then {nodeCover <= nodes *(1 - ((2*edges)/nodes * log(2*edges/nodes) - (2*edges/nodes) +1)/(2*edges/nodes -1)**2)};",
+            "name": "Theorem",
+            "idnum": 442,
+            "disp": ""
+        },
+        {
+            "text": "bandwidth <= nodes - (mindeg + 1)*(numOfComponents -1) - 1 - (nodes - nodeCover - numOfComponents + 1)/2;",
+            "name": "Theorem",
+            "idnum": 443,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 444,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 445,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique <= 2 and maxdeg <= 3 then {edges >= 14*nodeCover - 15*nodes/2};",
+            "name": "Theorem",
+            "idnum": 446,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique <= 2 and maxdeg <= 2 then {edges >= 15*nodeCover - 8*nodes};",
+            "name": "Theorem",
+            "idnum": 447,
+            "disp": ""
+        },
+        {
+            "text": "edges <= ((nodes - nodeCliqueCover)*(nodeCliqueCover + maxdeg - 1) + mindeg)/2;",
+            "name": "Theorem",
+            "idnum": 448,
+            "disp": ""
+        },
+        {
+            "text": "if nodeInd == 2 and mindeg >= nodes - 5 then {edges <= nodes*(nodes-13)/2 + 13*maxClique};",
+            "name": "Theorem",
+            "idnum": 449,
+            "disp": ""
+        },
+        {
+            "text": "if nodeInd < nodeCliqueCover and nodeCliqueCover == nodes - mindeg - 1 and mindeg <= nodes - 10 then {nodes <= 2*mindeg + 2} else if nodeInd < nodeCliqueCover and nodeCliqueCover == nodes - mindeg - 1 and mindeg >= nodes - 10 then {nodes <= 2*mindeg + 3};",
+            "name": "Theorem",
+            "idnum": 450,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg <= min(nodes-7, nodes - nodeInd - 2) then {mindeg <= ((nodes - 1)*(maxClique - 1) - 2)/maxClique};",
+            "name": "Theorem",
+            "idnum": 451,
+            "disp": ""
+        },
+        {
+            "text": "if nodeInd == 2 then {maxClique >= nodes*((nodes - 1 - 2*edges/nodes)*ln(nodes - 1 - 2*edges/nodes) - (nodes - 2 - 2*edges/nodes)**2)/(nodes - 2 - 2*edges/nodes)**2};",
+            "name": "Theorem",
+            "idnum": 452,
+            "disp": ""
+        },
+        {
+            "text": "edges <= nodes*(nodes - 1)/2 - floor((nodes-nodeConnec)/(maxClique-1))*(nodes-nodeConnec) - nodeConnec*(nodeConnec - 1)/2 + (maxClique - 1)*floor((nodes-nodeConnec)/(maxClique-1))*(floor((nodes-nodeConnec)/(maxClique-1))+1)/2;",
+            "name": "Theorem",
+            "idnum": 453,
+            "disp": ""
+        },
+        {
+            "text": "if nodeInd <= 2 and mindeg >= nodes - 4 then {edges <= nodes*(nodes - 14)/2 + 14*maxClique};",
+            "name": "Theorem",
+            "idnum": 454,
+            "disp": ""
+        },
+        {
+            "text": "if nodeInd <= 2 and mindeg >= nodes - 3 then {edges <= nodes*(nodes - 15)/2 + 15*maxClique};",
+            "name": "Theorem",
+            "idnum": 455,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 then {chromaticNum <= 1 + 3*(nodeCover + 12)/16};",
+            "name": "Theorem",
+            "idnum": 456,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 then {chromaticNum <= (3*nodes - 3*nodeInd + 52)/16};",
+            "name": "Theorem",
+            "idnum": 457,
+            "disp": ""
+        },
+        {
+            "text": "if nodeInd == 2 then {nodeCliqueCover <= (3*nodes - 3*maxClique + 52)/16};",
+            "name": "Theorem",
+            "idnum": 458,
+            "disp": ""
+        }    ]
 }

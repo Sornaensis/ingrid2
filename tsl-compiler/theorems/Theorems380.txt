@@ -1,5 +1,124 @@
 
 {
     "theorems":[
-    ]
+{
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 361,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 362,
+            "disp": ""
+        },
+        {
+            "text": "if diameter == 2 and nodeConnec >= 3 then { edges >= (nodes-1)*(nodeConnec+1)/(2 - nodeConnec**2 + 2*nodeConnec) };",
+            "name": "Theorem",
+            "idnum": 363,
+            "disp": ""
+        },
+        {
+            "text": "if diameter == 2 and nodeConnec >= 3 and nodes >= 3*nodeConnec**2 + 6 then { edges > (nodes - 1)*(nodeConnec + 1)/2 };",
+            "name": "Theorem",
+            "idnum": 364,
+            "disp": ""
+        },
+        {
+            "text": "if bipartite then { if odd nodes then { crossing <= (nodes/4)**2*((nodes-2)/4)**2 } else { crossing <= ((nodes+1)/4)*((nodes-1)/4)**2*(nodes-3)/4 } };",
+            "name": "Theorem",
+            "idnum": 365,
+            "disp": ""
+        },
+        {
+            "text": "if connected then { spectralRadius >= 2*cos(3.14159265358979/(nodes+1)) };",
+            "name": "Theorem",
+            "idnum": 366,
+            "disp": ""
+        },
+        {
+            "text": "if regular and mindeg >= 7 and odd mindeg and (mindeg > 9 or mindeg < 9) and not bipartite and girth  == 4 then { nodes >= 2*(5*mindeg/4) + 4 };",
+            "name": "Theorem",
+            "idnum": 367,
+            "disp": ""
+        },
+        {
+            "text": "if bipartite then { thickness <= nodes/8 + 2 };",
+            "name": "Theorem",
+            "idnum": 368,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique <= 2 then { thickness <= genus + 1 };",
+            "name": "Theorem",
+            "idnum": 369,
+            "disp": ""
+        },
+        {
+            "text": "if genus <= 1 then { thickness == genus + 1 };",
+            "name": "Theorem",
+            "idnum": 370,
+            "disp": ""
+        },
+        {
+            "text": "arboricity <= edgeCover;",
+            "name": "Theorem",
+            "idnum": 371,
+            "disp": ""
+        },
+        {
+            "text": "thickness <= edgeCover;",
+            "name": "Theorem",
+            "idnum": 372,
+            "disp": ""
+        },
+        {
+            "text": "if genus >= 1 then { edgeCover <= 2 + sqrt(3*genus) };",
+            "name": "Theorem",
+            "idnum": 373,
+            "disp": ""
+        },
+        {
+            "text": "thickness <= 5 + sqrt(2*genus - 2);",
+            "name": "Theorem",
+            "idnum": 374,
+            "disp": ""
+        },
+        {
+            "text": "if connected and regular then { edgeCover <= 4 + (6*genus+2)/(nodes - 1) };",
+            "name": "Theorem",
+            "idnum": 375,
+            "disp": ""
+        },
+        {
+            "text": "genus <= (thickness - 1)*(nodes - 1);",
+            "name": "Theorem",
+            "idnum": 376,
+            "disp": ""
+        },
+        {
+            "text": "edgeCover <= (maxdeg + 2)/2;",
+            "name": "Theorem",
+            "idnum": 377,
+            "disp": ""
+        },
+        {
+            "text": "edgeCover >= (mindeg+1)/2;",
+            "name": "Theorem",
+            "idnum": 378,
+            "disp": ""
+        },
+        {
+            "text": "edgeCover >= edges/(nodes-numOfComponents);",
+            "name": "Theorem",
+            "idnum": 379,
+            "disp": ""
+        },
+        {
+            "text": "edgeCover <= 3*thickness;",
+            "name": "Theorem",
+            "idnum": 380,
+            "disp": ""
+        }    ]
 }

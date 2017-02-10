@@ -2,7 +2,7 @@
 {
     "theorems":[
 {
-            "text": "chromaticNum <= odeCover + 1;",
+            "text": "chromaticNum <= nodeCover + 1;",
             "name": "Theorem",
             "idnum": 221,
             "disp": ""
@@ -110,13 +110,13 @@
             "disp": ""
         },
         {
-            "text": "nodes == nodeCover + nodeInd",
+            "text": "nodes == nodeCover + nodeInd;",
             "name": "Theorem",
             "idnum": 239,
             "disp": ""
         },
         {
-            "text": "nodes == edgeCover + edgeInd",
+            "text": "nodes == edgeCover + edgeInd;",
             "name": "Theorem",
             "idnum": 240,
             "disp": ""

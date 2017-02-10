@@ -1,5 +1,124 @@
 
 {
     "theorems":[
-    ]
+{
+            "text": "if planar and nodes >= 4 then { edges <= 3*nodes - 9 + min(3, edgeConnec) };",
+            "name": "Theorem",
+            "idnum": 381,
+            "disp": ""
+        },
+        {
+            "text": "if planer and edgeConnec < mindeg and (nodes >= 5 or mindeg >= 2) then { if mindeg == edgeConnec + 1 and mindeg == 1 then { edges <= 3*nodes - 11 } else { edges <= 3*nodes - 12 + nodeConnec } };",
+            "name": "Theorem",
+            "idnum": 382,
+            "disp": ""
+        },
+        {
+            "text": "if not forest then { nodes >= maxdeg + numOfComponents - 2 + ((circumference*(girth-3)+2)/(girth/2)) };",
+            "name": "Theorem",
+            "idnum": 383,
+            "disp": ""
+        },
+        {
+            "text": "nodeCover <= (2*nodes + edges - edgeInd)/4;",
+            "name": "Theorem",
+            "idnum": 384,
+            "disp": ""
+        },
+        {
+            "text": "if genus <= nodes*(sqrt(2*nodes)-7)/12 + 1 then { edgeCliqueCover <= nodeCover*nodeInd };",
+            "name": "Theorem",
+            "idnum": 385,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg >= 2 then { domination >= (girth+2)/3*numOfComponents };",
+            "name": "Theorem",
+            "idnum": 386,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg >= 2 and girth >= 5 then { domination <= (nodes - girth/3 - (g - 4)*(mindeg - 2)*(mindeg - 3)/2 - 2*(mindeg - 2)+1)/2 };",
+            "name": "Theorem",
+            "idnum": 387,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg >= 2 and girth >= 9 then { domination <= (nodes-girth/3-(girth-4)*(mindeg-2)*(mindeg-3)/2+1)/2 };",
+            "name": "Theorem",
+            "idnum": 388,
+            "disp": ""
+        },
+        {
+            "text": "if maxdeg >= 6 and maxClique <= maxdeg - 1 then { nodes <= maxdeg*nodeInd - 1 };",
+            "name": "Theorem",
+            "idnum": 389,
+            "disp": ""
+        },
+        {
+            "text": "if (nodes > 5 or nodes < 5) or (edges > 5 or edges < 5) or not cycle then { if maxClique > nodeInd then { maxClique >= (1/2)*log(2*nodes*sqrt(3.14159265359879),2) } else { nodeInd >= (1/2)*log(2*nodes*sqrt(3.14159265359879),2) } };",
+            "name": "Theorem",
+            "idnum": 390,
+            "disp": ""
+        },
+        {
+            "text": "if circumference <= nodes - mindeg then {edges <= nodes * (nodes - 1)/2 - mindeg *(nodes - mindeg - 1)};",
+            "name": "Theorem",
+            "idnum": 391,
+            "disp": ""
+        },
+        {
+            "text": "if girth == 5 and mindeg >= 6 then {nodes >= 40} else if girth == 5 and mindeg == 5 then {nodes >= 5} else if girth == 5 and mindeg == 4 then {nodes >= 19};",
+            "name": "Theorem",
+            "idnum": 392,
+            "disp": ""
+        },
+        {
+            "text": "if girth == 6 and mindeg >= 7 and regular then {nodes >= 90} else if girth == 6 and mindeg >= 7 and not regular then {nodes >= 93};",
+            "name": "Theorem",
+            "idnum": 393,
+            "disp": ""
+        },
+        {
+            "text": "if maxClique == 2 then {nodeInd >= nodes *(2*edges/nodes * ln(2*edges/nodes) - 2*edges/nodes +1)/((2*edges/nodes - 1)**2)};",
+            "name": "Theorem",
+            "idnum": 394,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 395,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 396,
+            "disp": ""
+        },
+        {
+            "text": "if girth >= 5+ log(max(1,genus),3) then {arboricity <= 2};",
+            "name": "Theorem",
+            "idnum": 397,
+            "disp": ""
+        },
+        {
+            "text": "if mindeg >= 2 then {nodes >= girth * numOfComponents + maxdeg - 2};",
+            "name": "Theorem",
+            "idnum": 398,
+            "disp": ""
+        },
+        {
+            "text": "if nodeConnec > 0 then {nodeConnec >= (nodes *(maxdeg - 2))/((maxdeg-1)**diam + maxdeg - 3)};",
+            "name": "Theorem",
+            "idnum": 399,
+            "disp": ""
+        },
+        {
+            "text": "null;",
+            "name": "Theorem",
+            "idnum": 400,
+            "disp": ""
+        }    ]
 }
