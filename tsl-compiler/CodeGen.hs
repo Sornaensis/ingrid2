@@ -99,6 +99,7 @@ getCondInvolves :: Cond -> Set String
 getCondInvolves (CondOr a b)        = S.union (getCondInvolves a) (getCondInvolves b)
 getCondInvolves (CondAnd a b)       = S.union (getCondInvolves a) (getCondInvolves b)
 getCondInvolves (CondSpec _ v)      = getValueInvolves v
+getCondInvolves (CondSpecF _ e)      = getExprInvolves e
 getCondInvolves (Cond ex (Just cr)) = S.union (getValueInvolves ex) (getCondRelInvolves cr)
 getCondInvolves (Cond ex Nothing)   = getValueInvolves ex
 
@@ -118,7 +119,9 @@ assertNotUdts = L.intercalate " and " . map (\(_,i) -> i ++ " != \'undt\'") . fi
 -- | Expression -> Source
 
 exprToSrc :: Expr -> String
-exprToSrc (Expr ts) = L.intercalate "+" $ map termToSrc ts
+exprToSrc (Expr ts) = foldl (\s t -> case t of
+                                     (Neg _) -> s ++ termToSrc t 
+                                     _       -> s ++ (if null s then "" else "+") ++ termToSrc t) "" ts
 
 termToSrc :: Term -> String
 termToSrc (Mul a b) = termToSrc a ++ "*" ++ termToSrc b
@@ -307,9 +310,13 @@ junction a b condis =
 generateCond :: Cond -> [String]
 generateCond (CondOr a b)  = junction a b "or"
 generateCond (CondAnd a b) = junction a b "and" 
+generateCond (CondSpecF "isfalse" exp) =
+    let setconds = foldr1 CondAnd . map (CondSpec "isset" . Invar) $ involves
+        involves = S.toList $ getExprInvolves exp
+    in generateCond setconds 
 generateCond (CondSpecF "istrue" exp) =
     let setconds = foldr1 CondAnd . map (CondSpec "isset" . Invar) $ involves
-        involves = getExprInvolves exp
+        involves = S.toList $ getExprInvolves exp
     in generateCond setconds 
 generateCond (CondSpec "undefined" (Invar v)) =
     [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind = \'Max\')",
@@ -480,11 +487,11 @@ genIExprIneq e@(InvarExpr _ (Just (InvarRelExpr _ _))) =
              invar_remap                                       = map (\(a,b) -> (b,a)) invar_map
              inequality                                        = v ++ show rel ++ exprToSrc exp
              invars                                            = v : S.toList (getExprInvolves exp)
-        in fmap (map (replaceAllInvar func_remap . replaceAllInvar invar_remap) . theoremParser . lexer . concat) . sequence $ 
+        in fmap (map (replaceAllInvar func_remap . replaceAllInvar invar_remap) . theoremParser . lexer . (\i -> trace i i ) . concat) . sequence $ 
                invars
                 >>= \inv -> return $ 
                    do Py.initialize
-                      E.handle (\exc -> Py.print (Py.exceptionValue exc) stdout >> return (inequality++":")) $
+                      E.handle (\exc -> Py.print (Py.exceptionValue exc) stdout >> return "") $
                        do  equation <- Py.toUnicode . T.pack $ inequality
                            variables <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) invars
                            target  <- Py.toUnicode . T.pack $ inv
@@ -494,7 +501,7 @@ genIExprIneq e@(InvarExpr _ (Just (InvarRelExpr _ _))) =
                            rewrite <- Py.cast pyout :: IO (Maybe Py.Unicode)
                            case rewrite of 
                             (Just eqn) -> (++";") . T.unpack <$> Py.fromUnicode eqn
-                            _          -> return inequality
+                            _          -> return ""
 
 genIExprIneq e = return [IExpr e]
                
