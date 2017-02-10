@@ -86,7 +86,7 @@
             "disp": ""
         },
         {
-            "text": "edges >= (nodes/nodeInd)*(nodes-nodeInd(nodes/nodeIn+1)/2);",
+            "text": "edges >= (nodes/nodeInd)*(nodes-nodeInd*(nodes/nodeInd+1)/2);",
             "name": "Theorem",
             "idnum": 75,
             "disp": ""

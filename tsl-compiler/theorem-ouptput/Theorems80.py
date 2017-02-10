@@ -429,32 +429,29 @@ class Theorem74(Theorem):
 
 class Theorem75(Theorem):
 	def __init__(self):
-		super(Theorem75, self).__init__(75, "edges >= (nodes/nodeInd)*(nodes-nodeInd(nodes/nodeIn+1)/2);", "")
+		super(Theorem75, self).__init__(75, "edges >= (nodes/nodeInd)*(nodes-nodeInd*(nodes/nodeInd+1)/2);", "")
 	def involves(self, str_invar):
-		return str_invar in ["edges","nodeIn","nodeInd","nodes"]
+		return str_invar in ["edges","nodeInd","nodes"]
 	def run(self, ingrid_obj):
-		nodeIn = ingrid_obj.get('nodeIn', ind='Min')
 		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
 		nodes = ingrid_obj.get('nodes', ind='Min')
 		if nodeInd != 'undt':
 			try:
-				ingrid_obj.set('edges', nodes*(-(0.5*nodeInd(nodes/nodeIn+1.0))+1.0*nodes)/nodeInd, ind='Min')
+				ingrid_obj.set('edges', 0.5*nodes*(-(nodeInd)+nodes)/nodeInd, ind='Min')
 			except:
 				pass
-		edges = ingrid_obj.get('edges', ind='Min')
-		nodeIn = ingrid_obj.get('nodeIn', ind='Min')
-		nodes = ingrid_obj.get('nodes', ind='Min')
-		try:
-			ingrid_obj.set('nodeInd', -(nodes*(0.5*nodeInd(nodes/nodeIn+1.0)-(1.0*nodes))/edges), ind='Min')
-		except:
-			pass
 		edges = ingrid_obj.get('edges', ind='Max')
-		nodeIn = ingrid_obj.get('nodeIn', ind='Min')
-		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
-		nodes = ingrid_obj.get('nodes', ind='Max')
-		if edges != 'undt' and nodeInd != 'undt' and nodes != 'undt':
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		if edges != 'undt':
 			try:
-				ingrid_obj.set('nodes', 0.25*nodeInd(nodes/nodeIn+1.0)+0.5*(4.0*edges*nodeInd+0.25*nodeInd(nodes/nodeIn+1.0)**2.0)**(1/2), ind='Max')
+				ingrid_obj.set('nodeInd', 0.5*nodes**2.0/(1.0*edges+0.5*nodes), ind='Min')
+			except:
+				pass
+		edges = ingrid_obj.get('edges', ind='Max')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+		if edges != 'undt' and nodeInd != 'undt':
+			try:
+				ingrid_obj.set('nodes', 0.5*nodeInd+1.0*(nodeInd*(2.0*edges+0.25*nodeInd))**(1/2), ind='Max')
 			except:
 				pass
 		return
