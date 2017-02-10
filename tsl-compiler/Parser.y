@@ -54,7 +54,7 @@ import Data.Char
 
 Theorem : Invarexpr ';' Theorem    { IExpr $1 : $3 }
          | Ifstmt ';' Theorem      { IfStmt $1 : $3 }
-         | null ';'                { [NullBody] }
+         | null ';' Theorem        { [NullBody] }
          | {- empty -}             { [] }
 
 Invarexpr : Invarexpror               { $1 }
@@ -97,8 +97,8 @@ Condand : Cond1   { $1 }
         | Condand and Cond1 { CondAnd $1 $3 }
 
 Cond1 : Invar CondRel    { Cond $1 $2 }
-      | istrue Expr      { CondSpecF "istrue" $2 }
-      | isfalse Expr     { CondSpecF "isfalse" $2 }
+      | istrue Expr      { CondSpecF "istrue" (Expr $2) }
+      | isfalse Expr     { CondSpecF "isfalse" (Expr $2) }
       | not Invar        { CondSpec "not" $2 }
       | even Invar       { CondSpec "even" $2 }
       | odd Invar        { CondSpec "odd" $2 }
