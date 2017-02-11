@@ -443,7 +443,7 @@ class IngridObj:
             json_dict['Theorems'] = self.theorems_used
             json_dict["Error"] = {"ErrorType": "", "ErrMsg": ""}
         else:
-            sys.stderr.write('ERROR reached here ' + str(success) + " " + str(changed) + '\n')
+            sys.stderr.write('ERROR reached here to dict writing \n')
             json_dict['Invariants'] = {}
             for key in self.original_json['Invariants'].keys():
                 if key in self.invariants.keys():
