@@ -120,7 +120,7 @@ class Invariant:
         elif self.value['Min'] > self.value['Max']:
             trace_msg += '. Error: the minimum [' + str(self.value['Min']) + '] is greater than the maximum [' + str(self.value['Max']) + ']'
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
-            return False, True
+            return False, False
         else:
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
             return True, True
@@ -158,7 +158,7 @@ class Invariant:
         elif val == 'undt' and self.value['Max'] != 'undt':
             trace_msg = 'Error: the maximum is defined as [' + str(self.value['Max']) + '], but it is being set to undetermined.'
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
-            return False, True
+            return False, False
         elif self.value['Max'] == 'undt' or val < self.value['Max']:
             trace_msg = 'The maximum of ' + self.name + ' from ' + str(self.value['Max']) + ' to ' + str(val)
             self.value['Max'] = val
@@ -169,7 +169,7 @@ class Invariant:
         if self.value['Min'] > self.value['Max']:
             trace_msg += '. Error: the maximum [' + str(self.value['Max']) + '] is less than the minimum [' + str(self.value['Min']) + ']'
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
-            return False, True
+            return False, False
         else:
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
             return True, True
