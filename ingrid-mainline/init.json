@@ -271,7 +271,7 @@
             "Value": "undt",
             "Trace"  : [],
             "Changed" : "False",
-            "Name": "Edges"
+            "Name": "Regular"
         },
         "planar":
         {
