@@ -349,7 +349,7 @@ class IngridObj:
             
         # saves the original invariants just in case of error
         sys.stderr.write('GOT TO 1\n')
-        self.original_json = inv_dict.copy()
+        self.original_json = copy.deepcopy(inv_dict)
         invars = copy.deepcopy(inv_dict['Invariants'])
         for key in invars.keys():
             self.invariants[key] = Invariant(name=invars[key]['Name'], stype=invars[key]['Type'], val=invars[key]['Value'])#, trace=invars[key]['Trace'])
@@ -447,7 +447,7 @@ class IngridObj:
         else:
             sys.stderr.write('ERROR reached here to dict writing \n')
             json_dict['Invariants'] = {}
-            for key in self.original_json['Invariants'].keys():
+            for key in self.invariants.keys():
                 inv = self.original_json['Invariants'][key]
                 
                 json_dict['Invariants'][key] = {'Type': inv['Type'],
