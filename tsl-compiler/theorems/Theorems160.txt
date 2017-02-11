@@ -8,10 +8,10 @@
             "disp": ""
         },
         {
-            "text": "if edges >= nodes + 1 + (1/2)*(nodes**(3/2)) then {girth <= 4};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 142,
-            "disp": ""
+            "disp": "REPLACED BY R343"
         },
         {
             "text": "nodeCliqueCover <= (1/2) + sqrt(1/4 + nodes**2 - nodes - 2*edges);",
@@ -80,10 +80,10 @@
             "disp": ""
         },
         {
-            "text": "if maxdeg >= 3 then { nodes <= 1 + maxdeg*((maxdeg - 1)**diameter - 1 )/(maxdeg - 2) };",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 154,
-            "disp": ""
+            "disp": "RETIRED by R265"
         },
         {
             "text": "if mindeg == 2 then { nodes <= (2 + max(4, maxdeg))/edgeInd/2 };",

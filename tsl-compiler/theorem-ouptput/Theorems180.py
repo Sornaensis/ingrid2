@@ -253,13 +253,6 @@ class Theorem170(Theorem):
 					ingrid_obj.set('edges', -(0.5*nodes)+0.5*nodes**2.0/nodeInd+1.5/nodeInd+0.5/(nodeInd*nodes), ind='Min')
 				except:
 					pass
-			edges = ingrid_obj.get('edges', ind='Max')
-			nodes = ingrid_obj.get('nodes', ind='Min')
-			if edges != 'undt':
-				try:
-					ingrid_obj.set('nodeInd', (1.0+3.0*nodes+nodes**3.0)/(nodes*(nodes+2.0*edges)), ind='Min')
-				except:
-					pass
 		return
 
 class Theorem171(Theorem):
@@ -449,23 +442,10 @@ class Theorem176(Theorem):
 
 class Theorem177(Theorem):
 	def __init__(self):
-		super(Theorem177, self).__init__(177, "if tree then { bandwidth <= nodes/2 };", "")
+		super(Theorem177, self).__init__(177, "null;", "")
 	def involves(self, str_invar):
 		return str_invar in ["bandwidth","nodes","tree"]
 	def run(self, ingrid_obj):
-		tree = ingrid_obj.get('tree')
-		if (tree == True):
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if nodes != 'undt':
-				try:
-					ingrid_obj.set('bandwidth', 0.5*nodes, ind='Max')
-				except:
-					pass
-			bandwidth = ingrid_obj.get('bandwidth', ind='Min')
-			try:
-				ingrid_obj.set('nodes', 2.0*bandwidth, ind='Min')
-			except:
-				pass
 		return
 
 class Theorem178(Theorem):

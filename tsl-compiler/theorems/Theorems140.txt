@@ -98,7 +98,7 @@
             "disp": ""
         },
         {
-            "text": "if defined diam then {edges >= nodes * (nodes - 1)*(maxdeg - 2)/(2*((maxdeg-1)**diam - 1))};",
+            "text": "null;",
             "name": "Theorem", 
             "idnum": 137,
             "disp": ""
