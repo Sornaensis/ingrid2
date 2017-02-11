@@ -1,4 +1,5 @@
 import math
+import copy
 
 class Invariant:
     """
@@ -306,10 +307,10 @@ class IngridObj:
         """
             
         # saves the original invariants just in case of error
-        self.original_json = inv_dict.copy()
-        invars = inv_dict['Invariants'].copy()
+        self.original_json = copy.deepcopy(inv_dict)
+        invars = copy.deepcopy(inv_dict['Invariants'])
         for key in invars.keys():
-            self.invariants[key] = Invariant(name=invars[key]['Name'], stype=invars[key]['Type'], trace=invars[key]['Trace'], val=invars[key]['Value'])
+            self.invariants[key] = Invariant(name=invars[key]['Name'], stype=invars[key]['Type'], trace=[], val=invars[key]['Value'])
             success = True
             if invars[key]['Changed'] == 'True':
                 success = self.invariants[key].check_conflict()
