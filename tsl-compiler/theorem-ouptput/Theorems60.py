@@ -953,13 +953,12 @@ class Theorem58(Theorem):
 			ingrid_obj.set('nodes', spectralRadius*(1.0*maxClique+0.333333333333333)/(1.0*maxClique-(0.666666666666667)), ind='Min')
 		except:
 			pass
-		maxClique = ingrid_obj.get('maxClique', ind='Max')
-		nodes = ingrid_obj.get('nodes', ind='Max')
-		if maxClique != 'undt' and nodes != 'undt':
-			try:
-				ingrid_obj.set('spectralRadius', nodes*(1.0*maxClique-(0.666666666666667))/(1.0*maxClique+0.333333333333333), ind='Max')
-			except:
-				pass
+		maxClique = ingrid_obj.get('maxClique', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		try:
+			ingrid_obj.set('spectralRadius', nodes*(1.0*maxClique-(0.666666666666667))/(1.0*maxClique+0.333333333333333), ind='Min')
+		except:
+			pass
 		return
 
 class Theorem59(Theorem):
@@ -1000,22 +999,22 @@ class Theorem60(Theorem):
 					ingrid_obj.set('genus', 0.5*edges-(1.0*edges/girth)-(0.5*nodes)+1.0*numOfComponents, ind='Min')
 				except:
 					pass
-			genus = ingrid_obj.get('genus', ind='Min')
-			girth = ingrid_obj.get('girth', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Min')
-			numOfComponents = ingrid_obj.get('numOfComponents', ind='Max')
-			if numOfComponents != 'undt':
-				try:
-					ingrid_obj.set('edges', girth*(1.0*genus+0.5*nodes-(1.0*numOfComponents))/(0.5*girth-(1.0)), ind='Min')
-				except:
-					pass
-			edges = ingrid_obj.get('edges', ind='Min')
 			genus = ingrid_obj.get('genus', ind='Max')
+			girth = ingrid_obj.get('girth', ind='Max')
 			nodes = ingrid_obj.get('nodes', ind='Max')
 			numOfComponents = ingrid_obj.get('numOfComponents', ind='Min')
-			if genus != 'undt' and nodes != 'undt':
+			if genus != 'undt' and girth != 'undt' and nodes != 'undt':
 				try:
-					ingrid_obj.set('girth', -(1.0*edges/(1.0*genus-(0.5*edges)+0.5*nodes-(1.0*numOfComponents))), ind='Max')
+					ingrid_obj.set('edges', girth*(1.0*genus+0.5*nodes-(1.0*numOfComponents))/(0.5*girth-(1.0)), ind='Max')
+				except:
+					pass
+			edges = ingrid_obj.get('edges', ind='Max')
+			genus = ingrid_obj.get('genus', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			numOfComponents = ingrid_obj.get('numOfComponents', ind='Max')
+			if edges != 'undt' and numOfComponents != 'undt':
+				try:
+					ingrid_obj.set('girth', -(1.0*edges/(1.0*genus-(0.5*edges)+0.5*nodes-(1.0*numOfComponents))), ind='Min')
 				except:
 					pass
 			edges = ingrid_obj.get('edges', ind='Min')

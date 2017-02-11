@@ -1,6 +1,3 @@
-TypeError('unorderable types: float() >= complex()',)
-TypeError('unorderable types: float() >= complex()',)
-TypeError('unorderable types: float() >= complex()',)
 TypeError('unorderable types: float() <= complex()',)
 class Theorem161(Theorem):
 	def __init__(self):
@@ -373,13 +370,13 @@ class Theorem174(Theorem):
 				ingrid_obj.set('maxClique', -(1.0*nodeInd*maxdeg)-(1.0*nodeInd)+2.0*maxdeg-(1.0*mindeg)+1.0*nodes+1.0, ind='Min')
 			except:
 				pass
-		maxClique = ingrid_obj.get('maxClique', ind='Min')
-		mindeg = ingrid_obj.get('mindeg', ind='Min')
-		nodeInd = ingrid_obj.get('nodeInd', ind='Min')
-		nodes = ingrid_obj.get('nodes', ind='Max')
-		if nodes != 'undt':
+		maxClique = ingrid_obj.get('maxClique', ind='Max')
+		mindeg = ingrid_obj.get('mindeg', ind='Max')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		if maxClique != 'undt' and mindeg != 'undt' and nodeInd != 'undt':
 			try:
-				ingrid_obj.set('maxdeg', 1.0*(-(nodeInd)-(maxClique)-(mindeg)+nodes+1.0)/(1.0*nodeInd-(2.0)), ind='Max')
+				ingrid_obj.set('maxdeg', 1.0*(-(nodeInd)-(maxClique)-(mindeg)+nodes+1.0)/(1.0*nodeInd-(2.0)), ind='Min')
 			except:
 				pass
 		maxClique = ingrid_obj.get('maxClique', ind='Max')
@@ -406,8 +403,27 @@ class Theorem175(Theorem):
 	def __init__(self):
 		super(Theorem175, self).__init__(175, "bandwidth >= (1/2)*(2*nodes-1-sqrt((2*nodes-1)**2-8*edges));", "")
 	def involves(self, str_invar):
-		return str_invar in []
+		return str_invar in ["bandwidth","edges","nodes"]
 	def run(self, ingrid_obj):
+		edges = ingrid_obj.get('edges', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		try:
+			ingrid_obj.set('bandwidth', 1.0*nodes-(0.5*(-(8.0*edges)+(2.0*nodes-(1.0))**2.0)**0.5)-(0.5), ind='Min')
+		except:
+			pass
+		bandwidth = ingrid_obj.get('bandwidth', ind='Max')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if bandwidth != 'undt' and nodes != 'undt':
+			try:
+				ingrid_obj.set('edges', 0.125*(2.0*nodes-(1.0))**2.0-(0.125*(-(2.0*bandwidth)+2.0*nodes-(1.0))**2.0), ind='Max')
+			except:
+				pass
+		edges = ingrid_obj.get('edges', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		try:
+			ingrid_obj.set('bandwidth', (1.0/2.0)*(-((((2.0*nodes-((1.0)))**2.0-((8.0*edges)))**(1.0/2.0)))-((1.0))+2.0*nodes), ind='Min')
+		except:
+			pass
 		return
 
 class Theorem176(Theorem):
@@ -501,13 +517,14 @@ class Theorem179(Theorem):
 					ingrid_obj.set('edges', 1.0*domination*nodeInd-(1.0*domination*nodes)-(0.5*nodeInd**2.0)-(1.0*nodeInd)+0.5*nodes**2.0+1.0*nodes, ind='Max')
 				except:
 					pass
-			edges = ingrid_obj.get('edges', ind='Min')
-			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Min')
-			try:
-				ingrid_obj.set('domination', 2.0*(0.5*edges+0.25*nodeInd**2.0+0.5*nodeInd-(0.25*nodes**2.0)-(0.5*nodes))/(nodeInd-(nodes)), ind='Min')
-			except:
-				pass
+			edges = ingrid_obj.get('edges', ind='Max')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if edges != 'undt' and nodeInd != 'undt' and nodes != 'undt':
+				try:
+					ingrid_obj.set('domination', 2.0*(0.5*edges+0.25*nodeInd**2.0+0.5*nodeInd-(0.25*nodes**2.0)-(0.5*nodes))/(nodeInd-(nodes)), ind='Max')
+				except:
+					pass
 			domination = ingrid_obj.get('domination', ind='Min')
 			edges = ingrid_obj.get('edges', ind='Min')
 			nodeInd = ingrid_obj.get('nodeInd', ind='Min')

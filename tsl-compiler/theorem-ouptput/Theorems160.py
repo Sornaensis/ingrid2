@@ -1,6 +1,4 @@
 TypeError('unorderable types: float() <= complex()',)
-TypeError('unorderable types: float() <= complex()',)
-TypeError('unorderable types: float() <= complex()',)
 class Theorem141(Theorem):
 	def __init__(self):
 		super(Theorem141, self).__init__(141, "circumference >= 2*edges/(nodes-1);", "")
@@ -49,8 +47,29 @@ class Theorem143(Theorem):
 	def __init__(self):
 		super(Theorem143, self).__init__(143, "nodeCliqueCover <= (1/2) + sqrt(1/4 + nodes**2 - nodes - 2*edges);", "")
 	def involves(self, str_invar):
-		return str_invar in []
+		return str_invar in ["edges","nodeCliqueCover","nodes"]
 	def run(self, ingrid_obj):
+		edges = ingrid_obj.get('edges', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if nodes != 'undt':
+			try:
+				ingrid_obj.set('nodeCliqueCover', 1.0*(-(2.0*edges)-(nodes)+nodes**2.0+0.25)**0.5+0.5, ind='Max')
+			except:
+				pass
+		nodeCliqueCover = ingrid_obj.get('nodeCliqueCover', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if nodes != 'undt':
+			try:
+				ingrid_obj.set('edges', -(0.5*nodes)+0.5*nodes**2.0-(0.5*(1.0*nodeCliqueCover-(0.5))**2.0)+0.125, ind='Max')
+			except:
+				pass
+		edges = ingrid_obj.get('edges', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if nodes != 'undt':
+			try:
+				ingrid_obj.set('nodeCliqueCover', (1.0/4.0+nodes**2.0-((nodes))-((2.0*edges)))**(1.0/2.0)+(1.0/2.0), ind='Max')
+			except:
+				pass
 		return
 
 class Theorem144(Theorem):
@@ -331,13 +350,6 @@ class Theorem152(Theorem):
 			if nodeInd != 'undt' and nodes != 'undt':
 				try:
 					ingrid_obj.set('edges', 4.0*(-((nodeInd))+nodes/2.0)**2.0+nodeInd**2.0, ind='Max')
-				except:
-					pass
-			edges = ingrid_obj.get('edges', ind='Max')
-			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
-			if edges != 'undt' and nodeInd != 'undt':
-				try:
-					ingrid_obj.set('nodes', 2.0*nodeInd+1.0*(edges-(nodeInd**2.0))**0.5, ind='Max')
 				except:
 					pass
 		return

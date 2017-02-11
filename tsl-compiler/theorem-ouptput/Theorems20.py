@@ -17,11 +17,11 @@ class Theorem1(Theorem):
 			ingrid_obj.set('nodeConnec', 1.0*edges-(0.5*nodes**2.0)+1.5*nodes-(1.0), ind='Min')
 		except:
 			pass
-		edges = ingrid_obj.get('edges', ind='Max')
-		nodeConnec = ingrid_obj.get('nodeConnec', ind='Min')
-		if edges != 'undt':
+		edges = ingrid_obj.get('edges', ind='Min')
+		nodeConnec = ingrid_obj.get('nodeConnec', ind='Max')
+		if nodeConnec != 'undt':
 			try:
-				ingrid_obj.set('nodes', 1.0*(2.0*edges-(2.0*nodeConnec)+0.25)**(1/2)+1.5, ind='Max')
+				ingrid_obj.set('nodes', 1.0*(2.0*edges-(2.0*nodeConnec)+0.25)**(1/2)+1.5, ind='Min')
 			except:
 				pass
 		return
@@ -103,11 +103,11 @@ class Theorem4(Theorem):
 			ingrid_obj.set('edges', 0.5*spectralRadius**2.0*(nodeCover+1.0)/nodeCover, ind='Min')
 		except:
 			pass
-		edges = ingrid_obj.get('edges', ind='Max')
-		spectralRadius = ingrid_obj.get('spectralRadius', ind='Min')
-		if edges != 'undt':
+		edges = ingrid_obj.get('edges', ind='Min')
+		spectralRadius = ingrid_obj.get('spectralRadius', ind='Max')
+		if spectralRadius != 'undt':
 			try:
-				ingrid_obj.set('nodeCover', -(0.5*spectralRadius**2.0/(0.5*spectralRadius**2.0-(edges))), ind='Min')
+				ingrid_obj.set('nodeCover', -(0.5*spectralRadius**2.0/(0.5*spectralRadius**2.0-(edges))), ind='Max')
 			except:
 				pass
 		return
@@ -125,19 +125,19 @@ class Theorem5(Theorem):
 				ingrid_obj.set('maxClique', -(1.0*nodes**2.0/(2.0*edges-(1.0*nodes**2.0))), ind='Min')
 			except:
 				pass
-		maxClique = ingrid_obj.get('maxClique', ind='Min')
-		nodes = ingrid_obj.get('nodes', ind='Min')
-		try:
-			ingrid_obj.set('edges', 0.5*nodes**2.0*(maxClique-(1.0))/maxClique, ind='Min')
-		except:
-			pass
-		edges = ingrid_obj.get('edges', ind='Max')
 		maxClique = ingrid_obj.get('maxClique', ind='Max')
-		if edges != 'undt' and maxClique != 'undt':
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if maxClique != 'undt' and nodes != 'undt':
 			try:
-				ingrid_obj.set('nodes', 1.4142135623731*(maxClique*edges/(maxClique-(1.0)))**0.5, ind='Max')
+				ingrid_obj.set('edges', 0.5*nodes**2.0*(maxClique-(1.0))/maxClique, ind='Max')
 			except:
 				pass
+		edges = ingrid_obj.get('edges', ind='Min')
+		maxClique = ingrid_obj.get('maxClique', ind='Min')
+		try:
+			ingrid_obj.set('nodes', 1.4142135623731*(maxClique*edges/(maxClique-(1.0)))**0.5, ind='Min')
+		except:
+			pass
 		return
 
 class Theorem6(Theorem):
@@ -219,12 +219,12 @@ class Theorem7(Theorem):
 					ingrid_obj.set('mindeg', 0.5*nodes-(0.5*diameter*nodeConnec)+1.5*nodeConnec-(1.0), ind='Max')
 				except:
 					pass
-			diameter = ingrid_obj.get('diameter', ind='Max')
-			mindeg = ingrid_obj.get('mindeg', ind='Max')
-			nodes = ingrid_obj.get('nodes', ind='Min')
-			if diameter != 'undt' and mindeg != 'undt':
+			diameter = ingrid_obj.get('diameter', ind='Min')
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if nodes != 'undt':
 				try:
-					ingrid_obj.set('nodeConnec', (1.0*nodes-(2.0*mindeg)-(2.0))/(1.0*diameter-(3.0)), ind='Min')
+					ingrid_obj.set('nodeConnec', (1.0*nodes-(2.0*mindeg)-(2.0))/(1.0*diameter-(3.0)), ind='Max')
 				except:
 					pass
 		return

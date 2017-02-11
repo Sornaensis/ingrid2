@@ -177,19 +177,19 @@ class Theorem69(Theorem):
 			ingrid_obj.set('chromaticNum', 2.0*edges/(2.0*edges-(1.0*spectralRadius**2.0)), ind='Min')
 		except:
 			pass
-		chromaticNum = ingrid_obj.get('chromaticNum', ind='Min')
-		spectralRadius = ingrid_obj.get('spectralRadius', ind='Min')
-		try:
-			ingrid_obj.set('edges', 0.5*chromaticNum*spectralRadius**2.0/(chromaticNum-(1.0)), ind='Min')
-		except:
-			pass
 		chromaticNum = ingrid_obj.get('chromaticNum', ind='Max')
-		edges = ingrid_obj.get('edges', ind='Max')
-		if chromaticNum != 'undt' and edges != 'undt':
+		spectralRadius = ingrid_obj.get('spectralRadius', ind='Max')
+		if chromaticNum != 'undt' and spectralRadius != 'undt':
 			try:
-				ingrid_obj.set('spectralRadius', 1.4142135623731*(edges-(edges/chromaticNum))**0.5, ind='Max')
+				ingrid_obj.set('edges', 0.5*chromaticNum*spectralRadius**2.0/(chromaticNum-(1.0)), ind='Max')
 			except:
 				pass
+		chromaticNum = ingrid_obj.get('chromaticNum', ind='Min')
+		edges = ingrid_obj.get('edges', ind='Min')
+		try:
+			ingrid_obj.set('spectralRadius', 1.4142135623731*(edges-(edges/chromaticNum))**0.5, ind='Min')
+		except:
+			pass
 		return
 
 class Theorem70(Theorem):

@@ -1,4 +1,4 @@
-# Revision history for invariant-delimiting-dsl
+# Revision history for tsl-compiler
 
 ## 0.1.0.0  -- YYYY-mm-dd
 

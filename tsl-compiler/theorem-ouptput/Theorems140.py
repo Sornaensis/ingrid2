@@ -1,7 +1,3 @@
-TypeError('unorderable types: float() <= complex()',)
-TypeError('unorderable types: float() <= complex()',)
-TypeError('unorderable types: float() <= complex()',)
-TypeError('unorderable types: float() >= complex()',)
 class Theorem121(Theorem):
 	def __init__(self):
 		super(Theorem121, self).__init__(121, "chromaticNum <= nodes - nodeConnec*(diameter - 3) - 2;", "")
@@ -24,12 +20,12 @@ class Theorem121(Theorem):
 				ingrid_obj.set('diameter', (-(1.0*chromaticNum)+3.0*nodeConnec+1.0*nodes-(2.0))/nodeConnec, ind='Max')
 			except:
 				pass
-		chromaticNum = ingrid_obj.get('chromaticNum', ind='Max')
-		diameter = ingrid_obj.get('diameter', ind='Max')
-		nodes = ingrid_obj.get('nodes', ind='Min')
-		if chromaticNum != 'undt' and diameter != 'undt':
+		chromaticNum = ingrid_obj.get('chromaticNum', ind='Min')
+		diameter = ingrid_obj.get('diameter', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if nodes != 'undt':
 			try:
-				ingrid_obj.set('nodeConnec', (-(1.0*chromaticNum)+1.0*nodes-(2.0))/(1.0*diameter-(3.0)), ind='Min')
+				ingrid_obj.set('nodeConnec', (-(1.0*chromaticNum)+1.0*nodes-(2.0))/(1.0*diameter-(3.0)), ind='Max')
 			except:
 				pass
 		chromaticNum = ingrid_obj.get('chromaticNum', ind='Min')
@@ -45,11 +41,32 @@ class Theorem122(Theorem):
 	def __init__(self):
 		super(Theorem122, self).__init__(122, "if edges >= nodes**2/4 then {edgeCliqueCover <= ((1/2)*nodes*(nodes-1) - edges) + (1 + sqrt(1 + 4*((1/2)*nodes*(nodes-1) - edges)))};", "")
 	def involves(self, str_invar):
-		return str_invar in ["edges","nodes"]
+		return str_invar in ["edgeCliqueCover","edges","nodes"]
 	def run(self, ingrid_obj):
 		edges_Min = ingrid_obj.get('edges', ind='Min')
 		nodes_Max = ingrid_obj.get('nodes', ind='Max')
 		if (nodes_Max != 'undt' and (edges_Min>=nodes_Max**2.0/4.0)):
+			edges = ingrid_obj.get('edges', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if nodes != 'undt':
+				try:
+					ingrid_obj.set('edgeCliqueCover', -(edges)+0.5*nodes**2.0-(0.5*nodes)+(-(4.0*edges)+2.0*nodes**2.0-(2.0*nodes)+1.0)**0.5+1.0, ind='Max')
+				except:
+					pass
+			edges = ingrid_obj.get('edges', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if nodes != 'undt':
+				try:
+					ingrid_obj.set('edgeCliqueCover', ((1.0+4.0*((1.0/2.0)*nodes*(nodes-((1.0)))-((edges))))**(1.0/2.0)+1.0)+(-((edges))+(1.0/2.0)*nodes*(-((1.0))+nodes)), ind='Max')
+				except:
+					pass
+			edges = ingrid_obj.get('edges', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if nodes != 'undt':
+				try:
+					ingrid_obj.set('edgeCliqueCover', ((1.0+4.0*((1.0/2.0)*nodes*(nodes-((1.0)))-((edges))))**(1.0/2.0)+1.0)+(-((edges))+(1.0/2.0)*nodes*(-((1.0))+nodes)), ind='Max')
+				except:
+					pass
 		return
 
 class Theorem123(Theorem):
@@ -291,6 +308,13 @@ class Theorem130(Theorem):
 			except:
 				pass
 			edges = ingrid_obj.get('edges', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			if edges != 'undt':
+				try:
+					ingrid_obj.set('maxdeg', 0.5*(nodes*(nodes-(1.0))+(-(nodes*(32.0*edges**2.0-(1.0*nodes**3.0)+2.0*nodes**2.0-(1.0*nodes))))**(1/2))/edges, ind='Min')
+				except:
+					pass
+			edges = ingrid_obj.get('edges', ind='Max')
 			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
 			if edges != 'undt' and maxdeg != 'undt':
 				try:
@@ -505,13 +529,14 @@ class Theorem137(Theorem):
 				ingrid_obj.set('edges', nodes*(-((1.0))+nodes)*(-((2.0))+maxdeg)/(2.0*(-((1.0))+(-((1.0))+maxdeg)**diam)), ind='Min')
 			except:
 				pass
-			diam = ingrid_obj.get('diam', ind='Min')
-			edges = ingrid_obj.get('edges', ind='Min')
-			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
-			try:
-				ingrid_obj.set('nodes', (1.0*maxdeg+(2.0*edges*(4.0*maxdeg-(8.0))*((maxdeg-(1.0))**diam-(1.0))+(1.0*maxdeg-(2.0))**2.0)**(1/2)-(2.0))/(2.0*maxdeg-(4.0)), ind='Min')
-			except:
-				pass
+			diam = ingrid_obj.get('diam', ind='Max')
+			edges = ingrid_obj.get('edges', ind='Max')
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			if diam != 'undt' and edges != 'undt' and maxdeg != 'undt':
+				try:
+					ingrid_obj.set('nodes', (1.0*maxdeg+(2.0*edges*(4.0*maxdeg-(8.0))*((maxdeg-(1.0))**diam-(1.0))+(1.0*maxdeg-(2.0))**2.0)**(1/2)-(2.0))/(2.0*maxdeg-(4.0)), ind='Max')
+				except:
+					pass
 		return
 
 class Theorem138(Theorem):

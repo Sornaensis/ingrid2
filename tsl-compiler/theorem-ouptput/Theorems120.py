@@ -1,3 +1,4 @@
+TypeError('unorderable types: float() >= complex()',)
 class Theorem101(Theorem):
 	def __init__(self):
 		super(Theorem101, self).__init__(101, "if connected or odd nodes then {nodeCover <= (nodes-1)*(nodes+1)/2, edgeCover <= (nodes-1)*(nodes+1)/2 } else {nodeCover <= (nodes-2)*(nodes+2)/2, edgeCover <= (nodes-2)*(nodes+2)/2 };", "")
@@ -89,12 +90,13 @@ class Theorem103(Theorem):
 			ingrid_obj.set('circumference', 1.0*maxClique*mindeg/(maxClique-(1.0)), ind='Min')
 		except:
 			pass
-		circumference = ingrid_obj.get('circumference', ind='Min')
-		mindeg = ingrid_obj.get('mindeg', ind='Min')
-		try:
-			ingrid_obj.set('maxClique', 1.0*circumference/(circumference-(mindeg)), ind='Min')
-		except:
-			pass
+		circumference = ingrid_obj.get('circumference', ind='Max')
+		mindeg = ingrid_obj.get('mindeg', ind='Max')
+		if circumference != 'undt' and mindeg != 'undt':
+			try:
+				ingrid_obj.set('maxClique', 1.0*circumference/(circumference-(mindeg)), ind='Max')
+			except:
+				pass
 		circumference = ingrid_obj.get('circumference', ind='Max')
 		maxClique = ingrid_obj.get('maxClique', ind='Max')
 		if circumference != 'undt' and maxClique != 'undt':
@@ -287,18 +289,20 @@ class Theorem110(Theorem):
 				ingrid_obj.set('circumference', 1.0*girth*mindeg-(2.0*girth)-(2.0*mindeg)+9.0, ind='Min')
 			except:
 				pass
-			circumference = ingrid_obj.get('circumference', ind='Min')
-			mindeg = ingrid_obj.get('mindeg', ind='Min')
-			try:
-				ingrid_obj.set('girth', (1.0*circumference+2.0*mindeg-(9.0))/(1.0*mindeg-(2.0)), ind='Min')
-			except:
-				pass
-			circumference = ingrid_obj.get('circumference', ind='Min')
-			girth = ingrid_obj.get('girth', ind='Min')
-			try:
-				ingrid_obj.set('mindeg', (1.0*circumference+2.0*girth-(9.0))/(1.0*girth-(2.0)), ind='Min')
-			except:
-				pass
+			circumference = ingrid_obj.get('circumference', ind='Max')
+			mindeg = ingrid_obj.get('mindeg', ind='Max')
+			if circumference != 'undt' and mindeg != 'undt':
+				try:
+					ingrid_obj.set('girth', (1.0*circumference+2.0*mindeg-(9.0))/(1.0*mindeg-(2.0)), ind='Max')
+				except:
+					pass
+			circumference = ingrid_obj.get('circumference', ind='Max')
+			girth = ingrid_obj.get('girth', ind='Max')
+			if circumference != 'undt' and girth != 'undt':
+				try:
+					ingrid_obj.set('mindeg', (1.0*circumference+2.0*girth-(9.0))/(1.0*girth-(2.0)), ind='Max')
+				except:
+					pass
 		return
 
 class Theorem111(Theorem):
@@ -358,14 +362,6 @@ class Theorem113(Theorem):
 			ingrid_obj.set('edges', 0.5*maxClique**2.0-(1.5*maxClique)+1.0*mindeg*nodeInd+1.0, ind='Min')
 		except:
 			pass
-		edges = ingrid_obj.get('edges', ind='Min')
-		mindeg = ingrid_obj.get('mindeg', ind='Max')
-		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
-		if mindeg != 'undt' and nodeInd != 'undt':
-			try:
-				ingrid_obj.set('maxClique', 0.5*(8.0*edges-(8.0*mindeg*nodeInd)+1.0)**(1/2)+1.5, ind='Min')
-			except:
-				pass
 		edges = ingrid_obj.get('edges', ind='Max')
 		maxClique = ingrid_obj.get('maxClique', ind='Max')
 		nodeInd = ingrid_obj.get('nodeInd', ind='Min')
@@ -468,12 +464,11 @@ class Theorem116(Theorem):
 					ingrid_obj.set('genus', 6.25e-2*(nodes-(4.0))**2.0+0.9375, ind='Max')
 				except:
 					pass
-			genus = ingrid_obj.get('genus', ind='Max')
-			if genus != 'undt':
-				try:
-					ingrid_obj.set('nodes', 1.0*(16.0*genus-(15.0))**0.5+4.0, ind='Max')
-				except:
-					pass
+			genus = ingrid_obj.get('genus', ind='Min')
+			try:
+				ingrid_obj.set('nodes', 1.0*(16.0*genus-(15.0))**0.5+4.0, ind='Min')
+			except:
+				pass
 		bipartite = ingrid_obj.get('bipartite')
 		nodes_Min = ingrid_obj.get('nodes', ind='Min')
 		nodes_Max = ingrid_obj.get('nodes', ind='Max')
@@ -556,20 +551,18 @@ class Theorem119(Theorem):
 					ingrid_obj.set('mindeg', nodes*(3.0*maxClique-(4.0))/(3.0*maxClique-(1.0)), ind='Max')
 				except:
 					pass
-			mindeg = ingrid_obj.get('mindeg', ind='Max')
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if mindeg != 'undt' and nodes != 'undt':
-				try:
-					ingrid_obj.set('maxClique', (0.333333333333333*mindeg-(1.33333333333333*nodes))/(mindeg-(nodes)), ind='Max')
-				except:
-					pass
-			maxClique = ingrid_obj.get('maxClique', ind='Max')
-			mindeg = ingrid_obj.get('mindeg', ind='Max')
-			if maxClique != 'undt' and mindeg != 'undt':
-				try:
-					ingrid_obj.set('nodes', mindeg*(3.0*maxClique-(1.0))/(3.0*maxClique-(4.0)), ind='Max')
-				except:
-					pass
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			try:
+				ingrid_obj.set('maxClique', (0.333333333333333*mindeg-(1.33333333333333*nodes))/(mindeg-(nodes)), ind='Min')
+			except:
+				pass
+			maxClique = ingrid_obj.get('maxClique', ind='Min')
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			try:
+				ingrid_obj.set('nodes', mindeg*(3.0*maxClique-(1.0))/(3.0*maxClique-(4.0)), ind='Min')
+			except:
+				pass
 		return
 
 class Theorem120(Theorem):
@@ -589,11 +582,11 @@ class Theorem120(Theorem):
 				ingrid_obj.set('e', 0.5*chromaticNum**2.0-(1.5*chromaticNum)+1.0*nodes+1.0, ind='Min')
 			except:
 				pass
-			e = ingrid_obj.get('e', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if nodes != 'undt':
+			e = ingrid_obj.get('e', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			if e != 'undt':
 				try:
-					ingrid_obj.set('chromaticNum', 0.5*(8.0*e-(8.0*nodes)+1.0)**(1/2)+1.5, ind='Min')
+					ingrid_obj.set('chromaticNum', 0.5*(8.0*e-(8.0*nodes)+1.0)**(1/2)+1.5, ind='Max')
 				except:
 					pass
 			chromaticNum = ingrid_obj.get('chromaticNum', ind='Max')

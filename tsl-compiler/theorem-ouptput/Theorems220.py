@@ -1,4 +1,6 @@
 TypeError('unorderable types: float() <= complex()',)
+TypeError('unorderable types: float() <= complex()',)
+TypeError('unorderable types: float() <= complex()',)
 class Theorem201(Theorem):
 	def __init__(self):
 		super(Theorem201, self).__init__(201, "if nodes >= 6 and connected and nodes >= 3*edgeInd-1 then {nodeCover <= 2*edgeInd - mindeg};", "")
@@ -99,7 +101,7 @@ class Theorem204(Theorem):
 	def __init__(self):
 		super(Theorem204, self).__init__(204, "if maxClique == 2 and nodes < 2*nodeCover and nodeCover <= 3*nodes/5 then {nodeCover <= (2*nodes-sqrt(5*edges - nodes**2))/5};", "")
 	def involves(self, str_invar):
-		return str_invar in ["edges","maxClique","nodeCover","nodes"]
+		return str_invar in ["maxClique","nodeCover","nodes"]
 	def run(self, ingrid_obj):
 		maxClique_Min = ingrid_obj.get('maxClique', ind='Min')
 		maxClique_Max = ingrid_obj.get('maxClique', ind='Max')
@@ -108,27 +110,6 @@ class Theorem204(Theorem):
 		nodeCover_Max = ingrid_obj.get('nodeCover', ind='Max')
 		nodes_Min = ingrid_obj.get('nodes', ind='Min')
 		if (maxClique_Max==maxClique_Min and (maxClique_Min==2.0)) and (nodes_Max != 'undt' and (nodes_Max<2.0*nodeCover_Min)) and (nodeCover_Max != 'undt' and (nodeCover_Max<=3.0*nodes_Min/5.0)):
-			edges = ingrid_obj.get('edges', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if nodes != 'undt':
-				try:
-					ingrid_obj.set('nodeCover', 0.4*nodes-(0.2*(5.0*edges-(nodes**2.0))**0.5), ind='Max')
-				except:
-					pass
-			nodeCover = ingrid_obj.get('nodeCover', ind='Max')
-			nodes = ingrid_obj.get('nodes', ind='Min')
-			if nodeCover != 'undt':
-				try:
-					ingrid_obj.set('edges', 0.2*nodes**2.0+0.2*(-(5.0*nodeCover)+2.0*nodes)**2.0, ind='Min')
-				except:
-					pass
-			edges = ingrid_obj.get('edges', ind='Max')
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if edges != 'undt' and nodes != 'undt':
-				try:
-					ingrid_obj.set('nodeCover', (-(((5.0*edges-((nodes**2.0)))**(1.0/2.0)))+2.0*nodes)/5.0, ind='Max')
-				except:
-					pass
 		return
 
 class Theorem205(Theorem):
@@ -225,13 +206,12 @@ class Theorem207(Theorem):
 				ingrid_obj.set('maxdeg', (0.5*nodeCover+0.1*nodes+0.5*(1.0*nodeCover**2.0-(0.4*nodeCover*nodes)+4.84*nodes**2.0)**(1/2))/nodes, ind='Min')
 			except:
 				pass
-			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
-			nodeCover = ingrid_obj.get('nodeCover', ind='Max')
-			if maxdeg != 'undt' and nodeCover != 'undt':
-				try:
-					ingrid_obj.set('nodes', nodeCover*(-(1.0*maxdeg)+0.2)/(-(1.0*maxdeg**2.0)+0.2*maxdeg+1.2), ind='Max')
-				except:
-					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+			nodeCover = ingrid_obj.get('nodeCover', ind='Min')
+			try:
+				ingrid_obj.set('nodes', nodeCover*(-(1.0*maxdeg)+0.2)/(-(1.0*maxdeg**2.0)+0.2*maxdeg+1.2), ind='Min')
+			except:
+				pass
 		elif (nodes_Min>=3.0) and (connected == True) and (complete == False) and (cycle == False) or (cycle == True) and (nodes_Min == nodes_Max) and (even(nodes_Min) and even(nodes_Max)):
 			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
 			mindeg = ingrid_obj.get('mindeg', ind='Max')
@@ -239,6 +219,14 @@ class Theorem207(Theorem):
 			if maxdeg != 'undt' and mindeg != 'undt' and nodes != 'undt':
 				try:
 					ingrid_obj.set('nodeCover', 1.0*(maxdeg**2.0*mindeg*nodes+maxdeg**2.0*nodes-(maxdeg**2.0)+maxdeg*mindeg-(mindeg*nodes)-(nodes))/(maxdeg*(maxdeg*mindeg+maxdeg+mindeg+1.0)), ind='Max')
+				except:
+					pass
+			mindeg = ingrid_obj.get('mindeg', ind='Max')
+			nodeCover = ingrid_obj.get('nodeCover', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if mindeg != 'undt' and nodeCover != 'undt' and nodes != 'undt':
+				try:
+					ingrid_obj.set('maxdeg', 0.5*(-(nodeCover*mindeg)-(nodeCover)+mindeg+(1.0*nodeCover**2.0*mindeg**2.0+2.0*nodeCover**2.0*mindeg+1.0*nodeCover**2.0-(4.0*nodeCover*mindeg**2.0*nodes)-(2.0*nodeCover*mindeg**2.0)-(8.0*nodeCover*mindeg*nodes)-(2.0*nodeCover*mindeg)-(4.0*nodeCover*nodes)+4.0*mindeg**2.0*nodes**2.0+1.0*mindeg**2.0+8.0*mindeg*nodes**2.0-(4.0*mindeg*nodes)+4.0*nodes**2.0-(4.0*nodes))**(1/2))/(nodeCover*mindeg+nodeCover-(mindeg*nodes)-(nodes)+1.0), ind='Max')
 				except:
 					pass
 			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
@@ -304,12 +292,12 @@ class Theorem209(Theorem):
 				ingrid_obj.set('nodeCover', 1.0*nodes*(maxClique+maxdeg-(1.0))/(maxClique+maxdeg+1.0), ind='Max')
 			except:
 				pass
-		maxdeg = ingrid_obj.get('maxdeg', ind='Min')
-		nodeCover = ingrid_obj.get('nodeCover', ind='Max')
-		nodes = ingrid_obj.get('nodes', ind='Min')
-		if nodeCover != 'undt':
+		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+		nodeCover = ingrid_obj.get('nodeCover', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if maxdeg != 'undt' and nodes != 'undt':
 			try:
-				ingrid_obj.set('maxClique', 1.0*(-(nodeCover*maxdeg)-(nodeCover)+maxdeg*nodes-(nodes))/(nodeCover-(nodes)), ind='Min')
+				ingrid_obj.set('maxClique', 1.0*(-(nodeCover*maxdeg)-(nodeCover)+maxdeg*nodes-(nodes))/(nodeCover-(nodes)), ind='Max')
 			except:
 				pass
 		maxClique = ingrid_obj.get('maxClique', ind='Min')

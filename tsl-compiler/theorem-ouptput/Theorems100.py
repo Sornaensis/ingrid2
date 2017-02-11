@@ -87,12 +87,11 @@ class Theorem83(Theorem):
 					ingrid_obj.set('arboricity', 0.25*(48.0*genus+1.0)**0.5+9.0, ind='Max')
 				except:
 					pass
-			arboricity = ingrid_obj.get('arboricity', ind='Max')
-			if arboricity != 'undt':
-				try:
-					ingrid_obj.set('genus', 0.333333333333333*(1.0*arboricity-(9.0))**2.0-(2.08333333333333e-2), ind='Max')
-				except:
-					pass
+			arboricity = ingrid_obj.get('arboricity', ind='Min')
+			try:
+				ingrid_obj.set('genus', 0.333333333333333*(1.0*arboricity-(9.0))**2.0-(2.08333333333333e-2), ind='Min')
+			except:
+				pass
 		return
 
 class Theorem84(Theorem):
@@ -161,12 +160,11 @@ class Theorem87(Theorem):
 					ingrid_obj.set('mindeg', 0.5*(48.0*genus+1.0)**0.5+5.0, ind='Max')
 				except:
 					pass
-			mindeg = ingrid_obj.get('mindeg', ind='Max')
-			if mindeg != 'undt':
-				try:
-					ingrid_obj.set('genus', 8.33333333333333e-2*(1.0*mindeg-(5.0))**2.0-(2.08333333333333e-2), ind='Max')
-				except:
-					pass
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			try:
+				ingrid_obj.set('genus', 8.33333333333333e-2*(1.0*mindeg-(5.0))**2.0-(2.08333333333333e-2), ind='Min')
+			except:
+				pass
 		return
 
 class Theorem88(Theorem):
