@@ -303,11 +303,11 @@ class Theorem250(Theorem):
 				ingrid_obj.set('nodeCover', 1.0*bandwidth*nodes/(bandwidth+1.0), ind='Max')
 			except:
 				pass
-		nodeCover = ingrid_obj.get('nodeCover', ind='Max')
-		nodes = ingrid_obj.get('nodes', ind='Min')
+		nodeCover = ingrid_obj.get('nodeCover', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Max')
 		if nodeCover != 'undt':
 			try:
-				ingrid_obj.set('bandwidth', -(1.0*nodeCover/(nodeCover-(nodes))), ind='Max')
+				ingrid_obj.set('bandwidth', -(1.0*nodeCover/(nodeCover-(nodes))), ind='Min')
 			except:
 				pass
 		bandwidth = ingrid_obj.get('bandwidth', ind='Min')
