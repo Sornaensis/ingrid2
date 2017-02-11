@@ -4,6 +4,7 @@ from tempfile import NamedTemporaryFile
 from ntpath import basename
 from os import remove
 from string import replace
+import sys
 
 '''
 def test():
