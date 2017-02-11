@@ -457,13 +457,13 @@ class IngridObj:
                                                 'Name': inv['Name']}
             json_dict['Theorems'] = self.theorems_used
             json_dict["Error"] = {"ErrorType": self.error_inv, "ErrMsg": self.error_msg}
-            
 
         json_dict['Addenda'] = self.original_json['Addenda'] 
-        sys.stderr.write('ERROR finished dict writing \n')
-        tttttt = json.dumps(json_dict)
-        sys.stderr.write(tttttt + '\n')
-        sys.stderr.write(str(json.loads(tttttt)) + '\n')
+        #sys.stderr.write('ERROR finished dict writing \n')
+        #tttttt = json.dumps(json_dict)
+        #sys.stderr.write(tttttt + '\n')
+        #sys.stderr.write(str(json.loads(tttttt)) + '\n')
+        
         return json_dict
 
 
