@@ -1,7 +1,7 @@
 {
     "theorems":[
 {
-            "text": "if regular then { nodeInd <= nodes/2 + (maxClique**2 + 3*maxClique - 2)/2*mindeg };",
+            "text": "if regular then { nodeInd <= nodes/2 + (maxClique**2 + 3*maxClique - 2)/(2*mindeg) };",
             "name": "Theorem",
             "idnum": 81,
             "disp": ""

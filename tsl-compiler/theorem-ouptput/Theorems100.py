@@ -253,42 +253,6 @@ class Theorem91(Theorem):
 	def involves(self, str_invar):
 		return str_invar in ["domination","girth","mindeg","nodes"]
 	def run(self, ingrid_obj):
-		mindeg_Min = ingrid_obj.get('mindeg', ind='Min')
-		domination_Min = ingrid_obj.get('domination', ind='Min')
-		domination_Max = ingrid_obj.get('domination', ind='Max')
-		girth_Min = ingrid_obj.get('girth', ind='Min')
-		girth_Max = ingrid_obj.get('girth', ind='Max')
-		if (mindeg_Min>=3.0) and (domination_Min>=1.0) and (domination_Max != 'undt' and (domination_Max<=(girth_Min-(1.0))/4.0)) and (girth_Max != 'undt' and (domination_Min>=(girth_Max-(1.0))/4.0)):
-			domination = ingrid_obj.get('domination', ind='Min')
-			girth = ingrid_obj.get('girth', ind='Min')
-			mindeg = ingrid_obj.get('mindeg', ind='Min')
-			try:
-				ingrid_obj.set('nodes', girth*(mindeg-(1.0))**domination, ind='Min')
-			except:
-				pass
-			domination = ingrid_obj.get('domination', ind='Min')
-			girth = ingrid_obj.get('girth', ind='Min')
-			mindeg = ingrid_obj.get('mindeg', ind='Min')
-			try:
-				ingrid_obj.set('nodes', girth*(-((1.0))+mindeg)**domination, ind='Min')
-			except:
-				pass
-			domination = ingrid_obj.get('domination', ind='Min')
-			mindeg = ingrid_obj.get('mindeg', ind='Max')
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if mindeg != 'undt' and nodes != 'undt':
-				try:
-					ingrid_obj.set('girth', nodes*(mindeg-(1.0))**(-(domination)), ind='Max')
-				except:
-					pass
-			domination = ingrid_obj.get('domination', ind='Min')
-			girth = ingrid_obj.get('girth', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if nodes != 'undt':
-				try:
-					ingrid_obj.set('mindeg', (nodes/girth)**(1.0/domination)+1.0, ind='Max')
-				except:
-					pass
 		return
 
 class Theorem92(Theorem):
