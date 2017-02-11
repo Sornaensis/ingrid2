@@ -141,6 +141,9 @@ class Invariant:
         if self.type == 'Bool':
             exit()
 
+        if val == 'undt':
+            sys.stderr.write(self.name +  ' is set to undt\n')
+            
         # gets floor for integer invariants
         if self.type == 'Integer' and val != 'undt':
             if abs(val - round(val)) < 0.0001:
@@ -157,6 +160,7 @@ class Invariant:
             return True, False
         elif val == 'undt' and self.value['Max'] != 'undt':
             trace_msg = 'Error: the maximum is defined as [' + str(self.value['Max']) + '], but it is being set to undetermined.'
+            sys.stderr.write(trace_msg + '\n')
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
             return False, False
         elif self.value['Max'] == 'undt' or val < self.value['Max']:
