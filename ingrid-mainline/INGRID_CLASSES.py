@@ -26,15 +26,13 @@ class Invariant:
             else:
                 self.value = (val == 'True')
         elif self.type == 'Integer':
-            if val['Max'] == 'undt':
-                self.value = {'Min': int(val['Min']), 'Max': 'undt'}
-            else:
-                self.value = {'Min': int(val['Min']), 'Max': int(val['Max'])}
+            valmin = 'undt' if val['Min'] == 'undt' else int(val['Min'])
+            valmax = 'undt' if val['Max'] == 'undt' else int(val['Max'])
+            self.value = {'Min': valmin, 'Max': valmax}
         else:
-            if val['Max'] == 'undt':
-                self.value = {'Min': float(val['Min']), 'Max': 'undt'}
-            else:
-                self.value = {'Min': float(val['Min']), 'Max': float(val['Max'])}
+            valmin = 'undt' if val['Min'] == 'undt' else float(val['Min'])
+            valmax = 'undt' if val['Max'] == 'undt' else float(val['Max'])
+            self.value = {'Min': valmin, 'Max': valmax}
 
     def __str__(self):
         """
@@ -99,17 +97,24 @@ class Invariant:
             exit()
         
         # gets ceiling for integer invariants
-        if self.type == 'Integer':
+        if self.type == 'Integer' and val != 'undt':
             if abs(val - round(val)) < 0.0001:
                 val = int(round(val))
             else:
                 val = int(val)
+        
+        if val == 'undt' and self.value['Min'] != 'undt':
+            trace_msg = 'The minimum value should be undetermined but it is defined';
+            self.trace.append({"Message": trace_msg, 'TheoremId': thm_id})
+            return False, False
+        elif val == 'undt' and self.value['Min'] == 'undt':
+            return True, False
             
         # a change occurs
         if thm_id == -1 and self.value['Min'] != val:
             trace_msg = 'The minimum of ' + self.name + ' from ' + str(self.value['Min']) + ' to ' + str(val)
             self.value['Min'] = val
-        elif val > self.value['Min']:
+        elif self.value['Min'] == 'undt' or val > self.value['Min']:
             trace_msg = 'The minimum of ' + self.name + ' from ' + str(self.value['Min']) + ' to ' + str(val)
             self.value['Min'] = val
         else:
@@ -155,7 +160,7 @@ class Invariant:
         # a change occurs
 
         if val == 'undt' and self.value['Max'] != 'undt':
-            trace_msg = 'The maximum value should be undetermined but is not';
+            trace_msg = 'The maximum value should be undetermined but it is defined';
             self.trace.append({"Message": trace_msg, 'TheoremId': thm_id})
             return False, False
         elif val == 'undt' and self.value['Max'] == 'undt':
@@ -173,7 +178,7 @@ class Invariant:
             return True, False
 
         # a conflict occurs
-        if self.value['Min'] > self.value['Max']:
+        if self.value['Min'] == 'undt' or self.value['Min'] > self.value['Max']:
             # print('Error: You set the maximum less than the minimum')
             trace_msg += '. Error: the maximum [' + str(self.value['Max']) + '] is less than the minimum [' + str(self.value['Min']) + ']'
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
@@ -220,7 +225,12 @@ class Invariant:
             return True
         else:
             # conflict occurred
-            if self.value['Max'] != 'undt' and self.value['Min'] > self.value['Max']:
+            if self.value['Min'] == 'undt' and self.value['Max'] != 'undt':
+                trace_msg = 'The minimum has been set to ' + str(self.value['Min']) + ', and the maximum to ' + str(self.value['Max'])
+                trace_msg += '. Error: the minimum is undetermined and is the maximum defined.'
+                self.trace.append({'Message': trace_msg, 'TheoremId': -1})
+                return False
+            elif self.value['Max'] != 'undt' and self.value['Min'] > self.value['Max']:
                 trace_msg = 'The minimum has been set to ' + str(self.value['Min']) + ', and the maximum to ' + str(self.value['Max'])
                 trace_msg += '. Error: the minimum [' + str(self.value['Min']) + '] is greater than the maximum [' + str(self.value['Max']) + ']'
                 self.trace.append({'Message': trace_msg, 'TheoremId': -1})
