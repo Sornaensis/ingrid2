@@ -4,7 +4,7 @@ from tempfile import NamedTemporaryFile
 from ntpath import basename
 from os import remove
 from string import replace
- 
+
 # TODO implement creating addenda
 def create_addenda(thm_eqn):
     # print 'TODO call addenda creator'
@@ -79,7 +79,6 @@ def run_mainline_old(json_obj, thm_file_name):
         addenda_thms = get_addenda_thms(json_dict['Addenda'])
         if isinstance(addenda_thms, basestring):
             json_dict['Error'] = {'ErrorType': 'TheoremParser', 'ErrMsg': addenda_thms}
-            # print 'ERROR'
             return json_dict
         
         # gets base theorems

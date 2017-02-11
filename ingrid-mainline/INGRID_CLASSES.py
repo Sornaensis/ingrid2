@@ -228,52 +228,7 @@ class Invariant:
                 trace_msg = 'The minimum has been set to ' + str(self.value['Min']) + ', and the maximum to ' + str(self.value['Max'])
                 self.trace.append({'Message': trace_msg, 'TheoremId': -1})
                 return True
-    '''        
-    def set_val(self, val):
-        """
-        Sets the value of an invariant. Only used for user inputs.
-
-        :param val: The value of the invariant. For bool it is 'undt', True, or False. For integer and real invariants,
-        it is a dictionary containing 'Min' and 'Max'
-        :return: returns two boolean values: a, b. a is True if no error has occurred and False if an error has
-        occurred. b is True if the minumum was changed and False if there was no change.
-        """        
-        if self.type == 'Bool':
-            if val != 'undt':
-                return self.set_bool(val == 'True')
-            else:
-                return self.set_bool(val)
-        else:
-            if val['Max'] == 'undt':
-                if self.type == 'Integer':
-                    val = {'Min': int(val['Min']), 'Max': 'undt'}
-                else:
-                    val = {'Min': float(val['Min']), 'Max': 'undt'}
-            else:
-                if self.type == 'Integer':
-                    val = {'Min': int(val['Min']), 'Max': int(val['Max'])}
-                else:
-                    val = {'Min': float(val['Min']), 'Max': float(val['Max'])}
-
-            # error occurs
-            if val['Max'] != 'undt' and val['Min'] > val['Max']:
-                self.value = val
-                trace_msg = 'The minimum has been set to ' + str(val['Min']) + ', and the maximum to ' + str(val['Max'])
-                trace_msg += '. Error: the minimum [' + str(val['Min']) + '] is greater than the maximum [' + str(val['Max']) + ']'
-                self.trace.append({'Message': trace_msg, 'TheoremId': -1})
-                return False, False
-
-            if val['Min'] != self.value['Min'] and val['Max'] != self.value['Max']:
-                trace_msg = 'The minimum has been set to ' + str(val['Min']) + ', and the maximum to ' + str(val['Max'])
-                self.trace.append({'Message': trace_msg, 'TheoremId': -1})
-                self.value = val
-                return True, True
-            else:
-                print 'ayy lmao'
-                a, b = self.set_min(val['Min'], -1)
-                c, d = self.set_max(val['Max'], -1)
-                return (a and c), (b or d)
-    '''
+                
 
 # The queue object which holds the string invariants
 class Queue:
