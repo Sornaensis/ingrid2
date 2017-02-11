@@ -80,7 +80,6 @@ class Invariant:
         return self.value
 
     def set_min(self, val, thm_id=-1):
-        print self.name, self.value, " ==> ", val, " : Theorem ", thm_id
         """
         Sets the minimum of an integer or real invariant. A minimum is only set if it is larger than the current minimum
         (unless the user input the minimum). This checks for conflicts: if a minimum is larger than the maximum, then
@@ -94,7 +93,6 @@ class Invariant:
         occurred. b is True if the minumum was changed and False if there was no change.
         """
         if self.type == 'Bool':
-            print('Error: You set min of a bool invariant')
             exit()
         
         # gets ceiling for integer invariants
@@ -119,7 +117,6 @@ class Invariant:
             return True, True
         # a conflict occurs
         elif self.value['Min'] > self.value['Max']:
-            print('Error: You set the minimum larger than the maximum')
             trace_msg += '. Error: the minimum [' + str(self.value['Min']) + '] is greater than the maximum [' + str(self.value['Max']) + ']'
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
             return False, True
@@ -141,7 +138,6 @@ class Invariant:
         occurred. b is True if the maximum was changed and False if there was no change.
         """
         if self.type == 'Bool':
-            print('Error: You set max to a bool invariant')
             exit()
 
         # gets floor for integer invariants
@@ -170,7 +166,6 @@ class Invariant:
 
         # a conflict occurs
         if self.value['Min'] > self.value['Max']:
-            print('Error: You set the maximum less than the minimum')
             trace_msg += '. Error: the maximum [' + str(self.value['Max']) + '] is less than the minimum [' + str(self.value['Min']) + ']'
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
             return False, True
@@ -190,7 +185,6 @@ class Invariant:
         occurred. b is True if the minumum was changed and False if there was no change.
         """
         if self.type != 'Bool':
-            print('Error: You setting a bool invariant to a number')
             exit()
 
         # change occurs
@@ -201,7 +195,6 @@ class Invariant:
                 self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
                 return True, True
             else:
-                print('Error: You set a boolean invariant from' + str(self.value) + ' to ' + str(val))
                 trace_msg = 'Error: ' + self.name + ' was changed from ' + str(self.value) + ' to ' + str(val)
                 self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
                 self.value = val
