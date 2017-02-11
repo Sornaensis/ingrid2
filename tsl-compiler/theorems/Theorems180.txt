@@ -98,10 +98,10 @@
             "disp": ""
         },
         {
-            "text": "if tree then { bandwidth <= nodes/2 };",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 177,
-            "disp": ""
+            "disp": "Replaced by r280"
         },
         {
             "text": "nodeCliqueCover <= nodes - mindeg - (nodes - mindeg)/max(4,nodeInd + 1);",

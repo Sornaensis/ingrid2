@@ -566,51 +566,9 @@ class Theorem119(Theorem):
 
 class Theorem120(Theorem):
 	def __init__(self):
-		super(Theorem120, self).__init__(120, "if hamiltonian and p>=chromaticNum-1 and chromaticNum >= 4 then { e>= (chromaticNum-1)*(chromaticNum-2)/2 + nodes }; if hamiltonian and chromaticNum==3 and even nodes then {edges >= nodes +1};", "")
+		super(Theorem120, self).__init__(120, "if hamiltonian and nodes>=chromaticNum-1 and chromaticNum >= 4 then { edges>= (chromaticNum-1)*(chromaticNum-2)/2 + nodes }; if hamiltonian and chromaticNum==3 and even nodes then {edges >= nodes +1};", "")
 	def involves(self, str_invar):
 		return str_invar in ["chromaticNum","e","hamiltonian","nodes","p","edges"]
 	def run(self, ingrid_obj):
-		hamiltonian = ingrid_obj.get('hamiltonian')
-		p_Min = ingrid_obj.get('p', ind='Min')
-		chromaticNum_Max = ingrid_obj.get('chromaticNum', ind='Max')
-		chromaticNum_Min = ingrid_obj.get('chromaticNum', ind='Min')
-		if (hamiltonian == True) and (chromaticNum_Max != 'undt' and (p_Min>=chromaticNum_Max-(1.0))) and (chromaticNum_Min>=4.0):
-			chromaticNum = ingrid_obj.get('chromaticNum', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Min')
-			try:
-				ingrid_obj.set('e', 0.5*chromaticNum**2.0-(1.5*chromaticNum)+1.0*nodes+1.0, ind='Min')
-			except:
-				pass
-			e = ingrid_obj.get('e', ind='Max')
-			nodes = ingrid_obj.get('nodes', ind='Min')
-			if e != 'undt':
-				try:
-					ingrid_obj.set('chromaticNum', 0.5*(8.0*e-(8.0*nodes)+1.0)**(1/2)+1.5, ind='Max')
-				except:
-					pass
-			chromaticNum = ingrid_obj.get('chromaticNum', ind='Max')
-			e = ingrid_obj.get('e', ind='Max')
-			if chromaticNum != 'undt' and e != 'undt':
-				try:
-					ingrid_obj.set('nodes', 1.0*e-(0.5*chromaticNum**2.0)+1.5*chromaticNum-(1.0), ind='Max')
-				except:
-					pass
-		hamiltonian = ingrid_obj.get('hamiltonian')
-		chromaticNum_Min = ingrid_obj.get('chromaticNum', ind='Min')
-		chromaticNum_Max = ingrid_obj.get('chromaticNum', ind='Max')
-		nodes_Min = ingrid_obj.get('nodes', ind='Min')
-		nodes_Max = ingrid_obj.get('nodes', ind='Max')
-		if (hamiltonian == True) and (chromaticNum_Max==chromaticNum_Min and (chromaticNum_Min==3.0)) and (even(nodes_Min) and even(nodes_Max)):
-			nodes = ingrid_obj.get('nodes', ind='Min')
-			try:
-				ingrid_obj.set('edges', 1.0*nodes+1.0, ind='Min')
-			except:
-				pass
-			edges = ingrid_obj.get('edges', ind='Max')
-			if edges != 'undt':
-				try:
-					ingrid_obj.set('nodes', 1.0*edges-(1.0), ind='Max')
-				except:
-					pass
 		return
 

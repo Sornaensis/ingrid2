@@ -384,33 +384,10 @@ class Theorem153(Theorem):
 
 class Theorem154(Theorem):
 	def __init__(self):
-		super(Theorem154, self).__init__(154, "if maxdeg >= 3 then { nodes <= 1 + maxdeg*((maxdeg - 1)**diameter - 1 )/(maxdeg - 2) };", "")
+		super(Theorem154, self).__init__(154, "null;", "")
 	def involves(self, str_invar):
 		return str_invar in ["diameter","maxdeg","nodes"]
 	def run(self, ingrid_obj):
-		maxdeg_Min = ingrid_obj.get('maxdeg', ind='Min')
-		if (maxdeg_Min>=3.0):
-			diameter = ingrid_obj.get('diameter', ind='Max')
-			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
-			if diameter != 'undt' and maxdeg != 'undt':
-				try:
-					ingrid_obj.set('nodes', (maxdeg*(maxdeg-(1.0))**diameter-(2.0))/(maxdeg-(2.0)), ind='Max')
-				except:
-					pass
-			diameter = ingrid_obj.get('diameter', ind='Max')
-			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
-			if diameter != 'undt' and maxdeg != 'undt':
-				try:
-					ingrid_obj.set('nodes', maxdeg*(-((1.0))+(-((1.0))+maxdeg)**diameter)/(-((2.0))+maxdeg)+1.0, ind='Max')
-				except:
-					pass
-			diameter = ingrid_obj.get('diameter', ind='Max')
-			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
-			if diameter != 'undt' and maxdeg != 'undt':
-				try:
-					ingrid_obj.set('nodes', maxdeg*(-((1.0))+(-((1.0))+maxdeg)**diameter)/(-((2.0))+maxdeg)+1.0, ind='Max')
-				except:
-					pass
 		return
 
 class Theorem155(Theorem):

@@ -184,10 +184,10 @@ class Theorem69(Theorem):
 				ingrid_obj.set('edges', 0.5*chromaticNum*spectralRadius**2.0/(chromaticNum-(1.0)), ind='Max')
 			except:
 				pass
-		chromaticNum = ingrid_obj.get('chromaticNum', ind='Min')
-		edges = ingrid_obj.get('edges', ind='Min')
+		chromaticNum = ingrid_obj.get('chromaticNum', ind='Max')
+		edges = ingrid_obj.get('edges', ind='Max')
 		try:
-			ingrid_obj.set('spectralRadius', 1.4142135623731*(edges-(edges/chromaticNum))**0.5, ind='Min')
+			ingrid_obj.set('spectralRadius', 1.4142135623731*(edges-(edges/chromaticNum))**0.5, ind='Max')
 		except:
 			pass
 		return
@@ -405,31 +405,11 @@ class Theorem74(Theorem):
 	def involves(self, str_invar):
 		return str_invar in ["bandwidth","nodeInd","nodes"]
 	def run(self, ingrid_obj):
-		nodeInd = ingrid_obj.get('nodeInd', ind='Min')
-		nodes = ingrid_obj.get('nodes', ind='Max')
-		if nodes != 'undt':
-			try:
-				ingrid_obj.set('bandwidth', -(0.5*nodeInd)+1.0*nodes-(1.0), ind='Max')
-			except:
-				pass
-		bandwidth = ingrid_obj.get('bandwidth', ind='Min')
-		nodes = ingrid_obj.get('nodes', ind='Max')
-		if nodes != 'undt':
-			try:
-				ingrid_obj.set('nodeInd', -(2.0*bandwidth)+2.0*nodes-(2.0), ind='Max')
-			except:
-				pass
-		bandwidth = ingrid_obj.get('bandwidth', ind='Min')
-		nodeInd = ingrid_obj.get('nodeInd', ind='Min')
-		try:
-			ingrid_obj.set('nodes', 1.0*bandwidth+0.5*nodeInd+1.0, ind='Min')
-		except:
-			pass
 		return
 
 class Theorem75(Theorem):
 	def __init__(self):
-		super(Theorem75, self).__init__(75, "edges >= (nodes/nodeInd)*(nodes-nodeInd*(nodes/nodeInd+1)/2);", "")
+		super(Theorem75, self).__init__(75, "edges >= (nodes/nodeInd)*(nodes-nodeInd*(nodes/nodeInd+1)/2);", "Turan's Theorem")
 	def involves(self, str_invar):
 		return str_invar in ["edges","nodeInd","nodes"]
 	def run(self, ingrid_obj):

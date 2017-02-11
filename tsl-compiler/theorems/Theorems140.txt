@@ -50,7 +50,7 @@
             "disp": ""
         },
         {
-            "text": "if defined girth and girth > 3 then {mindeg <= (nodes - diam + 3*(diam/3 + 1) -3)/ (diam/3+1)};",
+            "text": "if defined girth and girth > 3 then {mindeg <= (nodes - diameter + 3*(diameter/3 + 1) -3)/ (diameter/3+1)};",
             "name": "Theorem",
             "idnum": 129,
             "disp": ""
@@ -98,7 +98,7 @@
             "disp": ""
         },
         {
-            "text": "if defined diam then {edges >= nodes * (nodes - 1)*(maxdeg - 2)/(2*((maxdeg-1)**diam - 1))};",
+            "text": "null;",
             "name": "Theorem", 
             "idnum": 137,
             "disp": ""

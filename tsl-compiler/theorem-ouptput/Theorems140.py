@@ -501,42 +501,10 @@ class Theorem136(Theorem):
 
 class Theorem137(Theorem):
 	def __init__(self):
-		super(Theorem137, self).__init__(137, "if defined diam then {edges >= nodes * (nodes - 1)*(maxdeg - 2)/(2*((maxdeg-1)**diam - 1))};", "")
+		super(Theorem137, self).__init__(137, "null;", "")
 	def involves(self, str_invar):
 		return str_invar in ["diam","edges","maxdeg","nodes"]
 	def run(self, ingrid_obj):
-		diam_Max = ingrid_obj.get('diam', ind = 'Max')
-		if (diam_Max != 'undt'):
-			diam = ingrid_obj.get('diam', ind='Max')
-			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Min')
-			if diam != 'undt':
-				try:
-					ingrid_obj.set('edges', 0.5*nodes*(maxdeg*nodes-(1.0*maxdeg)-(2.0*nodes)+2.0)/((maxdeg-(1.0))**diam-(1.0)), ind='Min')
-				except:
-					pass
-			diam = ingrid_obj.get('diam', ind='Min')
-			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Min')
-			try:
-				ingrid_obj.set('edges', nodes*(-((1.0))+nodes)*(-((2.0))+maxdeg)/(2.0*(-((1.0))+(-((1.0))+maxdeg)**diam)), ind='Min')
-			except:
-				pass
-			diam = ingrid_obj.get('diam', ind='Min')
-			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Min')
-			try:
-				ingrid_obj.set('edges', nodes*(-((1.0))+nodes)*(-((2.0))+maxdeg)/(2.0*(-((1.0))+(-((1.0))+maxdeg)**diam)), ind='Min')
-			except:
-				pass
-			diam = ingrid_obj.get('diam', ind='Max')
-			edges = ingrid_obj.get('edges', ind='Max')
-			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
-			if diam != 'undt' and edges != 'undt' and maxdeg != 'undt':
-				try:
-					ingrid_obj.set('nodes', (1.0*maxdeg+(2.0*edges*(4.0*maxdeg-(8.0))*((maxdeg-(1.0))**diam-(1.0))+(1.0*maxdeg-(2.0))**2.0)**(1/2)-(2.0))/(2.0*maxdeg-(4.0)), ind='Max')
-				except:
-					pass
 		return
 
 class Theorem138(Theorem):

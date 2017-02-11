@@ -158,6 +158,10 @@ class Invariant:
             self.value['Max'] = val
         elif thm_id == -1 and self.value['Max'] == val:
             return True, False
+        elif val == 'undt' and self.value['Max'] != 'undt':
+            trace_msg += '. Error: the maximum is defined as [' + str(self.value['Max']) + '], but it is being set to undetermined.'
+            self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
+            return False, True
         elif self.value['Max'] == 'undt' or val < self.value['Max']:
             trace_msg = 'The maximum of ' + self.name + ' from ' + str(self.value['Max']) + ' to ' + str(val)
             self.value['Max'] = val

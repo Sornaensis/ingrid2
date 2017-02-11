@@ -104,7 +104,7 @@
             "disp": ""
         },
         {
-            "text": "edgeCover <= nodes - nodes/chromaticNum;",
+            "text": "nodeCover <= nodes - nodes/chromaticNum;",
             "name": "Theorem",
             "idnum": 198,
             "disp": ""
