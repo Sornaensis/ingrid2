@@ -349,7 +349,7 @@ class IngridObj:
         # saves the original invariants just in case of error
         sys.stderr.write('GOT TO 1\n')
         self.original_json = inv_dict.copy()
-        invars = inv_dict['Invariants'].copy()
+        invars = copy.deepcopy(inv_dict['Invariants'])
         for key in invars.keys():
             self.invariants[key] = Invariant(name=invars[key]['Name'], stype=invars[key]['Type'], val=invars[key]['Value'])#, trace=invars[key]['Trace'])
             success = True
@@ -462,7 +462,7 @@ class IngridObj:
         sys.stderr.write('ERROR finished dict writing \n')
         tttttt = json.dumps(json_dict)
         sys.stderr.write(tttttt + '\n')
-        sys.stderr.write(str(json.loads(tttttt) + '\n')
+        sys.stderr.write(str(json.loads(tttttt) + '\n'))
         return json_dict
 
 
