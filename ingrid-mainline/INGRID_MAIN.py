@@ -4,51 +4,10 @@ from tempfile import NamedTemporaryFile
 from ntpath import basename
 from os import remove
 from string import replace
-import sys
-
-'''
-def test():
-    ingrid = IngridObj()
-    thm1 = Theorem1()
-        
-    # get the initialization json
-    with open('init.json') as data_file:
-        json_obj = json.load(data_file)
-
-    # change the invariant values
-    json_obj['Invariants']['nodes']['Value']['Max'] = '7'
-    json_obj['Invariants']['nodes']['Changed'] = 'True'
-    json_obj['Invariants']['edges']['Value']['Min'] = '30'
-    json_obj['Invariants']['edges']['Changed'] = 'True'
-
-    # Original input
-    print 'Input' 
-    print 'Nodes =', json_obj['Invariants']['nodes']['Value']
-    print 'Nodes Trace =', json_obj['Invariants']['nodes']['Trace']  
-    print 'Edges=', json_obj['Invariants']['edges']['Value']
-    print 'Edges Trace =', json_obj['Invariants']['edges']['Trace']
-    print json_obj['Theorems']
-    print json_obj['Addenda']
-    print json_obj['Error']
-
-    # run ingrid
-    ingrid.go(json_obj.copy(), [thm1])
-    new_dict = ingrid.create_dict()
-
-    # see results
-    print 'Output' 
-    print 'Nodes =', new_dict['Invariants']['nodes']['Value']
-    print 'Nodes Trace =', new_dict['Invariants']['nodes']['Trace'] 
-    print 'Edges=', new_dict['Invariants']['edges']['Value']
-    print 'Edges Trace =', new_dict['Invariants']['edges']['Trace']  
-    print new_dict['Theorems']
-    print new_dict['Addenda']
-    print new_dict['Error']
- '''
  
 # TODO implement creating addenda
 def create_addenda(thm_eqn):
-    print 'TODO call addenda creator'
+    # print 'TODO call addenda creator'
     error_msg, thm_code = '', 'import math\n\ndef $$THM$$():\n\ta = 49\n\tb = math.sqrt(a)\n\tprint b\n\treturn b\n'   
     return thm_code
  
@@ -120,7 +79,7 @@ def run_mainline_old(json_obj, thm_file_name):
         addenda_thms = get_addenda_thms(json_dict['Addenda'])
         if isinstance(addenda_thms, basestring):
             json_dict['Error'] = {'ErrorType': 'TheoremParser', 'ErrMsg': addenda_thms}
-            #print 'ERROR'
+            # print 'ERROR'
             return json_dict
         
         # gets base theorems
@@ -133,28 +92,23 @@ def run_mainline_old(json_obj, thm_file_name):
         ingrid.go(json_dict.copy(), all_thms)
         new_dict = ingrid.create_dict()
         return new_dict
-    
+        
+        
 
-def run_mainline(json_obj, thm_file_name, addenda_list):
+def run_mainline(json_obj, thm_file_name, addenda):
     json_dict = json.loads(json_obj)
     # sends the initialization json to the server
     if json_dict == {}:
         with open('init.json') as data_file:
             json_dict = json.load(data_file)
-            sys.stderr.write(str(json_dict.keys()) + '\n')
-            return json.dumps(json_dict)
+            return json_dict
     # runs ingrid with given non-empty json dictionary
     else:
         base_thms = get_base_thms(thm_file_name)
-        all_thms = base_thms + addenda_list
+        all_thms = base_thms + addenda
         # runs ingrid
         ingrid = IngridObj()
         ingrid.go(json_dict.copy(), all_thms)
         new_dict = ingrid.create_dict()
-        sys.stderr.write(str(new_dict.keys()) + '\n')
-        #sys.stderr.write(str(new_dict) + '\n')
-        #sys.stderr.write('Right before main return!\n')
-        deser = json.dumps(new_dict)
-        #sys.stderr.write(str(deser) + '\n')
-        return deser
+        return new_dict
 

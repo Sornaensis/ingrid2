@@ -1,13 +1,10 @@
 import math
-import sys
-import copy
-import json
 
 class Invariant:
     """
     This is the Invariant object. It will store the value, name, type, and trace of an invariant.
     """
-    def __init__(self, name, stype, val, trace=[]):
+    def __init__(self, name, stype, trace, val):
         """
 
         Initializes the Invariant object
@@ -83,6 +80,7 @@ class Invariant:
         return self.value
 
     def set_min(self, val, thm_id=-1):
+        # print self.name, self.value, " ==> ", val, " : Theorem ", thm_id
         """
         Sets the minimum of an integer or real invariant. A minimum is only set if it is larger than the current minimum
         (unless the user input the minimum). This checks for conflicts: if a minimum is larger than the maximum, then
@@ -96,6 +94,7 @@ class Invariant:
         occurred. b is True if the minumum was changed and False if there was no change.
         """
         if self.type == 'Bool':
+            # print('Error: You set min of a bool invariant')
             exit()
         
         # gets ceiling for integer invariants
@@ -120,9 +119,10 @@ class Invariant:
             return True, True
         # a conflict occurs
         elif self.value['Min'] > self.value['Max']:
+            # print('Error: You set the minimum larger than the maximum')
             trace_msg += '. Error: the minimum [' + str(self.value['Min']) + '] is greater than the maximum [' + str(self.value['Max']) + ']'
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
-            return False, False
+            return False, True
         else:
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
             return True, True
@@ -141,11 +141,9 @@ class Invariant:
         occurred. b is True if the maximum was changed and False if there was no change.
         """
         if self.type == 'Bool':
+            # print('Error: You set max to a bool invariant')
             exit()
 
-        if val == 'undt':
-            sys.stderr.write(self.name +  ' is set to undt\n')
-            
         # gets floor for integer invariants
         if self.type == 'Integer' and val != 'undt':
             if abs(val - round(val)) < 0.0001:
@@ -154,17 +152,19 @@ class Invariant:
                 val = int(val)+1
             
         # a change occurs
+
+        if val == 'undt' and self.value['Max'] != 'undt':
+            trace_msg = 'The maximum value should be undetermined but is not';
+            self.trace.append({"Message": trace_msg, 'TheoremId': thm_id})
+            return False, False
+        elif val == 'undt' and self.value['Max'] == 'undt':
+            return True, False
         
         if thm_id == -1 and self.value['Max'] != val:
             trace_msg = 'The maximum of ' + self.name + ' from ' + str(self.value['Max']) + ' to ' + str(val)
             self.value['Max'] = val
         elif thm_id == -1 and self.value['Max'] == val:
             return True, False
-        elif val == 'undt' and self.value['Max'] != 'undt':
-            trace_msg = 'Error: the maximum is defined as [' + str(self.value['Max']) + '], but it is being set to undetermined.'
-            sys.stderr.write(trace_msg + '\n')
-            self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
-            return False, False
         elif self.value['Max'] == 'undt' or val < self.value['Max']:
             trace_msg = 'The maximum of ' + self.name + ' from ' + str(self.value['Max']) + ' to ' + str(val)
             self.value['Max'] = val
@@ -173,9 +173,10 @@ class Invariant:
 
         # a conflict occurs
         if self.value['Min'] > self.value['Max']:
+            # print('Error: You set the maximum less than the minimum')
             trace_msg += '. Error: the maximum [' + str(self.value['Max']) + '] is less than the minimum [' + str(self.value['Min']) + ']'
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
-            return False, False
+            return False, True
         else:
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
             return True, True
@@ -192,6 +193,7 @@ class Invariant:
         occurred. b is True if the minumum was changed and False if there was no change.
         """
         if self.type != 'Bool':
+            # print('Error: You setting a bool invariant to a number')
             exit()
 
         # change occurs
@@ -202,6 +204,7 @@ class Invariant:
                 self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
                 return True, True
             else:
+                # print('Error: You set a boolean invariant from' + str(self.value) + ' to ' + str(val))
                 trace_msg = 'Error: ' + self.name + ' was changed from ' + str(self.value) + ' to ' + str(val)
                 self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
                 self.value = val
@@ -348,11 +351,10 @@ class IngridObj:
         """
             
         # saves the original invariants just in case of error
-        sys.stderr.write('GOT TO 1\n')
-        self.original_json = copy.deepcopy(inv_dict)
-        invars = copy.deepcopy(inv_dict['Invariants'])
+        self.original_json = inv_dict.copy()
+        invars = inv_dict['Invariants'].copy()
         for key in invars.keys():
-            self.invariants[key] = Invariant(name=invars[key]['Name'], stype=invars[key]['Type'], val=invars[key]['Value'])#, trace=invars[key]['Trace'])
+            self.invariants[key] = Invariant(name=invars[key]['Name'], stype=invars[key]['Type'], trace=invars[key]['Trace'], val=invars[key]['Value'])
             success = True
             if invars[key]['Changed'] == 'True':
                 success = self.invariants[key].check_conflict()
@@ -362,23 +364,19 @@ class IngridObj:
                 self.error_inv = key
                 self.error_msg = 'User input parameters caused an error'
                 return
-        
-        sys.stderr.write('GOT TO 2\n')
+            
         # loops through the queue until it is empty
         while not self.queue.empty():
             str_inv = self.queue.pop()
-            sys.stderr.write(str_inv + '\n')
             # calls all theorems involving the current invariant
             for theorem in theorems:
-                sys.stderr.write(str(theorem.id) + '\n')
                 if not theorem.involves(str_inv):
                     continue
                 self.current_theorem = theorem
                 theorem.run(self)
                 if self.error_inv is not None:
-                    sys.stderr.write('ERROR reached here \n')
                     return
-            sys.stderr.write('Finished Theorems\n')
+                    
                     
     def set(self, str_invar, val, ind='Bool'):
         """
@@ -389,7 +387,6 @@ class IngridObj:
         :param val: the value which will be set. For real or integer invariants, this is a number. For boolean
         invariants this is a boolean value.
         """
-        
         if self.error_inv is not None:
             return
         if self.current_theorem is None:
@@ -409,10 +406,8 @@ class IngridObj:
             if {'Id': thm_id, 'Text': thm_str, 'Name': thm_name} not in self.theorems_used:
                 self.theorems_used.append( {'Id': thm_id, 'Text': thm_str, 'Name': thm_name} )
         if not success:
-            sys.stderr.write('ERROR reached here ' + str(success) + " " + str(changed) + '\n')
             self.error_inv = str_invar
             self.error_msg = 'Error has occurred when setting an invariant.'
-            sys.stderr.write('ERROR reached here ' + str(self.error_inv) + " " + str(self.error_msg) + '\n')
             return
         
 
@@ -445,25 +440,22 @@ class IngridObj:
             json_dict['Theorems'] = self.theorems_used
             json_dict["Error"] = {"ErrorType": "", "ErrMsg": ""}
         else:
-            sys.stderr.write('ERROR reached here to dict writing \n')
             json_dict['Invariants'] = {}
-            for key in self.invariants.keys():
-                inv = self.original_json['Invariants'][key]
+            for key in self.original_json['Invariants'].keys():
+                if key in self.invariants.keys():
+                    inv = self.invariants[key]
+                else:
+                    inv = self.original_json['Invariants'][key]
                 
-                json_dict['Invariants'][key] = {'Type': inv['Type'],
-                                                'Value': inv['Value'],
-                                                'Trace': self.invariants[key]['Trace'],
+                json_dict['Invariants'][key] = {'Type': self.original_json['Invariants'][key]['Type'],
+                                                'Value': self.original_json['Invariants'][key]['Value'],
+                                                'Trace': inv['Trace'],
                                                 'Changed': 'False',
-                                                'Name': inv['Name']}
+                                                'Name': self.original_json['Invariants'][key]['Name']}
             json_dict['Theorems'] = self.theorems_used
             json_dict["Error"] = {"ErrorType": self.error_inv, "ErrMsg": self.error_msg}
 
         json_dict['Addenda'] = self.original_json['Addenda'] 
-        #sys.stderr.write('ERROR finished dict writing \n')
-        #tttttt = json.dumps(json_dict)
-        #sys.stderr.write(tttttt + '\n')
-        #sys.stderr.write(str(json.loads(tttttt)) + '\n')
-        
         return json_dict
 
 
