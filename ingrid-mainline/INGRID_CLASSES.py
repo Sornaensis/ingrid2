@@ -446,20 +446,19 @@ class IngridObj:
             sys.stderr.write('ERROR reached here to dict writing \n')
             json_dict['Invariants'] = {}
             for key in self.original_json['Invariants'].keys():
-                if key in self.invariants.keys():
-                    inv = self.invariants[key]
-                else:
-                    inv = self.original_json['Invariants'][key]
+                inv = self.original_json['Invariants'][key]
                 
-                json_dict['Invariants'][key] = {'Type': self.original_json['Invariants'][key]['Type'],
-                                                'Value': self.original_json['Invariants'][key]['Value'],
-                                                'Trace': inv['Trace'],
+                json_dict['Invariants'][key] = {'Type': inv['Type'],
+                                                'Value': inv['Value'],
+                                                'Trace': self.invariants[key]['Trace'],
                                                 'Changed': 'False',
-                                                'Name': self.original_json['Invariants'][key]['Name']}
+                                                'Name': inv['Name']}
             json_dict['Theorems'] = self.theorems_used
             json_dict["Error"] = {"ErrorType": self.error_inv, "ErrMsg": self.error_msg}
+            
 
         json_dict['Addenda'] = self.original_json['Addenda'] 
+        sys.stderr.write('ERROR finished dict writing \n')
         return json_dict
 
 
