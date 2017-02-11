@@ -149,7 +149,8 @@ def run_mainline(json_obj, thm_file_name, addenda_list):
         # runs ingrid
         ingrid = IngridObj()
         ingrid.go(json_dict.copy(), all_thms)
-        new_dict = ingrid.create_dict()
+        new_dict = ingrid.create_dict
+        sys.stderr.write(str(new_dict) + '\n')
         sys.stderr.write('Right before main return!\n')
         return new_dict
 
