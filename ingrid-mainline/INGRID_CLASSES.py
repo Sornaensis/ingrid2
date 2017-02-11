@@ -374,6 +374,7 @@ class IngridObj:
                 self.current_theorem = theorem
                 theorem.run(self)
                 if self.error_inv is not None:
+                    sys.stderr('ERROR reached here \n')
                     return
             sys.stderr.write('Finished Theorems\n')
                     
@@ -406,8 +407,10 @@ class IngridObj:
             if {'Id': thm_id, 'Text': thm_str, 'Name': thm_name} not in self.theorems_used:
                 self.theorems_used.append( {'Id': thm_id, 'Text': thm_str, 'Name': thm_name} )
         if not success:
+            sys.stderr('ERROR reached here ' + str(success) + " " + str(changed) + '\n')
             self.error_inv = str_invar
             self.error_msg = 'Error has occurred when setting an invariant.'
+            sys.stderr('ERROR reached here ' + str(self.error_inv) + " " + str(self.error_msg) + '\n')
             return
         
 
@@ -440,6 +443,7 @@ class IngridObj:
             json_dict['Theorems'] = self.theorems_used
             json_dict["Error"] = {"ErrorType": "", "ErrMsg": ""}
         else:
+            sys.stderr('ERROR reached here ' + str(success) + " " + str(changed) + '\n')
             json_dict['Invariants'] = {}
             for key in self.original_json['Invariants'].keys():
                 if key in self.invariants.keys():
