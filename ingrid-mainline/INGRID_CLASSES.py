@@ -1,4 +1,5 @@
 import math
+import sys
 
 class Invariant:
     """
@@ -358,6 +359,7 @@ class IngridObj:
         # loops through the queue until it is empty
         while not self.queue.empty():
             str_inv = self.queue.pop()
+            sys.stderr.write(str_inv + '\n')
             # calls all theorems involving the current invariant
             for theorem in theorems:
                 if not theorem.involves(str_inv):
