@@ -5,50 +5,9 @@ from ntpath import basename
 from os import remove
 from string import replace
 import sys
-
-'''
-def test():
-    ingrid = IngridObj()
-    thm1 = Theorem1()
-        
-    # get the initialization json
-    with open('init.json') as data_file:
-        json_obj = json.load(data_file)
-
-    # change the invariant values
-    json_obj['Invariants']['nodes']['Value']['Max'] = '7'
-    json_obj['Invariants']['nodes']['Changed'] = 'True'
-    json_obj['Invariants']['edges']['Value']['Min'] = '30'
-    json_obj['Invariants']['edges']['Changed'] = 'True'
-
-    # Original input
-    print 'Input' 
-    print 'Nodes =', json_obj['Invariants']['nodes']['Value']
-    print 'Nodes Trace =', json_obj['Invariants']['nodes']['Trace']  
-    print 'Edges=', json_obj['Invariants']['edges']['Value']
-    print 'Edges Trace =', json_obj['Invariants']['edges']['Trace']
-    print json_obj['Theorems']
-    print json_obj['Addenda']
-    print json_obj['Error']
-
-    # run ingrid
-    ingrid.go(json_obj.copy(), [thm1])
-    new_dict = ingrid.create_dict()
-
-    # see results
-    print 'Output' 
-    print 'Nodes =', new_dict['Invariants']['nodes']['Value']
-    print 'Nodes Trace =', new_dict['Invariants']['nodes']['Trace'] 
-    print 'Edges=', new_dict['Invariants']['edges']['Value']
-    print 'Edges Trace =', new_dict['Invariants']['edges']['Trace']  
-    print new_dict['Theorems']
-    print new_dict['Addenda']
-    print new_dict['Error']
- '''
  
 # TODO implement creating addenda
 def create_addenda(thm_eqn):
-    print 'TODO call addenda creator'
     error_msg, thm_code = '', 'import math\n\ndef $$THM$$():\n\ta = 49\n\tb = math.sqrt(a)\n\tprint b\n\treturn b\n'   
     return thm_code
  
@@ -120,7 +79,6 @@ def run_mainline_old(json_obj, thm_file_name):
         addenda_thms = get_addenda_thms(json_dict['Addenda'])
         if isinstance(addenda_thms, basestring):
             json_dict['Error'] = {'ErrorType': 'TheoremParser', 'ErrMsg': addenda_thms}
-            #print 'ERROR'
             return json_dict
         
         # gets base theorems

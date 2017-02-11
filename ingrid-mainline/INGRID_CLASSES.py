@@ -266,7 +266,6 @@ class Invariant:
                 self.value = val
                 return True, True
             else:
-                print 'ayy lmao'
                 a, b = self.set_min(val['Min'], -1)
                 c, d = self.set_max(val['Max'], -1)
                 return (a and c), (b or d)
@@ -462,7 +461,7 @@ class IngridObj:
         #sys.stderr.write('ERROR finished dict writing \n')
         #tttttt = json.dumps(json_dict)
         #sys.stderr.write(tttttt + '\n')
-        #sys.stderr.write(str(json.loads(tttttt)) + '\n')
+        #sys.stderr.write(str(json.loads(tttttt)) + '\n')        
         
         return json_dict
 
