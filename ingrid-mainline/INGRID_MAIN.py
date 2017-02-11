@@ -1,5 +1,6 @@
 import json
 from INGRID_CLASSES import IngridObj
+'''
 from tempfile import NamedTemporaryFile
 from ntpath import basename
 from os import remove
@@ -49,7 +50,7 @@ def get_addenda_thms(addenda):
     tmp.close()
     
     return thms
-
+'''
     
 # returns a list of all the base theorem objects
 def get_base_thms(thm_file_name):
