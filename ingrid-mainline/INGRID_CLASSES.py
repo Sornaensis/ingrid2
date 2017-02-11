@@ -460,7 +460,9 @@ class IngridObj:
 
         json_dict['Addenda'] = self.original_json['Addenda'] 
         sys.stderr.write('ERROR finished dict writing \n')
-        sys.stderr.write(str(json_dict) + '\n')
+        tttttt = json.dumps(json_dict)
+        sys.stderr.write(tttttt + '\n')
+        sys.stderr.write(str(json.loads(tttttt) + '\n')
         return json_dict
 
 
