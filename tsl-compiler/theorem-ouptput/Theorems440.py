@@ -1,6 +1,3 @@
-TypeError('unorderable types: float() >= complex()',)
-TypeError('unorderable types: float() >= complex()',)
-TypeError('unorderable types: float() >= complex()',)
 class Theorem421(Theorem):
 	def __init__(self):
 		super(Theorem421, self).__init__(421, "if nodeInd == 2 and maxClique >= 2*nodes/5 then {maxClique >= (2*nodes + sqrt(nodes*(3*nodes-5)/2 - 5*edges))/5};", "")

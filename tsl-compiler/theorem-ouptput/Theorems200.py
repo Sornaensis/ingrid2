@@ -1,6 +1,3 @@
-TypeError('unorderable types: float() >= complex()',)
-TypeError('unorderable types: float() >= complex()',)
-TypeError('unorderable types: float() <= complex()',)
 class Theorem181(Theorem):
 	def __init__(self):
 		super(Theorem181, self).__init__(181, "if nodeCliqueCover > nodeInd then { maxdeg >= 3*nodes/(3*nodeInd - 1) - 1 };", "")

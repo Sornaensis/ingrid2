@@ -1,4 +1,3 @@
-TypeError('unorderable types: float() <= complex()',)
 class Theorem141(Theorem):
 	def __init__(self):
 		super(Theorem141, self).__init__(141, "circumference >= 2*edges/(nodes-1);", "")

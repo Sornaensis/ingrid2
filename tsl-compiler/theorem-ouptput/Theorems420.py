@@ -1,5 +1,3 @@
-TypeError('unorderable types: float() <= complex()',)
-TypeError('unorderable types: float() >= complex()',)
 class Theorem401(Theorem):
 	def __init__(self):
 		super(Theorem401, self).__init__(401, "if planar and edges == 3*nodes - 6 and maxdeg <= mindeg + 1 then {mindeg == nodeConnec};", "")

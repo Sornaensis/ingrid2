@@ -1,8 +1,3 @@
-TypeError('unorderable types: float() <= complex()',)
-SyntaxError('unexpected EOF while parsing', ('<string>', 0, 0, ''))
-SyntaxError('unexpected EOF while parsing', ('<string>', 0, 0, ''))
-SyntaxError('unexpected EOF while parsing', ('<string>', 0, 0, ''))
-TypeError('unorderable types: float() <= complex()',)
 class Theorem441(Theorem):
 	def __init__(self):
 		super(Theorem441, self).__init__(441, "if maxdeg >= 6 and maxClique <= maxdeg - 1 then {nodeCover <=  (nodes * (maxdeg - 1) -1)/maxdeg};", "")

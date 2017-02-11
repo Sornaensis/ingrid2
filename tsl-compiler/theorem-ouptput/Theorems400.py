@@ -1,6 +1,3 @@
-SyntaxError('unexpected EOF while parsing', ('<string>', 0, 0, ''))
-SyntaxError('unexpected EOF while parsing', ('<string>', 0, 0, ''))
-SyntaxError('unexpected EOF while parsing', ('<string>', 0, 0, ''))
 class Theorem381(Theorem):
 	def __init__(self):
 		super(Theorem381, self).__init__(381, "if planar and nodes >= 4 then { edges <= 3*nodes - 9 + min(3, edgeConnec) };", "")

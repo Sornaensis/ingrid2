@@ -1,6 +1,3 @@
-TypeError('unorderable types: float() <= complex()',)
-TypeError('unorderable types: float() <= complex()',)
-TypeError('unorderable types: float() <= complex()',)
 class Theorem201(Theorem):
 	def __init__(self):
 		super(Theorem201, self).__init__(201, "if nodes >= 6 and connected and nodes >= 3*edgeInd-1 then {nodeCover <= 2*edgeInd - mindeg};", "")

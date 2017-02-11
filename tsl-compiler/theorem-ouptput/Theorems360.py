@@ -1,4 +1,3 @@
-TypeError('unorderable types: float() <= complex()',)
 class Theorem341(Theorem):
 	def __init__(self):
 		super(Theorem341, self).__init__(341, "if mindeg >= 2 and girth >= 7 then {domination >= maxdeg + 1};", "")

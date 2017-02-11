@@ -1,5 +1,3 @@
-TypeError("can't convert expression to float",)
-TypeError("can't convert expression to float",)
 class Theorem361(Theorem):
 	def __init__(self):
 		super(Theorem361, self).__init__(361, "null;", "")

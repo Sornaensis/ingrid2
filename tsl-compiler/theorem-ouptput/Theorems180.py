@@ -1,4 +1,3 @@
-TypeError('unorderable types: float() <= complex()',)
 class Theorem161(Theorem):
 	def __init__(self):
 		super(Theorem161, self).__init__(161, "if genus > 2 and girth >= 4 and mindeg >= (5 + (16*genus + 1)**(1/2))/2 and mindeg == (3 + (16*genus + 9)**(1/2))/2 then { regular, hamiltonian, nodes == 2*mindeg+2 } else if genus > 2 and girth >= 4 and mindeg >= (5 + (16*genus + 1)**(1/2))/2 then { regular, hamiltonian, nodes == 2*mindeg }; ", "")

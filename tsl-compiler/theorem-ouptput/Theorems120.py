@@ -1,4 +1,3 @@
-TypeError('unorderable types: float() >= complex()',)
 class Theorem101(Theorem):
 	def __init__(self):
 		super(Theorem101, self).__init__(101, "if connected or odd nodes then {nodeCover <= (nodes-1)*(nodes+1)/2, edgeCover <= (nodes-1)*(nodes+1)/2 } else {nodeCover <= (nodes-2)*(nodes+2)/2, edgeCover <= (nodes-2)*(nodes+2)/2 };", "")
