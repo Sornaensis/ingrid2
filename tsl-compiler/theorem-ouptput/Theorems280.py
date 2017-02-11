@@ -151,7 +151,7 @@ class Theorem266(Theorem):
 
 class Theorem267(Theorem):
 	def __init__(self):
-		super(Theorem267, self).__init__(267, "if diameter == radius and radius == 2 then {maxdeg >= 2};", "")
+		super(Theorem267, self).__init__(267, "if diameter == radius and radius == 2 then {mindeg >= 2};", "")
 	def involves(self, str_invar):
 		return str_invar in ["diameter","maxdeg","radius"]
 	def run(self, ingrid_obj):
@@ -161,7 +161,7 @@ class Theorem267(Theorem):
 		radius_Max = ingrid_obj.get('radius', ind='Max')
 		if (diameter_Max != 'undt' and (diameter_Max<=radius_Min)) and (radius_Max != 'undt' and (diameter_Min>=radius_Max)) and (radius_Max==radius_Min and (radius_Min==2.0)):
 			try:
-				ingrid_obj.set('maxdeg', 2.0, ind='Min')
+				ingrid_obj.set('mindeg', 2.0, ind='Min')
 			except:
 				pass
 		return
@@ -211,12 +211,12 @@ class Theorem269(Theorem):
 				ingrid_obj.set('bandwidth', -(1.0*girth)+0.5*girth*nodes/nodeInd+2.0-(0.5*nodes/nodeInd), ind='Min')
 			except:
 				pass
-			bandwidth = ingrid_obj.get('bandwidth', ind='Max')
-			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Min')
+			bandwidth = ingrid_obj.get('bandwidth', ind='Min')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Max')
 			if bandwidth != 'undt':
 				try:
-					ingrid_obj.set('girth', (-(1.0*bandwidth*nodeInd)+2.0*nodeInd-(0.5*nodes))/(1.0*nodeInd-(0.5*nodes)), ind='Min')
+					ingrid_obj.set('girth', (-(1.0*bandwidth*nodeInd)+2.0*nodeInd-(0.5*nodes))/(1.0*nodeInd-(0.5*nodes)), ind='Max')
 				except:
 					pass
 			bandwidth = ingrid_obj.get('bandwidth', ind='Max')
@@ -433,36 +433,7 @@ class Theorem277(Theorem):
 		return
 
 class Theorem278(Theorem):
-	def __init__(self):
-		super(Theorem278, self).__init__(278, "if connected and maxdeg >= 3 then {nodes <= 1 + maxdeg*((maxdeg-1)^radius - 1)/(maxdeg-2)};", "")
-	def involves(self, str_invar):
-		return str_invar in ["connected","maxdeg","nodes","radius"]
-	def run(self, ingrid_obj):
-		connected = ingrid_obj.get('connected')
-		maxdeg_Min = ingrid_obj.get('maxdeg', ind='Min')
-		if (connected == True) and (maxdeg_Min>=3.0):
-			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
-			radius = ingrid_obj.get('radius', ind='Max')
-			if maxdeg != 'undt' and radius != 'undt':
-				try:
-					ingrid_obj.set('nodes', (maxdeg*(maxdeg-(1.0))**radius-(2.0))/(maxdeg-(2.0)), ind='Max')
-				except:
-					pass
-			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
-			radius = ingrid_obj.get('radius', ind='Max')
-			if maxdeg != 'undt' and radius != 'undt':
-				try:
-					ingrid_obj.set('nodes', maxdeg*(-((1.0))+(-((1.0))+maxdeg)**radius)/(-((2.0))+maxdeg)+1.0, ind='Max')
-				except:
-					pass
-			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
-			radius = ingrid_obj.get('radius', ind='Max')
-			if maxdeg != 'undt' and radius != 'undt':
-				try:
-					ingrid_obj.set('nodes', maxdeg*(-((1.0))+(-((1.0))+maxdeg)**radius)/(-((2.0))+maxdeg)+1.0, ind='Max')
-				except:
-					pass
-		return
+
 
 class Theorem279(Theorem):
 	def __init__(self):

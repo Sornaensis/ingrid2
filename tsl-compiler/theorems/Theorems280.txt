@@ -38,7 +38,7 @@
             "disp": ""
         },
         {
-            "text": "if diameter == radius and radius == 2 then {maxdeg >= 2};",
+            "text": "if diameter == radius and radius == 2 then {mindeg >= 2};",
             "name": "Theorem",
             "idnum": 267,
             "disp": ""

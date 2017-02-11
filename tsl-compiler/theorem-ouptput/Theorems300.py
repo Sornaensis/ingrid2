@@ -1,6 +1,3 @@
-SyntaxError('unexpected EOF while parsing', ('<string>', 0, 0, ''))
-SyntaxError('unexpected EOF while parsing', ('<string>', 0, 0, ''))
-SyntaxError('unexpected EOF while parsing', ('<string>', 0, 0, ''))
 class Theorem281(Theorem):
 	def __init__(self):
 		super(Theorem281, self).__init__(281, "if nodeConnec >= 2 and nodes <= 3*mindeg and edges <= ((nodes-1)*mindeg - 1)/2 then {Hamiltonian};", "")
@@ -232,10 +229,10 @@ class Theorem290(Theorem):
 					ingrid_obj.set('edges', 0.5*domination**2.0-(1.0*domination*nodes)-(0.5*domination)+0.5*nodes**2.0+0.5*nodes, ind='Max')
 				except:
 					pass
-			edges = ingrid_obj.get('edges', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Min')
+			edges = ingrid_obj.get('edges', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Max')
 			try:
-				ingrid_obj.set('domination', 1.0*nodes+0.5*(8.0*edges+1.0)**(1/2)+0.5, ind='Min')
+				ingrid_obj.set('domination', 1.0*nodes+0.5*(8.0*edges+1.0)**(1/2)+0.5, ind='Max')
 			except:
 				pass
 			domination = ingrid_obj.get('domination', ind='Min')

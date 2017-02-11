@@ -1,9 +1,3 @@
-TypeError('unorderable types: float() <= complex()',)
-TypeError('unorderable types: float() >= complex()',)
-TypeError('unorderable types: float() >= complex()',)
-TypeError('unorderable types: float() >= complex()',)
-TypeError('unorderable types: float() >= complex()',)
-TypeError('unorderable types: float() >= complex()',)
 class Theorem321(Theorem):
 	def __init__(self):
 		super(Theorem321, self).__init__(321, "if connected and regular and not complete and mindeg <= 3 then {edgeCliqueCover >= 3*nodes/(mindeg+1)} else if connected and regular and not complete and mindeg >= 5 then {edgeCliqueCover >= mindeg*nodes/((mindeg+1)*(mindeg-2))};", "")
