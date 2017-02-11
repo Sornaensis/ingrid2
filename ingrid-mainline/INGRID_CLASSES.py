@@ -1,5 +1,6 @@
 import math
 import sys
+import copy
 
 class Invariant:
     """
@@ -459,6 +460,7 @@ class IngridObj:
 
         json_dict['Addenda'] = self.original_json['Addenda'] 
         sys.stderr.write('ERROR finished dict writing \n')
+        sys.stderr.write(str(json_dict) + '\n')
         return json_dict
 
 
