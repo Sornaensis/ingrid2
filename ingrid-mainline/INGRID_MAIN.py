@@ -1,6 +1,5 @@
 import json
 from INGRID_CLASSES import IngridObj
-from thm_test import Theorem1
 from tempfile import NamedTemporaryFile
 from ntpath import basename
 from os import remove
