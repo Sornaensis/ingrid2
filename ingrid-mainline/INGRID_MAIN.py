@@ -141,7 +141,7 @@ def run_mainline(json_obj, thm_file_name, addenda_list):
     if json_dict == {}:
         with open('init.json') as data_file:
             json_dict = json.load(data_file)
-            return json_dict
+            return json.dumps(json_dict)
     # runs ingrid with given non-empty json dictionary
     else:
         base_thms = get_base_thms(thm_file_name)
