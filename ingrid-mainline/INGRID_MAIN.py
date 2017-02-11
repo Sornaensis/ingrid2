@@ -152,5 +152,7 @@ def run_mainline(json_obj, thm_file_name, addenda_list):
         new_dict = ingrid.create_dict()
         sys.stderr.write(str(new_dict) + '\n')
         sys.stderr.write('Right before main return!\n')
-        return new_dict
+        deser = json.dumps(new_dict)
+        sys.stderr.write(str(deser) + '\n')
+        return deser
 
