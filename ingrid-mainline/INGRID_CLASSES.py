@@ -317,24 +317,10 @@ class IngridObj:
         """
             
         # saves the original invariants just in case of error
-<<<<<<< HEAD
-        self.original_json = copy.deepcopy(inv_dict)
-        invars = copy.deepcopy(inv_dict['Invariants'])
-        for key in invars.keys():
-            self.invariants[key] = Invariant(name=invars[key]['Name'], stype=invars[key]['Type'], trace=[], val=invars[key]['Value'])
-=======
-<<<<<<< HEAD
-        self.original_json = inv_dict.copy()
-        invars = inv_dict['Invariants'].copy()
-        for key in invars.keys():
-            self.invariants[key] = Invariant(name=invars[key]['Name'], stype=invars[key]['Type'], trace=invars[key]['Trace'], val=invars[key]['Value'])
-=======
         self.original_json = copy.deepcopy(inv_dict)
         invars = copy.deepcopy(inv_dict['Invariants'])
         for key in list(invars.keys()):
             self.invariants[key] = Invariant(name=invars[key]['Name'], stype=invars[key]['Type'], trace=[], val=invars[key]['Value'])
->>>>>>> origin/master
->>>>>>> refs/remotes/origin/master
             success = True
             if invars[key]['Changed'] == 'True':
                 success = self.invariants[key].check_conflict()
