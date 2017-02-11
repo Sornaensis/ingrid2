@@ -1,56 +1,6 @@
 import json
 from INGRID_CLASSES import IngridObj
-'''
-from tempfile import NamedTemporaryFile
-from ntpath import basename
-from os import remove
-from string import replace
 
-# TODO implement creating addenda
-def create_addenda(thm_eqn):
-    # print 'TODO call addenda creator'
-    error_msg, thm_code = '', 'import math\n\ndef $$THM$$():\n\ta = 49\n\tb = math.sqrt(a)\n\tprint b\n\treturn b\n'   
-    return thm_code
- 
-
-# returns a list of all the theorem objects
-def get_addenda_thms(addenda):
-    tmp = NamedTemporaryFile(dir='./')
-    module_name = basename(tmp.name)
-    module = open(module_name+'.py', 'w')
-    module.write('import math\n\n\n')
-    
-    thm_names = []
-    for thm in addenda:
-        error_msg, thm_code = create_addenda(thm['Text'])
-        # error occurred in parser
-        if error_msg != '':
-            module.close()
-            remove('./' + module_name + '.py')
-            remove('./' + module_name + '.pyc')
-            tmp.close()
-            return error_msg
-
-        thm_name = 'AddTheorem' + str(len(thm_names)+1)
-        thm_names.append(thm_name)
-        thm_code_new = replace(thm_code, '$$THM$$', thm_name)
-        thm_code_new = replace(thm_code_new, '$$THM_NAME$$', thm['Name'])
-        module.write(thm_code_new + '\n\n')
-        
-    module.close()
-    fileX = __import__(module_name)
-    
-    thms = []
-    for class_name in thm_names:
-        TheoremX = getattr(fileX, class_name)
-        thms.append(TheoremX())
-    
-    remove('./' + module_name + '.py')
-    remove('./' + module_name + '.pyc')
-    tmp.close()
-    
-    return thms
-'''
     
 # returns a list of all the base theorem objects
 def get_base_thms(thm_file_name):
