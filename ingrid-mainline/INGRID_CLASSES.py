@@ -156,7 +156,7 @@ class Invariant:
         elif thm_id == -1 and self.value['Max'] == val:
             return True, False
         elif val == 'undt' and self.value['Max'] != 'undt':
-            trace_msg += '. Error: the maximum is defined as [' + str(self.value['Max']) + '], but it is being set to undetermined.'
+            trace_msg = 'Error: the maximum is defined as [' + str(self.value['Max']) + '], but it is being set to undetermined.'
             self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
             return False, True
         elif self.value['Max'] == 'undt' or val < self.value['Max']:
@@ -382,6 +382,7 @@ class IngridObj:
         :param val: the value which will be set. For real or integer invariants, this is a number. For boolean
         invariants this is a boolean value.
         """
+        
         if self.error_inv is not None:
             return
         if self.current_theorem is None:
