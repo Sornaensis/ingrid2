@@ -187,12 +187,13 @@ class Theorem268(Theorem):
 					ingrid_obj.set('arboricity', 1.0*(1.0*bandwidth+2.0*girth-(4.0))/(girth-(1.0)), ind='Max')
 				except:
 					pass
-			arboricity = ingrid_obj.get('arboricity', ind='Min')
-			bandwidth = ingrid_obj.get('bandwidth', ind='Min')
-			try:
-				ingrid_obj.set('girth', (1.0*bandwidth+1.0*arboricity-(4.0))/(1.0*arboricity-(2.0)), ind='Min')
-			except:
-				pass
+			arboricity = ingrid_obj.get('arboricity', ind='Max')
+			bandwidth = ingrid_obj.get('bandwidth', ind='Max')
+			if arboricity != 'undt' and bandwidth != 'undt':
+				try:
+					ingrid_obj.set('girth', (1.0*bandwidth+1.0*arboricity-(4.0))/(1.0*arboricity-(2.0)), ind='Max')
+				except:
+					pass
 		return
 
 class Theorem269(Theorem):
@@ -331,12 +332,13 @@ class Theorem274(Theorem):
 					ingrid_obj.set('girth', 1.0*(1.0*nodes+2.0*maxdeg-(4.0))/(maxdeg-(1.0)), ind='Max')
 				except:
 					pass
-			girth = ingrid_obj.get('girth', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Min')
-			try:
-				ingrid_obj.set('maxdeg', (1.0*nodes+1.0*girth-(4.0))/(1.0*girth-(2.0)), ind='Min')
-			except:
-				pass
+			girth = ingrid_obj.get('girth', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if girth != 'undt' and nodes != 'undt':
+				try:
+					ingrid_obj.set('maxdeg', (1.0*nodes+1.0*girth-(4.0))/(1.0*girth-(2.0)), ind='Max')
+				except:
+					pass
 		return
 
 class Theorem275(Theorem):

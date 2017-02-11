@@ -133,13 +133,13 @@ class Theorem286(Theorem):
 				ingrid_obj.set('maxdeg', 2.0*edges+1.0*chromaticNum*mindeg-(1.0*mindeg*nodes)-(1.0*(chromaticNum-(1.0))**2.0), ind='Max')
 			except:
 				pass
-		chromaticNum = ingrid_obj.get('chromaticNum', ind='Max')
-		edges = ingrid_obj.get('edges', ind='Min')
-		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
-		nodes = ingrid_obj.get('nodes', ind='Max')
-		if chromaticNum != 'undt' and maxdeg != 'undt' and nodes != 'undt':
+		chromaticNum = ingrid_obj.get('chromaticNum', ind='Min')
+		edges = ingrid_obj.get('edges', ind='Max')
+		maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		if edges != 'undt':
 			try:
-				ingrid_obj.set('mindeg', 2.0*(-(edges)+0.5*maxdeg+0.5*(chromaticNum-(1.0))**2.0)/(chromaticNum-(nodes)), ind='Max')
+				ingrid_obj.set('mindeg', 2.0*(-(edges)+0.5*maxdeg+0.5*(chromaticNum-(1.0))**2.0)/(chromaticNum-(nodes)), ind='Min')
 			except:
 				pass
 		chromaticNum = ingrid_obj.get('chromaticNum', ind='Max')

@@ -120,11 +120,11 @@ class Theorem26(Theorem):
 				ingrid_obj.set('edges', nodes*(0.5*domination*nodes-(1.5*domination)+1.0)/domination, ind='Max')
 			except:
 				pass
-		edges = ingrid_obj.get('edges', ind='Max')
-		nodes = ingrid_obj.get('nodes', ind='Min')
-		if edges != 'undt':
+		edges = ingrid_obj.get('edges', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if nodes != 'undt':
 			try:
-				ingrid_obj.set('domination', 1.0*nodes/(1.0*edges-(0.5*nodes**2.0)+1.5*nodes), ind='Min')
+				ingrid_obj.set('domination', 1.0*nodes/(1.0*edges-(0.5*nodes**2.0)+1.5*nodes), ind='Max')
 			except:
 				pass
 		domination = ingrid_obj.get('domination', ind='Min')
@@ -284,20 +284,6 @@ class Theorem30(Theorem):
 			if nodes != 'undt' and radius != 'undt':
 				try:
 					ingrid_obj.set('edges', 2.0*nodes*radius+2.5*nodes+0.5*nodes**2.0-(3.0*radius)+2.0*radius**2.0, ind='Max')
-				except:
-					pass
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			radius = ingrid_obj.get('radius', ind='Max')
-			if nodes != 'undt' and radius != 'undt':
-				try:
-					ingrid_obj.set('edges', (1.0/2.0)*(-((6.0*radius))+4.0*radius**2.0+5.0*nodes+4.0*radius*nodes+nodes**2.0), ind='Max')
-				except:
-					pass
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			radius = ingrid_obj.get('radius', ind='Max')
-			if nodes != 'undt' and radius != 'undt':
-				try:
-					ingrid_obj.set('edges', (1.0/2.0)*(-((6.0*radius))+4.0*radius**2.0+5.0*nodes+4.0*radius*nodes+nodes**2.0), ind='Max')
 				except:
 					pass
 		return
@@ -498,19 +484,20 @@ class Theorem37(Theorem):
 				ingrid_obj.set('edges', 0.5*nodes**2.0-(2.0*nodes*numOfComponents)+1.5*nodes+2.0*numOfComponents**2.0-(2.0*numOfComponents), ind='Max')
 			except:
 				pass
-		edges = ingrid_obj.get('edges', ind='Max')
-		numOfComponents = ingrid_obj.get('numOfComponents', ind='Max')
+		edges = ingrid_obj.get('edges', ind='Min')
+		numOfComponents = ingrid_obj.get('numOfComponents', ind='Min')
 		if edges != 'undt' and numOfComponents != 'undt':
 			try:
-				ingrid_obj.set('nodes', 2.0*numOfComponents+0.5*(8.0*edges-(8.0*numOfComponents)+9.0)**(1/2)-(1.5), ind='Max')
+				ingrid_obj.set('nodes', 2.0*numOfComponents+0.5*(8.0*edges-(8.0*numOfComponents)+9.0)**(1/2)-(1.5), ind='Min')
 			except:
 				pass
-		edges = ingrid_obj.get('edges', ind='Min')
-		nodes = ingrid_obj.get('nodes', ind='Min')
-		try:
-			ingrid_obj.set('numOfComponents', 0.5*(nodes+1.0)+0.5*(2.0*edges-(1.0*nodes)+1.0)**(1/2), ind='Min')
-		except:
-			pass
+		edges = ingrid_obj.get('edges', ind='Max')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if edges != 'undt' and nodes != 'undt':
+			try:
+				ingrid_obj.set('numOfComponents', 0.5*(nodes+1.0)+0.5*(2.0*edges-(1.0*nodes)+1.0)**(1/2), ind='Max')
+			except:
+				pass
 		return
 
 class Theorem38(Theorem):

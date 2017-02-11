@@ -103,11 +103,11 @@ class Theorem4(Theorem):
 			ingrid_obj.set('edges', 0.5*spectralRadius**2.0*(nodeCover+1.0)/nodeCover, ind='Min')
 		except:
 			pass
-		edges = ingrid_obj.get('edges', ind='Min')
-		spectralRadius = ingrid_obj.get('spectralRadius', ind='Max')
-		if spectralRadius != 'undt':
+		edges = ingrid_obj.get('edges', ind='Max')
+		spectralRadius = ingrid_obj.get('spectralRadius', ind='Min')
+		if edges != 'undt':
 			try:
-				ingrid_obj.set('nodeCover', -(0.5*spectralRadius**2.0/(0.5*spectralRadius**2.0-(edges))), ind='Max')
+				ingrid_obj.set('nodeCover', -(0.5*spectralRadius**2.0/(0.5*spectralRadius**2.0-(edges))), ind='Min')
 			except:
 				pass
 		return
@@ -165,68 +165,6 @@ class Theorem7(Theorem):
 	def involves(self, str_invar):
 		return str_invar in ["diameter","mindeg","nodeConnec","nodes"]
 	def run(self, ingrid_obj):
-		diameter_Max = ingrid_obj.get('diameter', ind = 'Max')
-		mindeg_Min = ingrid_obj.get('mindeg', ind='Min')
-		nodeConnec_Max = ingrid_obj.get('nodeConnec', ind='Max')
-		if (diameter_Max != 'undt') and (nodeConnec_Max != 'undt' and (mindeg_Min>3.0*nodeConnec_Max-(1.0))):
-			diameter = ingrid_obj.get('diameter', ind='Min')
-			mindeg = ingrid_obj.get('mindeg', ind='Min')
-			try:
-				ingrid_obj.set('nodes', 0.333333333333333*diameter*mindeg+0.333333333333333*diameter+1.0*mindeg+1.0, ind='Min')
-			except:
-				pass
-			mindeg = ingrid_obj.get('mindeg', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if nodes != 'undt':
-				try:
-					ingrid_obj.set('diameter', 3.0*(nodes-(mindeg)-(1.0))/(mindeg+1.0), ind='Max')
-				except:
-					pass
-			diameter = ingrid_obj.get('diameter', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if nodes != 'undt':
-				try:
-					ingrid_obj.set('mindeg', (1.0*nodes-(0.333333333333333*diameter)-(1.0))/(0.333333333333333*diameter+1.0), ind='Max')
-				except:
-					pass
-			diameter = ingrid_obj.get('diameter', ind='Min')
-			mindeg = ingrid_obj.get('mindeg', ind='Min')
-			try:
-				ingrid_obj.set('nodes', 0.333333333333333*diameter*mindeg+0.333333333333333*diameter+1.0*mindeg+1.0, ind='Min')
-			except:
-				pass
-		elif (diameter_Max != 'undt'):
-			diameter = ingrid_obj.get('diameter', ind='Min')
-			mindeg = ingrid_obj.get('mindeg', ind='Min')
-			nodeConnec = ingrid_obj.get('nodeConnec', ind='Min')
-			try:
-				ingrid_obj.set('nodes', 1.0*diameter*nodeConnec+2.0*mindeg-(3.0*nodeConnec)+2.0, ind='Min')
-			except:
-				pass
-			mindeg = ingrid_obj.get('mindeg', ind='Min')
-			nodeConnec = ingrid_obj.get('nodeConnec', ind='Max')
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if nodeConnec != 'undt' and nodes != 'undt':
-				try:
-					ingrid_obj.set('diameter', (1.0*nodes-(2.0*mindeg)+3.0*nodeConnec-(2.0))/nodeConnec, ind='Max')
-				except:
-					pass
-			diameter = ingrid_obj.get('diameter', ind='Min')
-			nodeConnec = ingrid_obj.get('nodeConnec', ind='Max')
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if nodeConnec != 'undt' and nodes != 'undt':
-				try:
-					ingrid_obj.set('mindeg', 0.5*nodes-(0.5*diameter*nodeConnec)+1.5*nodeConnec-(1.0), ind='Max')
-				except:
-					pass
-			diameter = ingrid_obj.get('diameter', ind='Min')
-			mindeg = ingrid_obj.get('mindeg', ind='Min')
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if nodes != 'undt':
-				try:
-					ingrid_obj.set('nodeConnec', (1.0*nodes-(2.0*mindeg)-(2.0))/(1.0*diameter-(3.0)), ind='Max')
-				except:
-					pass
 		return
 
 class Theorem8(Theorem):

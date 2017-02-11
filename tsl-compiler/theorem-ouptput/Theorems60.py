@@ -707,10 +707,8 @@ class Theorem50(Theorem):
 				ingrid_obj.set('arboricity', 1.0, ind='Min')
 			except:
 				pass
-			girth_Max = ingrid_obj.get('girth', ind='Max')-1
-				ingrid_obj.set('girth', 'undt', ind='Max')
-			circumference_Max = ingrid_obj.get('circumference', ind='Max')-1
-				ingrid_obj.set('circumference', 'undt', ind='Max')
+			ingrid_obj.set('girth', 'undt', ind='Max')
+			ingrid_obj.set('circumference', 'undt', ind='Max')
 		return
 
 class Theorem51(Theorem):
