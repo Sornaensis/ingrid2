@@ -342,6 +342,7 @@ class IngridObj:
         """
             
         # saves the original invariants just in case of error
+        sys.stderr.write('GOT TO 1\n')
         self.original_json = inv_dict.copy()
         invars = inv_dict['Invariants'].copy()
         for key in invars.keys():
@@ -355,7 +356,8 @@ class IngridObj:
                 self.error_inv = key
                 self.error_msg = 'User input parameters caused an error'
                 return
-            
+        
+        sys.stderr.write('GOT TO 2\n')
         # loops through the queue until it is empty
         while not self.queue.empty():
             str_inv = self.queue.pop()
