@@ -364,13 +364,14 @@ class IngridObj:
             sys.stderr.write(str_inv + '\n')
             # calls all theorems involving the current invariant
             for theorem in theorems:
+                sys.stderr.write(str(theorem.id) + '\n')
                 if not theorem.involves(str_inv):
                     continue
                 self.current_theorem = theorem
                 theorem.run(self)
                 if self.error_inv is not None:
                     return
-                    
+            sys.stderr.write('Finished Theorems\n')
                     
     def set(self, str_invar, val, ind='Bool'):
         """
