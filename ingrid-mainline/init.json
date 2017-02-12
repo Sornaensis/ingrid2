@@ -100,7 +100,7 @@
         "girth":
         {
             "Type": "Integer",
-            "Value": {"Max" : "undt", "Min" : "undt"},
+            "Value": {"Max" : "undt", "Min" : "3"},
             "Trace"  : [],
             "Changed" : "False",
             "Name": "Girth"
@@ -108,7 +108,7 @@
         "circumference":
         {
             "Type": "Integer",
-            "Value": {"Max" : "undt", "Min" : "undt"},
+            "Value": {"Max" : "undt", "Min" : "3"},
             "Trace"  : [],
             "Changed" : "False",
             "Name": "Circumference"
