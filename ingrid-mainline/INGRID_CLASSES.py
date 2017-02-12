@@ -319,7 +319,7 @@ class IngridObj:
         # saves the original invariants just in case of error
         self.original_json = copy.deepcopy(inv_dict)
         invars = copy.deepcopy(inv_dict['Invariants'])
-        for key in invars.keys():
+        for key in list(invars.keys()):
             self.invariants[key] = Invariant(name=invars[key]['Name'], stype=invars[key]['Type'], trace=[], val=invars[key]['Value'])
             success = True
             if invars[key]['Changed'] == 'True':
@@ -396,7 +396,7 @@ class IngridObj:
         # No error has occured
         if self.error_inv is None:
             json_dict['Invariants'] = {}
-            for key in self.invariants.keys():
+            for key in list(self.invariants.keys()):
                 inv = self.invariants[key]
                 json_dict['Invariants'][key] = {'Type': inv['Type'],
                                                 'Value': inv['Value'],
@@ -407,8 +407,8 @@ class IngridObj:
             json_dict["Error"] = {"ErrorType": "", "ErrMsg": ""}
         else:
             json_dict['Invariants'] = {}
-            for key in self.original_json['Invariants'].keys():
-                if key in self.invariants.keys():
+            for key in list(self.original_json['Invariants'].keys()):
+                if key in list(self.invariants.keys()):
                     inv = self.invariants[key]
                 else:
                     inv = self.original_json['Invariants'][key]

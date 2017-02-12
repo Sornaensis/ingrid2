@@ -28,7 +28,7 @@ def run_mainline_old(json_obj, thm_file_name):
     else:
         # creates user defined theorems
         addenda_thms = get_addenda_thms(json_dict['Addenda'])
-        if isinstance(addenda_thms, basestring):
+        if isinstance(addenda_thms, str):
             json_dict['Error'] = {'ErrorType': 'TheoremParser', 'ErrMsg': addenda_thms}
             return json_dict
         
