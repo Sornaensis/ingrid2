@@ -220,7 +220,7 @@ class Invariant:
 
     def check_conflict(self):
         if self.type == 'Bool':
-            trace_msg = self.name + ' has been set to ' + str(val)
+            trace_msg = self.name + ' has been set to ' + str(self.value)
             self.trace.append({'Message': trace_msg, 'TheoremId': -1})
             return True
         else:
