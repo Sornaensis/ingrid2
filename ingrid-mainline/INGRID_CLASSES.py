@@ -22,11 +22,11 @@ class Invariant:
         self.type = stype
         self.trace = trace
         if self.type == 'Bool':
-            sys.stderr.write(str(type(val)) + ' ' + str(val) + '\n')
+            sys.stderr.write(str(type(val)) + ' ' + str(val) + '\n')            
             if val == 'undt':
                 self.value = 'undt'
             else:
-                self.value = (val == 'True')
+                self.value = (str(val).lower() == 'True'.lower())
         elif self.type == 'Integer':
             valmin = 'undt' if val['Min'] == 'undt' else int(val['Min'])
             valmax = 'undt' if val['Max'] == 'undt' else int(val['Max'])
