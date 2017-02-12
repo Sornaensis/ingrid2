@@ -109,7 +109,9 @@ class Invariant:
         if thm_id == -1 and self.value['Min'] != val:
             trace_msg = 'The minimum of ' + self.name + ' from ' + str(self.value['Min']) + ' to ' + str(val)
             self.value['Min'] = val
-        elif val == 'undt' or val > self.value['Min']:
+        elif self.value['Min'] == 'undt':
+            return True, False
+        elif (val == 'undt' and self.value['Min'] != 'undt') or val > self.value['Min']:
             trace_msg = 'The minimum of ' + self.name + ' from ' + str(self.value['Min']) + ' to ' + str(val)
             self.value['Min'] = val
         else:
