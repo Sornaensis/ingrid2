@@ -361,7 +361,9 @@ generateCond (Cond (Invar v) (Just (CondRel r exp))) =
                  v_max ++ " = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')",
                   "(" ++ v_max ++ "==" ++ v_min ++ " and (" ++ v_min ++ show r ++ exprToSrc exp ++ "))"]
     make m m2 = 
-     let invars    = (m2, v, v ++ "_" ++ show m2) : (map (\i -> (m, i, i ++ "_" ++ show m)) . S.toList . getExprInvolves $ exp)
+     let invars    = (m2, v, v ++ "_" ++ show m2) : (map (\i -> 
+                                                    let m' = (swap m $ exprAnalysis exp i)
+                                                    in (m', i, i ++ "_" ++ show m')) . S.toList . getExprInvolves $ exp)
          v'        =  v ++ "_" ++ show m2
          invars'   = map (\(a,b,c) -> (a,c)) invars
          invarmap  = map (\(a,b,c) -> (Invar b, Invar c)) invars
