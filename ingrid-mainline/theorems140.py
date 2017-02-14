@@ -4153,31 +4153,31 @@ class Theorem128(Theorem):
 
 class Theorem129(Theorem):
     def __init__(self):
-        super(Theorem129, self).__init__(129, "if defined girth and girth > 3 then {mindeg <= (nodes - diam + 3*(diam/3 + 1) -3)/ (diam/3+1)};", "")
+        super(Theorem129, self).__init__(129, "if defined girth and girth > 3 then {mindeg <= (nodes - diameter + 3*(diameter/3 + 1) -3)/ (diameter/3+1)};", "")
     def involves(self, str_invar):
-        return str_invar in ["diam","girth","mindeg","nodes"]
+        return str_invar in ["diameter","girth","mindeg","nodes"]
     def run(self, ingrid_obj):
         girth_Max = ingrid_obj.get('girth', ind = 'Max')
         girth_Min = ingrid_obj.get('girth', ind='Min')
         if (girth_Max != 'undt') and (girth_Min != 'undt' and girth_Min>3.0):
-            diam = ingrid_obj.get('diam', ind='Min')
+            diameter = ingrid_obj.get('diameter', ind='Min')
             nodes = ingrid_obj.get('nodes', ind='Max')
             if nodes != 'undt':
                 try:
-                    ingrid_obj.set('mindeg', 1.0*nodes/(0.333333333333333*diam+1.0), ind='Max')
+                    ingrid_obj.set('mindeg', 1.0*nodes/(0.333333333333333*diameter+1.0), ind='Max')
                 except:
                     pass
             mindeg = ingrid_obj.get('mindeg', ind='Min')
             nodes = ingrid_obj.get('nodes', ind='Max')
             if nodes != 'undt':
                 try:
-                    ingrid_obj.set('diam', -(3.0)+3.0*nodes/mindeg, ind='Max')
+                    ingrid_obj.set('diameter', -(3.0)+3.0*nodes/mindeg, ind='Max')
                 except:
                     pass
-            diam = ingrid_obj.get('diam', ind='Min')
+            diameter = ingrid_obj.get('diameter', ind='Min')
             mindeg = ingrid_obj.get('mindeg', ind='Min')
             try:
-                ingrid_obj.set('nodes', mindeg*(0.333333333333333*diam+1.0), ind='Min')
+                ingrid_obj.set('nodes', mindeg*(0.333333333333333*diameter+1.0), ind='Min')
             except:
                 pass
         return
@@ -4186,7 +4186,7 @@ class Theorem130(Theorem):
     def __init__(self):
         super(Theorem130, self).__init__(130, "if diameter == 2 and nodes >= maxdeg * maxdeg / 8 then {edges >= nodes *(nodes - 1)/(2 * maxdeg)} else if diameter == 2 and nodes < maxdeg * maxdeg /8 then {edges >= maxdeg * nodes * (nodes - 1)/ (maxdeg * maxdeg + 8*nodes)};", "")
     def involves(self, str_invar):
-        return str_invar in ["diam","edges","maxdeg","nodes"]
+        return str_invar in ["diameter","edges","maxdeg","nodes"]
     def run(self, ingrid_obj):
         diameter_Min = ingrid_obj.get('diameter', ind='Min')
         diameter_Max = ingrid_obj.get('diameter', ind='Max')
