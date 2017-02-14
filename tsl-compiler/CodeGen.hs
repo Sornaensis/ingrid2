@@ -165,8 +165,8 @@ generateIExpr (InvarExpr (Invar v) Nothing) =
 generateIExpr (InvarExprNot (Invar v)) = 
     return ("ingrid_obj.set(\'" ++ v ++ "\', False)")
 generateIExpr (InvarExprUndefined (Invar v)) = 
-    [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')-1"
-    , "\tingrid_obj.set(\'" ++ v ++ "\', \'undt\', ind=\'Max\')"]
+    [ v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')"
+    , "ingrid_obj.set(\'" ++ v ++ "\', \'undt\', ind=\'Min\')"]
 generateIExpr (InvarExprEven (Invar v)) = 
     [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')-1"
     , v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')+1" 
