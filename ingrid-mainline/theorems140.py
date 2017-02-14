@@ -193,7 +193,6 @@ class Theorem8(Theorem):
         mindeg = ingrid_obj.get('mindeg', ind='Min')
         numOfComponents = ingrid_obj.get('numOfComponents', ind='Min')
         try:
-            sys.stderr.write("Values :  mindeg = " + str(mindeg) + " maxdeg = " + str(maxdeg) + " numCom = " + str(numOfComponents) + " min[nodes] = " + str(1.0*maxdeg+1.0*mindeg*numOfComponents-(1.0*mindeg)+1.0*numOfComponents) + "\n")
             ingrid_obj.set('nodes', 1.0*maxdeg+1.0*mindeg*numOfComponents-(1.0*mindeg)+1.0*numOfComponents, ind='Min')
         except:
             pass
@@ -3733,7 +3732,6 @@ class Theorem114(Theorem):
         nodeCover = ingrid_obj.get('nodeCover', ind='Min')
         if edges != 'undt':
             try:
-                sys.stderr.write("max[maxClique] = " + str(0.5*(8.0*edges-(8.0*nodeCover)+1.0)**(1/2)+1.5) + "\n")
                 ingrid_obj.set('maxClique', 0.5*(8.0*edges-(8.0*nodeCover)+1.0)**(1/2)+1.5, ind='Max')
             except:
                 pass
