@@ -319,8 +319,8 @@ generateCond (CondSpecF "istrue" exp) =
         involves = S.toList $ getExprInvolves exp
     in generateCond setconds 
 generateCond (CondSpec "undefined" (Invar v)) =
-    [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind = \'Max\')",
-     "(" ++ v ++ "_Max == \'undt\')"]
+    [ v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind = \'Min\')",
+     "(" ++ v ++ "_Min == \'undt\')"]
 generateCond (CondSpec "defined" (Invar v)) =
     [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind = \'Max\')",
      "(" ++ v ++ "_Max != \'undt\')"]
