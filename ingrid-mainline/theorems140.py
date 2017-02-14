@@ -1302,7 +1302,7 @@ class Theorem43(Theorem):
 
 class Theorem44(Theorem):
     def __init__(self):
-        super(Theorem44, self).__init__(44, "if nodeConnec >= 1 or numOfComponents == 1 or radius <= nodes/2 or diameter <= nodes-1 then { nodeConnec >= 1, numOfComponents == 1, radius <= nodes/2, diameter <= nodes-1 };", "")
+        super(Theorem44, self).__init__(44, "if connected or nodeConnec >= 1 or numOfComponents == 1 or radius <= nodes/2 or diameter <= nodes-1 then { connected, nodeConnec >= 1, numOfComponents == 1, radius <= nodes/2, diameter <= nodes-1 };", "")
     def involves(self, str_invar):
         return str_invar in ["diameter","nodeConnec","nodes","numOfComponents","radius"]
     def run(self, ingrid_obj):
@@ -1312,7 +1312,9 @@ class Theorem44(Theorem):
         radius_Max = ingrid_obj.get('radius', ind='Max')
         nodes_Min = ingrid_obj.get('nodes', ind='Min')
         diameter_Max = ingrid_obj.get('diameter', ind='Max')
-        if (nodeConnec_Min>=1.0) or (numOfComponents_Max==numOfComponents_Min and (numOfComponents_Min==1.0)) or (radius_Max != 'undt' and (radius_Max<=nodes_Min/2.0)) or (diameter_Max != 'undt' and (diameter_Max<=nodes_Min-(1.0))):
+        connected = ingrid_obj.get('connected')
+        if (connected==True) or (nodeConnec_Min>=1.0) or (numOfComponents_Max==numOfComponents_Min and (numOfComponents_Min==1.0)) or (radius_Max != 'undt' and (radius_Max<=nodes_Min/2.0)) or (diameter_Max != 'undt' and (diameter_Max<=nodes_Min-(1.0))):
+            ingrid_obj.set('connected', True)
             try:
                 ingrid_obj.set('nodeConnec', 1.0, ind='Min')
             except:
@@ -1886,9 +1888,9 @@ class Theorem50(Theorem):
         numOfComponents_Min = ingrid_obj.get('numOfComponents', ind='Min')
         arboricity_Min = ingrid_obj.get('arboricity', ind='Min')
         arboricity_Max = ingrid_obj.get('arboricity', ind='Max')
-        girth_Max = ingrid_obj.get('girth', ind = 'Max')
-        circumference_Max = ingrid_obj.get('circumference', ind = 'Max')
-        if (forest == True) or (edges_Max != 'undt' and numOfComponents_Max != 'undt' and (edges_Max<=nodes_Min-(numOfComponents_Max))) and (nodes_Max != 'undt' and (edges_Min>=nodes_Max-(numOfComponents_Min))) or (arboricity_Max==arboricity_Min and (arboricity_Min==1.0)) or (girth_Max == 'undt') or (circumference_Max == 'undt'):
+        girth_Min = ingrid_obj.get('girth', ind = 'Min')
+        circumference_Min = ingrid_obj.get('circumference', ind = 'Min')
+        if (forest == True) or (edges_Max != 'undt' and numOfComponents_Max != 'undt' and (edges_Max<=nodes_Min-(numOfComponents_Max)) and nodes_Max != 'undt' and (edges_Min>=nodes_Max-(numOfComponents_Min))) or (arboricity_Max==arboricity_Min and (arboricity_Min==1.0)) or (girth_Min == 'undt') or (circumference_Min == 'undt'):
             ingrid_obj.set('forest', True)
             nodes = ingrid_obj.get('nodes', ind='Max')
             numOfComponents = ingrid_obj.get('numOfComponents', ind='Min')
