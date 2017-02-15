@@ -1,3 +1,4 @@
+TypeError('unorderable types: float() <= complex()',)
 class Theorem141(Theorem):
 	def __init__(self):
 		super(Theorem141, self).__init__(141, "circumference >= 2*edges/(nodes-1);", "")
@@ -29,17 +30,10 @@ class Theorem141(Theorem):
 
 class Theorem142(Theorem):
 	def __init__(self):
-		super(Theorem142, self).__init__(142, "if edges >= nodes + 1 + (1/2)*(nodes**(3/2)) then {girth <= 4};", "")
+		super(Theorem142, self).__init__(142, "null;", "REPLACED BY R343")
 	def involves(self, str_invar):
-		return str_invar in ["edges","girth","nodes"]
+		return str_invar in []
 	def run(self, ingrid_obj):
-		edges_Min = ingrid_obj.get('edges', ind='Min')
-		nodes_Max = ingrid_obj.get('nodes', ind='Max')
-		if (nodes_Max != 'undt' and (edges_Min>=nodes_Max+1.0+(1.0/2.0)*(nodes_Max**(3.0/2.0)))):
-			try:
-				ingrid_obj.set('girth', 4.0, ind='Max')
-			except:
-				pass
 		return
 
 class Theorem143(Theorem):
@@ -384,9 +378,9 @@ class Theorem153(Theorem):
 
 class Theorem154(Theorem):
 	def __init__(self):
-		super(Theorem154, self).__init__(154, "null;", "")
+		super(Theorem154, self).__init__(154, "null;", "RETIRED by R265")
 	def involves(self, str_invar):
-		return str_invar in ["diameter","maxdeg","nodes"]
+		return str_invar in []
 	def run(self, ingrid_obj):
 		return
 
