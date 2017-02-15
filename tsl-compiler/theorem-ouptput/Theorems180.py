@@ -1,3 +1,4 @@
+TypeError('unorderable types: float() <= complex()',)
 class Theorem161(Theorem):
 	def __init__(self):
 		super(Theorem161, self).__init__(161, "if genus > 2 and girth >= 4 and mindeg >= (5 + (16*genus + 1)**(1/2))/2 and mindeg == (3 + (16*genus + 9)**(1/2))/2 then { regular, hamiltonian, nodes == 2*mindeg+2 } else if genus > 2 and girth >= 4 and mindeg >= (5 + (16*genus + 1)**(1/2))/2 then { regular, hamiltonian, nodes == 2*mindeg }; ", "")
@@ -253,6 +254,13 @@ class Theorem170(Theorem):
 					ingrid_obj.set('edges', -(0.5*nodes)+0.5*nodes**2.0/nodeInd+1.5/nodeInd+0.5/(nodeInd*nodes), ind='Min')
 				except:
 					pass
+			edges = ingrid_obj.get('edges', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			if edges != 'undt':
+				try:
+					ingrid_obj.set('nodeInd', (1.0+3.0*nodes+nodes**3.0)/(nodes*(nodes+2.0*edges)), ind='Min')
+				except:
+					pass
 		return
 
 class Theorem171(Theorem):
@@ -442,9 +450,9 @@ class Theorem176(Theorem):
 
 class Theorem177(Theorem):
 	def __init__(self):
-		super(Theorem177, self).__init__(177, "null;", "")
+		super(Theorem177, self).__init__(177, "null;", "Replaced by r280")
 	def involves(self, str_invar):
-		return str_invar in ["bandwidth","nodes","tree"]
+		return str_invar in []
 	def run(self, ingrid_obj):
 		return
 
