@@ -2,7 +2,7 @@
 module Delimit where
 
 import           Control.Lens
-import           Control.Monad.Logger
+import           Control.Monad.IO.Class         (liftIO)
 import           Control.Monad.Trans.State.Lazy
 
 import           Data.Aeson
@@ -35,7 +35,7 @@ data IngridNum a = IngridNum a | Infinity deriving Eq
 
 instance Read a => Read (IngridNum a) where
     readsPrec _ ('u':'n':'d':'t':rest) = [(Infinity, rest)]
-    readsPrec _ b                      = let b' = reads b 
+    readsPrec _ b                      = let b' = reads b
                                          in  case b' of
                                                 [(b'',r)] -> [(IngridNum b'',r)]
                                                 _       -> []
@@ -81,7 +81,10 @@ data IngridWorld = IngridWorld {
                  , _stack      :: [Text]
                  }
 
-type Ingrid = State IngridWorld
+type Ingrid = StateT IngridWorld IO
+
+doIO :: IO a -> Ingrid a
+doIO = liftIO
 
 makeLenses ''NumBound
 makeLenses ''Invariant

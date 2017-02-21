@@ -1,31 +1,48 @@
-TypeError('unorderable types: float() <= complex()',)
 class Theorem141(Theorem):
 	def __init__(self):
 		super(Theorem141, self).__init__(141, "circumference >= 2*edges/(nodes-1);", "")
 	def involves(self, str_invar):
 		return str_invar in ["circumference","edges","nodes"]
 	def run(self, ingrid_obj):
+		result = []
 		edges = ingrid_obj.get('edges', ind='Min')
 		nodes = ingrid_obj.get('nodes', ind='Max')
 		if nodes != 'undt':
 			try:
-				ingrid_obj.set('circumference', 2.0*edges/(nodes-(1.0)), ind='Min')
+				result.append(2.0*edges/(nodes-(1.0)))
 			except:
 				pass
-		circumference = ingrid_obj.get('circumference', ind='Max')
+		edges = ingrid_obj.get('edges', ind='Max')
 		nodes = ingrid_obj.get('nodes', ind='Max')
-		if circumference != 'undt' and nodes != 'undt':
+		if edges != 'undt' and nodes != 'undt':
 			try:
-				ingrid_obj.set('edges', 0.5*circumference*(nodes-(1.0)), ind='Max')
+				result.append(2.0*edges/(nodes-(1.0)))
 			except:
 				pass
+		if len(result) > 0:
+			ingrid_obj.set('circumference', min(result), ind='Min')
+		circumference = ingrid_obj.get('circumference', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		try:
+			ingrid_obj.set('edges', circumference*(nodes-(1.0))/2.0, ind='Min')
+		except:
+			pass
+		result = []
+		circumference = ingrid_obj.get('circumference', ind='Min')
+		edges = ingrid_obj.get('edges', ind='Min')
+		try:
+			result.append((circumference+2.0*edges)/circumference)
+		except:
+			pass
 		circumference = ingrid_obj.get('circumference', ind='Max')
 		edges = ingrid_obj.get('edges', ind='Min')
 		if circumference != 'undt':
 			try:
-				ingrid_obj.set('nodes', 1.0+2.0*edges/circumference, ind='Min')
+				result.append((circumference+2.0*edges)/circumference)
 			except:
 				pass
+		if len(result) > 0:
+			ingrid_obj.set('nodes', min(result), ind='Min')
 		return
 
 class Theorem142(Theorem):
@@ -42,25 +59,57 @@ class Theorem143(Theorem):
 	def involves(self, str_invar):
 		return str_invar in ["edges","nodeCliqueCover","nodes"]
 	def run(self, ingrid_obj):
+		result = []
+		nodes = ingrid_obj.get('nodes', ind='Min')
 		edges = ingrid_obj.get('edges', ind='Min')
+		try:
+			result.append((-(2.0*edges)-(nodes)+nodes**2.0+0.25)**(1/2)+0.5)
+		except:
+			pass
 		nodes = ingrid_obj.get('nodes', ind='Max')
+		edges = ingrid_obj.get('edges', ind='Min')
 		if nodes != 'undt':
 			try:
-				ingrid_obj.set('nodeCliqueCover', 1.0*(-(2.0*edges)-(nodes)+nodes**2.0+0.25)**0.5+0.5, ind='Max')
+				result.append((-(2.0*edges)-(nodes)+nodes**2.0+0.25)**(1/2)+0.5)
 			except:
 				pass
+		if len(result) > 0:
+			ingrid_obj.set('nodeCliqueCover', max(result), ind='Max')
+		result = []
+		nodeCliqueCover = ingrid_obj.get('nodeCliqueCover', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		try:
+			result.append(-(0.5*nodeCliqueCover**2.0)+0.5*nodeCliqueCover-(0.5*nodes)+0.5*nodes**2.0)
+		except:
+			pass
 		nodeCliqueCover = ingrid_obj.get('nodeCliqueCover', ind='Min')
 		nodes = ingrid_obj.get('nodes', ind='Max')
 		if nodes != 'undt':
 			try:
-				ingrid_obj.set('edges', -(0.5*nodes)+0.5*nodes**2.0-(0.5*(1.0*nodeCliqueCover-(0.5))**2.0)+0.125, ind='Max')
+				result.append(-(0.5*nodeCliqueCover**2.0)+0.5*nodeCliqueCover-(0.5*nodes)+0.5*nodes**2.0)
 			except:
 				pass
-		edges = ingrid_obj.get('edges', ind='Min')
-		nodes = ingrid_obj.get('nodes', ind='Max')
-		if nodes != 'undt':
+		nodeCliqueCover = ingrid_obj.get('nodeCliqueCover', ind='Max')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		if nodeCliqueCover != 'undt':
 			try:
-				ingrid_obj.set('nodeCliqueCover', (1.0/4.0+nodes**2.0-((nodes))-((2.0*edges)))**(1.0/2.0)+(1.0/2.0), ind='Max')
+				result.append(-(0.5*nodeCliqueCover**2.0)+0.5*nodeCliqueCover-(0.5*nodes)+0.5*nodes**2.0)
+			except:
+				pass
+		nodeCliqueCover = ingrid_obj.get('nodeCliqueCover', ind='Max')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if nodeCliqueCover != 'undt' and nodes != 'undt':
+			try:
+				result.append(-(0.5*nodeCliqueCover**2.0)+0.5*nodeCliqueCover-(0.5*nodes)+0.5*nodes**2.0)
+			except:
+				pass
+		if len(result) > 0:
+			ingrid_obj.set('edges', max(result), ind='Max')
+		edges = ingrid_obj.get('edges', ind='Max')
+		nodeCliqueCover = ingrid_obj.get('nodeCliqueCover', ind='Max')
+		if edges != 'undt' and nodeCliqueCover != 'undt':
+			try:
+				ingrid_obj.set('nodes', (8.0*edges+(2.0*nodeCliqueCover-(1.0))**2.0)**(1/2)/2.0+1.0/2.0, ind='Max')
 			except:
 				pass
 		return
@@ -74,14 +123,15 @@ class Theorem144(Theorem):
 		edges = ingrid_obj.get('edges', ind='Max')
 		if edges != 'undt':
 			try:
-				ingrid_obj.set('chromaticNum', 1.0*(2.0*edges+0.25)**0.5+0.5, ind='Max')
+				ingrid_obj.set('chromaticNum', (2.0*edges+0.25)**(1/2)+0.5, ind='Max')
 			except:
 				pass
-		chromaticNum = ingrid_obj.get('chromaticNum', ind='Min')
-		try:
-			ingrid_obj.set('edges', 0.5*(1.0*chromaticNum-(0.5))**2.0-(0.125), ind='Min')
-		except:
-			pass
+		chromaticNum = ingrid_obj.get('chromaticNum', ind='Max')
+		if chromaticNum != 'undt':
+			try:
+				ingrid_obj.set('edges', 0.5*chromaticNum*(chromaticNum-(1.0)), ind='Max')
+			except:
+				pass
 		return
 
 class Theorem145(Theorem):
@@ -95,15 +145,14 @@ class Theorem145(Theorem):
 		if (maxClique_Max==maxClique_Min and (maxClique_Min==2.0)):
 			nodes = ingrid_obj.get('nodes', ind='Min')
 			try:
-				ingrid_obj.set('nodeInd', 0.5*(8.0*nodes+9.0)**0.5-(3.0), ind='Min')
+				ingrid_obj.set('nodeInd', 0.5*(8.0*nodes+9.0)**(1/2)-(3.0), ind='Min')
 			except:
 				pass
-			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
-			if nodeInd != 'undt':
-				try:
-					ingrid_obj.set('nodes', 0.5*(1.0*nodeInd+3.0)**2.0-(1.125), ind='Max')
-				except:
-					pass
+			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+			try:
+				ingrid_obj.set('nodes', 0.5*(1.0*nodeInd+3.0)**2.0-(1.125), ind='Min')
+			except:
+				pass
 		return
 
 class Theorem146(Theorem):
@@ -128,12 +177,13 @@ class Theorem146(Theorem):
 					ingrid_obj.set('diam', -(bandwidth)+nodes, ind='Max')
 				except:
 					pass
-			bandwidth = ingrid_obj.get('bandwidth', ind='Min')
-			diam = ingrid_obj.get('diam', ind='Min')
-			try:
-				ingrid_obj.set('nodes', bandwidth+diam, ind='Min')
-			except:
-				pass
+			bandwidth = ingrid_obj.get('bandwidth', ind='Max')
+			diam = ingrid_obj.get('diam', ind='Max')
+			if bandwidth != 'undt' and diam != 'undt':
+				try:
+					ingrid_obj.set('nodes', bandwidth+diam, ind='Max')
+				except:
+					pass
 		return
 
 class Theorem147(Theorem):
@@ -147,12 +197,12 @@ class Theorem147(Theorem):
 		maxdeg_Min = ingrid_obj.get('maxdeg', ind='Min')
 		nodes_Max = ingrid_obj.get('nodes', ind='Max')
 		nodes_Min = ingrid_obj.get('nodes', ind='Min')
-		if (maxClique_Max==maxClique_Min and (maxClique_Min==2.0)) and (nodes_Max != 'undt' and (maxdeg_Min>=nodes_Max-(2.0))) or (nodes_Max != 'undt' and (nodes_Max<=4.0)):
+		if ((maxClique_Max==maxClique_Min and (maxClique_Min==2.0)) and ((nodes_Max != 'undt' and (maxdeg_Min>=nodes_Max-(2.0))) or (nodes_Max != 'undt' and (nodes_Max<=4.0)))):
 			try:
 				ingrid_obj.set('chromaticNum', 2.0, ind='Max')
 			except:
 				pass
-		elif (maxClique_Max==maxClique_Min and (maxClique_Min==2.0)) and (nodes_Min>=5.0) and (nodes_Max != 'undt' and (nodes_Max<=10.0)):
+		elif (((maxClique_Max==maxClique_Min and (maxClique_Min==2.0)) and (nodes_Min>=5.0)) and (nodes_Max != 'undt' and (nodes_Max<=10.0))):
 			try:
 				ingrid_obj.set('chromaticNum', 3.0, ind='Max')
 			except:
@@ -162,22 +212,23 @@ class Theorem147(Theorem):
 			nodes = ingrid_obj.get('nodes', ind='Max')
 			if nodes != 'undt':
 				try:
-					ingrid_obj.set('chromaticNum', -(0.25*maxdeg)+0.25*nodes+2.5, ind='Max')
+					ingrid_obj.set('chromaticNum', -(maxdeg/4.0)+nodes/4.0+5.0/2.0, ind='Max')
 				except:
 					pass
 			chromaticNum = ingrid_obj.get('chromaticNum', ind='Min')
 			nodes = ingrid_obj.get('nodes', ind='Max')
 			if nodes != 'undt':
 				try:
-					ingrid_obj.set('maxdeg', -(4.0*chromaticNum)+1.0*nodes+10.0, ind='Max')
+					ingrid_obj.set('maxdeg', -(4.0*chromaticNum)+nodes+10.0, ind='Max')
 				except:
 					pass
-			chromaticNum = ingrid_obj.get('chromaticNum', ind='Min')
-			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
-			try:
-				ingrid_obj.set('nodes', 4.0*chromaticNum+1.0*maxdeg-(10.0), ind='Min')
-			except:
-				pass
+			chromaticNum = ingrid_obj.get('chromaticNum', ind='Max')
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			if chromaticNum != 'undt' and maxdeg != 'undt':
+				try:
+					ingrid_obj.set('nodes', 4.0*chromaticNum+maxdeg-(10.0), ind='Max')
+				except:
+					pass
 		return
 
 class Theorem148(Theorem):
@@ -192,7 +243,7 @@ class Theorem148(Theorem):
 		maxdeg_Max = ingrid_obj.get('maxdeg', ind='Max')
 		planar = ingrid_obj.get('planar')
 		edgeConnec_Min = ingrid_obj.get('edgeConnec', ind='Min')
-		if (mindeg_Max==mindeg_Min and (mindeg_Min==3.0)) and (maxdeg_Max==maxdeg_Min and (maxdeg_Min==3.0)) and (planar == True) and (edgeConnec_Min>=2.0):
+		if ((((mindeg_Max==mindeg_Min and (mindeg_Min==3.0)) and (maxdeg_Max==maxdeg_Min and (maxdeg_Min==3.0))) and (planar == True)) and (edgeConnec_Min>=2.0)):
 			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
 			if maxdeg != 'undt':
 				try:
@@ -225,7 +276,7 @@ class Theorem149(Theorem):
 	def run(self, ingrid_obj):
 		planar = ingrid_obj.get('planar')
 		maxdeg_Min = ingrid_obj.get('maxdeg', ind='Min')
-		if (planar == True) and (maxdeg_Min>=8.0):
+		if ((planar == True) and (maxdeg_Min>=8.0)):
 			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
 			if maxdeg != 'undt':
 				try:
@@ -293,27 +344,27 @@ class Theorem151(Theorem):
 		regular = ingrid_obj.get('regular')
 		nodeConnec_Min = ingrid_obj.get('nodeConnec', ind='Min')
 		nodeConnec_Max = ingrid_obj.get('nodeConnec', ind='Max')
-		if (nodes_Min>2.0) and (regular == True) and (nodeConnec_Max==nodeConnec_Min and (nodeConnec_Min==1.0)):
+		if (((nodes_Min>2.0) and (regular == True)) and (nodeConnec_Max==nodeConnec_Min and (nodeConnec_Min==1.0))):
 			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
 			if maxdeg != 'undt':
 				try:
-					ingrid_obj.set('edgeChromatic', 1.0*maxdeg+1.0, ind='Max')
+					ingrid_obj.set('edgeChromatic', maxdeg+1.0, ind='Max')
 				except:
 					pass
 			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
 			try:
-				ingrid_obj.set('edgeChromatic', 1.0*maxdeg+1.0, ind='Min')
+				ingrid_obj.set('edgeChromatic', maxdeg+1.0, ind='Min')
 			except:
 				pass
 			edgeChromatic = ingrid_obj.get('edgeChromatic', ind='Max')
 			if edgeChromatic != 'undt':
 				try:
-					ingrid_obj.set('maxdeg', 1.0*edgeChromatic-(1.0), ind='Max')
+					ingrid_obj.set('maxdeg', edgeChromatic-(1.0), ind='Max')
 				except:
 					pass
 			edgeChromatic = ingrid_obj.get('edgeChromatic', ind='Min')
 			try:
-				ingrid_obj.set('maxdeg', 1.0*edgeChromatic-(1.0), ind='Min')
+				ingrid_obj.set('maxdeg', edgeChromatic-(1.0), ind='Min')
 			except:
 				pass
 		return
@@ -330,50 +381,82 @@ class Theorem152(Theorem):
 		nodes_Max = ingrid_obj.get('nodes', ind='Max')
 		nodeInd_Max = ingrid_obj.get('nodeInd', ind='Max')
 		nodes_Min = ingrid_obj.get('nodes', ind='Min')
-		if (maxClique_Max==maxClique_Min and (maxClique_Min==2.0)) and (nodes_Max != 'undt' and (nodeInd_Min>=2.0*nodes_Max/5.0)) and (nodeInd_Max != 'undt' and (nodeInd_Max<=nodes_Min/2.0)):
+		if (((maxClique_Max==maxClique_Min and (maxClique_Min==2.0)) and (nodes_Max != 'undt' and (nodeInd_Min>=2.0*nodes_Max/5.0))) and (nodeInd_Max != 'undt' and (nodeInd_Max<=nodes_Min/2.0))):
 			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if nodeInd != 'undt' and nodes != 'undt':
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			if nodeInd != 'undt':
 				try:
-					ingrid_obj.set('edges', nodeInd**2.0+4.0*(-(nodeInd)+0.5*nodes)**2.0, ind='Max')
+					ingrid_obj.set('edges', nodeInd**2.0+(2.0*nodeInd-(nodes))**2.0, ind='Max')
+				except:
+					pass
+			result = []
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			edges = ingrid_obj.get('edges', ind='Max')
+			if edges != 'undt':
+				try:
+					result.append(2.0*nodes/5.0+(5.0*edges-(nodes**2.0))**(1/2)/5.0)
+				except:
+					pass
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			edges = ingrid_obj.get('edges', ind='Max')
+			if nodes != 'undt' and edges != 'undt':
+				try:
+					result.append(2.0*nodes/5.0+(5.0*edges-(nodes**2.0))**(1/2)/5.0)
+				except:
+					pass
+			if len(result) > 0:
+				ingrid_obj.set('nodeInd', max(result), ind='Max')
+			result = []
+			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+			edges = ingrid_obj.get('edges', ind='Max')
+			if edges != 'undt':
+				try:
+					result.append(2.0*nodeInd+(edges-(nodeInd**2.0))**(1/2))
 				except:
 					pass
 			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
-			nodes = ingrid_obj.get('nodes', ind='Max')
-			if nodeInd != 'undt' and nodes != 'undt':
+			edges = ingrid_obj.get('edges', ind='Max')
+			if nodeInd != 'undt' and edges != 'undt':
 				try:
-					ingrid_obj.set('edges', 4.0*(-((nodeInd))+nodes/2.0)**2.0+nodeInd**2.0, ind='Max')
+					result.append(2.0*nodeInd+(edges-(nodeInd**2.0))**(1/2))
 				except:
 					pass
+			if len(result) > 0:
+				ingrid_obj.set('nodes', max(result), ind='Max')
 		return
 
 class Theorem153(Theorem):
 	def __init__(self):
-		super(Theorem153, self).__init__(153, "bandwidth <= maxdeg*(maxdeg - 1)**(radius - 1);", "")
+		super(Theorem153, self).__init__(153, "if maxdeg == 2 or radius == 1 then { bandwidth <= maxdeg } else { bandwidth <= maxdeg*(maxdeg - 1)**(radius - 1) };", "")
 	def involves(self, str_invar):
 		return str_invar in ["bandwidth","maxdeg","radius"]
 	def run(self, ingrid_obj):
-		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
-		radius = ingrid_obj.get('radius', ind='Max')
-		if maxdeg != 'undt' and radius != 'undt':
-			try:
-				ingrid_obj.set('bandwidth', maxdeg*(maxdeg-(1.0))**(radius-(1.0)), ind='Max')
-			except:
-				pass
-		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
-		radius = ingrid_obj.get('radius', ind='Max')
-		if maxdeg != 'undt' and radius != 'undt':
-			try:
-				ingrid_obj.set('bandwidth', maxdeg*(-((1.0))+maxdeg)**(-((1.0))+radius), ind='Max')
-			except:
-				pass
-		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
-		radius = ingrid_obj.get('radius', ind='Max')
-		if maxdeg != 'undt' and radius != 'undt':
-			try:
-				ingrid_obj.set('bandwidth', maxdeg*(-((1.0))+maxdeg)**(-((1.0))+radius), ind='Max')
-			except:
-				pass
+		maxdeg_Min = ingrid_obj.get('maxdeg', ind='Min')
+		maxdeg_Max = ingrid_obj.get('maxdeg', ind='Max')
+		radius_Min = ingrid_obj.get('radius', ind='Min')
+		radius_Max = ingrid_obj.get('radius', ind='Max')
+		
+		if ((maxdeg_Max==maxdeg_Min and (maxdeg_Min==2.0)) or (radius_Max==radius_Min and (radius_Min==1.0))):
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			if maxdeg != 'undt':
+				try:
+					ingrid_obj.set('bandwidth', maxdeg, ind='Max')
+				except:
+					pass
+			bandwidth = ingrid_obj.get('bandwidth', ind='Max')
+			if bandwidth != 'undt':
+				try:
+					ingrid_obj.set('maxdeg', bandwidth, ind='Max')
+				except:
+					pass
+		elif (True):
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			radius = ingrid_obj.get('radius', ind='Max')
+			if maxdeg != 'undt' and radius != 'undt':
+				try:
+					ingrid_obj.set('bandwidth', maxdeg*(maxdeg-(1.0))**(radius-(1.0)), ind='Max')
+				except:
+					pass
 		return
 
 class Theorem154(Theorem):
@@ -393,20 +476,66 @@ class Theorem155(Theorem):
 		mindeg_Min = ingrid_obj.get('mindeg', ind='Min')
 		mindeg_Max = ingrid_obj.get('mindeg', ind='Max')
 		if (mindeg_Max==mindeg_Min and (mindeg_Min==2.0)):
+			result = []
+			edgeInd = ingrid_obj.get('edgeInd', ind='Min')
+			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+			try:
+				result.append((max(4.0, maxdeg)+2.0)/(2.0*edgeInd))
+			except:
+				pass
+			edgeInd = ingrid_obj.get('edgeInd', ind='Min')
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			if maxdeg != 'undt':
+				try:
+					result.append((max(4.0, maxdeg)+2.0)/(2.0*edgeInd))
+				except:
+					pass
+			edgeInd = ingrid_obj.get('edgeInd', ind='Max')
+			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+			if edgeInd != 'undt':
+				try:
+					result.append((max(4.0, maxdeg)+2.0)/(2.0*edgeInd))
+				except:
+					pass
 			edgeInd = ingrid_obj.get('edgeInd', ind='Max')
 			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
 			if edgeInd != 'undt' and maxdeg != 'undt':
 				try:
-					ingrid_obj.set('nodes', (0.5*max(4.0, maxdeg)+1.0)/edgeInd, ind='Max')
+					result.append((max(4.0, maxdeg)+2.0)/(2.0*edgeInd))
+				except:
+					pass
+			if len(result) > 0:
+				ingrid_obj.set('nodes', max(result), ind='Max')
+			result = []
+			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			try:
+				result.append((max(4.0, maxdeg)+2.0)/(2.0*nodes))
+			except:
+				pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if nodes != 'undt':
+				try:
+					result.append((max(4.0, maxdeg)+2.0)/(2.0*nodes))
+				except:
+					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			if maxdeg != 'undt':
+				try:
+					result.append((max(4.0, maxdeg)+2.0)/(2.0*nodes))
 				except:
 					pass
 			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
 			nodes = ingrid_obj.get('nodes', ind='Max')
 			if maxdeg != 'undt' and nodes != 'undt':
 				try:
-					ingrid_obj.set('edgeInd', (0.5*max(4.0, maxdeg)+1.0)/nodes, ind='Max')
+					result.append((max(4.0, maxdeg)+2.0)/(2.0*nodes))
 				except:
 					pass
+			if len(result) > 0:
+				ingrid_obj.set('edgeInd', max(result), ind='Max')
 		return
 
 class Theorem156(Theorem):
@@ -423,12 +552,11 @@ class Theorem156(Theorem):
 				ingrid_obj.set('edgeInd', mindeg, ind='Min')
 			except:
 				pass
-			edgeInd = ingrid_obj.get('edgeInd', ind='Max')
-			if edgeInd != 'undt':
-				try:
-					ingrid_obj.set('mindeg', edgeInd, ind='Max')
-				except:
-					pass
+			edgeInd = ingrid_obj.get('edgeInd', ind='Min')
+			try:
+				ingrid_obj.set('mindeg', edgeInd, ind='Min')
+			except:
+				pass
 		return
 
 class Theorem157(Theorem):
@@ -443,14 +571,15 @@ class Theorem157(Theorem):
 			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
 			if maxdeg != 'undt':
 				try:
-					ingrid_obj.set('chromaticNum', 1.0*maxdeg-(1.0), ind='Max')
+					ingrid_obj.set('chromaticNum', maxdeg-(1.0), ind='Max')
 				except:
 					pass
-			chromaticNum = ingrid_obj.get('chromaticNum', ind='Min')
-			try:
-				ingrid_obj.set('maxdeg', 1.0*chromaticNum+1.0, ind='Min')
-			except:
-				pass
+			chromaticNum = ingrid_obj.get('chromaticNum', ind='Max')
+			if chromaticNum != 'undt':
+				try:
+					ingrid_obj.set('maxdeg', chromaticNum+1.0, ind='Max')
+				except:
+					pass
 		return
 
 class Theorem158(Theorem):
@@ -462,17 +591,17 @@ class Theorem158(Theorem):
 		connected = ingrid_obj.get('connected')
 		edges_Max = ingrid_obj.get('edges', ind='Max')
 		nodes_Min = ingrid_obj.get('nodes', ind='Min')
-		if (connected == True) and (edges_Max != 'undt' and (edges_Max<=nodes_Min+3.0)):
+		if ((connected == True) and (edges_Max != 'undt' and (edges_Max<=nodes_Min+3.0))):
 			try:
 				ingrid_obj.set('genus', 0.0, ind='Max')
 			except:
 				pass
-		elif (connected == True) and (edges_Max != 'undt' and (edges_Max<=nodes_Min+6.0)):
+		elif ((connected == True) and (edges_Max != 'undt' and (edges_Max<=nodes_Min+6.0))):
 			try:
 				ingrid_obj.set('genus', 1.0, ind='Max')
 			except:
 				pass
-		elif (connected == True) and (edges_Max != 'undt' and (edges_Max<=nodes_Min+9.0)):
+		elif ((connected == True) and (edges_Max != 'undt' and (edges_Max<=nodes_Min+9.0))):
 			try:
 				ingrid_obj.set('genus', 2.0, ind='Max')
 			except:
@@ -485,27 +614,180 @@ class Theorem159(Theorem):
 	def involves(self, str_invar):
 		return str_invar in ["maxdeg","mindeg","nodeInd","nodes"]
 	def run(self, ingrid_obj):
+		result = []
 		maxdeg = ingrid_obj.get('maxdeg', ind='Min')
 		mindeg = ingrid_obj.get('mindeg', ind='Min')
 		nodes = ingrid_obj.get('nodes', ind='Min')
 		try:
-			ingrid_obj.set('nodeInd', 1.0*(maxdeg+mindeg*nodes-(mindeg)+nodes)/(maxdeg*mindeg+maxdeg+mindeg+1.0), ind='Min')
+			result.append((maxdeg+mindeg*nodes-(mindeg)+nodes)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
 		except:
 			pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Min')
 		mindeg = ingrid_obj.get('mindeg', ind='Min')
-		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
-		nodes = ingrid_obj.get('nodes', ind='Min')
-		if nodeInd != 'undt':
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if nodes != 'undt':
 			try:
-				ingrid_obj.set('maxdeg', 1.0*(-(nodeInd*mindeg)-(nodeInd)+mindeg*nodes-(mindeg)+nodes)/(nodeInd*mindeg+nodeInd-(1.0)), ind='Min')
+				result.append((maxdeg+mindeg*nodes-(mindeg)+nodes)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
 			except:
 				pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+		mindeg = ingrid_obj.get('mindeg', ind='Max')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		if mindeg != 'undt':
+			try:
+				result.append((maxdeg+mindeg*nodes-(mindeg)+nodes)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
+			except:
+				pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+		mindeg = ingrid_obj.get('mindeg', ind='Max')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if mindeg != 'undt' and nodes != 'undt':
+			try:
+				result.append((maxdeg+mindeg*nodes-(mindeg)+nodes)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
+			except:
+				pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+		mindeg = ingrid_obj.get('mindeg', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		if maxdeg != 'undt':
+			try:
+				result.append((maxdeg+mindeg*nodes-(mindeg)+nodes)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
+			except:
+				pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+		mindeg = ingrid_obj.get('mindeg', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if maxdeg != 'undt' and nodes != 'undt':
+			try:
+				result.append((maxdeg+mindeg*nodes-(mindeg)+nodes)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
+			except:
+				pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+		mindeg = ingrid_obj.get('mindeg', ind='Max')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		if maxdeg != 'undt' and mindeg != 'undt':
+			try:
+				result.append((maxdeg+mindeg*nodes-(mindeg)+nodes)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
+			except:
+				pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+		mindeg = ingrid_obj.get('mindeg', ind='Max')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		if maxdeg != 'undt' and mindeg != 'undt' and nodes != 'undt':
+			try:
+				result.append((maxdeg+mindeg*nodes-(mindeg)+nodes)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
+			except:
+				pass
+		if len(result) > 0:
+			ingrid_obj.set('nodeInd', min(result), ind='Min')
+		result = []
+		mindeg = ingrid_obj.get('mindeg', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+		if nodeInd != 'undt':
+			try:
+				result.append((-(mindeg*nodeInd)+mindeg*nodes-(mindeg)-(nodeInd)+nodes)/(mindeg*nodeInd+nodeInd-(1.0)))
+			except:
+				pass
+		mindeg = ingrid_obj.get('mindeg', ind='Min')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+		if nodes != 'undt' and nodeInd != 'undt':
+			try:
+				result.append((-(mindeg*nodeInd)+mindeg*nodes-(mindeg)-(nodeInd)+nodes)/(mindeg*nodeInd+nodeInd-(1.0)))
+			except:
+				pass
+		mindeg = ingrid_obj.get('mindeg', ind='Max')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+		if mindeg != 'undt' and nodeInd != 'undt':
+			try:
+				result.append((-(mindeg*nodeInd)+mindeg*nodes-(mindeg)-(nodeInd)+nodes)/(mindeg*nodeInd+nodeInd-(1.0)))
+			except:
+				pass
+		mindeg = ingrid_obj.get('mindeg', ind='Max')
+		nodes = ingrid_obj.get('nodes', ind='Max')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+		if mindeg != 'undt' and nodes != 'undt' and nodeInd != 'undt':
+			try:
+				result.append((-(mindeg*nodeInd)+mindeg*nodes-(mindeg)-(nodeInd)+nodes)/(mindeg*nodeInd+nodeInd-(1.0)))
+			except:
+				pass
+		if len(result) > 0:
+			ingrid_obj.set('maxdeg', min(result), ind='Min')
+		result = []
 		maxdeg = ingrid_obj.get('maxdeg', ind='Min')
 		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
 		nodes = ingrid_obj.get('nodes', ind='Min')
 		if nodeInd != 'undt':
 			try:
-				ingrid_obj.set('mindeg', 1.0*(-(nodeInd*maxdeg)-(nodeInd)+maxdeg+nodes)/(nodeInd*maxdeg+nodeInd-(nodes)+1.0), ind='Min')
+				result.append((-(maxdeg*nodeInd)+maxdeg-(nodeInd)+nodes)/(maxdeg*nodeInd+nodeInd-(nodes)+1.0))
+			except:
+				pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+		nodes = ingrid_obj.get('nodes', ind='Min')
+		if maxdeg != 'undt' and nodeInd != 'undt':
+			try:
+				result.append((-(maxdeg*nodeInd)+maxdeg-(nodeInd)+nodes)/(maxdeg*nodeInd+nodeInd-(nodes)+1.0))
+			except:
+				pass
+		if len(result) > 0:
+			ingrid_obj.set('mindeg', min(result), ind='Min')
+		result = []
+		maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+		mindeg = ingrid_obj.get('mindeg', ind='Min')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+		try:
+			result.append((maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(mindeg+1.0))
+		except:
+			pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+		mindeg = ingrid_obj.get('mindeg', ind='Min')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+		if nodeInd != 'undt':
+			try:
+				result.append((maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(mindeg+1.0))
+			except:
+				pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+		mindeg = ingrid_obj.get('mindeg', ind='Max')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+		if mindeg != 'undt':
+			try:
+				result.append((maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(mindeg+1.0))
+			except:
+				pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+		mindeg = ingrid_obj.get('mindeg', ind='Max')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+		if mindeg != 'undt' and nodeInd != 'undt':
+			try:
+				result.append((maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(mindeg+1.0))
+			except:
+				pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+		mindeg = ingrid_obj.get('mindeg', ind='Min')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+		if maxdeg != 'undt':
+			try:
+				result.append((maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(mindeg+1.0))
+			except:
+				pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+		mindeg = ingrid_obj.get('mindeg', ind='Min')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+		if maxdeg != 'undt' and nodeInd != 'undt':
+			try:
+				result.append((maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(mindeg+1.0))
+			except:
+				pass
+		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+		mindeg = ingrid_obj.get('mindeg', ind='Max')
+		nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+		if maxdeg != 'undt' and mindeg != 'undt':
+			try:
+				result.append((maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(mindeg+1.0))
 			except:
 				pass
 		maxdeg = ingrid_obj.get('maxdeg', ind='Max')
@@ -513,9 +795,11 @@ class Theorem159(Theorem):
 		nodeInd = ingrid_obj.get('nodeInd', ind='Max')
 		if maxdeg != 'undt' and mindeg != 'undt' and nodeInd != 'undt':
 			try:
-				ingrid_obj.set('nodes', 1.0*(nodeInd*maxdeg*mindeg+nodeInd*maxdeg+nodeInd*mindeg+nodeInd-(maxdeg)+mindeg)/(mindeg+1.0), ind='Max')
+				result.append((maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(mindeg+1.0))
 			except:
 				pass
+		if len(result) > 0:
+			ingrid_obj.set('nodes', min(result), ind='Min')
 		return
 
 class Theorem160(Theorem):
@@ -534,49 +818,252 @@ class Theorem160(Theorem):
 		nodes_Max = ingrid_obj.get('nodes', ind = 'Max')
 		nodes_Max = ingrid_obj.get('nodes', ind='Max')
 		edges_Min = ingrid_obj.get('edges', ind='Min')
-		if (maxClique_Max==maxClique_Min and (maxClique_Min==2.0)) and (maxdeg_Min>=3.0):
-			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+		if ((maxClique_Max==maxClique_Min and (maxClique_Min==2.0)) and (maxdeg_Min>=3.0)):
+			result = []
 			nodes = ingrid_obj.get('nodes', ind='Min')
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
 			if maxdeg != 'undt':
 				try:
-					ingrid_obj.set('nodeInd', 1.0*nodes/(1.0*maxdeg-(0.2)), ind='Min')
+					result.append(5.0*nodes/(5.0*maxdeg-(1.0)))
 				except:
 					pass
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			if nodes != 'undt' and maxdeg != 'undt':
+				try:
+					result.append(5.0*nodes/(5.0*maxdeg-(1.0)))
+				except:
+					pass
+			if len(result) > 0:
+				ingrid_obj.set('nodeInd', min(result), ind='Min')
+			result = []
+			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			try:
+				result.append((nodeInd/5.0+nodes)/nodeInd)
+			except:
+				pass
 			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
 			nodes = ingrid_obj.get('nodes', ind='Min')
 			if nodeInd != 'undt':
 				try:
-					ingrid_obj.set('maxdeg', 0.2+1.0*nodes/nodeInd, ind='Min')
+					result.append((nodeInd/5.0+nodes)/nodeInd)
 				except:
 					pass
-			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
-			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
-			if maxdeg != 'undt' and nodeInd != 'undt':
-				try:
-					ingrid_obj.set('nodes', nodeInd*(1.0*maxdeg-(0.2)), ind='Max')
-				except:
-					pass
-		elif (maxClique_Max==maxClique_Min and (maxClique_Min==2.0)) and (nodes_Min>=3.0) and (connected == True) and (cycle == False) or (cycle == True) and (nodes_Min == nodes_Max) and (even(nodes_Min) and even(nodes_Max)) and (nodes_Max != 'undt' and (edges_Min>=nodes_Max)) or (maxdeg_Min>2.0) or (nodes_Min == nodes_Max) and (odd(nodes_Min) and odd(nodes_Max)):
+			if len(result) > 0:
+				ingrid_obj.set('maxdeg', min(result), ind='Min')
+			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+			try:
+				ingrid_obj.set('nodes', nodeInd*(maxdeg-(1.0/5.0)), ind='Min')
+			except:
+				pass
+		elif (((((maxClique_Max==maxClique_Min and (maxClique_Min==2.0)) and (nodes_Min>=3.0)) and (connected == True)) and ((cycle == False) or (((cycle == True) and (nodes_Min == nodes_Max)) and (even(nodes_Min) and even(nodes_Max))))) and (((nodes_Max != 'undt' and (edges_Min>=nodes_Max)) or (maxdeg_Min>2.0)) or ((nodes_Min == nodes_Max) and (odd(nodes_Min) and odd(nodes_Max))))):
+			result = []
 			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
 			mindeg = ingrid_obj.get('mindeg', ind='Min')
 			nodes = ingrid_obj.get('nodes', ind='Min')
 			try:
-				ingrid_obj.set('nodeInd', 1.0*(maxdeg**2.0+maxdeg*mindeg*nodes-(maxdeg*mindeg)+maxdeg*nodes+mindeg*nodes+nodes)/(maxdeg*(maxdeg*mindeg+maxdeg+mindeg+1.0)), ind='Min')
+				result.append((maxdeg**2.0+maxdeg*mindeg*nodes-(maxdeg*mindeg)+maxdeg*nodes+mindeg*nodes+nodes)/(maxdeg*(maxdeg*mindeg+maxdeg+mindeg+1.0)))
 			except:
 				pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if nodes != 'undt':
+				try:
+					result.append((maxdeg**2.0+maxdeg*mindeg*nodes-(maxdeg*mindeg)+maxdeg*nodes+mindeg*nodes+nodes)/(maxdeg*(maxdeg*mindeg+maxdeg+mindeg+1.0)))
+				except:
+					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+			mindeg = ingrid_obj.get('mindeg', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			if mindeg != 'undt':
+				try:
+					result.append((maxdeg**2.0+maxdeg*mindeg*nodes-(maxdeg*mindeg)+maxdeg*nodes+mindeg*nodes+nodes)/(maxdeg*(maxdeg*mindeg+maxdeg+mindeg+1.0)))
+				except:
+					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+			mindeg = ingrid_obj.get('mindeg', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if mindeg != 'undt' and nodes != 'undt':
+				try:
+					result.append((maxdeg**2.0+maxdeg*mindeg*nodes-(maxdeg*mindeg)+maxdeg*nodes+mindeg*nodes+nodes)/(maxdeg*(maxdeg*mindeg+maxdeg+mindeg+1.0)))
+				except:
+					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			if maxdeg != 'undt':
+				try:
+					result.append((maxdeg**2.0+maxdeg*mindeg*nodes-(maxdeg*mindeg)+maxdeg*nodes+mindeg*nodes+nodes)/(maxdeg*(maxdeg*mindeg+maxdeg+mindeg+1.0)))
+				except:
+					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if maxdeg != 'undt' and nodes != 'undt':
+				try:
+					result.append((maxdeg**2.0+maxdeg*mindeg*nodes-(maxdeg*mindeg)+maxdeg*nodes+mindeg*nodes+nodes)/(maxdeg*(maxdeg*mindeg+maxdeg+mindeg+1.0)))
+				except:
+					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			mindeg = ingrid_obj.get('mindeg', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			if maxdeg != 'undt' and mindeg != 'undt':
+				try:
+					result.append((maxdeg**2.0+maxdeg*mindeg*nodes-(maxdeg*mindeg)+maxdeg*nodes+mindeg*nodes+nodes)/(maxdeg*(maxdeg*mindeg+maxdeg+mindeg+1.0)))
+				except:
+					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			mindeg = ingrid_obj.get('mindeg', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if maxdeg != 'undt' and mindeg != 'undt' and nodes != 'undt':
+				try:
+					result.append((maxdeg**2.0+maxdeg*mindeg*nodes-(maxdeg*mindeg)+maxdeg*nodes+mindeg*nodes+nodes)/(maxdeg*(maxdeg*mindeg+maxdeg+mindeg+1.0)))
+				except:
+					pass
+			if len(result) > 0:
+				ingrid_obj.set('nodeInd', min(result), ind='Min')
+			result = []
 			mindeg = ingrid_obj.get('mindeg', ind='Min')
 			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
 			nodes = ingrid_obj.get('nodes', ind='Min')
 			try:
-				ingrid_obj.set('maxdeg', 0.5*(-(nodeInd*mindeg)-(nodeInd)+mindeg*nodes-(mindeg)+nodes+(1.0*nodeInd**2.0*mindeg**2.0+2.0*nodeInd**2.0*mindeg+1.0*nodeInd**2.0+2.0*nodeInd*mindeg**2.0*nodes+2.0*nodeInd*mindeg**2.0+4.0*nodeInd*mindeg*nodes+2.0*nodeInd*mindeg+2.0*nodeInd*nodes+1.0*mindeg**2.0*nodes**2.0-(2.0*mindeg**2.0*nodes)+1.0*mindeg**2.0+2.0*mindeg*nodes**2.0-(6.0*mindeg*nodes)+1.0*nodes**2.0-(4.0*nodes))**(1/2))/(nodeInd*mindeg+nodeInd-(1.0)), ind='Min')
+				result.append((-(mindeg*nodeInd)+mindeg*nodes-(mindeg)-(nodeInd)+nodes+(mindeg**2.0*nodeInd**2.0+2.0*mindeg**2.0*nodeInd*nodes+2.0*mindeg**2.0*nodeInd+mindeg**2.0*nodes**2.0-(2.0*mindeg**2.0*nodes)+mindeg**2.0+2.0*mindeg*nodeInd**2.0+4.0*mindeg*nodeInd*nodes+2.0*mindeg*nodeInd+2.0*mindeg*nodes**2.0-(6.0*mindeg*nodes)+nodeInd**2.0+2.0*nodeInd*nodes+nodes**2.0-(4.0*nodes))**(1/2))/(2.0*(mindeg*nodeInd+nodeInd-(1.0))))
 			except:
 				pass
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if nodes != 'undt':
+				try:
+					result.append((-(mindeg*nodeInd)+mindeg*nodes-(mindeg)-(nodeInd)+nodes+(mindeg**2.0*nodeInd**2.0+2.0*mindeg**2.0*nodeInd*nodes+2.0*mindeg**2.0*nodeInd+mindeg**2.0*nodes**2.0-(2.0*mindeg**2.0*nodes)+mindeg**2.0+2.0*mindeg*nodeInd**2.0+4.0*mindeg*nodeInd*nodes+2.0*mindeg*nodeInd+2.0*mindeg*nodes**2.0-(6.0*mindeg*nodes)+nodeInd**2.0+2.0*nodeInd*nodes+nodes**2.0-(4.0*nodes))**(1/2))/(2.0*(mindeg*nodeInd+nodeInd-(1.0))))
+				except:
+					pass
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			if nodeInd != 'undt':
+				try:
+					result.append((-(mindeg*nodeInd)+mindeg*nodes-(mindeg)-(nodeInd)+nodes+(mindeg**2.0*nodeInd**2.0+2.0*mindeg**2.0*nodeInd*nodes+2.0*mindeg**2.0*nodeInd+mindeg**2.0*nodes**2.0-(2.0*mindeg**2.0*nodes)+mindeg**2.0+2.0*mindeg*nodeInd**2.0+4.0*mindeg*nodeInd*nodes+2.0*mindeg*nodeInd+2.0*mindeg*nodes**2.0-(6.0*mindeg*nodes)+nodeInd**2.0+2.0*nodeInd*nodes+nodes**2.0-(4.0*nodes))**(1/2))/(2.0*(mindeg*nodeInd+nodeInd-(1.0))))
+				except:
+					pass
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if nodeInd != 'undt' and nodes != 'undt':
+				try:
+					result.append((-(mindeg*nodeInd)+mindeg*nodes-(mindeg)-(nodeInd)+nodes+(mindeg**2.0*nodeInd**2.0+2.0*mindeg**2.0*nodeInd*nodes+2.0*mindeg**2.0*nodeInd+mindeg**2.0*nodes**2.0-(2.0*mindeg**2.0*nodes)+mindeg**2.0+2.0*mindeg*nodeInd**2.0+4.0*mindeg*nodeInd*nodes+2.0*mindeg*nodeInd+2.0*mindeg*nodes**2.0-(6.0*mindeg*nodes)+nodeInd**2.0+2.0*nodeInd*nodes+nodes**2.0-(4.0*nodes))**(1/2))/(2.0*(mindeg*nodeInd+nodeInd-(1.0))))
+				except:
+					pass
+			mindeg = ingrid_obj.get('mindeg', ind='Max')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			if mindeg != 'undt':
+				try:
+					result.append((-(mindeg*nodeInd)+mindeg*nodes-(mindeg)-(nodeInd)+nodes+(mindeg**2.0*nodeInd**2.0+2.0*mindeg**2.0*nodeInd*nodes+2.0*mindeg**2.0*nodeInd+mindeg**2.0*nodes**2.0-(2.0*mindeg**2.0*nodes)+mindeg**2.0+2.0*mindeg*nodeInd**2.0+4.0*mindeg*nodeInd*nodes+2.0*mindeg*nodeInd+2.0*mindeg*nodes**2.0-(6.0*mindeg*nodes)+nodeInd**2.0+2.0*nodeInd*nodes+nodes**2.0-(4.0*nodes))**(1/2))/(2.0*(mindeg*nodeInd+nodeInd-(1.0))))
+				except:
+					pass
+			mindeg = ingrid_obj.get('mindeg', ind='Max')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if mindeg != 'undt' and nodes != 'undt':
+				try:
+					result.append((-(mindeg*nodeInd)+mindeg*nodes-(mindeg)-(nodeInd)+nodes+(mindeg**2.0*nodeInd**2.0+2.0*mindeg**2.0*nodeInd*nodes+2.0*mindeg**2.0*nodeInd+mindeg**2.0*nodes**2.0-(2.0*mindeg**2.0*nodes)+mindeg**2.0+2.0*mindeg*nodeInd**2.0+4.0*mindeg*nodeInd*nodes+2.0*mindeg*nodeInd+2.0*mindeg*nodes**2.0-(6.0*mindeg*nodes)+nodeInd**2.0+2.0*nodeInd*nodes+nodes**2.0-(4.0*nodes))**(1/2))/(2.0*(mindeg*nodeInd+nodeInd-(1.0))))
+				except:
+					pass
+			mindeg = ingrid_obj.get('mindeg', ind='Max')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			if mindeg != 'undt' and nodeInd != 'undt':
+				try:
+					result.append((-(mindeg*nodeInd)+mindeg*nodes-(mindeg)-(nodeInd)+nodes+(mindeg**2.0*nodeInd**2.0+2.0*mindeg**2.0*nodeInd*nodes+2.0*mindeg**2.0*nodeInd+mindeg**2.0*nodes**2.0-(2.0*mindeg**2.0*nodes)+mindeg**2.0+2.0*mindeg*nodeInd**2.0+4.0*mindeg*nodeInd*nodes+2.0*mindeg*nodeInd+2.0*mindeg*nodes**2.0-(6.0*mindeg*nodes)+nodeInd**2.0+2.0*nodeInd*nodes+nodes**2.0-(4.0*nodes))**(1/2))/(2.0*(mindeg*nodeInd+nodeInd-(1.0))))
+				except:
+					pass
+			mindeg = ingrid_obj.get('mindeg', ind='Max')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Max')
+			if mindeg != 'undt' and nodeInd != 'undt' and nodes != 'undt':
+				try:
+					result.append((-(mindeg*nodeInd)+mindeg*nodes-(mindeg)-(nodeInd)+nodes+(mindeg**2.0*nodeInd**2.0+2.0*mindeg**2.0*nodeInd*nodes+2.0*mindeg**2.0*nodeInd+mindeg**2.0*nodes**2.0-(2.0*mindeg**2.0*nodes)+mindeg**2.0+2.0*mindeg*nodeInd**2.0+4.0*mindeg*nodeInd*nodes+2.0*mindeg*nodeInd+2.0*mindeg*nodes**2.0-(6.0*mindeg*nodes)+nodeInd**2.0+2.0*nodeInd*nodes+nodes**2.0-(4.0*nodes))**(1/2))/(2.0*(mindeg*nodeInd+nodeInd-(1.0))))
+				except:
+					pass
+			if len(result) > 0:
+				ingrid_obj.set('maxdeg', min(result), ind='Min')
+			result = []
 			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
 			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
 			nodes = ingrid_obj.get('nodes', ind='Min')
 			if nodeInd != 'undt':
 				try:
-					ingrid_obj.set('mindeg', 1.0*(-(nodeInd*maxdeg**2.0)-(nodeInd*maxdeg)+maxdeg**2.0+maxdeg*nodes+nodes)/(nodeInd*maxdeg**2.0+nodeInd*maxdeg-(maxdeg*nodes)+maxdeg-(nodes)), ind='Min')
+					result.append((-(maxdeg**2.0*nodeInd)+maxdeg**2.0-(maxdeg*nodeInd)+maxdeg*nodes+nodes)/(maxdeg**2.0*nodeInd+maxdeg*nodeInd-(maxdeg*nodes)+maxdeg-(nodes)))
+				except:
+					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+			nodes = ingrid_obj.get('nodes', ind='Min')
+			if maxdeg != 'undt' and nodeInd != 'undt':
+				try:
+					result.append((-(maxdeg**2.0*nodeInd)+maxdeg**2.0-(maxdeg*nodeInd)+maxdeg*nodes+nodes)/(maxdeg**2.0*nodeInd+maxdeg*nodeInd-(maxdeg*nodes)+maxdeg-(nodes)))
+				except:
+					pass
+			if len(result) > 0:
+				ingrid_obj.set('mindeg', min(result), ind='Min')
+			result = []
+			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+			try:
+				result.append(maxdeg*(maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
+			except:
+				pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+			if nodeInd != 'undt':
+				try:
+					result.append(maxdeg*(maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
+				except:
+					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+			mindeg = ingrid_obj.get('mindeg', ind='Max')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+			if mindeg != 'undt':
+				try:
+					result.append(maxdeg*(maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
+				except:
+					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Min')
+			mindeg = ingrid_obj.get('mindeg', ind='Max')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+			if mindeg != 'undt' and nodeInd != 'undt':
+				try:
+					result.append(maxdeg*(maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
+				except:
+					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+			if maxdeg != 'undt':
+				try:
+					result.append(maxdeg*(maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
+				except:
+					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			mindeg = ingrid_obj.get('mindeg', ind='Min')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
+			if maxdeg != 'undt' and nodeInd != 'undt':
+				try:
+					result.append(maxdeg*(maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
+				except:
+					pass
+			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
+			mindeg = ingrid_obj.get('mindeg', ind='Max')
+			nodeInd = ingrid_obj.get('nodeInd', ind='Min')
+			if maxdeg != 'undt' and mindeg != 'undt':
+				try:
+					result.append(maxdeg*(maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
 				except:
 					pass
 			maxdeg = ingrid_obj.get('maxdeg', ind='Max')
@@ -584,8 +1071,10 @@ class Theorem160(Theorem):
 			nodeInd = ingrid_obj.get('nodeInd', ind='Max')
 			if maxdeg != 'undt' and mindeg != 'undt' and nodeInd != 'undt':
 				try:
-					ingrid_obj.set('nodes', 1.0*maxdeg*(nodeInd*maxdeg*mindeg+nodeInd*maxdeg+nodeInd*mindeg+nodeInd-(maxdeg)+mindeg)/(maxdeg*mindeg+maxdeg+mindeg+1.0), ind='Max')
+					result.append(maxdeg*(maxdeg*mindeg*nodeInd+maxdeg*nodeInd-(maxdeg)+mindeg*nodeInd+mindeg+nodeInd)/(maxdeg*mindeg+maxdeg+mindeg+1.0))
 				except:
 					pass
+			if len(result) > 0:
+				ingrid_obj.set('nodes', min(result), ind='Min')
 		return
 

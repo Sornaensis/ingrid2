@@ -5,6 +5,8 @@ import qualified Data.Text as T
 import qualified Control.Exception as E
 
 import qualified CPython as Py
+import qualified CPython.Constants as Py
+import qualified CPython.Types.Dictionary as PyDict
 import qualified CPython.Protocols.Object as Py
 import qualified CPython.Types as Py
 import qualified CPython.Types.Unicode as Py
@@ -196,10 +198,10 @@ generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr r exp))) =
       let invars = map (\i -> (swap m (exprAnalysis exp i), i)) . S.toList . getExprInvolves $ exp  
       in 
          if any (\(_,i) -> exprAnalysis exp i == Complex) invars 
-            then setBound invars m --"result = []" : iterateBounds invars m
+            then "result = []" : iterateBounds invars m
             else setBound invars m
          
-    resultList m = [ "\tingrid_obj.set(\'" ++ v ++ "\', " ++ (if m == Max then "max" else "min") ++ "(result), ind=\'" ++ show m ++ "\')" ]
+    resultList m = [ "if len(result) > 0:","\tingrid_obj.set(\'" ++ v ++ "\', " ++ (if m == Max then "max" else "min") ++ "(result), ind=\'" ++ show m ++ "\')" ]
 
     result m = [ "try:"
                , "\tingrid_obj.set(\'" ++ v ++ "\', " ++ exprToSrc exp ++ ", ind=\'" ++ show m ++ "\')"
@@ -305,7 +307,7 @@ junction a b condis =
         bf = init $ generateCond b
         ac = last $ generateCond a
         bc = last $ generateCond b
-    in L.nub (af ++ bf) ++ [ ac ++ " " ++ condis ++ " " ++ bc ]
+    in L.nub (af ++ bf) ++ [ "(" ++ ac ++ " " ++ condis ++ " " ++ bc ++ ")" ]
 
 generateCond :: Cond -> [String]
 generateCond (CondOr a b)  = junction a b "or"
@@ -375,7 +377,7 @@ generateCond (Cond (Invar v) (Just (CondRel r exp))) =
                 else "(" ++ v' ++ show r ++ exprToSrc (replaceExprInvar invarmap exp) ++ ")"]
 
 invarMappingList :: [Value]
-invarMappingList = map (Invar . return) (['A'..'Z'] ++ ['a'..'z'])
+invarMappingList = map (Invar . return) (filter (/='I') $ ['A'..'Z'] ++ ['a'..'z'])
 
 getAllIExprInvars :: InvarExpr -> [Value]
 getAllIExprInvars = map Invar . S.toList . getInvarExprInvolves
@@ -423,6 +425,7 @@ replFactorFuncs v                        _     _ = (v, [])
 
 
 replaceAllInvar :: [(Value, Value)] -> Theorem -> Theorem
+replaceAllInvar _  NullBody = NullBody
 replaceAllInvar m (IExpr i) = IExpr $ replaceIExprInvar m i
 
 replaceIExprInvar :: [(Value, Value)] -> InvarExpr -> InvarExpr
@@ -482,28 +485,30 @@ genInvarExprIneq = fmap (map extractInvarExprIO) . genIExprIneq
 
 genIExprIneq :: InvarExpr -> IO [Theorem]
 genIExprIneq e@(InvarExpr _ (Just (InvarRelExpr _ _))) =
-        let  (InvarExpr (Invar v) (Just (InvarRelExpr rel exp))) = replaceIExprInvar invar_map func_map
+        let  (InvarExpr (Invar v) (Just (InvarRelExpr rel exp))) = func_map
              (func_map, func_remap)                            = replAllIExprFuncs e invarMappingList
-             invar_maplist                                     = drop (length func_remap) invarMappingList
-             invar_map                                         = zip (getAllIExprInvars e) invar_maplist 
-             invar_remap                                       = map (\(a,b) -> (b,a)) invar_map
-             inequality                                        = v ++ show rel ++ exprToSrc exp
+             rationalFlag                                      = not $ containsFunc exp
+             inequality                                        = exprToSrc exp
+             lhs                                               = v
+             relation                                          = show rel
              invars                                            = v : S.toList (getExprInvolves exp)
-        in fmap (map (replaceAllInvar func_remap . replaceAllInvar invar_remap) . theoremParser . lexer . (\i -> trace i i ) . concat) . sequence $ 
+        in fmap (map (replaceAllInvar func_remap) . theoremParser . lexer . (\i -> trace i i) . concat) . sequence $ 
                invars
                 >>= \inv -> return $ 
                    do Py.initialize
-                      E.handle (\exc -> Py.print (Py.exceptionValue exc) stdout >> return "") $
-                       do  equation <- Py.toUnicode . T.pack $ inequality
-                           variables <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) invars
-                           target  <- Py.toUnicode . T.pack $ inv
-                           ms <- Py.importModule "mystic.symbolic"
-                           solver <- Py.getAttribute ms =<< Py.toUnicode "simplify"
-                           pyout <- Py.callArgs solver [Py.toObject equation, Py.toObject variables, Py.toObject target]
-                           rewrite <- Py.cast pyout :: IO (Maybe Py.Unicode)
-                           case rewrite of 
-                            (Just eqn) -> (++";") . T.unpack <$> Py.fromUnicode eqn
-                            _          -> return ""
+                      equation <- Py.toUnicode . T.pack $ inequality
+                      variables <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) invars
+                      lhs <- Py.toUnicode . T.pack $ lhs
+                      rel <- Py.toUnicode . T.pack $ relation
+                      target  <- Py.toUnicode . T.pack $ inv
+                      ms <- Py.importModule "mystic.symbolic"
+                      solver <- Py.getAttribute ms =<< Py.toUnicode "solve_ingrid"
+                      rationalval <- if rationalFlag then Py.true else Py.false
+                      pyout <- Py.callArgs solver [Py.toObject lhs, Py.toObject rel, Py.toObject equation, Py.toObject variables, Py.toObject target, Py.toObject rationalval]
+                      rewrite <- Py.cast pyout :: IO (Maybe Py.Unicode)
+                      case rewrite of 
+                       (Just eqn) -> (++";") . T.unpack <$> Py.fromUnicode eqn
+                       _          -> return ""
 
 genIExprIneq e = return [IExpr e]
                
