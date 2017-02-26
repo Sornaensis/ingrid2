@@ -1,25 +1,25 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
-import Parser
-import CodeGen
-import Data.Aeson (decode)
-import qualified Data.ByteString.Lazy.Char8 as C 
+import           Data.Aeson                 (decode)
+import qualified Data.ByteString.Lazy.Char8 as C
 
-import Debug.Trace
+import           Debug.Trace
 
-import Prelude hiding ((<$>))
+import           Compiler.Compiler
+import           Compiler.Types
+import           Parser.Parser
 
 main :: IO ()
-main = 
-  do input <- decode . C.pack <$> getContents  
+main =
+  do input <- decode . C.pack <$> getContents
      case input of
        Nothing                 -> error "Invalid input"
-       (Just (TSLInput tls))   -> 
+       (Just (TSLInput tls))   ->
             do theorems <- mapM genTheorem tls
-               mapM_ (putStrLn . unlines . generatePythonClass) $ theorems
+               mapM_ (putStrLn . unlines . generateTheorem) $ theorems
   where
-  genTheorem t@(TSLInputTheorem n code d i) = 
-       do ts <- generateIneq . theoremParser . lexer $ trace code code
+  genTheorem t@(TSLInputTheorem n code d i) =
+       do ts <- generateAllIneq . theoremParser . lexer $ trace code code
           return $ TSLTheorem (TSLInputTheorem (n ++ show i) code d i) $! ts
-            
+
