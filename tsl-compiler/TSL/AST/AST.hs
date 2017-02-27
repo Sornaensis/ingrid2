@@ -1,9 +1,10 @@
-{-# LANGUAGE KindSignatures  #-}
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE DeriveFunctor #-}
 module TSL.AST.AST (
                 Theorem(..),
+                Relation(..),
+                Fix(..),
                 solveableFunctions,
-                cataTSL,
+                cata
                 ) where
 
 import           Data.Maybe
@@ -15,28 +16,35 @@ solveableFunctions = ["log","ln","sqrt","cos","sin"]
 
 -- A theorem is a list of theorems
 data Theorem a = Empty
-               | If (Theorem a) (Theorem a) (Maybe (Theorem a))
-               | InvarExpr (Theorem a) (Maybe (Theorem a))
-               | Cond (Theorem a) (Theorem a)
-               | ExprList [Theorem a]
-               | ExprF String (Theorem a)
-               | RelExpr (Theorem a) (Theorem a)
+               | If a a (Maybe a)
+               | InvarExpr a (Maybe a)
+               | Cond a a
+               | ExprList [a]
+               | ExprF String a
+               | RelExpr a a
                | Relation Relation
-               | Expr [Theorem a]
-               | Or (Theorem a) (Theorem a)
-               | And (Theorem a) (Theorem a)
-               | Mul (Theorem a) (Theorem a)
-               | Div (Theorem a) (Theorem a)
-               | Neg (Theorem a)
-               | Term (Theorem a)
-               | Pow (Theorem a) (Theorem a)
-               | Value (Theorem a)
-               | Number a
-               | Function String [Theorem a]
+               | Expr [a]
+               | Or a a
+               | And a a
+               | Mul a a
+               | Div a a
+               | Neg a
+               | Term a
+               | Pow a a
+               | Value a
+               | Number Double 
+               | Function String [a]
                | Local String
                | Invar String
-               | Paren (Theorem a)
-               deriving (Show,Eq)
+               | Paren a
+               deriving (Functor, Show, Eq)
+
+newtype Fix f = Fx (f (Fix f))
+unFix :: Fix f -> f (Fix f)
+unFix (Fx x) = x
+
+cata :: Functor f => (f a -> a) -> Fix f -> a
+cata alg = alg . fmap (cata alg) . unFix
 
 data Relation = RelEq
               | RelGte
@@ -53,5 +61,3 @@ instance Show Relation where
         show RelNeq = "!="
         show RelGt  = ">"
         show RelLt  = "<"
-
-$(makeCata defaultOptions { cataName = "cataTSL" } ''Theorem)

@@ -52,91 +52,91 @@ import TSL.AST.AST
 
 Theorem : Invarexpr ';' Theorem    { $1 : $3 }
          | Ifstmt ';' Theorem      { $1 : $3 }
-         | null ';' Theorem        { [Empty] }
+         | null ';' Theorem        { [Fx Empty] }
          | {- empty -}             { [] }
 
-Invarexpr  : not Invar       { ExprF     "not"       $2 }
-           | even Invar      { ExprF     "even"      $2 }
-           | odd Invar       { ExprF     "odd"       $2 }
-           | undefined Invar { ExprF     "undefined" $2 }
-           | Invar Invarel   { InvarExpr $1          $2 }
+Invarexpr  : not Invar       { Fx $ ExprF     "not"       $2 }
+           | even Invar      { Fx $ ExprF     "even"      $2 }
+           | odd Invar       { Fx $ ExprF     "odd"       $2 }
+           | undefined Invar { Fx $ ExprF     "undefined" $2 }
+           | Invar Invarel   { Fx $ InvarExpr $1          $2 }
 
-Invarel : Relation Expr { Just $ RelExpr $1 (Expr $2) }
+Invarel : Relation Expr { Fx $ Just (Fx $ RelExpr $1 (Expr $2)) }
         |               { Nothing }
 
-Invarexprlist : '{' Invarexprlist1 '}'      { ExprList (reverse $2) }
+Invarexprlist : '{' Invarexprlist1 '}'      { Fx $ ExprList (reverse $2) }
 
 Invarexprlist1 : Invarexpr                      { [$1] }
                | Ifstmt                         { [$1] }
                | Invarexprlist1 ',' Invarexpr   { $3 : $1 } 
                | Invarexprlist1 ',' Ifstmt      { $3 : $1 } 
 
-Ifstmt : if Cond then Invarexprlist Elsestmt { If $2 $4 $5 }
+Ifstmt : if Cond then Invarexprlist Elsestmt { Fx $ If $2 $4 $5 }
 
 Elsestmt : else Elsestmt1 { Just $2 }
          |                { Nothing }
 
 Elsestmt1 : Ifstmt           { $1 }
-          | Invarexprlist    { If (ExprF "not" (Local "True")) $1 Nothing }
+          | Invarexprlist    { Fx $ If (Fx $ ExprF "not" (Fx $ Local "True")) $1 Nothing }
 
 Cond : Condand    { $1 }
-     | Cond or Condand { Or $1 $3 }
+     | Cond or Condand { Fx $ Or $1 $3 }
 
 Condand : Cond1   { $1 }
-        | Condand and Cond1 { And $1 $3 }
+        | Condand and Cond1 { Fx $ And $1 $3 }
 
-Cond1 : Invar CondRel    { Cond $1 $2 }
-      | istrue Expr      { CondF "istrue" (Expr $2) }
-      | isfalse Expr     { CondF "isfalse" (Expr $2) }
-      | not Invar        { CondF "not" $2 }
-      | even Invar       { CondF "even" $2 }
-      | odd Invar        { CondF "odd" $2 }
-      | isset Invar      { CondF "isset" $2 }
-      | defined Invar    { CondF "defined" $2 }
-      | undefined Invar  { CondF "undefined" $2 }
+Cond1 : Invar CondRel    { Fx $ Cond $1 $2 }
+      | istrue Expr      { Fx $ ExprF "istrue" (Fx $ Expr $2) }
+      | isfalse Expr     { Fx $ ExprF "isfalse" (Fx $ Expr $2) }
+      | not Invar        { Fx $ ExprF "not" $2 }
+      | even Invar       { Fx $ ExprF "even" $2 }
+      | odd Invar        { Fx $ ExprF "odd" $2 }
+      | isset Invar      { Fx $ ExprF "isset" $2 }
+      | defined Invar    { Fx $ ExprF "defined" $2 }
+      | undefined Invar  { Fx $ ExprF "undefined" $2 }
       | '(' Cond ')'     { $2 }
 
-CondRel : Relation Expr  { Just $ RelExpr $1 (Expr $2) }
+CondRel : Relation Expr  { Just $ RelExpr $1 (Fx $ Expr $2) }
         |                { Nothing }
  
-Relation : '=='   { Relation $ RelEq  }
-         | '>='   { Relation $ RelGte }
-         | '<='   { Relation $ RelLte }
-         | '!='   { Relation $ RelNeq }
-         | '>'    { Relation $ RelGt  }
-         | '<'    { Relation $ RelLt  }
+Relation : '=='   { Fx $ Relation RelEq  }
+         | '>='   { Fx $ Relation RelGte }
+         | '<='   { Fx $ Relation RelLte }
+         | '!='   { Fx $ Relation RelNeq }
+         | '>'    { Fx $ Relation RelGt  }
+         | '<'    { Fx $ Relation RelLt  }
 
-Invar : global  { Invar $1 }
+Invar : global  { Fx $ Invar $1 }
 
-Localvar : local   { Local $1 }
+Localvar : local   { Fx $ Local $1 }
 
-Func : global '(' Arglist ')'  { Function $1 $3 }
+Func : global '(' Arglist ')'  { Fx $ Function $1 $3 }
 
 Arglist : Arglist1 { reverse $1 }
 
-Arglist1 : Expr              { [Expr $1] }
-        | Arglist1 ',' Expr  { Expr $3 : $1 }
+Arglist1 : Expr              { [$1] }
+        | Arglist1 ',' Expr  { $3 : $1 }
         |                   { [] } 
 
 Expr : Expr1 { reverse $1 }
 
 Expr1 : Term           { [$1] }
-     | '-' Term        { [Neg $2] }
+     | '-' Term        { [Fx $ Neg $2] }
      | Expr1 '+' Term  { $3 : $1 }
-     | Expr1 '-' Term  { (Neg $3) : $1 }
+     | Expr1 '-' Term  { (Fx $ Neg $3) : $1 }
 
-Term : Factor          { Term $1 }
-     | Term '*' Factor { Mul $1 (Term $3) }
-     | Term '/' Factor { Div $1 (Term $3) }
+Term : Factor          { $1 }
+     | Term '*' Factor { Fx $ Mul $1 $3 }
+     | Term '/' Factor { Fx $ Div $1 $3 }
 
-Factor : Val             { Value $1 }
-       | Factor '^' Val  { Pow $1 (Value $3) } 
+Factor : Val             { $1 }
+       | Factor '^' Val  { Fx $ Pow $1 $3 } 
 
 Val : Func   { $1 }
     | Invar  { $1 }
     | Localvar { $1 }
-    | number { Number $1 }
-    | '(' Expr ')' { Paren (Expr $2) }
+    | number { Fx $ Number $1 }
+    | '(' Expr ')' { Fx $ Paren $2 }
 
 {
 
