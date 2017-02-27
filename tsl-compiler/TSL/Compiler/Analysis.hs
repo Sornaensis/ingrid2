@@ -1,13 +1,17 @@
-module Compiler.Analysis (
+module TSL.Compiler.Analysis (
                     exprAnalysis,
                     InvarBoundSwitch(..),
                     swap
                     ) where
 
-import           AST.AST
-import           Compiler.Types
 import qualified Data.List      as L
 import qualified Data.Set       as S
+
+import           TSL.AST.AST
+import           TSL.Compiler.Types
+
+
+data InvarBoundSwitch = Flip Bool | NotFound | Complex | Maximize | Minimize deriving Eq
 
 swap :: Bound -> InvarBoundSwitch -> Bound
 swap Max (Flip True) = Min
@@ -20,8 +24,7 @@ flipbound (Flip a) = Flip $ not a
 flipbound NotFound = Flip True
 flipbound a        = a
 
-data InvarBoundSwitch = Flip Bool | NotFound | Complex | Maximize | Minimize deriving Eq
-
+--- | Expression Analysis
 exprAnalysis :: Expr -> String -> InvarBoundSwitch
 exprAnalysis (Expr exps) inv = let analysis = L.nub $ filter (/=NotFound) . concatMap (\x -> termAnalysis x inv (Flip False)) $ exps
                                in if null analysis
@@ -69,3 +72,6 @@ valueAnalysis (Paren p)         s f              = let an = exprAnalysis p s
                                                              then Complex
                                                              else an
 valueAnalysis _                 _ _              = NotFound
+--- | End Expression Analysis
+
+--- | Degree Analysis

@@ -1,4 +1,4 @@
-module AST.AST (
+module TSL.AST.AST (
                 Theorem(..), 
                 IfStmt(..),
                 Cond(..), 

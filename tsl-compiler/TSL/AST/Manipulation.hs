@@ -1,10 +1,10 @@
-module AST.Manipulation where
+module TSL.AST.Manipulation where
 
 import qualified Data.List as L
 import           Data.Set  (Set)
 import qualified Data.Set  as S
 
-import           AST.AST
+import           TSL.AST.AST
 
 -- | Begin helper functions
 invarMappingList :: [Value]

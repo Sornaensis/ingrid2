@@ -1,11 +1,11 @@
 {
 {-# LANGUAGE ScopedTypeVariables #-}
-module Parser.Parser ( 
+module TSL.Parser.Parser ( 
              theoremParser, 
              lexer
              ) where
 import Data.Char
-import AST.AST
+import TSL.AST.AST
 }
 
 %name theoremParser

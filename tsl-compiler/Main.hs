@@ -6,9 +6,9 @@ import qualified Data.ByteString.Lazy.Char8 as C
 
 import           Debug.Trace
 
-import           Compiler.Compiler
-import           Compiler.Types
-import           Parser.Parser
+import           TSL.Compiler.Compiler
+import           TSL.Compiler.Types
+import           TSL.Parser.Parser
 
 main :: IO ()
 main =

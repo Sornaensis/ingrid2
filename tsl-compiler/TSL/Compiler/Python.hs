@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Compiler.Python (
+module TSL.Compiler.Python (
                     generateSympyIneq,
                     generatePythonClass
                     ) where
@@ -26,11 +26,11 @@ import qualified Data.Set                 as S
 
 import           Debug.Trace
 
-import           AST.AST
-import           AST.Manipulation
-import           Compiler.Analysis
-import           Compiler.Types
-import           Parser.Parser
+import           TSL.AST.AST
+import           TSL.AST.Manipulation
+import           TSL.Compiler.Analysis
+import           TSL.Compiler.Types
+import           TSL.Parser.Parser
 
 indent :: [String] -> [String]
 indent = map ("\t" ++)
