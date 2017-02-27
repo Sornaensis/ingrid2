@@ -4473,7 +4473,7 @@ class Theorem140(Theorem):
         nodes_Max = ingrid_obj.get('nodes', ind='Max')
         if (nodes_Max != 'undt' and (edges_Min>=4.0*nodes_Max)):
             edges = ingrid_obj.get('edges', ind='Min')
-            nodes = ingrid_obj.get('nodes', ind='Min')
+            nodes = ingrid_obj.get('nodes', ind='Max')
             try:
                 ingrid_obj.set('crossing', 1.0e-2*edges**3.0*nodes**(-(2.0))+1.0, ind='Min')
             except:
