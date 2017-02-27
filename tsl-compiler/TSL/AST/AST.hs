@@ -1,98 +1,54 @@
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE KindSignatures #-}
 module TSL.AST.AST (
                 Theorem(..), 
-                IfStmt(..),
-                Cond(..), 
-                CondRel(..),
-                InvarExprList(..), 
-                InvarExpr(..),
-                InvarRelExpr(..), 
-                Relation(..), 
-                Expr(..), 
-                Term(..), 
-                Factor(..), 
-                Value(..),
-                solveableFunctions
+                solveableFunctions,
+                tslCata
                 ) where
+
+import Data.Morphism.Cata
 
 -- Functions we can solve for
 solveableFunctions :: [String]
 solveableFunctions = ["log","ln","sqrt","cos","sin"]
 
 -- A theorem is a list of theorems
-data Theorem = IExpr InvarExpr
-             | IfStmt IfStmt
-             | NullBody
-    deriving (Show)
+data Theorem a = IExpr (Theorem a)
+               | IfStmt (Theorem a)
+               | NullBody
+               | If (Theorem a) (Theorem a) (Maybe (Theorem a)) 
+               | CondOr (Theorem a) (Theorem a)
+               | CondAnd (Theorem a) (Theorem a)
+               | CondSpec String (Theorem a)
+               | CondSpecF String (Theorem a)
+               | Cond (Theorem a) (Maybe (Theorem a))
+               | CondRel (Theorem a) (Theorem a)
+               | InvarExprList [Theorem a]
+               | InvarOr (Theorem a) (Theorem a)
+               | InvarAnd (Theorem a) (Theorem a)
+               | InvarExpr (Theorem a) (Maybe (Theorem a))
+               | InvarExprNot (Theorem a) 
+               | InvarExprEven (Theorem a) 
+               | InvarExprOdd (Theorem a) 
+               | InvarExprUndefined (Theorem a)
+               | InvarRelExpr (Theorem a) (Theorem a)
+               | RelEq
+               | RelGte
+               | RelLte
+               | RelNeq
+               | RelGt
+               | RelLt
+               | Expr [Theorem a]
+               | Mul (Theorem a) (Theorem a)
+               | Div (Theorem a) (Theorem a)
+               | Neg (Theorem a)
+               | Term (Theorem a)
+               | Pow (Theorem a) (Theorem a)
+               | Value (Theorem a)
+               | Number a
+               | Function String [Theorem a] 
+               | Local String
+               | Invar String
+               | Paren (Theorem a)
 
--- If statements may be nested
-data IfStmt = If Cond InvarExprList (Maybe IfStmt) 
-    deriving (Show)
-
-data Cond = CondOr Cond Cond
-          | CondAnd Cond Cond
-          | CondSpec String Value
-          | CondSpecF String Expr
-          | Cond Value (Maybe CondRel)
-    deriving (Show)
-
-data CondRel = CondRel Relation Expr
-    deriving (Show)
-
-data InvarExprList = InvarExprList [Theorem]
-    deriving (Show)
-
-data InvarExpr = InvarOr InvarExpr InvarExpr
-               | InvarAnd InvarExpr InvarExpr
-               | InvarExpr Value (Maybe InvarRelExpr)
-               | InvarExprNot Value 
-               | InvarExprEven Value 
-               | InvarExprOdd Value 
-               | InvarExprUndefined Value
-    deriving (Show)
-
-data InvarRelExpr = InvarRelExpr Relation Expr
-    deriving (Show)
-
-data Relation = RelEq
-              | RelGte
-              | RelLte
-              | RelNeq
-              | RelGt
-              | RelLt
-
-instance Show Relation where
-    show RelEq = "=="
-    show RelGte = ">="
-    show RelLte = "<="
-    show RelLt  = "<"
-    show RelGt  = ">"
-    show RelNeq = "!="
-
--- A list of terms to be summed
-data Expr = Expr [Term]
-    deriving (Show)
-
-data Term = Mul Term Term
-          | Div Term Term
-          | Neg Term
-          | Term Factor
-    deriving (Show)
-
-data Factor = Pow Factor Factor
-            | Value Value
-    deriving (Show)
-
-data Value = Number Double
-           | Function String [Expr] 
-           | Local String
-           | Invar String
-           | Paren Expr
-    deriving (Show)
-
-instance Eq Value where
-    (Number a) == Number b = a == b
-    Invar a == Invar b = a == b
-    _ == _ = False 
-
-
-
+$(makeCata defaultOptions { cataName = "tslCata" } ''Theorem)
