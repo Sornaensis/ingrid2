@@ -113,7 +113,7 @@ class Theorem4(Theorem):
                 ingrid_obj.set('spectralRadius', 1.4142135623731*(edges*nodeCover/(nodeCover+1.0))**0.5, ind='Max')
             except:
                 pass
-        nodeCover = ingrid_obj.get('nodeCover', ind='Min')
+        nodeCover = ingrid_obj.get('nodeCover', ind='Max')
         spectralRadius = ingrid_obj.get('spectralRadius', ind='Min')
         try:
             ingrid_obj.set('edges', 0.5*spectralRadius**2.0*(nodeCover+1.0)/nodeCover, ind='Min')
@@ -2160,20 +2160,20 @@ class Theorem56(Theorem):
 
 class Theorem57(Theorem):
     def __init__(self):
-        super(Theorem57, self).__init__(57, "if regular and odd mindeg then { even p };", "")
+        super(Theorem57, self).__init__(57, "if regular and odd mindeg then { even nodes };", "")
     def involves(self, str_invar):
-        return str_invar in ["mindeg","p","regular"]
+        return str_invar in ["mindeg","nodes","regular"]
     def run(self, ingrid_obj):
         regular = ingrid_obj.get('regular')
         mindeg_Min = ingrid_obj.get('mindeg', ind='Min')
         mindeg_Max = ingrid_obj.get('mindeg', ind='Max')
         if (regular == True) and (odd(mindeg_Min) and odd(mindeg_Max)):
-            p_Max = ingrid_obj.get('p', ind='Max')-1
-            p_Min = ingrid_obj.get('p', ind='Min')+1
-            if even(p_Max):
-                ingrid_obj.set('p', ind='Max')
-            if even(p_Min):
-                ingrid_obj.set('p', ind='Min')
+            nodes_Max = ingrid_obj.get('nodes', ind='Max')-1
+            nodes_Min = ingrid_obj.get('nodes', ind='Min')+1
+            if even(nodes_Max):
+                ingrid_obj.set('nodes', ind='Max')
+            if even(nodes_Min):
+                ingrid_obj.set('nodes', ind='Min')
         return
 
 class Theorem58(Theorem):
