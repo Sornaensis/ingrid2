@@ -48,45 +48,38 @@ generatePythonClass (TSLTheorem (TSLInputTheorem name text disp idnum) ts)  =
                 indent ["return str_invar in " ++ show (L.nub . concatMap getInvolves $ ts)]
              , ("def run(self, ingrid_obj):" : concatMap (indent . generatePython) ts) ++ ["\treturn"]]
 
-generatePython :: Theorem -> [String]
-generatePython (IExpr i)  =  generateIExpr i
-generatePython (IfStmt i) = generateIfStmt i
-generatePython NullBody   = []
+generatePython :: Theorem a -> [String]
+generatePython NullBody = []
+generatePython i        = generateCode i
 
-generateIExpr :: InvarExpr -> [String]
-generateIExpr (InvarOr a b) = undefined
-generateIExpr (InvarAnd a b) =
-    generateIExpr a ++ generateIExpr b
-generateIExpr (InvarExpr (Invar v) Nothing) =
-    return ("ingrid_obj.set(\'" ++ v ++ "\', True)")
-generateIExpr (InvarExprNot (Invar v)) =
-    return ("ingrid_obj.set(\'" ++ v ++ "\', False)")
-generateIExpr (InvarExprUndefined (Invar v)) =
-    [ v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')"
-    , "ingrid_obj.set(\'" ++ v ++ "\', \'undt\', ind=\'Min\')"]
-generateIExpr (InvarExprEven (Invar v)) =
+generateCode :: Theorem a -> [String]
+generateCode (InvarExpr (Invar v) Nothing) = return ("ingrid_obj.set(\'" ++ v ++ "\', True)")
+generateCode (ExprF "not" (Invar v)) = return ("ingrid_obj.set(\'" ++ v ++ "\', False)")
+generateCode (ExprF "undefined" (Invar v)) = 
+    [ v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')" 
+    , "ingrid_obj.set(\'" ++ v ++ "\', \'undt\', ind=\'Min\')"
+    ]
+generateCode (ExprF "even" (Invar v)) =
     [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')-1"
     , v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')+1"
     , "if even(" ++ v ++ "_Max):"
     , "\tingrid_obj.set(\'" ++ v ++ "\', ind=\'Max\')"
     , "if even(" ++ v ++ "_Min):"
     , "\tingrid_obj.set(\'" ++ v ++ "\', ind=\'Min\')"]
-generateIExpr (InvarExprOdd (Invar v)) =
+generateCode (ExprF "odd" (Invar v)) =
     [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')-1"
     , v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')+1"
     , "if odd(" ++ v ++ "_Max):"
     , "\tingrid_obj.set(\'" ++ v ++ "\', ind=\'Max\')"
     , "if odd(" ++ v ++ "_Min):"
     , "\tingrid_obj.set(\'" ++ v ++ "\', ind=\'Min\')"]
-generateIExpr (InvarExpr (Function _ _) (Just (InvarRelExpr r exp))) =
-    []
-generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr r exp))) =
+generateCode (InvarExpr (Invar v) (Just (RelExpr r exp))) =
     case r of
         RelLte -> make Max
         RelGte -> make Min
-        RelEq  -> generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr RelLte exp)))
+        RelEq  -> generateCode (InvarExpr (Invar v) (Just (RelExpr RelLte exp)))
                     ++
-                  generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr RelGte exp)))
+                  generateCode (InvarExpr (Invar v) (Just (RelExpr RelGte exp)))
         _      -> [""]
     where
     make m =
@@ -117,22 +110,19 @@ generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr r exp))) =
                                  reg_vars  = filter (\(b,i) -> exprAnalysis exp i /= Complex) ivars
                                  cplx_perms = map (\x -> zipWith (\b (_,i) -> (b,i)) x cplx_vars ++ reg_vars) (replicateM (length cplx_vars) [Min,Max])
                             in concatMap setTryBound cplx_perms ++ resultList m
-generateIExpr _ = []
-
-generateIfStmt' :: IfStmt -> [[String]]
-generateIfStmt' (If c (InvarExprList is) Nothing)
-    = let cond = generateCond c in
-       init cond : [last cond ++ ":"] : [indent (concatMap generatePython is)]
-
-generateIfStmt :: IfStmt -> [String]
-generateIfStmt i@(If c (InvarExprList is) _)
+generateCode i@(If c (ExprList is) _)
     = let ([c,f,b]:ifs) = generateIfStmt' <$> flattenIfStmt i []
           initf         = [c, map ("if "++) f, b]
           conds         = concatMap (\[c,_,_] -> c) $ initf : ifs
       in  L.nub conds ++ (concat (tail initf) ++ concatMap (\[_,i,b] -> (("elif "++) <$> i) ++ b) ifs)
+generateCode _ = []
 
+generateIfStmt' :: Theorem a -> [[String]]
+generateIfStmt' (If c (ExprList is) Nothing)
+    = let cond = generateCond c in
+       init cond : [last cond ++ ":"] : [indent (concatMap generatePython is)]
 
-flattenIfStmt :: IfStmt -> [IfStmt] -> [IfStmt]
+flattenIfStmt :: Theorem a -> [IfStmt] -> [IfStmt]
 flattenIfStmt i@(If _ _   Nothing)  is = i : is
 flattenIfStmt   (If c iex (Just i)) is = If c iex Nothing : flattenIfStmt i is
 
@@ -143,9 +133,9 @@ junction a b condis =
         bc = last $ generateCond b
     in L.nub (af ++ bf) ++ [ "(" ++ ac ++ " " ++ condis ++ " " ++ bc ++ ")" ]
 
-generateCond :: Cond -> [String]
-generateCond (CondOr a b)  = junction a b "or"
-generateCond (CondAnd a b) = junction a b "and"
+generateCond :: Theorem a -> [String]
+generateCond (Or a b)  = junction a b "or"
+generateCond (And a b) = junction a b "and"
 generateCond (CondSpecF "isfalse" exp) =
     let setconds = foldr1 CondAnd . map (CondSpec "isset" . Invar) $ involves
         involves = S.toList $ getExprInvolves exp
@@ -210,41 +200,41 @@ generateCond (Cond (Invar v) (Just (CondRel r exp))) =
                 then "(" ++ assertNotUdts invars' ++ " and (" ++ v' ++ show r ++ exprToSrc (replaceExprInvar invarmap exp) ++ "))"
                 else "(" ++ v' ++ show r ++ exprToSrc (replaceExprInvar invarmap exp) ++ ")"]
 
-generateSympyIneq :: [Theorem] -> IO [Theorem]
+generateSympyIneq :: [Theorem a] -> IO [Theorem a]
 generateSympyIneq =
     fmap concat . mapM (\t ->
           case t of
-           (IExpr e)  -> genIExprIneq e
-           (IfStmt i) -> return . IfStmt <$> genIfStmtIneq i
+           e@(InvarExpr _ _)  -> genIExprIneq e
+           i@(IfStmt _ _ _) -> return . IfStmt <$> genIfStmtIneq i
            t'         -> return [t']
         )
 
-genIfStmtIneq :: IfStmt -> IO IfStmt
-genIfStmtIneq (If c (InvarExprList iexpl) Nothing) =
-    fmap (\il -> If c (InvarExprList il) Nothing) . generateSympyIneq $ iexpl
-genIfStmtIneq (If c (InvarExprList iexpl) (Just i)) =
+genIfStmtIneq :: Theorem a -> IO (Theorem a)
+genIfStmtIneq (If c (ExprList iexpl) Nothing) =
+    fmap (\il -> If c (ExprList il) Nothing) . generateSympyIneq $ iexpl
+genIfStmtIneq (If c (ExprList iexpl) (Just i)) =
     let elsestmt = genIfStmtIneq i
-        ifstmt   = If c (InvarExprList iexpl) Nothing
+        ifstmt   = If c (ExprList iexpl) Nothing
     in liftM2 nestif elsestmt (genIfStmtIneq ifstmt)
     where
     nestif :: IfStmt -> IfStmt -> IfStmt
     nestif e (If c iex _) = If c iex (Just e)
 
-genInvarExprIneq :: InvarExpr -> IO [InvarExpr]
-genInvarExprIneq = fmap (map extractInvarExprIO) . genIExprIneq
-        where
-        extractInvarExprIO :: Theorem -> InvarExpr
-        extractInvarExprIO (IExpr i) = i
+-- genInvarExprIneq :: Theorem a -> IO [Theorem a]
+-- genInvarExprIneq = fmap (map extractInvarExprIO) . genIExprIneq
+--         where
+--         extractInvarExprIO :: Theorem -> InvarExpr
+--         extractInvarExprIO (IExpr i) = i
 
-genIExprIneq :: InvarExpr -> IO [Theorem]
-genIExprIneq e@(InvarExpr _ (Just (InvarRelExpr _ _))) =
-        let  (InvarExpr (Invar v) (Just (InvarRelExpr rel exp))) = func_map
-             (func_map, func_remap)                            = replAllIExprFuncs e invarMappingList
+genIExprIneq :: Theorem a -> IO [Theorem a]
+genIExprIneq e@(InvarExpr _ (Just (RelExpr _ _))) =
+        let  (InvarExpr (Invar v) (Just (RelExpr rel exp))) = func_map
+             (func_map, func_remap)                            = replAllFuncs e invarMappingList
              rationalFlag                                      = not $ containsFunc exp
              inequality                                        = exprToSrc exp
              lhs                                               = v
              relation                                          = show rel
-             invars                                            = v : S.toList (getExprInvolves exp)
+             invars                                            = v : S.toList (getInvolves exp)
         in fmap (map (replaceAllInvar func_remap) . theoremParser . lexer . (\i -> trace i i) . concat) . sequence $
                invars
                 >>= \inv -> return $

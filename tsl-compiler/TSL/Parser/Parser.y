@@ -50,35 +50,26 @@ import TSL.AST.AST
 
 %%
 
-Theorem : Invarexpr ';' Theorem    { IExpr $1 : $3 }
-         | Ifstmt ';' Theorem      { IfStmt $1 : $3 }
-         | null ';' Theorem        { [NullBody] }
+Theorem : Invarexpr ';' Theorem    { $1 : $3 }
+         | Ifstmt ';' Theorem      { $1 : $3 }
+         | null ';' Theorem        { [Empty] }
          | {- empty -}             { [] }
 
-Invarexpr : Invarexpror               { $1 }
-          | Invarexpr or Invarexpror  { InvarOr $1 $3 }
+Invarexpr  : not Invar       { ExprF     "not"       $2 }
+           | even Invar      { ExprF     "even"      $2 }
+           | odd Invar       { ExprF     "odd"       $2 }
+           | undefined Invar { ExprF     "undefined" $2 }
+           | Invar Invarel   { InvarExpr $1          $2 }
 
-Invarexpror : Invarexprand            { $1 }
-            | Invarexpror and Invarexprand { InvarAnd $1 $3 } 
-
-Invarexprand : Invarexpr1        { $1 }
-             | '(' Invarexpr ')' { $2 }
-
-Invarexpr1 : not Invar       { InvarExprNot $2 }
-           | even Invar      { InvarExprEven $2}
-           | odd Invar       { InvarExprOdd $2 }
-           | undefined Invar { InvarExprUndefined $2 }
-           | Invar Invarel   { InvarExpr $1 $2 }
-
-Invarel : Relation Expr { Just $ InvarRelExpr $1 (Expr $2) }
+Invarel : Relation Expr { Just $ RelExpr $1 (Expr $2) }
         |               { Nothing }
 
-Invarexprlist : '{' Invarexprlist1 '}'      { InvarExprList (reverse $2) }
+Invarexprlist : '{' Invarexprlist1 '}'      { ExprList (reverse $2) }
 
-Invarexprlist1 : Invarexpr                      { [IExpr $1] }
-               | Ifstmt                         { [IfStmt $1] }
-               | Invarexprlist1 ',' Invarexpr   { (IExpr $3) : $1 } 
-               | Invarexprlist1 ',' Ifstmt      { (IfStmt $3) : $1 } 
+Invarexprlist1 : Invarexpr                      { [$1] }
+               | Ifstmt                         { [$1] }
+               | Invarexprlist1 ',' Invarexpr   { $3 : $1 } 
+               | Invarexprlist1 ',' Ifstmt      { $3 : $1 } 
 
 Ifstmt : if Cond then Invarexprlist Elsestmt { If $2 $4 $5 }
 
@@ -86,34 +77,34 @@ Elsestmt : else Elsestmt1 { Just $2 }
          |                { Nothing }
 
 Elsestmt1 : Ifstmt           { $1 }
-          | Invarexprlist    { If (CondSpec "not" (Local "True")) $1 Nothing }
+          | Invarexprlist    { If (ExprF "not" (Local "True")) $1 Nothing }
 
 Cond : Condand    { $1 }
-     | Cond or Condand { CondOr $1 $3 }
+     | Cond or Condand { Or $1 $3 }
 
 Condand : Cond1   { $1 }
-        | Condand and Cond1 { CondAnd $1 $3 }
+        | Condand and Cond1 { And $1 $3 }
 
 Cond1 : Invar CondRel    { Cond $1 $2 }
-      | istrue Expr      { CondSpecF "istrue" (Expr $2) }
-      | isfalse Expr     { CondSpecF "isfalse" (Expr $2) }
-      | not Invar        { CondSpec "not" $2 }
-      | even Invar       { CondSpec "even" $2 }
-      | odd Invar        { CondSpec "odd" $2 }
-      | isset Invar      { CondSpec "isset" $2 }
-      | defined Invar    { CondSpec "defined" $2 }
-      | undefined Invar  { CondSpec "undefined" $2 }
+      | istrue Expr      { CondF "istrue" (Expr $2) }
+      | isfalse Expr     { CondF "isfalse" (Expr $2) }
+      | not Invar        { CondF "not" $2 }
+      | even Invar       { CondF "even" $2 }
+      | odd Invar        { CondF "odd" $2 }
+      | isset Invar      { CondF "isset" $2 }
+      | defined Invar    { CondF "defined" $2 }
+      | undefined Invar  { CondF "undefined" $2 }
       | '(' Cond ')'     { $2 }
 
-CondRel : Relation Expr  { Just $ CondRel $1 (Expr $2) }
+CondRel : Relation Expr  { Just $ RelExpr $1 (Expr $2) }
         |                { Nothing }
  
-Relation : '=='   { RelEq  }
-         | '>='   { RelGte }
-         | '<='   { RelLte }
-         | '!='   { RelNeq }
-         | '>'    { RelGt  }
-         | '<'    { RelLt  }
+Relation : '=='   { Relation $ RelEq  }
+         | '>='   { Relation $ RelGte }
+         | '<='   { Relation $ RelLte }
+         | '!='   { Relation $ RelNeq }
+         | '>'    { Relation $ RelGt  }
+         | '<'    { Relation $ RelLt  }
 
 Invar : global  { Invar $1 }
 

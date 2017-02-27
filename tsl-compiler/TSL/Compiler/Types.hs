@@ -17,7 +17,7 @@ data TSLInputTheorem = TSLInputTheorem
                         { name, text, disp :: String,
                                idnum       :: Int } deriving Generic -- Use 'Int' to prevent BigNum usage
 
-data TSLTheorem = TSLTheorem { info :: TSLInputTheorem, theorem :: [Theorem] }
+data TSLTheorem a = TSLTheorem { info :: TSLInputTheorem, theorem :: [Theorem a] }
 
 instance FromJSON TSLInput
 instance FromJSON TSLInputTheorem
