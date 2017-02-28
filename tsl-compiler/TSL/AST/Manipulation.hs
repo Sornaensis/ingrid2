@@ -15,60 +15,56 @@ getAllInvars = map (Fx . Invar) . getInvolves
 --- | End helper functions
 
 getInvolves :: Fix Theorem -> [String]
-getInvolves = cata getInvolves'
+getInvolves = L.nub . cata getInvolves'
 
 getInvolves' :: Theorem [String] -> [String]
 getInvolves' (Invar a) = return a
-getInvolves' (If a b c) = a ++ b ++ fromMaybe [[]] c
-getInvolves' (Cond a b) = a ++ b
+getInvolves' (InvarExpr a b) = a ++ fromMaybe [] b
+getInvolves' (If a b c) = a ++ b ++ fromMaybe [] c
+getInvolves' (Cond a b) = a ++ fromMaybe [] b
+getInvolves' (RelExpr a b) = a ++ b
 getInvolves' (ExprList as) = concat as
+getInvolves' (Expr as) = concat as
 getInvolves' (ExprF _ a) = a
 getInvolves' (Or a b) = a ++ b
-getInvolves' _         = [[]]
+getInvolves' (And a b) = a ++ b
+getInvolves' (Mul a b) = a ++ b
+getInvolves' (Div a b) = a ++ b
+getInvolves' (Pow a b) = a ++ b
+getInvolves' (Paren a) = a 
+getInvolves' (Neg a) = a 
+getInvolves' (Function _ as) = concat as
+getInvolves' _         = []
 
--- | Begin getInvolves as strings
--- getInvolves :: Theorem a -> [String]
--- getInvolves = L.nub . cataTSL [[]]
---                       (\a b c -> a ++ b ++ maybe [[]] getInvolves c)
---                       (\a b -> a ++ maybe [[]] getInvolves b)
---                       (++)
---                       (concatMap getInvolves)
---                       (\_ b -> b)
---                       (++)
---                       (const [[]])
---                       (concatMap getInvolves)
---                       (++)
---                       (++)
---                       (++)
---                       (++)
---                       id
---                       id
---                       (++)
---                       id
---                       (const [[]])
---                       (\_ b -> concatMap getInvolves b)
---                       (const [[]])
---                       (:[])
---                       id
----  | End getInvolves
+theoremToSrc :: Fix Theorem -> String
+theoremToSrc = cata theoremToSrc' 
 
--- theoremToSrc :: Show a => Theorem a -> String
--- theoremToSrc (Expr ts)             = foldl (\s t -> 
---                                     case t of
---                                        (Neg _) -> s ++ theoremToSrc t
---                                        _       -> s ++ (if null s then "" else "+") ++ theoremToSrc t) "" ts
--- theoremToSrc (Mul a b)             = theoremToSrc a ++ "*" ++ theoremToSrc b
--- theoremToSrc (Div a b)             = theoremToSrc a ++ "/" ++ theoremToSrc b
--- theoremToSrc (Pow a b)             = theoremToSrc a ++ "**" ++ theoremToSrc b
--- theoremToSrc (Neg a)               = "-(" ++ theoremToSrc a ++ ")"
--- theoremToSrc (Value a)             = theoremToSrc a
--- theoremToSrc (Number a)            = show a
--- theoremToSrc (Function "sqrt" es) = "(" ++ (L.intercalate ", " . map theoremToSrc $ es) ++ ")**(1.0/2.0)"
--- theoremToSrc (Function s es)      = s ++ "(" ++ (L.intercalate ", " . map theoremToSrc $ es) ++ ")"
--- theoremToSrc (Local s)            = s
--- theoremToSrc (Invar s)            = s
--- theoremToSrc (Paren e)            = theoremToSrc e
--- theoremToSrc _                    = ""
+theoremToSrc' :: Theorem String -> String
+theoremToSrc' (Relation a)          = show a
+theoremToSrc' (RelExpr a b)         = a ++ b
+theoremToSrc' (Cond a b)            = a ++ fromMaybe [] b
+theoremToSrc' (InvarExpr a b)       = a ++ fromMaybe [] b ++ ";\n"
+theoremToSrc' (If a b c)            =
+        concat ["if ", a, " then \n{\n", 
+                    unlines (map ("    "++) (lines b)), "\n}",
+                    maybe [] (" else "++) c, 
+                    ";\n"]
+theoremToSrc' (ExprList as)         = L.intercalate ",\n" . map (("    "++) . filter (/=';')) $ as
+theoremToSrc' (Expr (t:ts))         = t ++ concatMap (\s -> 
+                                                case s of 
+                                                  ('-':_) -> s
+                                                  _       -> '+':s) ts
+theoremToSrc' (Mul a b)             = a ++ "*" ++ b
+theoremToSrc' (Div a b)             = a ++ "/" ++ b
+theoremToSrc' (Pow a b)             = a ++ "**" ++ b
+theoremToSrc' (Neg a)               = "-(" ++ a ++ ")"
+theoremToSrc' (Number a)            = show a
+theoremToSrc' (Function "sqrt" es) = "(" ++ L.intercalate ", " es ++ ")**(1.0/2.0)"
+theoremToSrc' (Function s es)      = s ++ "(" ++ L.intercalate ", " es ++ ")"
+theoremToSrc' (Local s)            = s
+theoremToSrc' (Invar s)            = s
+theoremToSrc' (Paren e)            = e
+theoremToSrc' _                    = ""
 
 -- containsInvar :: Theorem a -> Bool
 -- containsInvar = cataTSL False

@@ -61,7 +61,7 @@ Invarexpr  : not Invar       { Fx $ ExprF     "not"       $2 }
            | undefined Invar { Fx $ ExprF     "undefined" $2 }
            | Invar Invarel   { Fx $ InvarExpr $1          $2 }
 
-Invarel : Relation Expr { Fx $ Just (Fx $ RelExpr $1 (Expr $2)) }
+Invarel : Relation Expr { Just (Fx $ RelExpr $1 $2) }
         |               { Nothing }
 
 Invarexprlist : '{' Invarexprlist1 '}'      { Fx $ ExprList (reverse $2) }
@@ -86,8 +86,8 @@ Condand : Cond1   { $1 }
         | Condand and Cond1 { Fx $ And $1 $3 }
 
 Cond1 : Invar CondRel    { Fx $ Cond $1 $2 }
-      | istrue Expr      { Fx $ ExprF "istrue" (Fx $ Expr $2) }
-      | isfalse Expr     { Fx $ ExprF "isfalse" (Fx $ Expr $2) }
+      | istrue Expr      { Fx $ ExprF "istrue" $2 }
+      | isfalse Expr     { Fx $ ExprF "isfalse" $2 }
       | not Invar        { Fx $ ExprF "not" $2 }
       | even Invar       { Fx $ ExprF "even" $2 }
       | odd Invar        { Fx $ ExprF "odd" $2 }
@@ -96,7 +96,7 @@ Cond1 : Invar CondRel    { Fx $ Cond $1 $2 }
       | undefined Invar  { Fx $ ExprF "undefined" $2 }
       | '(' Cond ')'     { $2 }
 
-CondRel : Relation Expr  { Just $ RelExpr $1 (Fx $ Expr $2) }
+CondRel : Relation Expr  { Just $ Fx $ RelExpr $1 $2 }
         |                { Nothing }
  
 Relation : '=='   { Fx $ Relation RelEq  }
@@ -118,7 +118,7 @@ Arglist1 : Expr              { [$1] }
         | Arglist1 ',' Expr  { $3 : $1 }
         |                   { [] } 
 
-Expr : Expr1 { reverse $1 }
+Expr : Expr1 { Fx $ Expr $ reverse $1 }
 
 Expr1 : Term           { [$1] }
      | '-' Term        { [Fx $ Neg $2] }

@@ -18,7 +18,7 @@ solveableFunctions = ["log","ln","sqrt","cos","sin"]
 data Theorem a = Empty
                | If a a (Maybe a)
                | InvarExpr a (Maybe a)
-               | Cond a a
+               | Cond a (Maybe a)
                | ExprList [a]
                | ExprF String a
                | RelExpr a a
@@ -29,9 +29,7 @@ data Theorem a = Empty
                | Mul a a
                | Div a a
                | Neg a
-               | Term a
                | Pow a a
-               | Value a
                | Number Double 
                | Function String [a]
                | Local String
