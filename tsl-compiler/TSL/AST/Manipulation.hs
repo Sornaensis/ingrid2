@@ -7,8 +7,8 @@ import           TSL.AST.AST
 import Data.Maybe (fromMaybe)
 
 -- | Begin helper functions
-invarMappingList :: [Fix Theorem]
-invarMappingList = map (Fx . Invar . return) (filter (/='I') $ ['A'..'Z'] ++ ['a'..'z'])
+invarMappingList :: [String]
+invarMappingList = map (:[]) (filter (/='I') $ ['A'..'Z'] ++ ['a'..'z'])
 
 getAllInvars :: Fix Theorem -> [Fix Theorem]
 getAllInvars = map (Fx . Invar) . getInvolves
@@ -115,40 +115,31 @@ replaceAllInvar' m (Invar i)       = case lookup i m of
                                         _      -> Fx $ Invar i
 replaceAllInvar' m v               = Fx v
 
+replaceAllFuncs :: Fix Theorem -> (Fix Theorem, [(String, Fix Theorem)])
+replaceAllFuncs f = 
+    let (exp, expmap)       = cata replaceAllFuncs' f
+        (expmap', finalmap) = unzip $ zipWith  (\(a,b) s -> ((a,Fx $ Invar s),(s,b))) expmap invarMappingList 
+    in (replaceAllInvar expmap' exp, finalmap)
 
--- -- -- | Begin replace Functions
--- replAllFuncs :: Theorem a -> [Theorem a] -> (Theorem a, [(Theorem a, Theorem a)])
--- replAllFuncs (InvarExpr i (Just (RelExpr r exp))) vals =
---     let (exp', vals') = replAllFuncs exp vals
---     in  (InvarExpr i (Just (RelExpr r exp')), vals')
--- replAllFuncs (Expr es) vals = snd $ foldr (\y (v, (Expr es, out)) ->
---                                     let (t, vs) = replAllFuncs y v
---                                     in (drop (length vs) v, (Expr (es++[t]), out++vs))) (vals, (Expr [], [])) es
--- replAllFuncs (Div a b) vals =
---     let (ta, avs) = replAllFuncs a vals
---         (tb, bvs) = replAllFuncs b (drop (length avs) vals)
---     in (Div ta tb, avs ++ bvs)
--- replAllFuncs (Mul a b) vals =
---     let (ta, avs) = replAllFuncs a vals
---         (tb, bvs) = replAllFuncs b (drop (length avs) vals)
---     in (Mul ta tb, avs ++ bvs)
--- replAllFuncs (Neg a) vals =
---     let (t, v) = replAllFuncs a vals
---     in  (Neg t, v)
--- replAllFuncs (Term a) vals =
---     let (f, vs) = replAllFuncs a vals
---     in  (Term f, vs)
--- replAllFuncs (Pow a b)                vals  =
---     let (fa, avs) = replAllFuncs a vals 
---         (fb, bvs) = replAllFuncs b (drop (length avs) vals)
---     in (Pow fa fb, avs ++ bvs)
--- replAllFuncs fv@(Value f@(Function fun _)) (v:_) | fun `L.elem` solveableFunctions
---                                                                   = (fv, [])
---                                                  | otherwise = (Value v, [(v, f)])
--- replAllFuncs (Value (Paren expr))     vals  =
---     let (p', vs') = replAllFuncs expr vals 
---     in (Value $ Paren p', vs')
--- replAllFuncs (Value n@(Number _))     (v:_) = (Value n, [])
--- replAllFuncs v                        _     = (v, [])
--- -- --- | End replace Functions
 
+replaceAllFuncs' :: Theorem (Fix Theorem, [(String, Fix Theorem)]) -> (Fix Theorem, [(String, Fix Theorem)])
+replaceAllFuncs' (InvarExpr (a,a') mb)       = case mb of
+                                            Just (b,b') -> (Fx $ InvarExpr a (Just b), a'++b') 
+                                            _           -> (Fx $ InvarExpr a Nothing, a')
+replaceAllFuncs' (RelExpr (r,r') (p,p'))        = (Fx $ RelExpr r p, r'++p')
+replaceAllFuncs' (Expr es)                       = let (es'',v) = foldr (\(e,t) (es',ts') -> (e:es', t++ts')) ([],[]) es
+                                               in (Fx $ Expr es'', v)
+replaceAllFuncs' (Div (a,a') (b,b'))             = (Fx $ Div a b, a'++b')
+replaceAllFuncs' (Mul (a,a') (b,b'))             = (Fx $ Mul a b, a'++b')
+replaceAllFuncs' (Neg (a,a'))                    = (Fx $ Neg a, a')
+replaceAllFuncs' (Pow (a,a') (b,b'))             = (Fx $ Pow a b, a'++b')
+replaceAllFuncs' (Function fun es) | fun `L.elem` solveableFunctions
+                                             = let (es'',v) = foldr (\(e,t) (es',ts') -> (e:es', t++ts')) ([],[]) es
+                                               in (Fx $ Function fun es'', v)
+                                 | otherwise = let (es'',v) = foldr (\(e,t) (es',ts') -> (e:es', t++ts')) ([],[]) es
+                                                   val      = Fx $ Function fun es''
+                                               in (Fx $ Invar (theoremToSrc val), (theoremToSrc val, val):v)
+replaceAllFuncs' (Paren (a,a'))             = (Fx $ Paren a, a')
+replaceAllFuncs' (Invar a)                  = (Fx $ Invar a, [])
+replaceAllFuncs' (Relation a)               = (Fx $ Relation a, [])
+replaceAllFuncs' (Number a)                 = (Fx $ Number a, [])
