@@ -66,6 +66,12 @@ theoremToSrc' (Invar s)            = s
 theoremToSrc' (Paren e)            = e
 theoremToSrc' _                    = ""
 
+extractLetStatements :: [Fix Theorem] -> [(String, Fix Theorem)]
+extractLetStatements = foldr (\x ys ->
+                                case x of
+                                    (Fx (Let (Fx (Invar s)) e)) -> (s,e):ys
+                                    _                           -> ys) [] 
+
 containsFunc :: Fix Theorem -> Bool
 containsFunc = cata containsFunc'
 

@@ -16,6 +16,7 @@ solveableFunctions = ["log","ln","sqrt","cos","sin"]
 
 -- A theorem is a list of theorems
 data Theorem a = Empty
+               | Let a a
                | If a a (Maybe a)
                | InvarExpr a (Maybe a)
                | Cond a (Maybe a)

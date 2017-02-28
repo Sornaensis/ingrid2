@@ -14,6 +14,7 @@ import TSL.AST.AST
 
 %token 
       if             { TokenIf }
+      let            { TokenLet }
       then           { TokenThen }
       else           { TokenElse }
       null           { TokenNull }
@@ -50,10 +51,11 @@ import TSL.AST.AST
 
 %%
 
-Theorem : Invarexpr ';' Theorem    { $1 : $3 }
-         | Ifstmt ';' Theorem      { $1 : $3 }
-         | null ';' Theorem        { [Fx Empty] }
-         | {- empty -}             { [] }
+Theorem : Invarexpr ';' Theorem                 { $1 : $3 }
+         | Ifstmt ';' Theorem                   { $1 : $3 }
+         | let Invar '==' Expr ';' Theorem      { (Fx $ Let $2 $4) : $6 }
+         | null ';' Theorem                     { [Fx Empty] }
+         | {- empty -}                          { [] }
 
 Invarexpr  : not Invar       { Fx $ ExprF     "not"       $2 }
            | even Invar      { Fx $ ExprF     "even"      $2 }
@@ -148,6 +150,7 @@ parseError _ = error "Parse error"
 data Token
       = TokenIf
       | TokenThen
+      | TokenLet
       | TokenNull
       | TokenElse
       | TokenDefined
@@ -199,6 +202,7 @@ lexer ('!':'=':cs) = TokenNeq : lexer cs
 lexer ('*':'*':cs) = TokenPow : lexer cs
 lexer ('<':cs) = TokenLt : lexer cs
 lexer ('>':cs) = TokenGt : lexer cs
+lexer ('=':cs) = TokenEq : lexer cs
 lexer ('+':cs) = TokenPlus : lexer cs
 lexer ('^':cs) = TokenPow : lexer cs
 lexer ('-':cs) = TokenMinus : lexer cs
@@ -227,6 +231,7 @@ lexVar cs =
       ("even",rest)      -> TokenEven : lexer rest
       ("and",rest)       -> TokenAnd : lexer rest
       ("not",rest)       -> TokenNot : lexer rest
+      ("let",rest)       -> TokenLet : lexer rest
       ("odd",rest)       -> TokenOdd : lexer rest
       ("if",rest)        -> TokenIf : lexer rest
       ("or",rest)        -> TokenOr : lexer rest
