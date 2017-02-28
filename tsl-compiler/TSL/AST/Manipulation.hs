@@ -66,75 +66,55 @@ theoremToSrc' (Invar s)            = s
 theoremToSrc' (Paren e)            = e
 theoremToSrc' _                    = ""
 
--- containsInvar :: Theorem a -> Bool
--- containsInvar = cataTSL False
---                         (\a b c -> a || b || maybe False containsInvar c)
---                         (\a b -> a || maybe False containsInvar b)
---                         (||)
---                         (any containsInvar)
---                         (\_ b -> b)
---                         (||)
---                         (const False)
---                         (any containsInvar)
---                         (||)
---                         (||)
---                         (||)
---                         (||)
---                         id
---                         id
---                         (||)
---                         id
---                         (const False)
---                         (\_ b -> any containsInvar b)
---                         (const False)
---                         (const True)
---                         id
+containsFunc :: Fix Theorem -> Bool
+containsFunc = cata containsFunc'
 
--- containsFunc :: Theorem a -> Bool
--- containsFunc = cataTSL False
---                          (\a b c -> a || b || maybe False containsInvar c)
---                          (\a b -> a || maybe False containsInvar b)
---                          (||)
---                          (any containsInvar)
---                          (\_ b -> b)
---                          (||)
---                          (const False)
---                          (any containsInvar)
---                          (||)
---                          (||)
---                          (||)
---                          (||)
---                          id
---                          id
---                          (||)
---                          id
---                          (const False)
---                          (\_ _ -> True)
---                          (const False)
---                          (const False)
---                          id
+containsFunc' :: Theorem Bool -> Bool
+containsFunc' (If a b c) = a || b || fromMaybe False c
+containsFunc' (InvarExpr a b) = a || fromMaybe False b
+containsFunc' (Cond a b)      =  a || fromMaybe False b
+containsFunc' (ExprList as)   = or as
+containsFunc' (ExprF _ a)     = a
+containsFunc' (RelExpr a b)   = a || b
+containsFunc' (Expr as)       = or as
+containsFunc' (Or a b)        = a || b
+containsFunc' (And a b)       = a || b
+containsFunc' (Mul a b)       = a || b
+containsFunc' (Neg a)         = a
+containsFunc' (Pow a b)       = a || b
+containsFunc' (Function _ _)  = True
+containsFunc' (Paren a)       = a
+containsFunc' _               = False
 
--- -- -- | Begin replace Invars
--- replaceAllInvar :: Eq a => [(Theorem a, Theorem a)] -> Theorem a -> Theorem a
--- replaceAllInvar _  Empty          = Empty
--- replaceAllInvar m (InvarExpr i (Just (RelExpr r exp))) =
---   InvarExpr (case lookup i m of
---               (Just new) -> new
---               _          -> i) (Just $ RelExpr r (replaceAllInvar m exp))
--- replaceAllInvar m (Expr xs)       = Expr $ map (replaceAllInvar m) xs
--- replaceAllInvar m (Div a b)       = Div (replaceAllInvar m a) (replaceAllInvar m b)
--- replaceAllInvar m (Mul a b)       = Mul (replaceAllInvar m a) (replaceAllInvar m b)
--- replaceAllInvar m (Term f)        = Term $ replaceAllInvar m f
--- replaceAllInvar m (Neg a)         = Neg $ replaceAllInvar m a
--- replaceAllInvar m (Pow a b)       = Pow (replaceAllInvar m a) (replaceAllInvar m b)
--- replaceAllInvar m (Value v)       = Value $ replaceAllInvar m v
--- replaceAllInvar m i@(Invar _)     = case lookup i m of
---                                         Just v -> v
---                                         _      -> i
--- replaceAllInvar m (Function f es) = Function f $ map (replaceAllInvar m) es
--- replaceAllInvar m (Paren e)       = Paren . replaceAllInvar m $ e
--- replaceAllInvar _ v               = v
--- --- | End replace
+containsInvar :: Fix Theorem -> Bool
+containsInvar = cata containsInvar' 
+
+containsInvar' :: Theorem Bool -> Bool
+containsInvar' (If a b c) = a || b || fromMaybe False c
+containsInvar' (InvarExpr a b) = a || fromMaybe False b
+containsInvar' (Cond a b)      =  a || fromMaybe False b
+containsInvar' (ExprList as)   = or as
+containsInvar' (ExprF _ a)     = a
+containsInvar' (RelExpr a b)   = a || b
+containsInvar' (Expr as)       = or as
+containsInvar' (Or a b)        = a || b
+containsInvar' (And a b)       = a || b
+containsInvar' (Mul a b)       = a || b
+containsInvar' (Neg a)         = a
+containsInvar' (Pow a b)       = a || b
+containsInvar' (Function _ _)  = True
+containsInvar' (Paren a)       = a
+containsInvar' _               = False
+
+replaceAllInvar :: [(String, Fix Theorem)] -> Fix Theorem -> Fix Theorem
+replaceAllInvar m = cata (replaceAllInvar' m)
+
+replaceAllInvar' :: [(String, Fix Theorem)] -> Theorem (Fix Theorem) -> Fix Theorem 
+replaceAllInvar' m (Invar i)       = case lookup i m of
+                                        Just v -> v
+                                        _      -> Fx $ Invar i
+replaceAllInvar' m v               = Fx v
+
 
 -- -- -- | Begin replace Functions
 -- replAllFuncs :: Theorem a -> [Theorem a] -> (Theorem a, [(Theorem a, Theorem a)])
