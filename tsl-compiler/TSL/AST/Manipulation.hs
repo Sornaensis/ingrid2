@@ -1,10 +1,11 @@
-{-# LANGUAGE DataKinds #-}
+{-# LANGUAGE DataKinds         #-}
+{-# LANGUAGE FlexibleInstances #-}
 module TSL.AST.Manipulation where
 
 import qualified Data.List   as L
 
+import           Data.Maybe  (fromMaybe)
 import           TSL.AST.AST
-import Data.Maybe (fromMaybe)
 
 -- | Begin helper functions
 invarMappingList :: [String]
@@ -31,16 +32,16 @@ getInvolves' (And a b) = a ++ b
 getInvolves' (Mul a b) = a ++ b
 getInvolves' (Div a b) = a ++ b
 getInvolves' (Pow a b) = a ++ b
-getInvolves' (Paren a) = a 
-getInvolves' (Neg a) = a 
+getInvolves' (Paren a) = a
+getInvolves' (Neg a) = a
 getInvolves' (Function _ as) = concat as
 getInvolves' _         = []
 
 theoremToSrc :: Fix Theorem -> String
-theoremToSrc = cata theoremToSrc' 
+theoremToSrc = cata theoremToSrc'
 
 theoremToSrc' :: Theorem String -> String
-theoremToSrc' (Let a b)             = a ++ b
+theoremToSrc' (Let a b)             = "let " ++ a ++ " = " ++ b ++ ";"
 theoremToSrc' (Relation a)          = show a
 theoremToSrc' (RelExpr a b)         = " " ++ a ++ " " ++ b
 theoremToSrc' (Cond a b)            = a ++ fromMaybe [] b
@@ -48,19 +49,19 @@ theoremToSrc' (InvarExpr a b)       = a ++ fromMaybe [] b ++ ";"
 theoremToSrc' (If a b c)            =
     case a of
         "not Local True" ->
-           concat [" \n{\n", 
+           concat [" \n{\n",
                        unlines (map ("    "++) (lines b)), "\n}",
-                       maybe [] (" else "++) c, 
+                       maybe [] (" else "++) c,
                        ";\n"]
         _            ->
-           concat ["if ", a, " then \n{\n", 
+           concat ["if ", a, " then \n{\n",
                        unlines (map ("    "++) (lines b)), "\n}",
-                       maybe [] (" else "++) c, 
+                       maybe [] (" else "++) c,
                        ";\n"]
 theoremToSrc' (ExprF s a)           = s ++ " " ++ a
 theoremToSrc' (ExprList as)         = L.intercalate ",\n" . map (filter (/=';')) $ as
-theoremToSrc' (Expr (t:ts))         = t ++ concatMap (\s -> 
-                                                case s of 
+theoremToSrc' (Expr (t:ts))         = t ++ concatMap (\s ->
+                                                case s of
                                                   ('-':_) -> s
                                                   _       -> '+':s) ts
 theoremToSrc' (Mul a b)             = a ++ "*" ++ b
@@ -75,16 +76,20 @@ theoremToSrc' (Invar s)            = s
 theoremToSrc' (Paren e)            = e
 theoremToSrc' _                    = ""
 
+instance Show (Fix Theorem) where
+    show = theoremToSrc
+
 extractLetStatements :: [Fix Theorem] -> [(String, Fix Theorem)]
 extractLetStatements = foldr (\x ys ->
                                 case x of
                                     (Fx (Let (Fx (Invar s)) e)) -> (s,e):ys
-                                    _                           -> ys) [] 
+                                    _                           -> ys) []
 
 containsFunc :: Fix Theorem -> Bool
 containsFunc = cata containsFunc'
 
 containsFunc' :: Theorem Bool -> Bool
+containsFunc' (Let a b)  = a || b
 containsFunc' (If a b c) = a || b || fromMaybe False c
 containsFunc' (InvarExpr a b) = a || fromMaybe False b
 containsFunc' (Cond a b)      =  a || fromMaybe False b
@@ -102,7 +107,7 @@ containsFunc' (Paren a)       = a
 containsFunc' _               = False
 
 containsInvar :: Fix Theorem -> Bool
-containsInvar = cata containsInvar' 
+containsInvar = cata containsInvar'
 
 containsInvar' :: Theorem Bool -> Bool
 containsInvar' (If a b c) = a || b || fromMaybe False c
@@ -124,26 +129,38 @@ containsInvar' _               = False
 replaceAllInvar :: [(String, Fix Theorem)] -> Fix Theorem -> Fix Theorem
 replaceAllInvar m = cata (replaceAllInvar' m)
 
-replaceAllInvar' :: [(String, Fix Theorem)] -> Theorem (Fix Theorem) -> Fix Theorem 
+replaceAllInvar' :: [(String, Fix Theorem)] -> Theorem (Fix Theorem) -> Fix Theorem
 replaceAllInvar' m (Invar i)       = case lookup i m of
                                         Just v -> v
                                         _      -> Fx $ Invar i
 replaceAllInvar' m v               = Fx v
 
 replaceAllFuncs :: Fix Theorem -> (Fix Theorem, [(String, Fix Theorem)])
-replaceAllFuncs f = 
+replaceAllFuncs f =
     let (exp, expmap)       = cata replaceAllFuncs' f
-        (expmap', finalmap) = unzip $ zipWith  (\(a,b) s -> ((a,Fx $ Invar s),(s,b))) expmap invarMappingList 
+        (expmap', finalmap) = unzip $ zipWith  (\(a,b) s -> ((a,Fx $ Invar s),(s,b))) expmap invarMappingList
     in (replaceAllInvar expmap' exp, finalmap)
 
 
 replaceAllFuncs' :: Theorem (Fix Theorem, [(String, Fix Theorem)]) -> (Fix Theorem, [(String, Fix Theorem)])
-replaceAllFuncs' (InvarExpr (a,a') mb)       = case mb of
-                                            Just (b,b') -> (Fx $ InvarExpr a (Just b), a'++b') 
-                                            _           -> (Fx $ InvarExpr a Nothing, a')
+replaceAllFuncs' (Let (a,a') (b,b'))        = (Fx $ Let a b, a'++b')
+replaceAllFuncs' (If (a,a') (b,b') mc)      = case mc of
+                                                Just (c,c') -> (Fx $ If a b (Just c), a'++b'++c')
+                                                _           -> (Fx $ If a b Nothing, a'++b')
+replaceAllFuncs' (InvarExpr (a,a') mb)      = case mb of
+                                                Just (b,b') -> (Fx $ InvarExpr a (Just b), a'++b')
+                                                _           -> (Fx $ InvarExpr a Nothing, a')
+replaceAllFuncs' (Cond (a,a') mb)           = case mb of
+                                                Just (b,b') -> (Fx $ Cond a (Just b), a'++b')
+                                                _           -> (Fx $ Cond a Nothing, a')
+replaceAllFuncs' (ExprF s (a,a'))           = (Fx $ ExprF s a, a') 
 replaceAllFuncs' (RelExpr (r,r') (p,p'))        = (Fx $ RelExpr r p, r'++p')
+replaceAllFuncs' (ExprList es)                       = let (es'',v) = foldr (\(e,t) (es',ts') -> (e:es', t++ts')) ([],[]) es
+                                               in (Fx $ ExprList es'', v)
 replaceAllFuncs' (Expr es)                       = let (es'',v) = foldr (\(e,t) (es',ts') -> (e:es', t++ts')) ([],[]) es
                                                in (Fx $ Expr es'', v)
+replaceAllFuncs' (Or (a,a') (b,b'))             = (Fx $ Or a b, a'++b')
+replaceAllFuncs' (And (a,a') (b,b'))             = (Fx $ And a b, a'++b')
 replaceAllFuncs' (Div (a,a') (b,b'))             = (Fx $ Div a b, a'++b')
 replaceAllFuncs' (Mul (a,a') (b,b'))             = (Fx $ Mul a b, a'++b')
 replaceAllFuncs' (Neg (a,a'))                    = (Fx $ Neg a, a')
@@ -155,6 +172,8 @@ replaceAllFuncs' (Function fun es) | fun `L.elem` solveableFunctions
                                                    val      = Fx $ Function fun es''
                                                in (Fx $ Invar (theoremToSrc val), (theoremToSrc val, val):v)
 replaceAllFuncs' (Paren (a,a'))             = (Fx $ Paren a, a')
+replaceAllFuncs' (Local s)                  = (Fx $ Local s, [])
 replaceAllFuncs' (Invar a)                  = (Fx $ Invar a, [])
 replaceAllFuncs' (Relation a)               = (Fx $ Relation a, [])
 replaceAllFuncs' (Number a)                 = (Fx $ Number a, [])
+replaceAllFuncs' Empty                      = (Fx Empty, [])

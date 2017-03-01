@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveFunctor #-}
+{-# LANGUAGE DeriveFunctor     #-}
 module TSL.AST.AST (
                 Theorem(..),
                 Relation(..),
@@ -6,9 +6,6 @@ module TSL.AST.AST (
                 solveableFunctions,
                 cata
                 ) where
-
-import           Data.Maybe
-import           Data.Morphism.Cata
 
 -- Functions we can solve for
 solveableFunctions :: [String]
@@ -31,7 +28,7 @@ data Theorem a = Empty
                | Div a a
                | Neg a
                | Pow a a
-               | Number Double 
+               | Number Double
                | Function String [a]
                | Local String
                | Invar String
