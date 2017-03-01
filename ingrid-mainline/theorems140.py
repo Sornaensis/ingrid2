@@ -2828,7 +2828,7 @@ class Theorem62(Theorem):
 
 class Theorem63(Theorem):
     def __init__(self):
-        super(Theorem63, self).__init__(63, "null;", "")
+        super(Theorem63, self).__init__(63, "null; diam<=(2*nodes + 1 - sqrt(8*edges-8*nodes+17))/2", "")
     def involves(self, str_invar):
         return str_invar in []
     def run(self, ingrid_obj):
