@@ -25,6 +25,8 @@ flipbound NotFound = Flip True
 flipbound a        = a
 
 --- | Expression Analysis
+invarAnalysis
+
 theoremAnalysis :: Theorem a -> String -> InvarBoundSwitch -> InvarBoundSwitch
 theoremAnalysis (Expr exps) inv f = let analysis = L.nub $ filter (/=NotFound) . concatMap (\x -> theoremAnalysis x inv f) $ exps
                                in if null analysis

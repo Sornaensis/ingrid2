@@ -40,16 +40,25 @@ theoremToSrc :: Fix Theorem -> String
 theoremToSrc = cata theoremToSrc' 
 
 theoremToSrc' :: Theorem String -> String
+theoremToSrc' (Let a b)             = a ++ b
 theoremToSrc' (Relation a)          = show a
-theoremToSrc' (RelExpr a b)         = a ++ b
+theoremToSrc' (RelExpr a b)         = " " ++ a ++ " " ++ b
 theoremToSrc' (Cond a b)            = a ++ fromMaybe [] b
-theoremToSrc' (InvarExpr a b)       = a ++ fromMaybe [] b ++ ";\n"
+theoremToSrc' (InvarExpr a b)       = a ++ fromMaybe [] b ++ ";"
 theoremToSrc' (If a b c)            =
-        concat ["if ", a, " then \n{\n", 
-                    unlines (map ("    "++) (lines b)), "\n}",
-                    maybe [] (" else "++) c, 
-                    ";\n"]
-theoremToSrc' (ExprList as)         = L.intercalate ",\n" . map (("    "++) . filter (/=';')) $ as
+    case a of
+        "not Local True" ->
+           concat [" \n{\n", 
+                       unlines (map ("    "++) (lines b)), "\n}",
+                       maybe [] (" else "++) c, 
+                       ";\n"]
+        _            ->
+           concat ["if ", a, " then \n{\n", 
+                       unlines (map ("    "++) (lines b)), "\n}",
+                       maybe [] (" else "++) c, 
+                       ";\n"]
+theoremToSrc' (ExprF s a)           = s ++ " " ++ a
+theoremToSrc' (ExprList as)         = L.intercalate ",\n" . map (filter (/=';')) $ as
 theoremToSrc' (Expr (t:ts))         = t ++ concatMap (\s -> 
                                                 case s of 
                                                   ('-':_) -> s
@@ -59,9 +68,9 @@ theoremToSrc' (Div a b)             = a ++ "/" ++ b
 theoremToSrc' (Pow a b)             = a ++ "**" ++ b
 theoremToSrc' (Neg a)               = "-(" ++ a ++ ")"
 theoremToSrc' (Number a)            = show a
-theoremToSrc' (Function "sqrt" es) = "(" ++ L.intercalate ", " es ++ ")**(1.0/2.0)"
+-- theoremToSrc' (Function "sqrt" es) = "(" ++ L.intercalate ", " es ++ ")**(1.0/2.0)"
 theoremToSrc' (Function s es)      = s ++ "(" ++ L.intercalate ", " es ++ ")"
-theoremToSrc' (Local s)            = s
+theoremToSrc' (Local s)            = "Local " ++ s
 theoremToSrc' (Invar s)            = s
 theoremToSrc' (Paren e)            = e
 theoremToSrc' _                    = ""
