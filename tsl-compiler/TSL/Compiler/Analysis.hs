@@ -83,6 +83,6 @@ invarAnalysis' s (Function _ as)            = foldr1 chooseBound as
 invarAnalysis' s (Paren a)                  = a
 invarAnalysis' s (Number n)                 = Coeff n
 invarAnalysis' s (Invar i)                  | s == i = InvAn False 1
-invarAnalysis' _ _                         = NotFound
+invarAnalysis' _ _                          = NotFound
 
 
