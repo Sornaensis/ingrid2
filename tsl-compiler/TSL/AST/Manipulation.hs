@@ -41,25 +41,25 @@ theoremToSrc :: Fix Theorem -> String
 theoremToSrc = cata theoremToSrc'
 
 theoremToSrc' :: Theorem String -> String
-theoremToSrc' (Let a b)             = "let " ++ a ++ " = " ++ b ++ ";"
+theoremToSrc' (Let a b)             = "let " ++ a ++ " = " ++ b 
 theoremToSrc' (Relation a)          = show a
 theoremToSrc' (RelExpr a b)         = " " ++ a ++ " " ++ b
 theoremToSrc' (Cond a b)            = a ++ fromMaybe [] b
-theoremToSrc' (InvarExpr a b)       = a ++ fromMaybe [] b ++ ";"
+theoremToSrc' (InvarExpr a b)       = a ++ fromMaybe [] b 
 theoremToSrc' (If a b c)            =
     case a of
         "not Local True" ->
            concat [" \n{\n",
                        unlines (map ("    "++) (lines b)), "\n}",
-                       maybe [] (" else "++) c,
-                       ";\n"]
+                       maybe [] (" else "++) c] --,
+                       --";\n"]
         _            ->
            concat ["if ", a, " then \n{\n",
                        unlines (map ("    "++) (lines b)), "\n}",
-                       maybe [] (" else "++) c,
-                       ";\n"]
+                       maybe [] (" else "++) c] --,
+                       --";\n"]
 theoremToSrc' (ExprF s a)           = s ++ " " ++ a
-theoremToSrc' (ExprList as)         = L.intercalate ",\n" . map (filter (/=';')) $ as
+theoremToSrc' (ExprList as)         = L.intercalate ",\n" as
 theoremToSrc' (Expr (t:ts))         = t ++ concatMap (\s ->
                                                 case s of
                                                   ('-':_) -> s
@@ -71,13 +71,13 @@ theoremToSrc' (Neg a)               = "-(" ++ a ++ ")"
 theoremToSrc' (Number a)            = show a
 -- theoremToSrc' (Function "sqrt" es) = "(" ++ L.intercalate ", " es ++ ")**(1.0/2.0)"
 theoremToSrc' (Function s es)      = s ++ "(" ++ L.intercalate ", " es ++ ")"
-theoremToSrc' (Local s)            = "Local " ++ s
+theoremToSrc' (Local s)            = s
 theoremToSrc' (Invar s)            = s
 theoremToSrc' (Paren e)            = e
 theoremToSrc' _                    = ""
 
 instance Show (Fix Theorem) where
-    show = theoremToSrc
+    show = (++";") . theoremToSrc 
 
 extractLetStatements :: [Fix Theorem] -> [(String, Fix Theorem)]
 extractLetStatements = foldr (\x ys ->
@@ -100,6 +100,7 @@ containsFunc' (Expr as)       = or as
 containsFunc' (Or a b)        = a || b
 containsFunc' (And a b)       = a || b
 containsFunc' (Mul a b)       = a || b
+containsFunc' (Div a b)       = a || b
 containsFunc' (Neg a)         = a
 containsFunc' (Pow a b)       = a || b
 containsFunc' (Function _ _)  = True
@@ -120,6 +121,7 @@ containsInvar' (Expr as)       = or as
 containsInvar' (Or a b)        = a || b
 containsInvar' (And a b)       = a || b
 containsInvar' (Mul a b)       = a || b
+containsInvar' (Div a b)       = a || b
 containsInvar' (Neg a)         = a
 containsInvar' (Pow a b)       = a || b
 containsInvar' (Function _ _)  = True
