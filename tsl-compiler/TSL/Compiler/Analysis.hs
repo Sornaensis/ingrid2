@@ -22,6 +22,10 @@ data InvarBoundSwitch = Coeff Double | InvAn Bool Double | Complex | NotFound de
 -- swap Min Maximize    = Max
 -- swap b   _           = b
 
+isCoeff :: InvarBoundSwitch -> Bool
+isCoeff (Coeff _) = True
+isCoeff _         = False
+
 chooseBound :: InvarBoundSwitch -> InvarBoundSwitch -> InvarBoundSwitch
 chooseBound (InvAn af ad) (InvAn bf bd) | abs ad == abs bd && af = InvAn af ad
                                         | abs ad == abs bd && bf = InvAn bf bd
@@ -47,10 +51,12 @@ addBound NotFound      a             = a
 addBound a             NotFound      = a
 
 mulBound :: InvarBoundSwitch -> InvarBoundSwitch -> InvarBoundSwitch
+mulBound Complex       _             = Complex
+mulBound _             Complex       = Complex
 mulBound InvAn{}       InvAn{}       = Complex
 mulBound (InvAn af ad) (Coeff c)     = InvAn af $ ad*c
 mulBound (Coeff c)     (InvAn af ad) = InvAn af $ ad*c
-mulBound a@InvAn{}     _             = a
+mulBound InvAn{}       NotFound      = Complex
 mulBound _             a@InvAn{}     = a
 mulBound NotFound      a             = a
 mulBound a             NotFound      = a
@@ -72,7 +78,8 @@ invarAnalysis' s (RelExpr a b)              = chooseBound a b
 invarAnalysis' s (ExprList [])              = NotFound
 invarAnalysis' s (ExprList as)              = foldr1 chooseBound as
 invarAnalysis' s (Expr [])                  = NotFound
-invarAnalysis' s (Expr as)                  = foldr1 chooseBound as
+invarAnalysis' s (Expr as)                  | all isCoeff as = foldr1 (\(Coeff a) (Coeff b) -> Coeff $ a+b)  as
+                                            | otherwise      = foldr chooseBound NotFound . filter (not . isCoeff) $ as
 invarAnalysis' s (Mul a b)                  = addBound a b
 invarAnalysis' s (Div a b)                  = chooseBound a (flipInvBound b)
 invarAnalysis' s (Neg a)                    = flipInvBound a
