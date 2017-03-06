@@ -328,6 +328,10 @@ class IngridObj:
                 self.error_msg = 'User input parameters caused an error'
                 return
             
+        # gives ingrid obj to the theorem object
+        for thm in theorems:
+            thm.set_ing_obj(self)
+        
         # loops through the queue until it is empty
         while not self.queue.empty():
             str_inv = self.queue.pop()
@@ -336,7 +340,7 @@ class IngridObj:
                 if not theorem.involves(str_inv):
                     continue
                 self.current_theorem = theorem
-                theorem.run(self)
+                theorem.run()
                 if self.error_inv is not None:
                     return
                     
@@ -466,9 +470,9 @@ class Theorem(object):
     def maxb(self, str_invar):
         return self.ingrid_obj.get(str_invar, ind='Max')
         
-    def minb():
-        return 
+    def minb(self, str_invar):
+        return self.ingrid_obj.get(str_invar, ind='Min')
     
-    def get():
-    
+    def get(self, str_invar):
+        return self.ingrid_obj.get(str_invar)
 
