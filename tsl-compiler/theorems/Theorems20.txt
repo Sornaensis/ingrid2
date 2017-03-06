@@ -72,7 +72,7 @@
             "text": "edgeInd >= nodes/(maxdeg + 1);" 
         }, 
         {
-            "text": "if g == 2*d + 1 then { regular };",
+            "text": "if girth == 2*diameter + 1 then { regular };",
             "name": "Theorem",
             "idnum": 13,
             "disp": ""

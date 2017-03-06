@@ -14,7 +14,7 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if connected then {2*diameter - 3 - (diameter**2 - diameter - 4)/nodes <= (nodes**2-edges)/nodes};",
             "name": "Theorem",
             "idnum": 63,
             "disp": ""

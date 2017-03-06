@@ -427,7 +427,7 @@ class Theorem(object):
     This is the Theorem class from which all theorems should inherit. It contains unimplemented methods which are used
     in the INGRID mainline.
     """
-    def __init__(self, thm_id, string, name):
+    def __init__(self, thm_id, string, name, ing_obj=None):
         """
         This will initialize the theorem id (self.id) to thm_id and the string that represents the theorem (self.str) to
         string.
@@ -435,6 +435,7 @@ class Theorem(object):
         self.id = thm_id
         self.str = string
         self.name = name
+        self.ingrid_obj = ing_obj
 
     def involves(self, str_invar):
         """
@@ -446,7 +447,7 @@ class Theorem(object):
         """
         raise NotImplementedError
 
-    def run(self, ingrid_obj):
+    def run(self):
         """
 
         CHILD MUST IMPLEMENT: This runs the given theorem.
@@ -456,7 +457,18 @@ class Theorem(object):
         """
         raise NotImplementedError
 
-
-
-
+    def set_ing_obj(self, ing_obj):
+        self.ingrid_obj = ing_obj
+        
+    def set(self, str_invar, val, ind='Bool'):
+        self.ingrid_obj.set(self, str_invar, val, ind)
+        
+    def maxb(self, str_invar):
+        return self.ingrid_obj.get(str_invar, ind='Max')
+        
+    def minb():
+        return 
+    
+    def get():
+    
 

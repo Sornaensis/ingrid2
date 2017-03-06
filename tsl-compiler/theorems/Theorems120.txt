@@ -116,7 +116,7 @@
             "disp": ""
         },
         {
-            "text": "if hamiltonian and nodes>=chromaticNum-1 and chromaticNum >= 4 then { edges>= (chromaticNum-1)*(chromaticNum-2)/2 + nodes }; if hamiltonian and chromaticNum==3 and even nodes then {edges >= nodes +1};",
+            "text": "if hamiltonian and nodes>=chromaticNum-1 and chromaticNum >= 4 then { edges>= (chromaticNum-1)*(chromaticNum-2)/2 + nodes } else if hamiltonian and chromaticNum==3 and even nodes then {edges >= nodes +1};",
             "name": "Theorem",
             "idnum": 120,
             "disp": ""

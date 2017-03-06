@@ -26,7 +26,7 @@
             "disp": ""
         },
         {
-            "text": "if genus >= 1 and istrue congruent(girth, 3, 4) then { nodes >= 9*(girth-1)/4 + 1 } else { nodes >= 9*(girth-1)/4 };",
+            "text": "if genus >= 1 and istrue congruent(girth, 3, 4) then { nodes >= 9*(girth-1)/4 + 1 } else if genus >= 1 { nodes >= 9*(girth-1)/4 };",
             "name": "Theorem",
             "idnum": 125,
             "disp": ""
@@ -44,7 +44,7 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if nodes >= 2*edgeInd+1 and (maxdeg <= 2*edgeInd and nodes <= 2*edgeInd+ floor(edgeInd/floor((maxdeg+1)/2)) and odd maxdeg) then {edges <= min(nodes*maxdeg/2, edgeInd*maxdeg + floor(2*(nodes-edgeInd)/(maxdeg+3))*(maxdeg-1)/2)} else if nodes >= 2*edgeInd+1 and (maxdeg <= 2*edgeInd and nodes <= 2*edgeInd+ floor(edgeInd/floor((maxdeg+1)/2)) and even maxdeg) then {edges <= nodes*maxdeg/2}; if nodes >= 2*edgeInd and (maxdeg <= 2*edgeInd and nodes <= 2*edgeInd+ floor(edgeInd/floor((maxdeg+1)/2))) then {edges <= edgeInd*maxdeg + floor(edgeInd*floor((maxdeg+1)/2))*floor(maxdeg/2)}; if nodes >= 2*edgeInd and maxdeg >= 2*edgeInd+1 and nodes >= edgeInd + maxdeg then {edges <= edgeInd*maxdeg} else if nodes >= 2*edgeInd and maxdeg >= 2*edgeInd+1 and nodes < edgeInd + maxdeg then {edges <= max(edgeInd*(2*edgeInd+1), floor(edgeInd*(nodes + maxdeg - edgeInd)/2))};",
             "name": "Theorem",
             "idnum": 128,
             "disp": ""
@@ -68,13 +68,13 @@
             "disp": ""
         },
         {
-            "text": "if istrue congruent(nodes, 3, 4) then {mindeg <= (nodes-1)**2 / (4*(nodes-1-maxdeg))} else {mindeg <= (nodes-3)*(nodes+1)/(4*(nodes-1-maxdeg))};",
+            "text": "if istrue congruent(nodes, 3, 4) then {mindeg <= (nodes-3)*(nodes+1)/(4*(nodes-1-maxdeg))} else {mindeg <= (nodes-1)**2 / (4*(nodes-1-maxdeg))};",
             "name": "Theorem",
             "idnum": 132,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "let z = 1 + floor(2*edges/nodes); let k = ceil(nodes - 2*edges/z); nodeInd >= k + ceil((nodes - k*z)/(1+z))",
             "name": "Theorem",
             "idnum": 133,
             "disp": ""

@@ -2236,7 +2236,7 @@ class Theorem60(Theorem):
         #         except:
         #             pass
         #     genus = ingrid_obj.get('genus', ind='Max')
-        #     girth = ingrid_obj.get('girth', ind='Max')
+        #     girth = ingrid_obj.get('girth', ind='Min')
         #     nodes = ingrid_obj.get('nodes', ind='Max')
         #     numOfComponents = ingrid_obj.get('numOfComponents', ind='Min')
         #     if genus != 'undt' and girth != 'undt' and nodes != 'undt':
@@ -3903,7 +3903,7 @@ class Theorem119(Theorem):
 
 class Theorem120(Theorem):
     def __init__(self):
-        super(Theorem120, self).__init__(120, "if hamiltonian and nodes>=chromaticNum-1 and chromaticNum >= 4 then { edges>= (chromaticNum-1)*(chromaticNum-2)/2 + nodes }; if hamiltonian and chromaticNum==3 and even nodes then {edges >= nodes +1};", "")
+        super(Theorem120, self).__init__(120, "if hamiltonian and nodes>=chromaticNum-1 and chromaticNum >= 4 then { edges>= (chromaticNum-1)*(chromaticNum-2)/2 + nodes } else if hamiltonian and chromaticNum==3 and even nodes then {edges >= nodes +1};", "")
     def involves(self, str_invar):
         return str_invar in ["chromaticNum","e","hamiltonian","nodes","p","edges"]
     def run(self, ingrid_obj):

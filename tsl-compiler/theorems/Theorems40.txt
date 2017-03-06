@@ -20,7 +20,7 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if mindeg >= 3 and odd girth then {nodes >= (mindeg*(mindeg-1)**((girth-1)/2)-2)/(mindeg-2)} else if mindeg >= 3 and even girth then {nodes >= 2*(mindeg-1)**(girth/2)-2)/(mindeg-2)};",
             "name": "Theorem",
             "idnum": 24,
             "disp": ""
@@ -86,7 +86,7 @@
             "disp": ""
         },
         {
-            "text": "if planar and maxClique < 3 then { nodeInd >= (1/3)*(nodes+1), nodeCover <= (2*nodes-1)/3 } else if planar then { maxClique >= 3 }; ",
+            "text": "if planar and maxClique < 3 then { nodeInd >= (1/3)*(nodes+1), nodeCover <= (2*nodes-1)/3 } else if planar and (nodeInd < (1/3)*(nodes+1) or nodeCover > (2*nodes-1)/3) then { maxClique >= 3 }; ",
             "name": "Theorem",
             "idnum": 35,
             "disp": ""

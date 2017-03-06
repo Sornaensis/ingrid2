@@ -1,0 +1,26 @@
+Unless otherwise stated these changes were made to the /tsl-compiler/theorems/theorems*.txt files.
+
+24 - dont solve for girth in this one, it is necessary to calculate dummy variable k
+
+35 - we need to add the second condition in the case of an undetermined girth (also the original ingrid code might have a typo with this second condition)
+
+60 - changed the bounds for girth when setting edges (in theorems140.py). Also, the incorrect bounds might be used when setting nodes and ncomp, but the original code is difficult to read.
+
+86 - added, should be double checked, very long
+
+91 - domination is not in this theorem. Changed
+
+63 - added
+
+67 - will need to be written by hand 
+
+120 - the written equation seems good. Run it through the compiler again, if it does not work, then we must write by hand.
+
+125 - the if else statement written is no good. fixed.
+
+128 - added, kill me now, should be double checked, very long
+
+132 - the if statements were flipped, I changed them
+
+133 - added
+
