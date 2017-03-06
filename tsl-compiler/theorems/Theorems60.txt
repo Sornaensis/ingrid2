@@ -68,7 +68,7 @@
             "disp": ""
         },
         {
-            "text": "if (connected and not cycle and not complete) or (maxClique <= maxdeg and maxdeg >= 4 and regular) then { arboricity <= (1 + maxdeg)/2 }; arboricity <= 1 + spectralRadius/2;",
+            "text": "if (connected and not cycle and (not complete or even nodes)) or (maxClique <= maxdeg and maxdeg >= 4 and regular) then { arboricity <= (1 + maxdeg)/2 }; arboricity <= 1 + spectralRadius/2;",
             "name": "Theorem",
             "idnum": 52,
             "disp": ""
