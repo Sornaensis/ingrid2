@@ -2,7 +2,7 @@ Unless otherwise stated these changes were made to the /tsl-compiler/theorems/th
 
 24 - dont solve for girth in this one, it is necessary to calculate dummy variable k
 
-35 - we need to add the second condition in the case of an undetermined girth (also the original ingrid code might have a typo with this second condition)
+35 - The FUCK-OR theorem change
 
 60 - changed the bounds for girth when setting edges (in theorems140.py). Also, the incorrect bounds might be used when setting nodes and ncomp, but the original code is difficult to read.
 
