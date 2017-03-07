@@ -52,12 +52,13 @@ generatePython = cata generatePython'  . cata realizeAnalysis'
 
 generatePython' :: Theorem String -> String
 generatePython' (Relation a) = show a
-generatePython' (RelExpr a b) = a ++ " " ++ b
+generatePython' (RelExpr a b) = " " ++ a ++ " " ++ b
 generatePython' (Cond a b)                   = a ++ fromMaybe [] b
+generatePython' (InvarExpr a Nothing) = a
 generatePython' (InvarExpr a (Just relexpr)) =
-           "set(" ++ a ++  ", " ++ expr ++ ", ind=\'" ++ rel' ++ "\')"
+           "try:\n    set(" ++ a ++  ", " ++ expr ++ ", ind=\'" ++ rel' ++ "\')\nexcept:\n    pass"
            where
-           rel = takeWhile (/= ' ') relexpr
+           rel = takeWhile (/= ' ') . dropWhile (==' ') $ relexpr
            expr = drop (length rel + 1) relexpr
            rel' = case rel of
                     ">=" -> "Min"
@@ -74,7 +75,7 @@ generatePython' (If a b c)            =
                        maybe [] ("el"++) c]
 -- generatePython' (ExprF "even" a)      = s ++ " " ++ a
 generatePython' (ExprF s a)       = s ++ " " ++ a
-generatePython' (ExprList as)         = L.intercalate ",\n" as
+generatePython' (ExprList as)         = L.intercalate "\n" as
 generatePython' (Expr (t:ts))         = t ++ concatMap (\s ->
                                                 case s of
                                                   ('-':_) -> s
@@ -94,18 +95,40 @@ generatePython' _                    = ""
 
 realizeAnalysis' :: Theorem (Fix Theorem) -> Fix Theorem
 realizeAnalysis' v
+   | (Cond (Fx (ExprF s e)) Nothing) <- v =
+        case s of
+            "not" -> Fx $ 
+                Cond (Fx $ Function "get" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "False" (Fx Empty))) 
+            "even" -> undefined
+            "odd" -> undefined
+            "isset" -> undefined
+            "defined" ->  undefined
+            "undefined" -> undefined
    | (Cond a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
             invars = getInvolves expr
             inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
             inv_replce = map (swapBound bound) inv_mappings
-        in  Fx $ Cond a (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
+            a' = case bound of
+                    Max -> Fx $ Function "min" [a]
+                    Min -> Fx $ Function "max" [a] 
+        in  Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
+   | (InvarExpr (Fx (ExprF s e)) Nothing) <- v =
+        case s of
+            "not" -> Fx $ InvarExpr (Fx $ Function "set" [e, Fx $ ExprF "False" (Fx Empty)]) Nothing
+            "even" -> undefined
+            "odd" -> undefined
+            "undefined" -> undefined
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
             invars = getInvolves expr
             inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
             inv_replce = map (swapBound bound) inv_mappings
         in  Fx $ InvarExpr a (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
+   | (Cond a Nothing) <- v =
+        Fx $ Cond (Fx $ Function "get" [a]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "True" (Fx Empty)))
+   | (InvarExpr a Nothing) <- v =
+        Fx $ InvarExpr (Fx $ Function "set" [a, Fx $ ExprF "True" (Fx Empty)]) Nothing
    | otherwise = Fx v
         where
         swapBound Max (i, InvAn True _) = (i, Fx $ Function "min" [Fx $ Invar i])

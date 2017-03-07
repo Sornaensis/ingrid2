@@ -57,10 +57,10 @@ Theorem : Invarexpr ';' Theorem                 { $1 : $3 }
          | null ';' Theorem                     { [Fx Empty] }
          | {- empty -}                          { [] }
 
-Invarexpr  : not Invar       { Fx $ ExprF     "not"       $2 }
-           | even Invar      { Fx $ ExprF     "even"      $2 }
-           | odd Invar       { Fx $ ExprF     "odd"       $2 }
-           | undefined Invar { Fx $ ExprF     "undefined" $2 }
+Invarexpr  : not Invar       { Fx $ InvarExpr (Fx $ ExprF     "not"       $2) Nothing }
+           | even Invar      { Fx $ InvarExpr (Fx $ ExprF     "even"      $2) Nothing }
+           | odd Invar       { Fx $ InvarExpr (Fx $ ExprF     "odd"       $2) Nothing }
+           | undefined Invar { Fx $ InvarExpr (Fx $ ExprF     "undefined" $2) Nothing }
            | Invar Invarel   { Fx $ InvarExpr $1          $2 }
 
 Invarel : Relation Expr { Just (Fx $ RelExpr $1 $2) }
@@ -88,15 +88,15 @@ Condand : Cond1   { $1 }
         | Condand and Cond1 { Fx $ And $1 $3 }
 
 Cond1 : Invar CondRel    { Fx $ Cond $1 $2 }
-      | istrue Expr      { Fx $ ExprF "istrue" $2 }
-      | isfalse Expr     { Fx $ ExprF "isfalse" $2 }
-      | not Invar        { Fx $ ExprF "not" $2 }
-      | even Invar       { Fx $ ExprF "even" $2 }
-      | odd Invar        { Fx $ ExprF "odd" $2 }
-      | isset Invar      { Fx $ ExprF "isset" $2 }
-      | defined Invar    { Fx $ ExprF "defined" $2 }
-      | undefined Invar  { Fx $ ExprF "undefined" $2 }
-      | '(' Cond ')'     { $2 }
+      | istrue Expr      { Fx $ Cond (Fx $ ExprF "istrue"    $2) Nothing }
+      | isfalse Expr     { Fx $ Cond (Fx $ ExprF "isfalse"   $2) Nothing }
+      | not Invar        { Fx $ Cond (Fx $ ExprF "not"       $2) Nothing }
+      | even Invar       { Fx $ Cond (Fx $ ExprF "even"      $2) Nothing }
+      | odd Invar        { Fx $ Cond (Fx $ ExprF "odd"       $2) Nothing }
+      | isset Invar      { Fx $ Cond (Fx $ ExprF "isset"     $2) Nothing }
+      | defined Invar    { Fx $ Cond (Fx $ ExprF "defined"   $2) Nothing }
+      | undefined Invar  { Fx $ Cond (Fx $ ExprF "undefined" $2) Nothing }
+      | '(' Cond ')'     { Fx $ Paren $2 }
 
 CondRel : Relation Expr  { Just $ Fx $ RelExpr $1 $2 }
         |                { Nothing }
