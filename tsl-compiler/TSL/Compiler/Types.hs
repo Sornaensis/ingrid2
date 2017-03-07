@@ -15,9 +15,9 @@ import           TSL.AST.AST
 data TSLInput = TSLInput { theorems :: [TSLInputTheorem] } deriving Generic
 data TSLInputTheorem = TSLInputTheorem
                         { name, text, disp :: String,
-                               idnum       :: Int } deriving Generic -- Use 'Int' to prevent BigNum usage
+                               idnum       :: Int } deriving Generic 
 
-data TSLTheorem a = TSLTheorem { info :: TSLInputTheorem, theorem :: [Theorem a] }
+data TSLTheorem = TSLTheorem { info :: TSLInputTheorem, theorem :: [Fix Theorem] }
 
 instance FromJSON TSLInput
 instance FromJSON TSLInputTheorem

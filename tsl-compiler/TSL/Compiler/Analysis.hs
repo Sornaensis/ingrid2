@@ -1,5 +1,4 @@
 module TSL.Compiler.Analysis (
-                    -- exprAnalysis,
                     InvarBoundSwitch(..),
                     invarAnalysis
                     ) where

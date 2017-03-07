@@ -64,6 +64,8 @@ theoremToSrc' (Expr (t:ts))         = t ++ concatMap (\s ->
                                                 case s of
                                                   ('-':_) -> s
                                                   _       -> '+':s) ts
+theoremToSrc' (Or a b)              = a ++ " or " ++ b
+theoremToSrc' (And a b)             = a ++ " and " ++ b
 theoremToSrc' (Mul a b)             = a ++ "*" ++ b
 theoremToSrc' (Div a b)             = a ++ "/" ++ b
 theoremToSrc' (Pow a b)             = a ++ "**" ++ b
@@ -71,9 +73,9 @@ theoremToSrc' (Neg a)               = "-(" ++ a ++ ")"
 theoremToSrc' (Number a)            = show a
 -- theoremToSrc' (Function "sqrt" es) = "(" ++ L.intercalate ", " es ++ ")**(1.0/2.0)"
 theoremToSrc' (Function s es)      = s ++ "(" ++ L.intercalate ", " es ++ ")"
-theoremToSrc' (Local s)            = s
+theoremToSrc' (Local s)            = "Local " ++ s
 theoremToSrc' (Invar s)            = s
-theoremToSrc' (Paren e)            = e
+theoremToSrc' (Paren e)            = "(" ++ e ++ ")"
 theoremToSrc' _                    = ""
 
 instance Show (Fix Theorem) where
