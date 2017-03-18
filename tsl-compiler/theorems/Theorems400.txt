@@ -86,7 +86,7 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "let k = (1+(-1)**girth)/2; let t = floor(girth/2);",
             "name": "Theorem",
             "idnum": 395,
             "disp": ""

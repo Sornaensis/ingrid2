@@ -62,7 +62,7 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "let k = ceil(nodes/mindeg); circumference >= floor(nodes/(k-1));",
             "name": "Theorem",
             "idnum": 271,
             "disp": ""

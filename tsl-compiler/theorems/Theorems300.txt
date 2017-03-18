@@ -44,7 +44,7 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if diameter == 2 and maxClique == 2 and regular and not bipartite and istrue congruent(maxdeg, 0, 2) then {nodes >= 3*maxdeg - maxdeg/2}; if diameter == 2 and maxClique == 2 and regular and bipartite and istrue congruent(maxdeg, 0, 3) then {nodes >= 3*maxdeg - maxdeg/3};",
             "name": "Theorem",
             "idnum": 288,
             "disp": ""

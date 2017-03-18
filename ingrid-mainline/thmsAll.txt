@@ -1,0 +1,20 @@
+changes made:
+
+Thm 260: added
+Thm 271: added (using the inequality used in original code, which is visually different from the one in the paper.)
+Thm 284: involves odd cycle even path (will be written by hand)
+Thm 288: added
+Thm 292: needs to be written by hand
+Thm 304: added
+Thm 318: needs to be written by hand (Catalan number?)
+Thm 319: added (check if my use of mod is correct here)
+Thm 345: added
+Thm 352: added
+Thm 353: added
+Thm 354: added
+Thm 355: added
+Thm 361: added
+Thm 362: added
+
+
+

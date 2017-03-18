@@ -26,7 +26,7 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "let r = floor((girth-1)/2)>=2; let m = max(1, (nodes-2**(t+1)+8)/4); if not forest then edges <= nodes*m**(1/t) + nodes - 1;",
             "name": "Theorem",
             "idnum": 345,
             "disp": ""
@@ -68,25 +68,25 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "let t = floor((girth-1)/2); let s = ((mindeg-1)**(t-1)-1)/(mindeg-2); if girth >= 5 and mindeg <= 2 then {edges <= nodes*(.5 + sqrt((nodes-mindeg-1)/(t-1) + .25))/2} else if girth >= 5 and mindeg >= 3 then {edges <= nodes*(.5 + sqrt((nodes-mindeg-1)/s + .25))/2};",
             "name": "Theorem",
             "idnum": 352,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "let t = floor((girth-1)/2); let k = floor(edges/nodes); let r = (k**(t-1)-1)/(k-1); if girth >= 5 and k <= 1 then {edges <= nodes*(.5 + sqrt((nodes-k-2)/(t-1) + .25))/2} else if girth >= 5 and mindeg >= 2 then {edges <= nodes*(.5 + sqrt((nodes-k-1)/r + .25))/2};",
             "name": "Theorem",
             "idnum": 353,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "let k = floor((nodes-floor((girth-1)/2))/girth); if not forest then {edges <= nodes + k*(2*nodes - girth*(k-1))/(2*floor((girth-1)/4)) };",
             "name": "Theorem",
             "idnum": 354,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "let t = floor(girth/2); if mindeg == 1 then {nodes >= 1 + maxdeg - (maxdeg - 1)*(mindeg - 1)**(t-1)*(1+(-1)**girth)/2} else if mindeg == 2 then {nodes >= 1 + maxdeg*t - (maxdeg - 1)*(mindeg - 1)**(t-1)*(1+(-1)**girth)/2} else if mindeg >= 3 then {nodes >= 1 + maxdeg*(((mindeg-1)**t-1)/(mindeg-2)) - (maxdeg - 1)*(mindeg - 1)**(t-1)*(1+(-1)**girth)/2};",
             "name": "Theorem",
             "idnum": 355,
             "disp": ""
