@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module TSL.Compiler.Python (
                     generatePython
+                ,   generateIExprIneq
                     -- generateSympyIneq,
                     -- generatePythonClass
                     ) where
@@ -144,14 +145,14 @@ realizeAnalysis' v
 
 
 
--- generateSympyIneq :: [Fix Theorem] -> IO [Fix Theorem]
--- generateSympyIneq =
---     fmap concat . mapM (\t ->
---           case t of
---            e@(InvarExpr _ _)  -> genIExprIneq e
---            i@(If _ _ _) -> return . IfStmt <$> genIfStmtIneq i
---            t'         -> return [t']
---         )
+generateSympyIneq :: [Fix Theorem] -> IO [Fix Theorem]
+generateSympyIneq =
+    fmap concat . mapM (\t ->
+          case t of
+           e@(Fx (InvarExpr _ _))  -> generateIExprIneq e
+           -- i@(If _ _ _) -> return . IfStmt <$> genIfStmtIneq i
+           t'         -> return [t']
+        )
 
 -- genIfStmtIneq :: Fix Theorem -> IO (Fix Theorem)
 -- genIfStmtIneq (If c (ExprList iexpl) Nothing) =
@@ -164,36 +165,35 @@ realizeAnalysis' v
 --     nestif :: IfStmt -> IfStmt -> IfStmt
 --     nestif e (If c iex _) = If c iex (Just e)
 
--- -- genInvarExprIneq :: Theorem a -> IO [Theorem a]
--- -- genInvarExprIneq = fmap (map extractInvarExprIO) . genIExprIneq
--- --         where
--- --         extractInvarExprIO :: Theorem -> InvarExpr
--- --         extractInvarExprIO (IExpr i) = i
-
--- genIExprIneq :: Theorem a -> IO [Theorem a]
--- genIExprIneq e@(InvarExpr _ (Just (RelExpr _ _))) =
---         let  (InvarExpr (Invar v) (Just (RelExpr rel exp))) = func_map
---              (func_map, func_remap)                            = replAllFuncs e invarMappingList
---              rationalFlag                                      = not $ containsFunc exp
---              inequality                                        = exprToSrc exp
---              lhs                                               = v
---              relation                                          = show rel
---              invars                                            = v : S.toList (getInvolves exp)
---         in fmap (map (replaceAllInvar func_remap) . theoremParser . lexer . (\i -> trace i i) . concat) . sequence $
---                invars
---                 >>= \inv -> return $
---                    do Py.initialize
---                       equation <- Py.toUnicode . T.pack $ inequality
---                       variables <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) invars
---                       lhs <- Py.toUnicode . T.pack $ lhs
---                       rel <- Py.toUnicode . T.pack $ relation
---                       target  <- Py.toUnicode . T.pack $ inv
---                       ms <- Py.importModule "mystic.symbolic"
---                       solver <- Py.getAttribute ms =<< Py.toUnicode "solve_ingrid"
---                       rationalval <- if rationalFlag then Py.true else Py.false
---                       pyout <- Py.callArgs solver [Py.toObject lhs, Py.toObject rel, Py.toObject equation, Py.toObject variables, Py.toObject target, Py.toObject rationalval]
---                       rewrite <- Py.cast pyout :: IO (Maybe Py.Unicode)
---                       case rewrite of
---                        (Just eqn) -> (++";") . T.unpack <$> Py.fromUnicode eqn
---                        _          -> return ""
--- genIExprIneq e = return [IExpr e]
+generateIExprIneq :: Fix Theorem -> IO [Fix Theorem]
+generateIExprIneq e@(Fx (InvarExpr _ (Just (Fx (RelExpr _ _))))) =
+        let  (Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp)))))    = func_map
+             (func_map, func_remap)                            = replaceAllFuncs e 
+             rationalFlag                                      = not $ containsFunc exp
+             inequality                                        = theoremToSrc exp
+             lhs                                               = v
+             relation                                          = theoremToSrc rel
+             invars                                            = getInvolves exp
+        in fmap ((e:) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
+               invars
+                >>= \inv -> return $
+                   do Py.initialize
+                      equation <- Py.toUnicode . T.pack $ inequality
+                      variables <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) (v:invars)
+                      lhs <- Py.toUnicode . T.pack $ lhs
+                      rel <- Py.toUnicode . T.pack $ relation
+                      target  <- Py.toUnicode . T.pack $ inv
+                      ms <- Py.importModule "mystic.symbolic"
+                      solver <- Py.getAttribute ms =<< Py.toUnicode "solve_ingrid"
+                      rationalval <- if rationalFlag then Py.true else Py.false
+                      pyout <- Py.callArgs solver [   Py.toObject lhs
+                                                    , Py.toObject rel
+                                                    , Py.toObject equation
+                                                    , Py.toObject variables
+                                                    , Py.toObject target
+                                                    , Py.toObject rationalval]
+                      rewrite <- Py.cast pyout :: IO (Maybe Py.Unicode)
+                      case rewrite of
+                       (Just eqn) -> (++";") . T.unpack <$> Py.fromUnicode eqn
+                       _          -> return ""
+generateIExprIneq e = return [e]
