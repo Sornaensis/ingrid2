@@ -143,29 +143,11 @@ realizeAnalysis' v
                  (Fx (Relation RelLt))  -> Min
 
 
-
-
-generateSympyIneq :: [Fix Theorem] -> IO [Fix Theorem]
-generateSympyIneq =
-    fmap concat . mapM (\t ->
-          case t of
-           e@(Fx (InvarExpr _ _))  -> generateIExprIneq e
-           -- i@(If _ _ _) -> return . IfStmt <$> genIfStmtIneq i
-           t'         -> return [t']
-        )
-
--- genIfStmtIneq :: Fix Theorem -> IO (Fix Theorem)
--- genIfStmtIneq (If c (ExprList iexpl) Nothing) =
---     fmap (\il -> If c (ExprList il) Nothing) . generateSympyIneq $ iexpl
--- genIfStmtIneq (If c (ExprList iexpl) (Just i)) =
---     let elsestmt = genIfStmtIneq i
---         ifstmt   = If c (ExprList iexpl) Nothing
---     in liftM2 nestif elsestmt (genIfStmtIneq ifstmt)
---     where
---     nestif :: IfStmt -> IfStmt -> IfStmt
---     nestif e (If c iex _) = If c iex (Just e)
-
 generateIExprIneq :: Fix Theorem -> IO [Fix Theorem]
+generateIExprIneq (Fx (If c (Fx (ExprList elist)) elif)) = do
+        elist' <- mapM generateIExprIneq elist
+        elif'  <- sequence $ (head <$>) . generateIExprIneq <$> elif
+        return [Fx $ If c (Fx $ ExprList (concat elist')) elif']
 generateIExprIneq e@(Fx (InvarExpr _ (Just (Fx (RelExpr _ _))))) =
         let  (Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp)))))    = func_map
              (func_map, func_remap)                            = replaceAllFuncs e 
@@ -178,21 +160,21 @@ generateIExprIneq e@(Fx (InvarExpr _ (Just (Fx (RelExpr _ _))))) =
                invars
                 >>= \inv -> return $
                    do Py.initialize
-                      equation <- Py.toUnicode . T.pack $ inequality
-                      variables <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) (v:invars)
-                      lhs <- Py.toUnicode . T.pack $ lhs
-                      rel <- Py.toUnicode . T.pack $ relation
-                      target  <- Py.toUnicode . T.pack $ inv
-                      ms <- Py.importModule "mystic.symbolic"
-                      solver <- Py.getAttribute ms =<< Py.toUnicode "solve_ingrid"
+                      equation    <- Py.toUnicode . T.pack $ inequality
+                      variables   <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) (v:invars)
+                      lhs         <- Py.toUnicode . T.pack $ lhs
+                      rel         <- Py.toUnicode . T.pack $ relation
+                      target      <- Py.toUnicode . T.pack $ inv
+                      ms          <- Py.importModule "mystic.symbolic"
+                      solver      <- Py.getAttribute ms =<< Py.toUnicode "solve_ingrid"
                       rationalval <- if rationalFlag then Py.true else Py.false
-                      pyout <- Py.callArgs solver [   Py.toObject lhs
+                      pyout       <- Py.callArgs solver [   Py.toObject lhs
                                                     , Py.toObject rel
                                                     , Py.toObject equation
                                                     , Py.toObject variables
                                                     , Py.toObject target
                                                     , Py.toObject rationalval]
-                      rewrite <- Py.cast pyout :: IO (Maybe Py.Unicode)
+                      rewrite     <- Py.cast pyout :: IO (Maybe Py.Unicode)
                       case rewrite of
                        (Just eqn) -> (++";") . T.unpack <$> Py.fromUnicode eqn
                        _          -> return ""
