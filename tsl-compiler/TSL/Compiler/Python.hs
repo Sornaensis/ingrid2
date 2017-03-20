@@ -41,7 +41,7 @@ generatePythonClass :: TSLTheorem -> String
 generatePythonClass (TSLTheorem (TSLInputTheorem name text disp idnum) ts)  = 
        (("class " ++ name ++ "(Theorem):\n")++) . indent $
                 "def __init__(self):\n"
-             ++ "    super(" ++ name ++ ", self).__init__(" ++ L.intercalate ", " [show idnum, show text, show disp] ++")\n"
+             ++ "    super(" ++ name ++ ", self).__init__(" ++ L.intercalate ", " [show idnum, show . concatMap show . theoremParser . lexer $ text, show disp] ++")\n"
              ++ "def involves(self, str_invar):\n"
              ++ "    return str_invar in " ++ show (L.nub $ concatMap getInvolves ts) ++ "\n"
              ++ "def run(self, ingrid_obj):\n"
