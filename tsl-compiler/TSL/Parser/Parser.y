@@ -14,6 +14,7 @@ import TSL.AST.AST
 
 %token 
       if             { TokenIf }
+      let            { TokenLet }
       then           { TokenThen }
       else           { TokenElse }
       null           { TokenNull }
@@ -50,102 +51,94 @@ import TSL.AST.AST
 
 %%
 
-Theorem : Invarexpr ';' Theorem    { IExpr $1 : $3 }
-         | Ifstmt ';' Theorem      { IfStmt $1 : $3 }
-         | null ';' Theorem        { [NullBody] }
-         | {- empty -}             { [] }
+Theorem : Invarexpr ';' Theorem                 { $1 : $3 }
+         | Ifstmt ';' Theorem                   { $1 : $3 }
+         | let Invar '==' Expr ';' Theorem      { (Fx $ Let $2 $4) : $6 }
+         | null ';' Theorem                     { [Fx Empty] }
+         | {- empty -}                          { [] }
 
-Invarexpr : Invarexpror               { $1 }
-          | Invarexpr or Invarexpror  { InvarOr $1 $3 }
+Invarexpr  : not Invar       { Fx $ InvarExpr (Fx $ ExprF     "not"       $2) Nothing }
+           | even Invar      { Fx $ InvarExpr (Fx $ ExprF     "even"      $2) Nothing }
+           | odd Invar       { Fx $ InvarExpr (Fx $ ExprF     "odd"       $2) Nothing }
+           | undefined Invar { Fx $ InvarExpr (Fx $ ExprF     "undefined" $2) Nothing }
+           | Invar Invarel   { Fx $ InvarExpr $1          $2 }
 
-Invarexpror : Invarexprand            { $1 }
-            | Invarexpror and Invarexprand { InvarAnd $1 $3 } 
-
-Invarexprand : Invarexpr1        { $1 }
-             | '(' Invarexpr ')' { $2 }
-
-Invarexpr1 : not Invar       { InvarExprNot $2 }
-           | even Invar      { InvarExprEven $2}
-           | odd Invar       { InvarExprOdd $2 }
-           | undefined Invar { InvarExprUndefined $2 }
-           | Invar Invarel   { InvarExpr $1 $2 }
-
-Invarel : Relation Expr { Just $ InvarRelExpr $1 (Expr $2) }
+Invarel : Relation Expr { Just (Fx $ RelExpr $1 $2) }
         |               { Nothing }
 
-Invarexprlist : '{' Invarexprlist1 '}'      { InvarExprList (reverse $2) }
+Invarexprlist : '{' Invarexprlist1 '}'      { Fx $ ExprList (reverse $2) }
 
-Invarexprlist1 : Invarexpr                      { [IExpr $1] }
-               | Ifstmt                         { [IfStmt $1] }
-               | Invarexprlist1 ',' Invarexpr   { (IExpr $3) : $1 } 
-               | Invarexprlist1 ',' Ifstmt      { (IfStmt $3) : $1 } 
+Invarexprlist1 : Invarexpr                      { [$1] }
+               | Ifstmt                         { [$1] }
+               | Invarexprlist1 ',' Invarexpr   { $3 : $1 } 
+               | Invarexprlist1 ',' Ifstmt      { $3 : $1 } 
 
-Ifstmt : if Cond then Invarexprlist Elsestmt { If $2 $4 $5 }
+Ifstmt : if Cond then Invarexprlist Elsestmt { Fx $ If $2 $4 $5 }
 
 Elsestmt : else Elsestmt1 { Just $2 }
          |                { Nothing }
 
 Elsestmt1 : Ifstmt           { $1 }
-          | Invarexprlist    { If (CondSpec "not" (Local "True")) $1 Nothing }
+          | Invarexprlist    { Fx $ If (Fx $ ExprF "not" (Fx $ Local "True")) $1 Nothing }
 
 Cond : Condand    { $1 }
-     | Cond or Condand { CondOr $1 $3 }
+     | Cond or Condand { Fx $ Or $1 $3 }
 
 Condand : Cond1   { $1 }
-        | Condand and Cond1 { CondAnd $1 $3 }
+        | Condand and Cond1 { Fx $ And $1 $3 }
 
-Cond1 : Invar CondRel    { Cond $1 $2 }
-      | istrue Expr      { CondSpecF "istrue" (Expr $2) }
-      | isfalse Expr     { CondSpecF "isfalse" (Expr $2) }
-      | not Invar        { CondSpec "not" $2 }
-      | even Invar       { CondSpec "even" $2 }
-      | odd Invar        { CondSpec "odd" $2 }
-      | isset Invar      { CondSpec "isset" $2 }
-      | defined Invar    { CondSpec "defined" $2 }
-      | undefined Invar  { CondSpec "undefined" $2 }
-      | '(' Cond ')'     { $2 }
+Cond1 : Invar CondRel    { Fx $ Cond $1 $2 }
+      | istrue Expr      { Fx $ Cond (Fx $ ExprF "istrue"    $2) Nothing }
+      | isfalse Expr     { Fx $ Cond (Fx $ ExprF "isfalse"   $2) Nothing }
+      | not Invar        { Fx $ Cond (Fx $ ExprF "not"       $2) Nothing }
+      | even Invar       { Fx $ Cond (Fx $ ExprF "even"      $2) Nothing }
+      | odd Invar        { Fx $ Cond (Fx $ ExprF "odd"       $2) Nothing }
+      | isset Invar      { Fx $ Cond (Fx $ ExprF "isset"     $2) Nothing }
+      | defined Invar    { Fx $ Cond (Fx $ ExprF "defined"   $2) Nothing }
+      | undefined Invar  { Fx $ Cond (Fx $ ExprF "undefined" $2) Nothing }
+      | '(' Cond ')'     { Fx $ Paren $2 }
 
-CondRel : Relation Expr  { Just $ CondRel $1 (Expr $2) }
+CondRel : Relation Expr  { Just $ Fx $ RelExpr $1 $2 }
         |                { Nothing }
  
-Relation : '=='   { RelEq  }
-         | '>='   { RelGte }
-         | '<='   { RelLte }
-         | '!='   { RelNeq }
-         | '>'    { RelGt  }
-         | '<'    { RelLt  }
+Relation : '=='   { Fx $ Relation RelEq  }
+         | '>='   { Fx $ Relation RelGte }
+         | '<='   { Fx $ Relation RelLte }
+         | '!='   { Fx $ Relation RelNeq }
+         | '>'    { Fx $ Relation RelGt  }
+         | '<'    { Fx $ Relation RelLt  }
 
-Invar : global  { Invar $1 }
+Invar : global  { Fx $ Invar $1 }
 
-Localvar : local   { Local $1 }
+Localvar : local   { Fx $ Local $1 }
 
-Func : global '(' Arglist ')'  { Function $1 $3 }
+Func : global '(' Arglist ')'  { Fx $ Function $1 $3 }
 
 Arglist : Arglist1 { reverse $1 }
 
-Arglist1 : Expr              { [Expr $1] }
-        | Arglist1 ',' Expr  { Expr $3 : $1 }
+Arglist1 : Expr              { [$1] }
+        | Arglist1 ',' Expr  { $3 : $1 }
         |                   { [] } 
 
-Expr : Expr1 { reverse $1 }
+Expr : Expr1 { Fx $ Expr $ reverse $1 }
 
 Expr1 : Term           { [$1] }
-     | '-' Term        { [Neg $2] }
+     | '-' Term        { [Fx $ Neg $2] }
      | Expr1 '+' Term  { $3 : $1 }
-     | Expr1 '-' Term  { (Neg $3) : $1 }
+     | Expr1 '-' Term  { (Fx $ Neg $3) : $1 }
 
-Term : Factor          { Term $1 }
-     | Term '*' Factor { Mul $1 (Term $3) }
-     | Term '/' Factor { Div $1 (Term $3) }
+Term : Factor          { $1 }
+     | Term '*' Factor { Fx $ Mul $1 $3 }
+     | Term '/' Factor { Fx $ Div $1 $3 }
 
-Factor : Val             { Value $1 }
-       | Factor '^' Val  { Pow $1 (Value $3) } 
+Factor : Val             { $1 }
+       | Factor '^' Val  { Fx $ Pow $1 $3 } 
 
 Val : Func   { $1 }
     | Invar  { $1 }
     | Localvar { $1 }
-    | number { Number $1 }
-    | '(' Expr ')' { Paren (Expr $2) }
+    | number { Fx $ Number $1 }
+    | '(' Expr ')' { Fx $ Paren $2 }
 
 {
 
@@ -157,6 +150,7 @@ parseError _ = error "Parse error"
 data Token
       = TokenIf
       | TokenThen
+      | TokenLet
       | TokenNull
       | TokenElse
       | TokenDefined
@@ -208,6 +202,7 @@ lexer ('!':'=':cs) = TokenNeq : lexer cs
 lexer ('*':'*':cs) = TokenPow : lexer cs
 lexer ('<':cs) = TokenLt : lexer cs
 lexer ('>':cs) = TokenGt : lexer cs
+lexer ('=':cs) = TokenEq : lexer cs
 lexer ('+':cs) = TokenPlus : lexer cs
 lexer ('^':cs) = TokenPow : lexer cs
 lexer ('-':cs) = TokenMinus : lexer cs
@@ -236,6 +231,7 @@ lexVar cs =
       ("even",rest)      -> TokenEven : lexer rest
       ("and",rest)       -> TokenAnd : lexer rest
       ("not",rest)       -> TokenNot : lexer rest
+      ("let",rest)       -> TokenLet : lexer rest
       ("odd",rest)       -> TokenOdd : lexer rest
       ("if",rest)        -> TokenIf : lexer rest
       ("or",rest)        -> TokenOr : lexer rest

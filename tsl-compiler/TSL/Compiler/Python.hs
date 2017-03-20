@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module TSL.Compiler.Python (
-                    generateSympyIneq,
                     generatePythonClass
+                ,   generateSymPyIneq
                     ) where
 
 {- All python generation and related functions go in here
@@ -20,6 +20,7 @@ import qualified CPython.Types.Dictionary as PyDict
 import qualified CPython.Types.Exception  as Py
 import qualified CPython.Types.Module     as Py
 import qualified CPython.Types.Unicode    as Py
+import           Data.Maybe               (fromMaybe)
 
 import qualified Data.List                as L
 import qualified Data.Set                 as S
@@ -32,234 +33,209 @@ import           TSL.Compiler.Analysis
 import           TSL.Compiler.Types
 import           TSL.Parser.Parser
 
-indent :: [String] -> [String]
-indent = map ("\t" ++)
-
-assertNotUdts :: [(Bound, String)] -> String
-assertNotUdts = L.intercalate " and " . map (\(_,i) -> i ++ " != \'undt\'") . filter (\(b,_) -> b == Max)
+indent :: String -> String
+indent = unlines . map ("    " ++) . lines
 
 -- | Body
-generatePythonClass :: TSLTheorem -> [String]
-generatePythonClass (TSLTheorem (TSLInputTheorem name text disp idnum) ts)  =
-       (("class " ++ name ++ "(Theorem):"):) . concatMap indent $
-             [("def __init__(self):" :) $
-                indent ["super(" ++ name ++ ", self).__init__(" ++ L.intercalate ", " [show idnum, show text, show disp] ++")"]
-             ,("def involves(self, str_invar):" :) $
-                indent ["return str_invar in " ++ show (L.nub . concatMap getInvolves $ ts)]
-             , ("def run(self, ingrid_obj):" : concatMap (indent . generatePython) ts) ++ ["\treturn"]]
+generatePythonClass :: TSLTheorem -> String
+generatePythonClass (TSLTheorem (TSLInputTheorem name text disp idnum) ts)  = 
+       (("class " ++ name ++ "(Theorem):\n")++) . indent $
+                "def __init__(self):\n"
+             ++ "    super(" ++ name ++ ", self).__init__(" ++ L.intercalate ", " [show idnum, show text, show disp] ++")\n"
+             ++ "def involves(self, str_invar):\n"
+             ++ "    return str_invar in " ++ show (L.nub $ concatMap getInvolves ts) ++ "\n"
+             ++ "def run(self, ingrid_obj):\n"
+             ++ concatMap (indent . generatePython) ts 
+             ++ "return"
 
-generatePython :: Theorem -> [String]
-generatePython (IExpr i)  =  generateIExpr i
-generatePython (IfStmt i) = generateIfStmt i
-generatePython NullBody   = []
+generatePython :: Fix Theorem -> String
+generatePython = cata generatePython'  . cata realizeAnalysis'
 
-generateIExpr :: InvarExpr -> [String]
-generateIExpr (InvarOr a b) = undefined
-generateIExpr (InvarAnd a b) =
-    generateIExpr a ++ generateIExpr b
-generateIExpr (InvarExpr (Invar v) Nothing) =
-    return ("ingrid_obj.set(\'" ++ v ++ "\', True)")
-generateIExpr (InvarExprNot (Invar v)) =
-    return ("ingrid_obj.set(\'" ++ v ++ "\', False)")
-generateIExpr (InvarExprUndefined (Invar v)) =
-    [ v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')"
-    , "ingrid_obj.set(\'" ++ v ++ "\', \'undt\', ind=\'Min\')"]
-generateIExpr (InvarExprEven (Invar v)) =
-    [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')-1"
-    , v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')+1"
-    , "if even(" ++ v ++ "_Max):"
-    , "\tingrid_obj.set(\'" ++ v ++ "\', ind=\'Max\')"
-    , "if even(" ++ v ++ "_Min):"
-    , "\tingrid_obj.set(\'" ++ v ++ "\', ind=\'Min\')"]
-generateIExpr (InvarExprOdd (Invar v)) =
-    [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')-1"
-    , v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')+1"
-    , "if odd(" ++ v ++ "_Max):"
-    , "\tingrid_obj.set(\'" ++ v ++ "\', ind=\'Max\')"
-    , "if odd(" ++ v ++ "_Min):"
-    , "\tingrid_obj.set(\'" ++ v ++ "\', ind=\'Min\')"]
-generateIExpr (InvarExpr (Function _ _) (Just (InvarRelExpr r exp))) =
-    []
-generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr r exp))) =
-    case r of
-        RelLte -> make Max
-        RelGte -> make Min
-        RelEq  -> generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr RelLte exp)))
-                    ++
-                  generateIExpr (InvarExpr (Invar v) (Just (InvarRelExpr RelGte exp)))
-        _      -> [""]
-    where
-    make m =
-      let invars = map (\i -> (swap m (exprAnalysis exp i), i)) . S.toList . getExprInvolves $ exp
-      in
-         if any (\(_,i) -> exprAnalysis exp i == Complex) invars
-            then "result = []" : iterateBounds invars m
-            else setBound invars m
+generatePython' :: Theorem String -> String
+generatePython' (Relation a) = show a
+generatePython' (RelExpr a b) = " " ++ a ++ " " ++ b
+generatePython' (Cond a b)                   = a ++ fromMaybe [] b
+generatePython' (InvarExpr a Nothing) = a
+generatePython' (InvarExpr a (Just relexpr)) =
+           "try:\n    set(" ++ a ++  ", " ++ expr ++ ", ind=\'" ++ rel' ++ "\')\nexcept:\n    pass"
+           where
+           rel = takeWhile (/= ' ') . dropWhile (==' ') $ relexpr
+           expr = drop (length rel + 1) relexpr
+           rel' = case rel of
+                    ">=" -> "Min"
+                    "<=" -> "Max"
+generatePython' (If a b c)            =
+    case a of
+        "not Local True" ->
+           concat ["if True:\n",
+                       unlines (map ("    "++) (lines b)), "\n",
+                       maybe [] (" el"++) c]
+        _            ->
+           concat ["if ", a, ":\n",
+                       unlines (map ("    "++) (lines b)), "\n",
+                       maybe [] ("el"++) c]
+-- generatePython' (ExprF "even" a)      = s ++ " " ++ a
+generatePython' (ExprF s a)       = s ++ " " ++ a
+generatePython' (ExprList as)         = L.intercalate "\n" as
+generatePython' (Expr (t:ts))         = t ++ concatMap (\s ->
+                                                case s of
+                                                  ('-':_) -> s
+                                                  _       -> '+':s) ts
+generatePython' (Or a b)              = a ++ " or " ++ b
+generatePython' (And a b)             = a ++ " and " ++ b
+generatePython' (Mul a b)             = a ++ "*" ++ b
+generatePython' (Div a b)             = a ++ "/" ++ b
+generatePython' (Pow a b)             = a ++ "**" ++ b
+generatePython' (Neg a)               = "-(" ++ a ++ ")"
+generatePython' (Number a)            = show a
+generatePython' (Function s es)      = s ++ "(" ++ L.intercalate ", " es ++ ")"
+generatePython' (Local s)            = "Local " ++ s
+generatePython' (Invar s)            = show s
+generatePython' (Paren e)            = "(" ++ e ++ ")"
+generatePython' _                    = ""
 
-    resultList m = [ "if len(result) > 0:","\tingrid_obj.set(\'" ++ v ++ "\', " ++ (if m == Max then "max" else "min") ++ "(result), ind=\'" ++ show m ++ "\')" ]
+realizeAnalysis' :: Theorem (Fix Theorem) -> Fix Theorem
+realizeAnalysis' v
+   | (Cond (Fx (ExprF s e)) Nothing) <- v =
+        case s of
+            "not" -> Fx $ 
+                Cond (Fx $ Function "get" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "False" (Fx Empty))) 
+            "even" -> Fx $ 
+                And (Fx $ Function "even" [Fx $ Function "min" [e]])
+                    (Fx $ Function "even" [Fx $ Function "max" [e]])
+            "odd" -> Fx $ 
+                And (Fx $ Function "odd" [Fx $ Function "min" [e]])
+                    (Fx $ Function "odd" [Fx $ Function "max" [e]]) 
+            "isset" -> Fx $ 
+                And (Fx $ Cond (Fx $ Function "max" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))))
+                 (Fx $ Cond (Fx $ Function "min" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ Function "max" [e])))
+            "exists" -> Fx $ 
+                Cond (Fx $ Function "max" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))) 
+            "defined" -> Fx $ 
+                Cond (Fx $ Function "min" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))) 
+            "undefined" -> Fx $ 
+                Cond (Fx $ Function "min" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "\'undt\'" (Fx Empty)))
+   | (Cond a (Just (Fx (RelExpr (Fx (Relation RelEq)) expr)))) <- v =
+        cata realizeAnalysis' $ Fx $ And (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelGte)) expr)))))
+                                         (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelLte)) expr)))))
+   | (Cond a (Just (Fx (RelExpr rel expr)))) <- v =
+        let bound = getBound rel
+            invars = getInvolves expr
+            inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
+            inv_replce = map (swapBound bound) inv_mappings
+            a' = case bound of
+                    Max -> Fx $ Function "min" [a]
+                    Min -> Fx $ Function "max" [a] 
+        in  Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
+   | (InvarExpr (Fx (ExprF s e)) Nothing) <- v =
+        case s of
+            "undefined" -> Fx $ InvarExpr (Fx $ Function "set" [e, 
+                                                                Fx $ ExprF "\'undt\'" (Fx Empty),
+                                                                Fx $ ExprF "ind=\'Min\'" (Fx Empty)]) Nothing
+            "not" -> Fx $ InvarExpr (Fx $ Function "set" [e, 
+                                                          Fx $ ExprF "False" (Fx Empty)]) Nothing
+            s@"even" -> evenOrOdd s e
+            s@"odd"  -> evenOrOdd s e
+   | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
+        let bound = getBound rel
+            invars = getInvolves expr
+            inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
+            inv_replce = map (swapBound bound) inv_mappings
+        in  Fx $ InvarExpr a (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
+   | (Cond a Nothing) <- v =
+        Fx $ Cond (Fx $ Function "get" [a]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "True" (Fx Empty)))
+   | (InvarExpr a Nothing) <- v =
+        Fx $ InvarExpr (Fx $ Function "set" [a, Fx $ ExprF "True" (Fx Empty)]) Nothing
+   | otherwise = Fx v
+   where
+        swapBound Max (i, InvAn True _) = (i, Fx $ Function "min" [Fx $ Invar i])
+        swapBound Min (i, InvAn True _) = (i, Fx $ Function "max" [Fx $ Invar i])
+        swapBound Min (i, _)            = (i, Fx $ Function "min" [Fx $ Invar i])
+        swapBound Max (i, _)            = (i, Fx $ Function "max" [Fx $ Invar i])
+        evenOrOdd s e = Fx $ ExprList [
+                            Fx $ If (Fx $ Cond (Fx $ Function "min" [e])
+                                               (Just . Fx $ RelExpr (Fx $ Relation RelNeq) 
+                                                                     (Fx $ ExprF "\'undt\'" (Fx Empty))))
+                                    (Fx $ If (Fx $ Function s [Fx $ Expr [Fx $ Function "min" [e]
+                                                                             , Fx $ Number 1]])
+                                             (Fx $ InvarExpr (Fx $ Function "set" [e 
+                                                                        ,    Fx $ Expr [Fx $ Function "min" [e] 
+                                                                                   ,    Fx $ Number 1]
+                                                                        , Fx $ ExprF "ind=\'Min\'" (Fx Empty)])
+                                                             Nothing)
+                                             Nothing)
+                                    Nothing,
+                            Fx $ If (Fx $ Cond (Fx $ Function "max" [e])
+                                               (Just . Fx $ RelExpr (Fx $ Relation RelNeq) 
+                                                                     (Fx $ ExprF "\'undt\'" (Fx Empty))))
+                                    (Fx $ If (Fx $ Function s [Fx $ Expr [Fx $ Function "max" [e]
+                                                                             , Fx $ Neg $ Fx $ Number 1]])
+                                             (Fx $ InvarExpr (Fx $ Function "set" [e 
+                                                                        ,    Fx $ Expr [Fx $ Function "min" [e] 
+                                                                                   ,    Fx $ Neg $ Fx $ Number 1]
+                                                                        , Fx $ ExprF "ind=\'Max\'" (Fx Empty)])
+                                                             Nothing)
+                                             Nothing)
+                                    Nothing ]
 
-    result m = [ "try:"
-               , "\tingrid_obj.set(\'" ++ v ++ "\', " ++ exprToSrc exp ++ ", ind=\'" ++ show m ++ "\')"
-               , "except:"
-               , "\tpass"]
+swapBound Max (InvAn True _) = Min
+swapBound Min (InvAn True _) = Max
+swapBound Max _              = Max
+swapBound Min _              = Min
 
-    setTryBound invars =
-            (invars >>=
-                \(b, i) -> [i ++ " = ingrid_obj.get(\'" ++ i ++ "\', ind=\'" ++ show b ++ "\')"])
-                            ++ if not . null $ assertNotUdts invars
-                                then ("if " ++ assertNotUdts invars ++ ":") : indent ["try:","\tresult.append(" ++ exprToSrc exp ++ ")","except:","\tpass"]
-                                else ["try:","\tresult.append(" ++ exprToSrc exp ++ ")","except:","\tpass"]
-    setBound invars m =
-            (invars >>=
-                \(b, i) -> [i ++ " = ingrid_obj.get(\'" ++ i ++ "\', ind=\'" ++ show b ++ "\')"])
-                            ++ if not . null $ assertNotUdts invars then ("if " ++ assertNotUdts invars ++ ":") : indent (result m) else result m
-    iterateBounds ivars m = let  cplx_vars = filter (\(b,i) -> exprAnalysis exp i == Complex) ivars
-                                 reg_vars  = filter (\(b,i) -> exprAnalysis exp i /= Complex) ivars
-                                 cplx_perms = map (\x -> zipWith (\b (_,i) -> (b,i)) x cplx_vars ++ reg_vars) (replicateM (length cplx_vars) [Min,Max])
-                            in concatMap setTryBound cplx_perms ++ resultList m
-generateIExpr _ = []
+flipBound Min = Max
+flipBound Max = Min
 
-generateIfStmt' :: IfStmt -> [[String]]
-generateIfStmt' (If c (InvarExprList is) Nothing)
-    = let cond = generateCond c in
-       init cond : [last cond ++ ":"] : [indent (concatMap generatePython is)]
+getBound rel = case rel of
+            (Fx (Relation RelGte)) -> Min
+            (Fx (Relation RelLte)) -> Max
+            (Fx (Relation RelGt))  -> Min
+            (Fx (Relation RelLt))  -> Max
 
-generateIfStmt :: IfStmt -> [String]
-generateIfStmt i@(If c (InvarExprList is) _)
-    = let ([c,f,b]:ifs) = generateIfStmt' <$> flattenIfStmt i []
-          initf         = [c, map ("if "++) f, b]
-          conds         = concatMap (\[c,_,_] -> c) $ initf : ifs
-      in  L.nub conds ++ (concat (tail initf) ++ concatMap (\[_,i,b] -> (("elif "++) <$> i) ++ b) ifs)
+getIneq rel = case rel of
+            Min -> Fx (Relation RelGte)
+            Max -> Fx (Relation RelLte)
 
-
-flattenIfStmt :: IfStmt -> [IfStmt] -> [IfStmt]
-flattenIfStmt i@(If _ _   Nothing)  is = i : is
-flattenIfStmt   (If c iex (Just i)) is = If c iex Nothing : flattenIfStmt i is
-
-junction a b condis =
-    let af = init $ generateCond a
-        bf = init $ generateCond b
-        ac = last $ generateCond a
-        bc = last $ generateCond b
-    in L.nub (af ++ bf) ++ [ "(" ++ ac ++ " " ++ condis ++ " " ++ bc ++ ")" ]
-
-generateCond :: Cond -> [String]
-generateCond (CondOr a b)  = junction a b "or"
-generateCond (CondAnd a b) = junction a b "and"
-generateCond (CondSpecF "isfalse" exp) =
-    let setconds = foldr1 CondAnd . map (CondSpec "isset" . Invar) $ involves
-        involves = S.toList $ getExprInvolves exp
-    in generateCond setconds
-generateCond (CondSpecF "istrue" exp) =
-    let setconds = foldr1 CondAnd . map (CondSpec "isset" . Invar) $ involves
-        involves = S.toList $ getExprInvolves exp
-    in generateCond setconds
-generateCond (CondSpec "undefined" (Invar v)) =
-    [ v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind = \'Min\')",
-     "(" ++ v ++ "_Min == \'undt\')"]
-generateCond (CondSpec "defined" (Invar v)) =
-    [ v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind = \'Max\')",
-     "(" ++ v ++ "_Max != \'undt\')"]
-generateCond (CondSpec "isset" (Invar v)) =
-    [v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind = \'Min\')",
-     v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind = \'Max\')",
-     "(" ++ v ++ "_Min" ++ " == " ++ v ++ "_Max)"]
-generateCond (CondSpec "not" (Local "True")) =
-    ["", "(True)"]
-generateCond (CondSpec "even" (Invar v)) =
-    [v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')",
-     v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')",
-     "(even(" ++ v ++ "_Min) and even(" ++ v ++ "_Max))"]
-generateCond (CondSpec "odd" (Invar v)) =
-    [v ++ "_Min = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')",
-     v ++ "_Max = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')",
-     "(odd(" ++ v ++ "_Min) and odd(" ++ v ++ "_Max))"]
-generateCond (CondSpec "not" (Invar v)) =
-    [v ++ " = ingrid_obj.get(\'" ++ v ++ "\')",
-     "(" ++ v ++ " == False)"]
-generateCond (Cond (Invar v) Nothing) =
-    [v ++ " = ingrid_obj.get(\'" ++ v ++ "\')",
-     "(" ++ v ++ " == True)"]
-generateCond (Cond (Invar v) (Just (CondRel r exp))) =
-    case r of
-        RelLte -> make Min Max
-        RelGte -> make Max Min
-        RelGt  -> make Max Min
-        RelLt  -> make Min Max
-        RelEq  -> if containsInvar exp
-                    then generateCond $ CondAnd (Cond (Invar v) (Just (CondRel RelLte exp)))
-                                                (Cond (Invar v) (Just (CondRel RelGte exp)))
-                    else makeEq
-    where
-    makeEq = let v_max = v ++ "_Max"
-                 v_min = v ++ "_Min"
-             in [v_min ++ " = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Min\')",
-                 v_max ++ " = ingrid_obj.get(\'" ++ v ++ "\', ind=\'Max\')",
-                  "(" ++ v_max ++ "==" ++ v_min ++ " and (" ++ v_min ++ show r ++ exprToSrc exp ++ "))"]
-    make m m2 =
-     let invars    = (m2, v, v ++ "_" ++ show m2) : (map (\i ->
-                                                    let m' = (swap m $ exprAnalysis exp i)
-                                                    in (m', i, i ++ "_" ++ show m')) . S.toList . getExprInvolves $ exp)
-         v'        =  v ++ "_" ++ show m2
-         invars'   = map (\(a,b,c) -> (a,c)) invars
-         invarmap  = map (\(a,b,c) -> (Invar b, Invar c)) invars
-     in (invars >>=
-         \(b, i, name) -> [name ++ " = ingrid_obj.get(\'" ++ i ++ "\', ind=\'" ++ show b ++ "\')"])
-        ++ [v' ++ " = ingrid_obj.get(\'" ++ v ++ "\', ind=\'" ++ show m2 ++ "\')",
-            if not . null $ assertNotUdts invars'
-                then "(" ++ assertNotUdts invars' ++ " and (" ++ v' ++ show r ++ exprToSrc (replaceExprInvar invarmap exp) ++ "))"
-                else "(" ++ v' ++ show r ++ exprToSrc (replaceExprInvar invarmap exp) ++ ")"]
-
-generateSympyIneq :: [Theorem] -> IO [Theorem]
-generateSympyIneq =
-    fmap concat . mapM (\t ->
-          case t of
-           (IExpr e)  -> genIExprIneq e
-           (IfStmt i) -> return . IfStmt <$> genIfStmtIneq i
-           t'         -> return [t']
-        )
-
-genIfStmtIneq :: IfStmt -> IO IfStmt
-genIfStmtIneq (If c (InvarExprList iexpl) Nothing) =
-    fmap (\il -> If c (InvarExprList il) Nothing) . generateSympyIneq $ iexpl
-genIfStmtIneq (If c (InvarExprList iexpl) (Just i)) =
-    let elsestmt = genIfStmtIneq i
-        ifstmt   = If c (InvarExprList iexpl) Nothing
-    in liftM2 nestif elsestmt (genIfStmtIneq ifstmt)
-    where
-    nestif :: IfStmt -> IfStmt -> IfStmt
-    nestif e (If c iex _) = If c iex (Just e)
-
-genInvarExprIneq :: InvarExpr -> IO [InvarExpr]
-genInvarExprIneq = fmap (map extractInvarExprIO) . genIExprIneq
-        where
-        extractInvarExprIO :: Theorem -> InvarExpr
-        extractInvarExprIO (IExpr i) = i
-
-genIExprIneq :: InvarExpr -> IO [Theorem]
-genIExprIneq e@(InvarExpr _ (Just (InvarRelExpr _ _))) =
-        let  (InvarExpr (Invar v) (Just (InvarRelExpr rel exp))) = func_map
-             (func_map, func_remap)                            = replAllIExprFuncs e invarMappingList
+generateSymPyIneq :: Fix Theorem -> IO [Fix Theorem]
+generateSymPyIneq (Fx (If c (Fx (ExprList elist)) elif)) = do
+        elist' <- mapM generateSymPyIneq elist
+        elif'  <- sequence $ (head <$>) . generateSymPyIneq <$> elif
+        return [Fx $ If c (Fx $ ExprList (concat elist')) elif']
+generateSymPyIneq e@(Fx (InvarExpr _ (Just (Fx (RelExpr _ _))))) =
+        let  (Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp)))))    = func_map
+             (func_map, func_remap)                            = replaceAllFuncs e 
              rationalFlag                                      = not $ containsFunc exp
-             inequality                                        = exprToSrc exp
+             inequality                                        = theoremToSrc exp
              lhs                                               = v
-             relation                                          = show rel
-             invars                                            = v : S.toList (getExprInvolves exp)
-        in fmap (map (replaceAllInvar func_remap) . theoremParser . lexer . (\i -> trace i i) . concat) . sequence $
+             relation                                          = theoremToSrc rel
+             bound                                             = getBound rel
+             invar_analyses                                    = map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) invars
+             invars                                            = getInvolves exp
+        in fmap (map (adjustInequality invar_analyses) . (e:) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
                invars
                 >>= \inv -> return $
                    do Py.initialize
-                      equation <- Py.toUnicode . T.pack $ inequality
-                      variables <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) invars
-                      lhs <- Py.toUnicode . T.pack $ lhs
-                      rel <- Py.toUnicode . T.pack $ relation
-                      target  <- Py.toUnicode . T.pack $ inv
-                      ms <- Py.importModule "mystic.symbolic"
-                      solver <- Py.getAttribute ms =<< Py.toUnicode "solve_ingrid"
+                      equation    <- Py.toUnicode . T.pack $ inequality
+                      variables   <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) (v:invars)
+                      lhs         <- Py.toUnicode . T.pack $ lhs
+                      rel         <- Py.toUnicode . T.pack $ relation
+                      target      <- Py.toUnicode . T.pack $ inv
+                      ms          <- Py.importModule "mystic.symbolic"
+                      solver      <- Py.getAttribute ms =<< Py.toUnicode "solve_ingrid"
                       rationalval <- if rationalFlag then Py.true else Py.false
-                      pyout <- Py.callArgs solver [Py.toObject lhs, Py.toObject rel, Py.toObject equation, Py.toObject variables, Py.toObject target, Py.toObject rationalval]
-                      rewrite <- Py.cast pyout :: IO (Maybe Py.Unicode)
+                      pyout       <- Py.callArgs solver [   Py.toObject lhs
+                                                    , Py.toObject rel
+                                                    , Py.toObject equation
+                                                    , Py.toObject variables
+                                                    , Py.toObject target
+                                                    , Py.toObject rationalval]
+                      rewrite     <- Py.cast pyout :: IO (Maybe Py.Unicode)
                       case rewrite of
                        (Just eqn) -> (++";") . T.unpack <$> Py.fromUnicode eqn
                        _          -> return ""
-genIExprIneq e = return [IExpr e]
+        where
+        adjustInequality imap ineq@(Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp))))) =
+                   maybe ineq (\r -> Fx $ InvarExpr (Fx $ Invar v) (Just . Fx $ RelExpr r exp)) (lookup v imap) 
+        adjustInequality _    ineq                                                               = ineq
+            
+generateSymPyIneq e = return [e]

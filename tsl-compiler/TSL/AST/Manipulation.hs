@@ -1,203 +1,191 @@
+{-# LANGUAGE DataKinds         #-}
+{-# LANGUAGE FlexibleInstances #-}
 module TSL.AST.Manipulation where
 
-import qualified Data.List as L
-import           Data.Set  (Set)
-import qualified Data.Set  as S
+import qualified Data.List   as L
 
+import           Data.Maybe  (fromMaybe)
 import           TSL.AST.AST
 
 -- | Begin helper functions
-invarMappingList :: [Value]
-invarMappingList = map (Invar . return) (filter (/='I') $ ['A'..'Z'] ++ ['a'..'z'])
+invarMappingList :: [String]
+invarMappingList = map (:[]) (filter (/='I') $ ['A'..'Z'] ++ ['a'..'z'])
 
-getAllIExprInvars :: InvarExpr -> [Value]
-getAllIExprInvars = map Invar . S.toList . getInvarExprInvolves
+getAllInvars :: Fix Theorem -> [Fix Theorem]
+getAllInvars = map (Fx . Invar) . getInvolves
 --- | End helper functions
 
--- | Begin getInvolves
-getInvolves :: Theorem -> [String]
-getInvolves (IExpr i)  = S.toList $ getInvarExprInvolves i
-getInvolves (IfStmt i) = S.toList $ getIfStmtInvolves i
-getInvolves NullBody   = []
+getInvolves :: Fix Theorem -> [String]
+getInvolves = L.nub . cata getInvolves'
 
-getInvarExprInvolves :: InvarExpr -> Set String
-getInvarExprInvolves (InvarOr a b)          = S.union (getInvarExprInvolves a) (getInvarExprInvolves b)
-getInvarExprInvolves (InvarAnd a b)         = S.union (getInvarExprInvolves a) (getInvarExprInvolves b)
-getInvarExprInvolves (InvarExpr a Nothing)  = getValueInvolves a
-getInvarExprInvolves (InvarExpr a (Just b)) = S.union (getValueInvolves a) (getInvarRelExprInvolves b)
-getInvarExprInvolves (InvarExprNot a)       = getValueInvolves a
-getInvarExprInvolves (InvarExprEven a)      = getValueInvolves a
-getInvarExprInvolves (InvarExprOdd a)       = getValueInvolves a
-getInvarExprInvolves (InvarExprUndefined a) = getValueInvolves a
+getInvolves' :: Theorem [String] -> [String]
+getInvolves' (Invar a) = return a
+getInvolves' (InvarExpr a b) = a ++ fromMaybe [] b
+getInvolves' (If a b c) = a ++ b ++ fromMaybe [] c
+getInvolves' (Cond a b) = a ++ fromMaybe [] b
+getInvolves' (RelExpr a b) = a ++ b
+getInvolves' (ExprList as) = concat as
+getInvolves' (Expr as) = concat as
+getInvolves' (ExprF _ a) = a
+getInvolves' (Or a b) = a ++ b
+getInvolves' (And a b) = a ++ b
+getInvolves' (Mul a b) = a ++ b
+getInvolves' (Div a b) = a ++ b
+getInvolves' (Pow a b) = a ++ b
+getInvolves' (Paren a) = a
+getInvolves' (Neg a) = a
+getInvolves' (Function _ as) = concat as
+getInvolves' _         = []
 
-getValueInvolves :: Value -> Set String
-getValueInvolves (Invar i) = S.singleton i
-getValueInvolves (Paren exp) = getExprInvolves exp
-getValueInvolves (Function _ exps) = S.unions . map getExprInvolves $ exps
-getValueInvolves _         = S.empty
+theoremToSrc :: Fix Theorem -> String
+theoremToSrc = cata theoremToSrc'
 
-getInvarRelExprInvolves :: InvarRelExpr -> Set String
-getInvarRelExprInvolves (InvarRelExpr _ ex) = getExprInvolves ex
+theoremToSrc' :: Theorem String -> String
+theoremToSrc' (Let a b)             = "let " ++ a ++ " = " ++ b 
+theoremToSrc' (Relation a)          = show a
+theoremToSrc' (RelExpr a b)         = " " ++ a ++ " " ++ b
+theoremToSrc' (Cond a b)            = a ++ fromMaybe [] b
+theoremToSrc' (InvarExpr a b)       = a ++ fromMaybe [] b 
+theoremToSrc' (If a b c)            =
+    case a of
+        "not Local True" ->
+           concat [" \n{\n",
+                       unlines (map ("    "++) (lines b)), "\n}",
+                       maybe [] (" else "++) c] --,
+                       --";\n"]
+        _            ->
+           concat ["if ", a, " then \n{\n",
+                       unlines (map ("    "++) (lines b)), "\n}",
+                       maybe [] (" else "++) c] --,
+                       --";\n"]
+theoremToSrc' (ExprF s a)           = s ++ " " ++ a
+theoremToSrc' (ExprList as)         = L.intercalate ",\n" as
+theoremToSrc' (Expr (t:ts))         = t ++ concatMap (\s ->
+                                                case s of
+                                                  ('-':_) -> s
+                                                  _       -> '+':s) ts
+theoremToSrc' (Or a b)              = a ++ " or " ++ b
+theoremToSrc' (And a b)             = a ++ " and " ++ b
+theoremToSrc' (Mul a b)             = a ++ "*" ++ b
+theoremToSrc' (Div a b)             = a ++ "/" ++ b
+theoremToSrc' (Pow a b)             = a ++ "**" ++ b
+theoremToSrc' (Neg a)               = "-(" ++ a ++ ")"
+theoremToSrc' (Number a)            = show a
+-- theoremToSrc' (Function "sqrt" es) = "(" ++ L.intercalate ", " es ++ ")**(1.0/2.0)"
+theoremToSrc' (Function s es)      = s ++ "(" ++ L.intercalate ", " es ++ ")"
+theoremToSrc' (Local s)            = "Local " ++ s
+theoremToSrc' (Invar s)            = s
+theoremToSrc' (Paren e)            = "(" ++ e ++ ")"
+theoremToSrc' _                    = ""
 
-getExprInvolves :: Expr -> Set String
-getExprInvolves (Expr t) = foldr (S.union . getTermInvolves) S.empty t
+instance Show (Fix Theorem) where
+    show = (++";") . theoremToSrc 
 
-getTermInvolves :: Term -> Set String
-getTermInvolves (Mul a b)  = S.union (getTermInvolves a) (getTermInvolves b)
-getTermInvolves (Div a b)  = S.union (getTermInvolves a) (getTermInvolves b)
-getTermInvolves (Neg a)    = getTermInvolves a
-getTermInvolves (Term fac) = getFactorInvolves fac
+extractLetStatements :: [Fix Theorem] -> [(String, Fix Theorem)]
+extractLetStatements = foldr (\x ys ->
+                                case x of
+                                    (Fx (Let (Fx (Invar s)) e)) -> (s,e):ys
+                                    _                           -> ys) []
 
-getFactorInvolves :: Factor -> Set String
-getFactorInvolves (Pow a b) = S.union (getFactorInvolves a) (getFactorInvolves b)
-getFactorInvolves (Value v) = getValueInvolves v
+containsFunc :: Fix Theorem -> Bool
+containsFunc = cata containsFunc'
 
-getIfStmtInvolves :: IfStmt -> Set String
-getIfStmtInvolves (If c iexpl (Just i)) = S.union (getCondInvolves c) (S.union (getInvarExprListInvolves iexpl) (getIfStmtInvolves i))
-getIfStmtInvolves (If c iexpl Nothing) = S.union (getCondInvolves c) (getInvarExprListInvolves iexpl)
+containsFunc' :: Theorem Bool -> Bool
+containsFunc' (Let a b)  = a || b
+containsFunc' (If a b c) = a || b || fromMaybe False c
+containsFunc' (InvarExpr a b) = a || fromMaybe False b
+containsFunc' (Cond a b)      =  a || fromMaybe False b
+containsFunc' (ExprList as)   = or as
+containsFunc' (ExprF _ a)     = a
+containsFunc' (RelExpr a b)   = a || b
+containsFunc' (Expr as)       = or as
+containsFunc' (Or a b)        = a || b
+containsFunc' (And a b)       = a || b
+containsFunc' (Mul a b)       = a || b
+containsFunc' (Div a b)       = a || b
+containsFunc' (Neg a)         = a
+containsFunc' (Pow a b)       = a || b
+containsFunc' (Function _ _)  = True
+containsFunc' (Paren a)       = a
+containsFunc' _               = False
 
-getInvarExprListInvolves :: InvarExprList -> Set String
-getInvarExprListInvolves (InvarExprList l) = foldr (flip (\r -> S.union r . S.fromList . getInvolves)) S.empty l
+containsInvar :: Fix Theorem -> Bool
+containsInvar = cata containsInvar'
 
-getCondInvolves :: Cond -> Set String
-getCondInvolves (CondOr a b)        = S.union (getCondInvolves a) (getCondInvolves b)
-getCondInvolves (CondAnd a b)       = S.union (getCondInvolves a) (getCondInvolves b)
-getCondInvolves (CondSpec _ v)      = getValueInvolves v
-getCondInvolves (CondSpecF _ e)      = getExprInvolves e
-getCondInvolves (Cond ex (Just cr)) = S.union (getValueInvolves ex) (getCondRelInvolves cr)
-getCondInvolves (Cond ex Nothing)   = getValueInvolves ex
+containsInvar' :: Theorem Bool -> Bool
+containsInvar' (If a b c) = a || b || fromMaybe False c
+containsInvar' (InvarExpr a b) = a || fromMaybe False b
+containsInvar' (Cond a b)      =  a || fromMaybe False b
+containsInvar' (ExprList as)   = or as
+containsInvar' (ExprF _ a)     = a
+containsInvar' (RelExpr a b)   = a || b
+containsInvar' (Expr as)       = or as
+containsInvar' (Or a b)        = a || b
+containsInvar' (And a b)       = a || b
+containsInvar' (Mul a b)       = a || b
+containsInvar' (Div a b)       = a || b
+containsInvar' (Neg a)         = a
+containsInvar' (Pow a b)       = a || b
+containsInvar' (Function _ _)  = True
+containsInvar' (Paren a)       = a
+containsInvar' _               = False
 
-getCondRelInvolves :: CondRel -> Set String
-getCondRelInvolves (CondRel _ e) = getExprInvolves e
----  | End getInvolves
+replaceAllEqSign :: Fix Theorem -> [Fix Theorem]
+replaceAllEqSign (Fx (If c (Fx (ExprList as)) elif)) = 
+        return . Fx $ If c (Fx $ ExprList (concatMap replaceAllEqSign as)) (head . replaceAllEqSign <$> elif)
+replaceAllEqSign (Fx (InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelEq)) exp))))) =
+        [Fx $ InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelGte)) exp))),
+         Fx $ InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelLte)) exp)))]
+replaceAllEqSign e = [e]
 
--- | Begin exprToSrc
-exprToSrc :: Expr -> String
-exprToSrc (Expr ts) = foldl (\s t -> case t of
-                                     (Neg _) -> s ++ termToSrc t
-                                     _       -> s ++ (if null s then "" else "+") ++ termToSrc t) "" ts
+replaceAllInvar :: [(String, Fix Theorem)] -> Fix Theorem -> Fix Theorem
+replaceAllInvar m = cata (replaceAllInvar' m)
 
-termToSrc :: Term -> String
-termToSrc (Mul a b) = termToSrc a ++ "*" ++ termToSrc b
-termToSrc (Div a b) = termToSrc a ++ "/" ++ termToSrc b
-termToSrc (Neg a)   = "-(" ++ termToSrc a ++ ")"
-termToSrc (Term a)  = factorToSrc a
-
-factorToSrc :: Factor -> String
-factorToSrc (Pow a b) = factorToSrc a ++ "**" ++ factorToSrc b
-factorToSrc (Value v) = valueToSrc v
-
-valueToSrc :: Value -> String
-valueToSrc (Number n)      = show n
-valueToSrc (Function "sqrt" es) = "(" ++ (L.intercalate ", " . map exprToSrc $ es) ++ ")**(1/2)"
-valueToSrc (Function s es) = s ++ "(" ++ (L.intercalate ", " . map exprToSrc $ es) ++ ")"
-valueToSrc (Local s)       = s
-valueToSrc (Invar s)       = s
-valueToSrc (Paren e)       = "(" ++ exprToSrc e ++ ")"
---- | End exprToSrc
-
--- | Begin contains
-containsInvar :: Expr -> Bool
-containsInvar (Expr es) = any termHasInvar es
-    where
-    termHasInvar (Div a b)       = termHasInvar a || termHasInvar b
-    termHasInvar (Mul a b)       = termHasInvar a || termHasInvar b
-    termHasInvar (Term f)        = factorHasInvar f
-    termHasInvar (Neg a)         = termHasInvar a
-    factorHasInvar (Pow a b)     = factorHasInvar a || factorHasInvar b
-    factorHasInvar (Value v)     = valueHasInvar v
-    valueHasInvar (Invar _)      = True
-    valueHasInvar (Function _ e) = any containsInvar e
-    valueHasInvar (Paren e)      = containsInvar e
-    valueHasInvar _              = False
-
-containsFunc :: Expr -> Bool
-containsFunc (Expr es) = any termHasFunc es
-    where
-    termHasFunc (Div a b)       = termHasFunc a || termHasFunc b
-    termHasFunc (Mul a b)       = termHasFunc a || termHasFunc b
-    termHasFunc (Term f)        = factorHasFunc f
-    termHasFunc (Neg a)         = termHasFunc a
-    factorHasFunc (Pow a b)     = factorHasFunc a || factorHasFunc b
-    factorHasFunc (Value v)     = valueHasFunc v
-    valueHasFunc (Function _ _) = True
-    valueHasFunc (Paren e)      = containsFunc e
-    valueHasFunc _              = False
---- | End contains
-
--- | Begin replace Invars
-replaceAllInvar :: [(Value, Value)] -> Theorem -> Theorem
-replaceAllInvar _  NullBody = NullBody
-replaceAllInvar m (IExpr i) = IExpr $ replaceIExprInvar m i
-
-replaceIExprInvar :: [(Value, Value)] -> InvarExpr -> InvarExpr
-replaceIExprInvar m (InvarExpr i (Just (InvarRelExpr r exp))) =
-  InvarExpr (case lookup i m of
-              (Just new) -> new
-              _          -> i) (Just $ InvarRelExpr r (replaceExprInvar m exp))
-
-replaceExprInvar :: [(Value, Value)] -> Expr -> Expr
-replaceExprInvar m (Expr xs) = Expr $ map (replaceTermInvar m) xs
-
-replaceTermInvar :: [(Value, Value)] -> Term -> Term
-replaceTermInvar m (Div a b) = Div (replaceTermInvar m a) (replaceTermInvar m b)
-replaceTermInvar m (Mul a b) = Mul (replaceTermInvar m a) (replaceTermInvar m b)
-replaceTermInvar m (Term f)  = Term $ replaceFactorInvar m f
-replaceTermInvar m (Neg a)   = Neg $ replaceTermInvar m a
-
-replaceFactorInvar :: [(Value, Value)] -> Factor -> Factor
-replaceFactorInvar m (Pow a b) = Pow (replaceFactorInvar m a) (replaceFactorInvar m b)
-replaceFactorInvar m (Value v) = Value $ replaceValueInvar m v
-
-replaceValueInvar :: [(Value, Value)] -> Value -> Value
-replaceValueInvar m i@(Invar _)     = case lookup i m of
+replaceAllInvar' :: [(String, Fix Theorem)] -> Theorem (Fix Theorem) -> Fix Theorem
+replaceAllInvar' m (Invar i)       = case lookup i m of
                                         Just v -> v
-                                        _      -> i
-replaceValueInvar m (Function f es) = Function f $ map (replaceExprInvar m) es
-replaceValueInvar m (Paren e)       = Paren . replaceExprInvar m $ e
-replaceValueInvar _ v               = v
---- | End replace
+                                        _      -> Fx $ Invar i
+replaceAllInvar' m v               = Fx v
 
--- | Begin replace Functions
-replAllIExprFuncs :: InvarExpr -> [Value] -> (InvarExpr, [(Value, Value)])
-replAllIExprFuncs (InvarExpr i (Just (InvarRelExpr r exp))) vals =
-    let (exp', vals') = replAllExprFuncs exp vals True
-    in  (InvarExpr i (Just (InvarRelExpr r exp')), vals')
+replaceAllFuncs :: Fix Theorem -> (Fix Theorem, [(String, Fix Theorem)])
+replaceAllFuncs f =
+    let (exp, expmap)       = cata replaceAllFuncs' f
+        (expmap', finalmap) = unzip $ zipWith  (\(a,b) s -> ((a,Fx $ Invar s),(s,b))) expmap invarMappingList
+    in (replaceAllInvar expmap' exp, finalmap)
 
-replAllExprFuncs :: Expr -> [Value] -> Bool -> (Expr, [(Value, Value)])
-replAllExprFuncs (Expr es) vals p = snd $ foldr (\y (v, (Expr es, out)) ->
-                                    let (t, vs) = replTermFuncs y v p
-                                    in (drop (length vs) v, (Expr (es++[t]), out++vs))) (vals, (Expr [], [])) es
 
-replTermFuncs :: Term -> [Value] -> Bool -> (Term, [(Value, Value)])
-replTermFuncs (Div a b) vals p =
-    let (ta, avs) = replTermFuncs a vals p
-        (tb, bvs) = replTermFuncs b (drop (length avs) vals) p
-    in (Div ta tb, avs ++ bvs)
-replTermFuncs (Mul a b) vals p =
-    let (ta, avs) = replTermFuncs a vals p
-        (tb, bvs) = replTermFuncs b (drop (length avs) vals) p
-    in (Mul ta tb, avs ++ bvs)
-replTermFuncs (Neg a) vals p =
-    let (t, v) = replTermFuncs a vals p
-    in  (Neg t, v)
-replTermFuncs (Term a) vals p =
-    let (f, vs) = replFactorFuncs a vals p
-    in  (Term f, vs)
-
-replFactorFuncs :: Factor -> [Value] -> Bool -> (Factor, [(Value, Value)])
-replFactorFuncs (Pow a b)                vals  p =
-    let (fa, avs) = replFactorFuncs a vals True
-        (fb, bvs) = replFactorFuncs b (drop (length avs) vals) False
-    in (Pow fa fb, avs ++ bvs)
-replFactorFuncs fv@(Value f@(Function fun _)) (v:_) _ | fun `L.elem` solveableFunctions
-                                                                  = (fv, [])
-                                                      | otherwise = (Value v, [(v, f)])
-replFactorFuncs (Value (Paren expr))     vals  p =
-    let (p', vs') = replAllExprFuncs expr vals p
-    in (Value $ Paren p', vs')
-replFactorFuncs (Value n@(Number _))     (v:_) p =
-    {- if p then (Value v, [(v, n)]) else -} (Value n, [])
-replFactorFuncs v                        _     _ = (v, [])
---- | End replace Functions
-
+replaceAllFuncs' :: Theorem (Fix Theorem, [(String, Fix Theorem)]) -> (Fix Theorem, [(String, Fix Theorem)])
+replaceAllFuncs' (Let (a,a') (b,b'))        = (Fx $ Let a b, a'++b')
+replaceAllFuncs' (If (a,a') (b,b') mc)      = case mc of
+                                                Just (c,c') -> (Fx $ If a b (Just c), a'++b'++c')
+                                                _           -> (Fx $ If a b Nothing, a'++b')
+replaceAllFuncs' (InvarExpr (a,a') mb)      = case mb of
+                                                Just (b,b') -> (Fx $ InvarExpr a (Just b), a'++b')
+                                                _           -> (Fx $ InvarExpr a Nothing, a')
+replaceAllFuncs' (Cond (a,a') mb)           = case mb of
+                                                Just (b,b') -> (Fx $ Cond a (Just b), a'++b')
+                                                _           -> (Fx $ Cond a Nothing, a')
+replaceAllFuncs' (ExprF s (a,a'))           = (Fx $ ExprF s a, a') 
+replaceAllFuncs' (RelExpr (r,r') (p,p'))        = (Fx $ RelExpr r p, r'++p')
+replaceAllFuncs' (ExprList es)                       = let (es'',v) = foldr (\(e,t) (es',ts') -> (e:es', t++ts')) ([],[]) es
+                                               in (Fx $ ExprList es'', v)
+replaceAllFuncs' (Expr es)                       = let (es'',v) = foldr (\(e,t) (es',ts') -> (e:es', t++ts')) ([],[]) es
+                                               in (Fx $ Expr es'', v)
+replaceAllFuncs' (Or (a,a') (b,b'))             = (Fx $ Or a b, a'++b')
+replaceAllFuncs' (And (a,a') (b,b'))             = (Fx $ And a b, a'++b')
+replaceAllFuncs' (Div (a,a') (b,b'))             = (Fx $ Div a b, a'++b')
+replaceAllFuncs' (Mul (a,a') (b,b'))             = (Fx $ Mul a b, a'++b')
+replaceAllFuncs' (Neg (a,a'))                    = (Fx $ Neg a, a')
+replaceAllFuncs' (Pow (a,a') (b,b'))             = (Fx $ Pow a b, a'++b')
+replaceAllFuncs' (Function fun es) | fun `L.elem` solveableFunctions
+                                             = let (es'',v) = foldr (\(e,t) (es',ts') -> (e:es', t++ts')) ([],[]) es
+                                               in (Fx $ Function fun es'', v)
+                                 | otherwise = let (es'',v) = foldr (\(e,t) (es',ts') -> (e:es', t++ts')) ([],[]) es
+                                                   val      = Fx $ Function fun es''
+                                               in (Fx $ Invar (theoremToSrc val), (theoremToSrc val, val):v)
+replaceAllFuncs' (Paren (a,a'))             = (Fx $ Paren a, a')
+replaceAllFuncs' (Local s)                  = (Fx $ Local s, [])
+replaceAllFuncs' (Invar a)                  = (Fx $ Invar a, [])
+replaceAllFuncs' (Relation a)               = (Fx $ Relation a, [])
+replaceAllFuncs' (Number a)                 = (Fx $ Number a, [])
+replaceAllFuncs' Empty                      = (Fx Empty, [])

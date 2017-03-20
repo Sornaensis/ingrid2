@@ -10,9 +10,9 @@ import           TSL.AST.AST
 import           TSL.Compiler.Python
 import           TSL.Compiler.Types
 
-generateTheorem :: TSLTheorem -> [String]
+generateTheorem :: TSLTheorem -> String
 generateTheorem = generatePythonClass
 
-generateAllIneq :: [Theorem] -> IO [Theorem]
-generateAllIneq = generateSympyIneq
+generateAllIneq :: [Fix Theorem] -> IO [Fix Theorem]
+generateAllIneq = fmap concat . mapM generateSymPyIneq
 

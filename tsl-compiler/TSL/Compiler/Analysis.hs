@@ -1,77 +1,96 @@
 module TSL.Compiler.Analysis (
-                    exprAnalysis,
                     InvarBoundSwitch(..),
-                    swap
+                    invarAnalysis
                     ) where
 
-import qualified Data.List      as L
-import qualified Data.Set       as S
+import qualified Data.List            as L
+import qualified Data.Set             as S
 
+import           Data.Maybe
 import           TSL.AST.AST
+import           TSL.AST.Manipulation
 import           TSL.Compiler.Types
 
+-- data Sign = Positive | Negative deriving Eq
 
-data InvarBoundSwitch = Flip Bool | NotFound | Complex | Maximize | Minimize deriving Eq
+data InvarBoundSwitch = Coeff Double | InvAn Bool Double | Complex | NotFound deriving (Show, Eq)
 
-swap :: Bound -> InvarBoundSwitch -> Bound
-swap Max (Flip True) = Min
-swap Min (Flip True) = Max
-swap Min Maximize    = Max
-swap b   _           = b
+-- swap :: Bound -> InvarBoundSwitch -> Bound
+-- swap Max (Flip True) = Min
+-- swap Min (Flip True) = Max
+-- swap Min Maximize    = Max
+-- swap b   _           = b
 
-flipbound :: InvarBoundSwitch -> InvarBoundSwitch
-flipbound (Flip a) = Flip $ not a
-flipbound NotFound = Flip True
-flipbound a        = a
+isCoeff :: InvarBoundSwitch -> Bool
+isCoeff (Coeff _) = True
+isCoeff _         = False
+
+chooseBound :: InvarBoundSwitch -> InvarBoundSwitch -> InvarBoundSwitch
+chooseBound (InvAn af ad) (InvAn bf bd) | abs ad == abs bd && af && abs ad > 1  = InvAn af ad
+                                        | abs ad == abs bd && bf && abs ad > 1  = InvAn bf bd
+                                        | abs ad == abs bd && af && abs ad <= 1 = InvAn bf bd
+                                        | abs ad == abs bd && bf && abs ad <= 1 = InvAn af ad
+                                        | abs ad > abs bd                       = InvAn af ad
+                                        | otherwise                             = InvAn bf bd
+chooseBound Complex       _             = Complex
+chooseBound _             Complex       = Complex
+chooseBound _             a@InvAn{}     = a
+chooseBound a@InvAn{}     _             = a
+chooseBound NotFound      a             = a
+chooseBound a             NotFound      = a
+
+flipInvBound :: InvarBoundSwitch -> InvarBoundSwitch
+flipInvBound (InvAn af ad) = InvAn (not af) ad
+flipInvBound a             = a
+
+addBound :: InvarBoundSwitch -> InvarBoundSwitch -> InvarBoundSwitch
+addBound (InvAn af ad) (InvAn bf bd) |  af == bf  = InvAn af $ ad+bd
+                                     |  otherwise = chooseBound (InvAn af ad) (InvAn bf bd)
+addBound a@InvAn{}     _             = a
+addBound _             a@InvAn{}     = a
+addBound NotFound      a             = a
+addBound a             NotFound      = a
+
+mulBound :: InvarBoundSwitch -> InvarBoundSwitch -> InvarBoundSwitch
+mulBound Complex       _             = Complex
+mulBound _             Complex       = Complex
+mulBound InvAn{}       InvAn{}       = Complex
+mulBound (InvAn af ad) (Coeff c)     = InvAn af $ ad*c
+mulBound (Coeff c)     (InvAn af ad) = InvAn af $ ad*c
+mulBound InvAn{}       NotFound      = Complex
+mulBound _             a@InvAn{}     = a
+mulBound NotFound      a             = a
+mulBound a             _             = a
 
 --- | Expression Analysis
-exprAnalysis :: Expr -> String -> InvarBoundSwitch
-exprAnalysis (Expr exps) inv = let analysis = L.nub $ filter (/=NotFound) . concatMap (\x -> termAnalysis x inv (Flip False)) $ exps
-                               in if null analysis
-                                   then NotFound
-                                   else if length analysis > 1
-                                         then Complex
-                                         else head analysis
+invarAnalysis :: String -> Fix Theorem -> InvarBoundSwitch
+invarAnalysis s = cata (invarAnalysis' s)
 
-termAnalysis :: Term -> String -> InvarBoundSwitch -> [InvarBoundSwitch]
-termAnalysis (Mul a b) inv f = termAnalysis a inv f ++ termAnalysis b inv f
-termAnalysis (Div a b) inv f = termAnalysis a inv f ++ termAnalysis b inv (flipbound f)
-termAnalysis (Neg a) inv f   = termAnalysis a inv (flipbound f)
-termAnalysis (Term a) inv f  = factorAnalysis a inv f
+invarAnalysis' :: String -> Theorem InvarBoundSwitch -> InvarBoundSwitch
+--- If we only match numbers
+invarAnalysis' s (Mul (Coeff a) (Coeff b)) = Coeff $ a*b
+invarAnalysis' s (Div (Coeff a) (Coeff b)) = Coeff $ a/b
+invarAnalysis' s (Neg (Coeff a))           = Coeff $ -1*a
+invarAnalysis' s (Pow (Coeff a) (Coeff b)) = Coeff $ a**b
+---
+invarAnalysis' s (If a b c)                 = foldr1 chooseBound [a, b, fromMaybe NotFound c]
+invarAnalysis' s (InvarExpr a b)            = foldr1 chooseBound [a,    fromMaybe NotFound b]
+invarAnalysis' s (RelExpr a b)              = chooseBound a b
+invarAnalysis' s (ExprList [])              = NotFound
+invarAnalysis' s (ExprList as)              = foldr1 chooseBound as
+invarAnalysis' s (Expr [])                  = NotFound
+invarAnalysis' s (Expr as)                  | all isCoeff as = foldr1 (\(Coeff a) (Coeff b) -> Coeff $ a+b)  as
+                                            | otherwise      = foldr chooseBound NotFound . filter (not . isCoeff) $ as
+invarAnalysis' s (Mul a b)                  = addBound a b
+invarAnalysis' s (Div a b)                  = chooseBound a (flipInvBound b)
+invarAnalysis' s (Neg a)                    = flipInvBound a
+invarAnalysis' s (Pow a b)                  = mulBound a b
+invarAnalysis' s (Function "sqrt" as@(_:_)) = foldr1 chooseBound . map (mulBound $ Coeff 0.5) $ as
+invarAnalysis' s (Function _ [])            = NotFound
+invarAnalysis' s (Function _ as)            = foldr1 chooseBound as
+invarAnalysis' s (Paren a)                  = a
+invarAnalysis' s (Number n)                 = Coeff n
+invarAnalysis' s (Invar i)                  | s == i = InvAn False 1
+invarAnalysis' _ _                          = NotFound
 
-factorAnalysis :: Factor -> String -> InvarBoundSwitch -> [InvarBoundSwitch]
-factorAnalysis (Pow a b) inv f = factorAnalysis a inv f ++ factorAnalysis b inv f
-factorAnalysis (Value v) inv f = return $ valueAnalysis v inv f
 
-valueAnalysis :: Value -> String -> InvarBoundSwitch -> InvarBoundSwitch
-valueAnalysis (Invar v)         s f   | s == v     = f
-valueAnalysis (Function fun exps) s f | fun `L.elem` specialFunctions
-                                                  = let fxprs = map (`exprAnalysis` s) exps
-                                                    in if null fxprs
-                                                        then NotFound
-                                                        else
-                                                            let f' = head fxprs in
-                                                            case fun of
-                                                              "max" -> if f' == Flip True then Minimize else Maximize
-                                                              "min" -> if f' == Flip True then Maximize else Minimize
-                                                              _     -> f'
-                                      | otherwise = let fxprs = map (`exprAnalysis` s) exps
-                                                   in if null fxprs
-                                                       then NotFound
-                                                       else if length fxprs > 1
-                                                             then Complex
-                                                             else if f == Flip True
-                                                                   then flipbound $ head fxprs
-                                                                   else head fxprs
-                                      where
-                                      specialFunctions = ["min","max"]
-valueAnalysis (Paren p)         s f              = let an = exprAnalysis p s
-                                                   in if f == Flip True
-                                                       then flipbound an
-                                                       else if f == Complex && an /= NotFound
-                                                             then Complex
-                                                             else an
-valueAnalysis _                 _ _              = NotFound
---- | End Expression Analysis
-
---- | Degree Analysis

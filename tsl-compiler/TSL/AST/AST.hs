@@ -1,17 +1,10 @@
+{-# LANGUAGE DeriveFunctor     #-}
 module TSL.AST.AST (
-                Theorem(..), 
-                IfStmt(..),
-                Cond(..), 
-                CondRel(..),
-                InvarExprList(..), 
-                InvarExpr(..),
-                InvarRelExpr(..), 
-                Relation(..), 
-                Expr(..), 
-                Term(..), 
-                Factor(..), 
-                Value(..),
-                solveableFunctions
+                Theorem(..),
+                Relation(..),
+                Fix(..),
+                solveableFunctions,
+                cata
                 ) where
 
 -- Functions we can solve for
@@ -19,39 +12,28 @@ solveableFunctions :: [String]
 solveableFunctions = ["log","ln","sqrt","cos","sin"]
 
 -- A theorem is a list of theorems
-data Theorem = IExpr InvarExpr
-             | IfStmt IfStmt
-             | NullBody
-    deriving (Show)
-
--- If statements may be nested
-data IfStmt = If Cond InvarExprList (Maybe IfStmt) 
-    deriving (Show)
-
-data Cond = CondOr Cond Cond
-          | CondAnd Cond Cond
-          | CondSpec String Value
-          | CondSpecF String Expr
-          | Cond Value (Maybe CondRel)
-    deriving (Show)
-
-data CondRel = CondRel Relation Expr
-    deriving (Show)
-
-data InvarExprList = InvarExprList [Theorem]
-    deriving (Show)
-
-data InvarExpr = InvarOr InvarExpr InvarExpr
-               | InvarAnd InvarExpr InvarExpr
-               | InvarExpr Value (Maybe InvarRelExpr)
-               | InvarExprNot Value 
-               | InvarExprEven Value 
-               | InvarExprOdd Value 
-               | InvarExprUndefined Value
-    deriving (Show)
-
-data InvarRelExpr = InvarRelExpr Relation Expr
-    deriving (Show)
+data Theorem a = Empty
+               | Let a a
+               | If a a (Maybe a)
+               | InvarExpr a (Maybe a)
+               | Cond a (Maybe a)
+               | ExprList [a]
+               | ExprF String a
+               | RelExpr a a
+               | Relation Relation
+               | Expr [a]
+               | Or a a
+               | And a a
+               | Mul a a
+               | Div a a
+               | Neg a
+               | Pow a a
+               | Number Double
+               | Function String [a]
+               | Local String
+               | Invar String
+               | Paren a
+               deriving (Functor, Show, Eq)
 
 data Relation = RelEq
               | RelGte
@@ -59,40 +41,24 @@ data Relation = RelEq
               | RelNeq
               | RelGt
               | RelLt
+              deriving Eq
 
 instance Show Relation where
-    show RelEq = "=="
-    show RelGte = ">="
-    show RelLte = "<="
-    show RelLt  = "<"
-    show RelGt  = ">"
-    show RelNeq = "!="
+        show RelEq  = "=="
+        show RelGte = ">="
+        show RelLte = "<="
+        show RelNeq = "!="
+        show RelGt  = ">"
+        show RelLt  = "<"
 
--- A list of terms to be summed
-data Expr = Expr [Term]
-    deriving (Show)
+newtype Fix f = Fx (f (Fix f))
+unFix :: Fix f -> f (Fix f)
+unFix (Fx x) = x
 
-data Term = Mul Term Term
-          | Div Term Term
-          | Neg Term
-          | Term Factor
-    deriving (Show)
+type MAlgebra m f a = f (m a) -> m a
 
-data Factor = Pow Factor Factor
-            | Value Value
-    deriving (Show)
+cata :: Functor f => (f a -> a) -> Fix f -> a
+cata alg = alg . fmap (cata alg) . unFix
 
-data Value = Number Double
-           | Function String [Expr] 
-           | Local String
-           | Invar String
-           | Paren Expr
-    deriving (Show)
-
-instance Eq Value where
-    (Number a) == Number b = a == b
-    Invar a == Invar b = a == b
-    _ == _ = False 
-
-
-
+mcata :: Functor f => MAlgebra m f a -> Fix f -> m a
+mcata alg = alg . fmap (mcata alg) . unFix
