@@ -100,12 +100,21 @@ realizeAnalysis' v
         case s of
             "not" -> Fx $ 
                 Cond (Fx $ Function "get" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "False" (Fx Empty))) 
-            "even" -> undefined
-            "odd" -> undefined
-            "isset" -> undefined
-            "defined" -> Fx $ 
+            "even" -> Fx $ 
+                And (Fx $ Function "even" [Fx $ Function "min" [e]])
+                    (Fx $ Function "even" [Fx $ Function "max" [e]])
+            "odd" -> Fx $ 
+                And (Fx $ Function "odd" [Fx $ Function "min" [e]])
+                    (Fx $ Function "odd" [Fx $ Function "max" [e]]) 
+            "isset" -> Fx $ 
+                And (Fx $ Cond (Fx $ Function "max" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))))
+                 (Fx $ Cond (Fx $ Function "min" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ Function "max" [e])))
+            "exists" -> Fx $ 
                 Cond (Fx $ Function "max" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))) 
-            "undefined" -> undefined
+            "defined" -> Fx $ 
+                Cond (Fx $ Function "min" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))) 
+            "undefined" -> Fx $ 
+                Cond (Fx $ Function "min" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "\'undt\'" (Fx Empty)))
    | (Cond a (Just (Fx (RelExpr (Fx (Relation RelEq)) expr)))) <- v =
         cata realizeAnalysis' $ Fx $ And (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelGte)) expr)))))
                                          (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelLte)) expr)))))
@@ -120,10 +129,13 @@ realizeAnalysis' v
         in  Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
    | (InvarExpr (Fx (ExprF s e)) Nothing) <- v =
         case s of
-            "not" -> Fx $ InvarExpr (Fx $ Function "set" [e, Fx $ ExprF "False" (Fx Empty)]) Nothing
-            "even" -> undefined
-            "odd" -> undefined
-            "undefined" -> undefined
+            "undefined" -> Fx $ InvarExpr (Fx $ Function "set" [e, 
+                                                                Fx $ ExprF "\'undt\'" (Fx Empty),
+                                                                Fx $ ExprF "ind=\'Min\'" (Fx Empty)]) Nothing
+            "not" -> Fx $ InvarExpr (Fx $ Function "set" [e, 
+                                                          Fx $ ExprF "False" (Fx Empty)]) Nothing
+            s@"even" -> evenOrOdd s e
+            s@"odd"  -> evenOrOdd s e
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
             invars = getInvolves expr
@@ -140,6 +152,31 @@ realizeAnalysis' v
         swapBound Min (i, InvAn True _) = (i, Fx $ Function "max" [Fx $ Invar i])
         swapBound Min (i, _)            = (i, Fx $ Function "min" [Fx $ Invar i])
         swapBound Max (i, _)            = (i, Fx $ Function "max" [Fx $ Invar i])
+        evenOrOdd s e = Fx $ ExprList [
+                            Fx $ If (Fx $ Cond (Fx $ Function "min" [e])
+                                               (Just . Fx $ RelExpr (Fx $ Relation RelNeq) 
+                                                                     (Fx $ ExprF "\'undt\'" (Fx Empty))))
+                                    (Fx $ If (Fx $ Function s [Fx $ Expr [Fx $ Function "min" [e]
+                                                                             , Fx $ Number 1]])
+                                             (Fx $ InvarExpr (Fx $ Function "set" [e 
+                                                                        ,    Fx $ Expr [Fx $ Function "min" [e] 
+                                                                                   ,    Fx $ Number 1]
+                                                                        , Fx $ ExprF "ind=\'Min\'" (Fx Empty)])
+                                                             Nothing)
+                                             Nothing)
+                                    Nothing,
+                            Fx $ If (Fx $ Cond (Fx $ Function "max" [e])
+                                               (Just . Fx $ RelExpr (Fx $ Relation RelNeq) 
+                                                                     (Fx $ ExprF "\'undt\'" (Fx Empty))))
+                                    (Fx $ If (Fx $ Function s [Fx $ Expr [Fx $ Function "max" [e]
+                                                                             , Fx $ Neg $ Fx $ Number 1]])
+                                             (Fx $ InvarExpr (Fx $ Function "set" [e 
+                                                                        ,    Fx $ Expr [Fx $ Function "min" [e] 
+                                                                                   ,    Fx $ Neg $ Fx $ Number 1]
+                                                                        , Fx $ ExprF "ind=\'Max\'" (Fx Empty)])
+                                                             Nothing)
+                                             Nothing)
+                                    Nothing ]
 
 swapBound Max (InvAn True _) = Min
 swapBound Min (InvAn True _) = Max
