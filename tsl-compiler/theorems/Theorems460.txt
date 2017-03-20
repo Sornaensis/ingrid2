@@ -26,7 +26,7 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "let m = floor((nodes - chromaticNum)/(nodes - nodeCover - 1)); edges >= m*(nodes - chromaticNum) + chromaticNum*(chromaticNum - 1)/2 - (nodes - nodeCover - 1)*m*(m+1)/2;",
             "name": "Theorem",
             "idnum": 445,
             "disp": ""

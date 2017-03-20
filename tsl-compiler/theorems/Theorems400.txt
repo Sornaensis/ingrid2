@@ -86,13 +86,13 @@
             "disp": ""
         },
         {
-            "text": "let k = (1+(-1)**girth)/2; let t = floor(girth/2);",
+            "text": "let k = (1+(-1)**girth)/2; let t = floor(girth/2); if connected and not tree and mindeg == 1 then {nodes >= ceil((diameter + 1)/(girth + k))*(1 + mindeg - k*(mindeg - 1)**t)} else if connected and not tree and mindeg == 2 then {nodes >= ceil((diameter + 1)/(girth + k))*(1 + mindeg*t - k*(mindeg - 1)**t)} else if connected and not tree and mindeg >= 3 then {nodes >= ceil((diameter + 1)/(girth + k))*(1 + mindeg*(((mindeg - 1)**t - 1)/(mindeg - 2)) - k*(mindeg - 1)**t)}",
             "name": "Theorem",
             "idnum": 395,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "let t = floor(girth/2); if not forest and mindeg == 1 and odd(girth) then {edges <= nodes*(nodes-1)/(4*(1 - (mindeg-1)**(t-1)/2)) + nodes/2} else if not forest and mindeg == 1 and even(girth) then {edges <= nodes*(nodes-1)/(4*(1 - (mindeg-1)**(t-1))) + nodes/2} else if not forest and mindeg == 2 and odd(girth) then {edges <= nodes*(nodes-1)/(4*(t - (mindeg-1)**(t-1)/2)) + nodes/2} else if not forest and mindeg == 2 and even(girth) then {edges <= nodes*(nodes-1)/(4*(t - (mindeg-1)**(t-1))) + nodes/2} else if not forest and mindeg == 3 and odd(girth) then {edges <= nodes*(nodes-1)/(4*(((mindeg-1)**t-1)/(mindeg-2) - (mindeg-1)**(t-1)/2)) + nodes/2} else if not forest and mindeg == 3 and even(girth) then {edges <= nodes*(nodes-1)/(4*(((mindeg-1)**t-1)/(mindeg-2) - (mindeg-1)**(t-1))) + nodes/2}",
             "name": "Theorem",
             "idnum": 396,
             "disp": ""
@@ -116,7 +116,7 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if diameter == 2 and ((2*nodes-2)/3 <= maxdeg and maxdeg < nodes - 4 or maxdeg == nodes-2) then {edges >= 2*nodes-4} else if diameter == 2 and ((3*nodes-5)/5 <= maxdeg and maxdeg < (2*nodes-2)/3) then {edges >= 3*nodes - maxdeg - 6} else if diameter == 2 and ((5*nodes - 3)/9 <= maxdeg and maxdeg < (3*nodes-5)/5) then {edges >= 5*nodes - 4*maxdeg - 10} else if diameter == 2 and ((nodes + 1)/2 <= maxdeg and maxdeg < (5*nodes - 3)/9) then {edges >= 4*nodes - 2*maxdeg -13};",
             "name": "Theorem",
             "idnum": 400,
             "disp": ""
