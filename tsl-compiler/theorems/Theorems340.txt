@@ -26,7 +26,7 @@
             "disp": ""
         },
         {
-            "text": "if regular and even girth  and girth >= 6 and connected and nodes <= (mindeg*(mindeg-3)+2*(mindeg-1)**(girth/2))/(mindeg-2) then {bipartite and diameter == girth/2 + 1};",
+            "text": "if regular and even girth  and girth >= 6 and connected and nodes <= (mindeg*(mindeg-3)+2*(mindeg-1)**(girth/2))/(mindeg-2) then {bipartite, diameter == girth/2 + 1};",
             "name": "Theorem",
             "idnum": 325,
             "disp": ""

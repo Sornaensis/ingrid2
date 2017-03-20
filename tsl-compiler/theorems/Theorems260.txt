@@ -116,7 +116,7 @@
             "disp": ""
         },
         {
-            "text": "let c = edges - nodes + numOfComponents; genus <= c/2-c/(4*log(c)/log(2))",
+            "text": "let c = edges - nodes + numOfComponents; genus <= c/2-c/(4*log(c)/log(2));",
             "name": "Theorem",
             "idnum": 260,
             "disp": ""

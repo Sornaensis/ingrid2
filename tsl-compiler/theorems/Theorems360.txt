@@ -26,7 +26,7 @@
             "disp": ""
         },
         {
-            "text": "let r = floor((girth-1)/2)>=2; let m = max(1, (nodes-2**(t+1)+8)/4); if not forest then edges <= nodes*m**(1/t) + nodes - 1;",
+            "text": "let r = floor((girth-1)/2); let m = max(1, (nodes-2**(t+1)+8)/4); if t >= 2 and not forest then { edges <= nodes*m**(1/t) + nodes - 1 };",
             "name": "Theorem",
             "idnum": 345,
             "disp": ""

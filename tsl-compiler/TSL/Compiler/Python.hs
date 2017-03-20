@@ -106,6 +106,7 @@ realizeAnalysis' v
             "odd" -> Fx $ 
                 And (Fx $ Function "odd" [Fx $ Function "min" [e]])
                     (Fx $ Function "odd" [Fx $ Function "max" [e]]) 
+            "istrue" -> Fx $ InvarExpr e Nothing
             "isset" -> Fx $ 
                 And (Fx $ Cond (Fx $ Function "max" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))))
                  (Fx $ Cond (Fx $ Function "min" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ Function "max" [e])))
