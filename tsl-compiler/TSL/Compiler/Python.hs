@@ -1,9 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module TSL.Compiler.Python (
-                    generatePython
-                ,   generateIExprIneq
-                    -- generateSympyIneq,
-                    -- generatePythonClass
+                    generatePythonClass
+                ,   generateSymPyIneq
                     ) where
 
 {- All python generation and related functions go in here
@@ -35,18 +33,20 @@ import           TSL.Compiler.Analysis
 import           TSL.Compiler.Types
 import           TSL.Parser.Parser
 
--- indent :: String -> String
--- indent = unlines . map ("    " ++) . lines
+indent :: String -> String
+indent = unlines . map ("    " ++) . lines
 
 -- | Body
--- generatePythonClass :: TSLTheorem -> String
--- generatePythonClass (TSLTheorem (TSLInputTheorem name text disp idnum) ts)  =
---        (("class " ++ name ++ "(Theorem):"):) . concatMap indent $
---              [("def __init__(self):" :) $
---                 indent ["super(" ++ name ++ ", self).__init__(" ++ L.intercalate ", " [show idnum, show text, show disp] ++")"]
---              ,("def involves(self, str_invar):" :) $
---                 indent ["return str_invar in " ++ show (concatMap getInvolves ts)]
---              , ("def run(self, ingrid_obj):" : concatMap (indent . generatePython) ts) ++ ["\treturn"]]
+generatePythonClass :: TSLTheorem -> String
+generatePythonClass (TSLTheorem (TSLInputTheorem name text disp idnum) ts)  = 
+       (("class " ++ name ++ "(Theorem):\n")++) . indent $
+                "def __init__(self):\n"
+             ++ "    super(" ++ name ++ ", self).__init__(" ++ L.intercalate ", " [show idnum, show text, show disp] ++")\n"
+             ++ "def involves(self, str_invar):\n"
+             ++ "    return str_invar in " ++ show (L.nub $ concatMap getInvolves ts) ++ "\n"
+             ++ "def run(self, ingrid_obj):\n"
+             ++ concatMap (indent . generatePython) ts 
+             ++ "return"
 
 generatePython :: Fix Theorem -> String
 generatePython = cata generatePython'  . cata realizeAnalysis'
@@ -103,7 +103,8 @@ realizeAnalysis' v
             "even" -> undefined
             "odd" -> undefined
             "isset" -> undefined
-            "defined" ->  undefined
+            "defined" -> Fx $ 
+                Cond (Fx $ Function "max" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))) 
             "undefined" -> undefined
    | (Cond a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
@@ -131,32 +132,46 @@ realizeAnalysis' v
    | (InvarExpr a Nothing) <- v =
         Fx $ InvarExpr (Fx $ Function "set" [a, Fx $ ExprF "True" (Fx Empty)]) Nothing
    | otherwise = Fx v
-        where
+   where
         swapBound Max (i, InvAn True _) = (i, Fx $ Function "min" [Fx $ Invar i])
         swapBound Min (i, InvAn True _) = (i, Fx $ Function "max" [Fx $ Invar i])
         swapBound Min (i, _)            = (i, Fx $ Function "min" [Fx $ Invar i])
         swapBound Max (i, _)            = (i, Fx $ Function "max" [Fx $ Invar i])
-        getBound rel = case rel of
-                 (Fx (Relation RelGte)) -> Max
-                 (Fx (Relation RelLte)) -> Min
-                 (Fx (Relation RelGt))  -> Max
-                 (Fx (Relation RelLt))  -> Min
 
+swapBound Max (InvAn True _) = Min
+swapBound Min (InvAn True _) = Max
+swapBound Max _              = Max
+swapBound Min _              = Min
 
-generateIExprIneq :: Fix Theorem -> IO [Fix Theorem]
-generateIExprIneq (Fx (If c (Fx (ExprList elist)) elif)) = do
-        elist' <- mapM generateIExprIneq elist
-        elif'  <- sequence $ (head <$>) . generateIExprIneq <$> elif
+flipBound Min = Max
+flipBound Max = Min
+
+getBound rel = case rel of
+            (Fx (Relation RelGte)) -> Min
+            (Fx (Relation RelLte)) -> Max
+            (Fx (Relation RelGt))  -> Min
+            (Fx (Relation RelLt))  -> Max
+
+getIneq rel = case rel of
+            Min -> Fx (Relation RelGte)
+            Max -> Fx (Relation RelLte)
+
+generateSymPyIneq :: Fix Theorem -> IO [Fix Theorem]
+generateSymPyIneq (Fx (If c (Fx (ExprList elist)) elif)) = do
+        elist' <- mapM generateSymPyIneq elist
+        elif'  <- sequence $ (head <$>) . generateSymPyIneq <$> elif
         return [Fx $ If c (Fx $ ExprList (concat elist')) elif']
-generateIExprIneq e@(Fx (InvarExpr _ (Just (Fx (RelExpr _ _))))) =
+generateSymPyIneq e@(Fx (InvarExpr _ (Just (Fx (RelExpr _ _))))) =
         let  (Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp)))))    = func_map
              (func_map, func_remap)                            = replaceAllFuncs e 
              rationalFlag                                      = not $ containsFunc exp
              inequality                                        = theoremToSrc exp
              lhs                                               = v
              relation                                          = theoremToSrc rel
+             bound                                             = getBound rel
+             invar_analyses                                    = map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) invars
              invars                                            = getInvolves exp
-        in fmap ((e:) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
+        in fmap (map (adjustInequality invar_analyses) . (e:) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
                invars
                 >>= \inv -> return $
                    do Py.initialize
@@ -178,4 +193,9 @@ generateIExprIneq e@(Fx (InvarExpr _ (Just (Fx (RelExpr _ _))))) =
                       case rewrite of
                        (Just eqn) -> (++";") . T.unpack <$> Py.fromUnicode eqn
                        _          -> return ""
-generateIExprIneq e = return [e]
+        where
+        adjustInequality imap ineq@(Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp))))) =
+                   maybe ineq (\r -> Fx $ InvarExpr (Fx $ Invar v) (Just . Fx $ RelExpr r exp)) (lookup v imap) 
+        adjustInequality _    ineq                                                               = ineq
+            
+generateSymPyIneq e = return [e]

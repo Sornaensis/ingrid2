@@ -58,7 +58,7 @@ mulBound (Coeff c)     (InvAn af ad) = InvAn af $ ad*c
 mulBound InvAn{}       NotFound      = Complex
 mulBound _             a@InvAn{}     = a
 mulBound NotFound      a             = a
-mulBound a             NotFound      = a
+mulBound a             _             = a
 
 --- | Expression Analysis
 invarAnalysis :: String -> Fix Theorem -> InvarBoundSwitch
