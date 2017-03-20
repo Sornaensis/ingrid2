@@ -132,10 +132,11 @@ containsInvar' _               = False
 
 replaceAllEqSign :: Fix Theorem -> [Fix Theorem]
 replaceAllEqSign (Fx (If c (Fx (ExprList as)) elif)) = 
-        Fx $ If c (Fx $ ExprList (concat as)) (head . replaceAllEqSign <$> elif)
-replaceAllEqSign (Fx (InvarExpr i (Just Fx (Relation RelEq) exp))) =
-        [Fx $ InvarExpr i (Just (Fx (Relation RelGte)) exp),
-         Fx $ InvarExpr i (Just (Fx (Relation RelLte)) exp)]
+        return . Fx $ If c (Fx $ ExprList (concatMap replaceAllEqSign as)) (head . replaceAllEqSign <$> elif)
+replaceAllEqSign (Fx (InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelEq)) exp))))) =
+        [Fx $ InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelGte)) exp))),
+         Fx $ InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelLte)) exp)))]
+replaceAllEqSign e = [e]
 
 replaceAllInvar :: [(String, Fix Theorem)] -> Fix Theorem -> Fix Theorem
 replaceAllInvar m = cata (replaceAllInvar' m)
