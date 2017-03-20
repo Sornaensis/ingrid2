@@ -15,6 +15,14 @@ Thm 354: added
 Thm 355: added
 Thm 361: added
 Thm 362: added
-
-
-
+Thm 395: added (check if it is a ceil or just square braces)
+Thm 396: added (check if correct, very long)
+Thm 400: added
+Thm 403: needs to be hand written
+Thm 408: added
+Thm 412: added
+Thm 427: added
+Thm 436: added
+Thm 437: added
+Thm 444: needs to be hand written
+Thm 445: added
