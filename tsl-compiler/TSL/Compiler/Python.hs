@@ -107,8 +107,8 @@ realizeAnalysis' v
                 Cond (Fx $ Function "max" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))) 
             "undefined" -> undefined
    | (Cond a (Just (Fx (RelExpr (Fx (Relation RelEq)) expr)))) <- v =
-        realizeAnalysis $ Fx $ And (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelGte) expr))))))
-                                   (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelLte) expr))))))
+        cata realizeAnalysis' $ Fx $ And (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelGte)) expr)))))
+                                         (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelLte)) expr)))))
    | (Cond a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
             invars = getInvolves expr
