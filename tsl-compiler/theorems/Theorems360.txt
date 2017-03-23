@@ -1,4 +1,3 @@
-
 {
     "theorems":[
 {
@@ -26,7 +25,7 @@
             "disp": ""
         },
         {
-            "text": "let r = floor((girth-1)/2); let m = max(1, (nodes-2**(t+1)+8)/4); if t >= 2 and not forest then { edges <= nodes*m**(1/t) + nodes - 1 };",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 345,
             "disp": ""
@@ -68,13 +67,13 @@
             "disp": ""
         },
         {
-            "text": "let t = floor((girth-1)/2); let s = ((mindeg-1)**(t-1)-1)/(mindeg-2); if girth >= 5 and mindeg <= 2 then {edges <= nodes*(.5 + sqrt((nodes-mindeg-1)/(t-1) + .25))/2} else if girth >= 5 and mindeg >= 3 then {edges <= nodes*(.5 + sqrt((nodes-mindeg-1)/s + .25))/2};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 352,
             "disp": ""
         },
         {
-            "text": "let t = floor((girth-1)/2); let k = floor(edges/nodes); let r = (k**(t-1)-1)/(k-1); if girth >= 5 and k <= 1 then {edges <= nodes*(.5 + sqrt((nodes-k-2)/(t-1) + .25))/2} else if girth >= 5 and mindeg >= 2 then {edges <= nodes*(.5 + sqrt((nodes-k-1)/r + .25))/2};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 353,
             "disp": ""

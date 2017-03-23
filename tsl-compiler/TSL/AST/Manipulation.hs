@@ -15,6 +15,10 @@ getAllInvars :: Fix Theorem -> [Fix Theorem]
 getAllInvars = map (Fx . Invar) . getInvolves
 --- | End helper functions
 
+isLetStatement :: Fix Theorem -> Bool
+isLetStatement (Fx (Let _ _)) = True
+isLetStatement _              = False
+
 getInvolves :: Fix Theorem -> [String]
 getInvolves = L.nub . cata getInvolves'
 
