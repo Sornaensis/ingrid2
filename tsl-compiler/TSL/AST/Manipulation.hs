@@ -7,6 +7,8 @@ import qualified Data.List   as L
 import           Data.Maybe  (fromMaybe)
 import           TSL.AST.AST
 
+import           Debug.Trace
+
 -- | Begin helper functions
 invarMappingList :: [String]
 invarMappingList = map (:[]) (filter (/='I') $ ['A'..'Z'] ++ ['a'..'z'])
@@ -45,11 +47,11 @@ theoremToSrc :: Fix Theorem -> String
 theoremToSrc = cata theoremToSrc'
 
 theoremToSrc' :: Theorem String -> String
-theoremToSrc' (Let a b)             = "let " ++ a ++ " = " ++ b 
+theoremToSrc' (Let a b)             = "let " ++ a ++ " = " ++ b
 theoremToSrc' (Relation a)          = show a
 theoremToSrc' (RelExpr a b)         = " " ++ a ++ " " ++ b
 theoremToSrc' (Cond a b)            = a ++ fromMaybe [] b
-theoremToSrc' (InvarExpr a b)       = a ++ fromMaybe [] b 
+theoremToSrc' (InvarExpr a b)       = a ++ fromMaybe [] b
 theoremToSrc' (If a b c)            =
     case a of
         "not Local True" ->
@@ -83,7 +85,7 @@ theoremToSrc' (Paren e)            = "(" ++ e ++ ")"
 theoremToSrc' _                    = ""
 
 instance Show (Fix Theorem) where
-    show = (++";") . theoremToSrc 
+    show = (++";") . theoremToSrc
 
 extractLetStatements :: [Fix Theorem] -> [(String, Fix Theorem)]
 extractLetStatements = foldr (\x ys ->
@@ -135,7 +137,7 @@ containsInvar' (Paren a)       = a
 containsInvar' _               = False
 
 replaceAllEqSign :: Fix Theorem -> [Fix Theorem]
-replaceAllEqSign (Fx (If c (Fx (ExprList as)) elif)) = 
+replaceAllEqSign (Fx (If c (Fx (ExprList as)) elif)) =
         return . Fx $ If c (Fx $ ExprList (concatMap replaceAllEqSign as)) (head . replaceAllEqSign <$> elif)
 replaceAllEqSign (Fx (InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelEq)) exp))))) =
         [Fx $ InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelGte)) exp))),
@@ -147,7 +149,7 @@ replaceAllInvar m = cata (replaceAllInvar' m)
 
 replaceAllInvar' :: [(String, Fix Theorem)] -> Theorem (Fix Theorem) -> Fix Theorem
 replaceAllInvar' m (Invar i)       = case lookup i m of
-                                        Just v -> v
+                                        Just v -> replaceAllInvar (filter ((/=i) . fst) m) v
                                         _      -> Fx $ Invar i
 replaceAllInvar' m v               = Fx v
 
@@ -155,7 +157,7 @@ replaceAllFuncs :: Fix Theorem -> (Fix Theorem, [(String, Fix Theorem)])
 replaceAllFuncs f =
     let (exp, expmap)       = cata replaceAllFuncs' f
         (expmap', finalmap) = unzip $ zipWith  (\(a,b) s -> ((a,Fx $ Invar s),(s,b))) expmap invarMappingList
-    in (replaceAllInvar expmap' exp, finalmap)
+    in trace (show exp) $ (replaceAllInvar expmap' exp, finalmap)
 
 
 replaceAllFuncs' :: Theorem (Fix Theorem, [(String, Fix Theorem)]) -> (Fix Theorem, [(String, Fix Theorem)])
@@ -169,7 +171,7 @@ replaceAllFuncs' (InvarExpr (a,a') mb)      = case mb of
 replaceAllFuncs' (Cond (a,a') mb)           = case mb of
                                                 Just (b,b') -> (Fx $ Cond a (Just b), a'++b')
                                                 _           -> (Fx $ Cond a Nothing, a')
-replaceAllFuncs' (ExprF s (a,a'))           = (Fx $ ExprF s a, a') 
+replaceAllFuncs' (ExprF s (a,a'))           = (Fx $ ExprF s a, a')
 replaceAllFuncs' (RelExpr (r,r') (p,p'))        = (Fx $ RelExpr r p, r'++p')
 replaceAllFuncs' (ExprList es)                       = let (es'',v) = foldr (\(e,t) (es',ts') -> (e:es', t++ts')) ([],[]) es
                                                in (Fx $ ExprList es'', v)

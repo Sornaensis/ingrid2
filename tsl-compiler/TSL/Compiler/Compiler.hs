@@ -25,8 +25,8 @@ genTheorem :: TSLInputTheorem -> IO TSLTheorem
 genTheorem (TSLInputTheorem n code d i) =
      do ts <- generateAllIneq
                   . concatMap replaceAllEqSign
-                  . (\(lets, ts) -> trace (show ts) $ map ({- replaceAllInvar lets
-                                       . -} replaceAllInvar lets) ts)
+                  . (\(lets, ts) -> map ( replaceAllInvar lets
+                                       .  replaceAllInvar lets) ts)
                   . (\ts -> (extractLetStatements ts, filter (not . isLetStatement) ts))
                   . theoremParser
                   . lexer $ code

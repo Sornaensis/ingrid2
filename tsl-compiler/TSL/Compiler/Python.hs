@@ -211,7 +211,7 @@ generateSymPyIneq e@(Fx (InvarExpr _ (Just (Fx (RelExpr _ _))))) =
              relation                                          = theoremToSrc rel
              bound                                             = getBound rel
              invar_analyses                                    = map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) invars
-             invars                                            = getInvolves exp
+             invars                                            = getInvolves e
         in fmap (map (adjustInequality invar_analyses) . (e:) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
                invars
                 >>= \inv -> return $
