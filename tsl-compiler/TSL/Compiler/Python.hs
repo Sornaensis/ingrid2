@@ -202,7 +202,7 @@ generateSymPyIneq (Fx (If c (Fx (ExprList elist)) elif)) = do
         elist' <- mapM generateSymPyIneq elist
         elif'  <- sequence $ (head <$>) . generateSymPyIneq <$> elif
         return [Fx $ If c (Fx $ ExprList (concat elist')) elif']
-generateSymPyIneq e@(Fx (InvarExpr _ (Just (Fx (RelExpr _ _))))) =
+generateSymPyIneq e@(Fx (InvarExpr _ (Just (Fx (RelExpr _ orig))))) =
         let  (Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp)))))    = func_map
              (func_map, func_remap)                            = replaceAllFuncs e 
              rationalFlag                                      = not $ containsFunc exp
@@ -211,7 +211,7 @@ generateSymPyIneq e@(Fx (InvarExpr _ (Just (Fx (RelExpr _ _))))) =
              relation                                          = theoremToSrc rel
              bound                                             = getBound rel
              invar_analyses                                    = map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) invars
-             invars                                            = getInvolves e
+             invars                                            = getInvolves orig
         in fmap (map (adjustInequality invar_analyses) . (e:) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
                invars
                 >>= \inv -> return $
