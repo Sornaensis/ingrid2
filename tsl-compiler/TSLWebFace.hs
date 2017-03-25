@@ -48,7 +48,8 @@ postCompileTSLR = do
                                                  #{json}
                                        <input type=submit>
                            <div style="width:60%;float:left">
-                                       <pre>#{res}
+                                       <textarea rows="40" cols="80" name=theoremjson>
+                                         #{res}
                      |]
         _  -> badResult json "Input Error"
 
