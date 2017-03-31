@@ -157,7 +157,7 @@ replaceAllFuncs :: Fix Theorem -> (Fix Theorem, [(String, Fix Theorem)])
 replaceAllFuncs f =
     let (exp, expmap)       = cata replaceAllFuncs' f
         (expmap', finalmap) = unzip $ zipWith  (\(a,b) s -> ((a,Fx $ Invar s),(s,b))) expmap invarMappingList
-    in trace (show exp) $ (replaceAllInvar expmap' exp, finalmap)
+    in (replaceAllInvar expmap' exp, finalmap)
 
 
 replaceAllFuncs' :: Theorem (Fix Theorem, [(String, Fix Theorem)]) -> (Fix Theorem, [(String, Fix Theorem)])
@@ -188,7 +188,7 @@ replaceAllFuncs' (Function fun es) | fun `L.elem` solveableFunctions
                                                in (Fx $ Function fun es'', v)
                                  | otherwise = let (es'',v) = foldr (\(e,t) (es',ts') -> (e:es', t++ts')) ([],[]) es
                                                    val      = Fx $ Function fun es''
-                                               in (Fx $ Invar (theoremToSrc val), (theoremToSrc val, val):v)
+                                               in (Fx $ Invar (theoremToSrc val), (theoremToSrc val, replaceAllInvar v val):v)
 replaceAllFuncs' (Paren (a,a'))             = (Fx $ Paren a, a')
 replaceAllFuncs' (Local s)                  = (Fx $ Local s, [])
 replaceAllFuncs' (Invar a)                  = (Fx $ Invar a, [])
