@@ -461,11 +461,17 @@ class Theorem(object):
         """
         raise NotImplementedError
 
+    def oddInvar(self, str_invar):
+        return maxb(str_invar) == minb(str_invar) and minb(str_invar) != 'undt' and minb(str_invar) % 2 == 1
+
+    def evenInvar(self, str_invar):
+        return maxb(str_invar) == minb(str_invar) and minb(str_invar) != 'undt' and minb(str_invar) % 2 == 0
+
     def set_ing_obj(self, ing_obj):
         self.ingrid_obj = ing_obj
         
     def set(self, str_invar, val, ind='Bool'):
-        self.ingrid_obj.set(self, str_invar, val, ind)
+        self.ingrid_obj.set(str_invar, val, ind)
         
     def maxb(self, str_invar):
         return self.ingrid_obj.get(str_invar, ind='Max')

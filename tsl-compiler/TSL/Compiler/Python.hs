@@ -44,9 +44,9 @@ generatePythonClass (TSLTheorem (TSLInputTheorem name text disp idnum) ts)  =
              ++ "    super(" ++ name ++ ", self).__init__(" ++ L.intercalate ", " [show idnum, show . concatMap show . theoremParser . lexer $ text, show disp] ++")\n"
              ++ "def involves(self, str_invar):\n"
              ++ "    return str_invar in " ++ show (L.nub $ concatMap getInvolves ts) ++ "\n"
-             ++ "def run(self, ingrid_obj):\n"
+             ++ "def run(self):\n"
              ++ concatMap (indent . generatePython) ts 
-             ++ "return"
+             ++ "    return"
 
 generatePython :: Fix Theorem -> String
 generatePython = cata generatePython'  . cata realizeAnalysis'
@@ -100,12 +100,8 @@ realizeAnalysis' v
         case s of
             "not" -> Fx $ 
                 Cond (Fx $ Function "get" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "False" (Fx Empty))) 
-            "even" -> Fx $ 
-                And (Fx $ Function "even" [Fx $ Function "min" [e]])
-                    (Fx $ Function "even" [Fx $ Function "max" [e]])
-            "odd" -> Fx $ 
-                And (Fx $ Function "odd" [Fx $ Function "min" [e]])
-                    (Fx $ Function "odd" [Fx $ Function "max" [e]]) 
+            "even" ->  Fx $ Function "evenInvar" [e]
+            "odd" -> Fx $ Function "oddInvar" [e]
             "istrue" -> Fx $ InvarExpr e Nothing
             "isset" -> Fx $ 
                 And (Fx $ Cond (Fx $ Function "max" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))))
