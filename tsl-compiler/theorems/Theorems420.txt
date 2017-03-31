@@ -68,7 +68,7 @@
             "disp": ""
         },
         {
-            "text": "let t = floor((girth-1)/2); let k = (1-(-1)**(t-1))/2; let s = ((mindeg - 1)**(t-1) - 1)/(mindeg*(mindeg-2)); let rx = maxdeg*s - (maxdeg - mindeg)*k/mindeg; let rz = (maxdeg + mindeg - 2)*s - (maxdeg - 2)*k/mindeg; if not forest and (3 <= mindeg and mindeg <= maxdeg - 3) and odd(girth) then {edgeInd >= (nodes*(mindeg - 1) +(maxdeg - mindeg + 1)*rx)/(maxdeg + mindeg - 1)} else if not forest and (3 <= mindeg and mindeg <= maxdeg - 3) and even(girth) then {edgeInd >= (nodes*(mindeg - 1) +(maxdeg - mindeg + 1)*rz)/(maxdeg + mindeg - 1)};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 412,
             "disp": ""
