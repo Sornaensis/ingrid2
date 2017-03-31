@@ -39,7 +39,7 @@
             "name": "Theorem",
             "disp": "",
             "idnum": 7,
-            "text": "if defined diameter and mindeg > 3*nodeConnec - 1 then { nodes >= 1 + mindeg + diameter*nodeConnec + (diameter/3)*(mindeg - 3*nodeConnec + 1) } else if defined diameter then { nodes >= nodeConnec * (diameter-3) + 2*mindeg + 2 };" 
+            "text": "if exists diameter and mindeg > 3*nodeConnec - 1 then { nodes >= 1 + mindeg + diameter*nodeConnec + (diameter/3)*(mindeg - 3*nodeConnec + 1) } else if exists diameter then { nodes >= nodeConnec * (diameter-3) + 2*mindeg + 2 };" 
         }, 
         { 
             "name": "Theorem",

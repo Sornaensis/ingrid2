@@ -25,6 +25,7 @@ import TSL.AST.AST
       even           { TokenEven }
       number         { TokenNum $$ }
       defined        { TokenDefined }
+      exists         { TokenExists }
       undefined      { TokenUndefined }
       isset          { TokenIsset }
       istrue         { TokenIstrue }
@@ -95,6 +96,7 @@ Cond1 : Invar CondRel    { Fx $ Cond $1 $2 }
       | odd Invar        { Fx $ Cond (Fx $ ExprF "odd"       $2) Nothing }
       | isset Invar      { Fx $ Cond (Fx $ ExprF "isset"     $2) Nothing }
       | defined Invar    { Fx $ Cond (Fx $ ExprF "defined"   $2) Nothing }
+      | exists Invar     { Fx $ Cond (Fx $ ExprF "exists"   $2) Nothing }
       | undefined Invar  { Fx $ Cond (Fx $ ExprF "undefined" $2) Nothing }
       | '(' Cond ')'     { Fx $ Paren $2 }
 
@@ -155,6 +157,7 @@ data Token
       | TokenElse
       | TokenDefined
       | TokenUndefined
+      | TokenExists
       | TokenIsset
       | TokenIstrue
       | TokenIsfalse
@@ -224,6 +227,7 @@ lexVar cs =
       ("defined",rest)   -> TokenDefined : lexer rest
       ("isfalse",rest)   -> TokenIsfalse : lexer rest
       ("istrue",rest)    -> TokenIstrue : lexer rest
+      ("exists",rest)    -> TokenExists : lexer rest
       ("isset",rest)     -> TokenIsset : lexer rest
       ("then",rest)      -> TokenThen : lexer rest
       ("null",rest)      -> TokenNull : lexer rest
