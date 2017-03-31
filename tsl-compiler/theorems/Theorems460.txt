@@ -68,7 +68,7 @@
             "disp": ""
         },
         {
-            "text": "if nodeInd == 2 then {maxClique >= nodes*((nodes - 1 - 2*edges/nodes)*ln(nodes - 1 - 2*edges/nodes) - (nodes - 2 - 2*edges/nodes)**2)/(nodes - 2 - 2*edges/nodes)**2};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 452,
             "disp": ""

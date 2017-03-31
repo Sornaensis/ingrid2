@@ -111,7 +111,10 @@ containsFunc' (Mul a b)       = a || b
 containsFunc' (Div a b)       = a || b
 containsFunc' (Neg a)         = a
 containsFunc' (Pow a b)       = a || b
-containsFunc' (Function _ _)  = True
+containsFunc' (Function f _)  | f == "ln" || 
+                                f == "log" ||
+                                f == "exp" =  True
+                              | otherwise  = False
 containsFunc' (Paren a)       = a
 containsFunc' _               = False
 
