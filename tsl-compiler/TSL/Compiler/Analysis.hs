@@ -38,6 +38,7 @@ chooseBound _             a@InvAn{}     = a
 chooseBound a@InvAn{}     _             = a
 chooseBound NotFound      a             = a
 chooseBound a             NotFound      = a
+chooseBound _             _             = NotFound
 
 flipInvBound :: InvarBoundSwitch -> InvarBoundSwitch
 flipInvBound (InvAn af ad) = InvAn (not af) ad
@@ -49,7 +50,7 @@ addBound (InvAn af ad) (InvAn bf bd) |  af == bf  = InvAn af $ ad+bd
 addBound a@InvAn{}     _             = a
 addBound _             a@InvAn{}     = a
 addBound NotFound      a             = a
-addBound a             NotFound      = a
+addBound a             _             = a
 
 mulBound :: InvarBoundSwitch -> InvarBoundSwitch -> InvarBoundSwitch
 mulBound Complex       _             = Complex

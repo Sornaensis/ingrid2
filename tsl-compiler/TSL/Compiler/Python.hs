@@ -116,7 +116,7 @@ realizeAnalysis' v
         cata realizeAnalysis' $ Fx $ And (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelGte)) expr)))))
                                          (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelLte)) expr)))))
    | (Cond a (Just (Fx (RelExpr rel expr)))) <- v =
-        let bound = getBound rel
+        let bound = flipBound $ getBound rel
             invars = getInvolves expr
             inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
             inv_replce = map (swapBound bound) inv_mappings

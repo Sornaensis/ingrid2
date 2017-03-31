@@ -29,5 +29,5 @@ genTheorem (TSLInputTheorem n code d i) =
                                        .  replaceAllInvar lets) ts)
                   . (\ts -> (extractLetStatements ts, filter (not . isLetStatement) ts))
                   . theoremParser
-                  . lexer $ code
+                  . lexer $ trace code code
         return $ TSLTheorem (TSLInputTheorem (n ++ show i) code d i) $! ts
