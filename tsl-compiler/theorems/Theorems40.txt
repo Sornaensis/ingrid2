@@ -44,7 +44,17 @@
             "disp": ""
         },
         {
-            "text": "if diameter <= 3 then { maxdeg <= nodes - diameter + 1 } else { maxdeg <= nodes - nodeConnec*(diameter - 4)-3 };",
+            "text": "
+            if exists diameter then 
+            {
+                if diameter <= 3 then { 
+                    maxdeg <= nodes - diameter + 1 
+                } 
+                else 
+                { 
+                    maxdeg <= nodes - nodeConnec*(diameter - 4)-3 
+                }
+            };",
             "name": "Theorem",
             "idnum": 28,
             "disp": ""
