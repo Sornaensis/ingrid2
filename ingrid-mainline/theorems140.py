@@ -2,6 +2,11 @@ from INGRID_CLASSES import Theorem
 from math import floor,ceil,log,sqrt,exp
 import sys
 
+def odd(x):
+    return !isinstance(x, str) && x % 2 == 1
+def even(x):
+    return !isinstance(x, str) && x % 2 == 0
+
 class Theorem1(Theorem):
     def __init__(self):
         super(Theorem1, self).__init__(1, "edges <= (1.0/2.0)*(nodes-(1.0))*(nodes-(2.0))+nodeConnec;", "")
