@@ -461,13 +461,13 @@ class Theorem(object):
         raise NotImplementedError
 
     def congruent(self, str_invar, b, c):
-        return maxb(str_invar) == minb(str_invar) and minb(str_invar) != 'undt' and (minb(str_invar) - b) % c == 0
+        return self.maxb(str_invar) == self.minb(str_invar) and self.minb(str_invar) != 'undt' and (self.minb(str_invar) - b) % c == 0
 
     def oddInvar(self, str_invar):
-        return maxb(str_invar) == minb(str_invar) and minb(str_invar) != 'undt' and minb(str_invar) % 2 == 1
+        return self.maxb(str_invar) == self.minb(str_invar) and self.minb(str_invar) != 'undt' and self.minb(str_invar) % 2 == 1
 
     def evenInvar(self, str_invar):
-        return maxb(str_invar) == minb(str_invar) and minb(str_invar) != 'undt' and minb(str_invar) % 2 == 0
+        return self.maxb(str_invar) == self.minb(str_invar) and self.minb(str_invar) != 'undt' and self.minb(str_invar) % 2 == 0
 
     def set_ing_obj(self, ing_obj):
         self.ingrid_obj = ing_obj
