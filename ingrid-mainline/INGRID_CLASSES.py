@@ -156,11 +156,12 @@ class Invariant:
             
         # a change occurs
 
-        if val == 'undt' and self.value['Max'] != 'undt':
-            trace_msg = 'The maximum value should be undetermined but it is defined';
-            self.trace.append({"Message": trace_msg, 'TheoremId': thm_id})
-            return False, False
-        elif val == 'undt' and self.value['Max'] == 'undt':
+        # if val == 'undt' and self.value['Max'] != 'undt':
+        #     trace_msg = 'The maximum value should be undetermined but it is defined';
+        #     self.trace.append({"Message": trace_msg, 'TheoremId': thm_id})
+        #     return False, False
+        # el
+        if val == 'undt' and self.value['Max'] == 'undt':
             return True, False
         
         if thm_id == -1 and self.value['Max'] != val:
