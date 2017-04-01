@@ -155,7 +155,7 @@ class Theorem7(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if maxb("diameter") != 'undt'  and minb("mindeg") > 3.0*maxb("nodeConnec")-(1.0):
+        if maxb("diameter") != 'undt'  and maxb("nodeConnec") != 'undt'  and minb("mindeg") > 3.0*maxb("nodeConnec")-(1.0):
             try:
                 set("nodes",  1.0+minb("mindeg")+minb("diameter")*minb("nodeConnec")+(minb("diameter")/3.0)*(minb("mindeg")-(3.0*minb("nodeConnec"))+1.0), ind='Min')
             except:
@@ -317,7 +317,7 @@ class Theorem13(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if minb("girth") >= 2.0*maxb("diameter")+1.0 and maxb("girth") <= 2.0*minb("diameter")+1.0:
+        if maxb("diameter") != 'undt'  and minb("girth") >= 2.0*maxb("diameter")+1.0 and minb("diameter") != 'undt'  and maxb("girth") <= 2.0*minb("diameter")+1.0:
             set("regular", True )
         
         return

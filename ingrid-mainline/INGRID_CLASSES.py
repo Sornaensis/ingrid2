@@ -425,7 +425,6 @@ class IngridObj:
         json_dict['Addenda'] = self.original_json['Addenda'] 
         return json_dict
 
-
 class Theorem(object):
     """
     This is the Theorem class from which all theorems should inherit. It contains unimplemented methods which are used

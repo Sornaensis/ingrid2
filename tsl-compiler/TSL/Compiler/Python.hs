@@ -45,6 +45,7 @@ generatePythonClass (TSLTheorem (TSLInputTheorem name text disp idnum) ts)  =
              ++ "def involves(self, str_invar):\n"
              ++ "    return str_invar in " ++ show (L.nub $ concatMap getInvolves ts) ++ "\n"
              ++ "def run(self):\n"
+             ++ "    set = self.set\n"
              ++ "    maxb = self.maxb\n"
              ++ "    minb = self.minb\n"
              ++ "    evenInvar = self.evenInvar\n"
@@ -125,10 +126,16 @@ realizeAnalysis' v
             invars = getInvolves expr
             inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
             inv_replce = map (swapBound bound) inv_mappings
+            inv_check  = map (\(_,f) -> Fx $ Cond f 
+                                            (Just . Fx $ 
+                                                RelExpr (Fx $ Relation RelNeq) 
+                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) inv_replce
             a' = case bound of
                     Max -> Fx $ Function "minb" [a]
                     Min -> Fx $ Function "maxb" [a] 
-        in  Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
+        in  if null inv_check 
+              then Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
+              else Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr))
    | (InvarExpr (Fx (ExprF s e)) Nothing) <- v =
         case s of
             "undefined" -> Fx $ InvarExpr (Fx $ Function "set" [e, 
