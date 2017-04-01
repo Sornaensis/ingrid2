@@ -4289,9 +4289,9 @@ class Theorem129(Theorem):
 
 class Theorem130(Theorem):
     def __init__(self):
-        super(Theorem130, self).__init__(130, "if diam == 2.0 and nodes >= maxdeg*maxdeg/8.0 then \n{\n    edges >= nodes*(nodes-(1.0))/(2.0*maxdeg)\n\n} else if diam == 2.0 and nodes < maxdeg*maxdeg/8.0 then \n{\n    edges >= maxdeg*nodes*(nodes-(1.0))/(maxdeg*maxdeg+8.0*nodes)\n\n};", "")
+        super(Theorem130, self).__init__(130, "if diameter == 2.0 and nodes >= maxdeg*maxdeg/8.0 then \n{\n    edges >= nodes*(nodes-(1.0))/(2.0*maxdeg)\n\n} else if diameter == 2.0 and nodes < maxdeg*maxdeg/8.0 then \n{\n    edges >= maxdeg*nodes*(nodes-(1.0))/(maxdeg*maxdeg+8.0*nodes)\n\n};", "")
     def involves(self, str_invar):
-        return str_invar in ["diam","nodes","maxdeg","edges"]
+        return str_invar in ["diameter","nodes","maxdeg","edges"]
     def run(self):
         get = self.get
         set = self.set
@@ -4300,7 +4300,7 @@ class Theorem130(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("diam") != 'undt'  and minb("diam") >= 2.0) and (maxb("diam") != 'undt'  and maxb("diam") <= 2.0) and (minb("nodes") != 'undt'  and maxb("maxdeg") != 'undt'  and minb("nodes") >= maxb("maxdeg")*maxb("maxdeg")/8.0):
+        if (minb("diameter") != 'undt'  and minb("diameter") >= 2.0) and (maxb("diameter") != 'undt'  and maxb("diameter") <= 2.0) and (minb("nodes") != 'undt'  and maxb("maxdeg") != 'undt'  and minb("nodes") >= maxb("maxdeg")*maxb("maxdeg")/8.0):
             try:
                 set("edges",  minb("nodes")*(minb("nodes")-(1.0))/(2.0*maxb("maxdeg")), ind='Min')
             except:
@@ -4314,7 +4314,7 @@ class Theorem130(Theorem):
             except:
                 pass
         
-        elif (minb("diam") != 'undt'  and minb("diam") >= 2.0) and (maxb("diam") != 'undt'  and maxb("diam") <= 2.0) and (maxb("nodes") != 'undt'  and minb("maxdeg") != 'undt'  and maxb("nodes") < minb("maxdeg")*minb("maxdeg")/8.0):
+        elif (minb("diameter") != 'undt'  and minb("diameter") >= 2.0) and (maxb("diameter") != 'undt'  and maxb("diameter") <= 2.0) and (maxb("nodes") != 'undt'  and minb("maxdeg") != 'undt'  and maxb("nodes") < minb("maxdeg")*minb("maxdeg")/8.0):
             try:
                 set("edges",  maxb("maxdeg")*minb("nodes")*(minb("nodes")-(1.0))/(maxb("maxdeg")*maxb("maxdeg")+8.0*minb("nodes")), ind='Min')
             except:

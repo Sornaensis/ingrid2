@@ -56,7 +56,7 @@
             "disp": ""
         },
         {
-            "text": "if diam == 2 and nodes >= maxdeg * maxdeg / 8 then {edges >= nodes *(nodes - 1)/(2 * maxdeg)} else if diam == 2 and nodes < maxdeg * maxdeg /8 then {edges >= maxdeg * nodes * (nodes - 1)/ (maxdeg * maxdeg + 8*nodes)};",
+            "text": "if diameter == 2 and nodes >= maxdeg * maxdeg / 8 then {edges >= nodes *(nodes - 1)/(2 * maxdeg)} else if diameter == 2 and nodes < maxdeg * maxdeg /8 then {edges >= maxdeg * nodes * (nodes - 1)/ (maxdeg * maxdeg + 8*nodes)};",
             "name": "Theorem",
             "idnum": 130,
             "disp": ""
