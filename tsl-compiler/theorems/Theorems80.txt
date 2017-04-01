@@ -62,7 +62,7 @@
             "disp": ""
         },
         {
-            "text": "if defined girth then { circumference <= nodes - (numOfComponents - 1)*(mindeg + 1), circumference <= edges - (numOfComponents - 1)*mindeg, maxdeg >= 2 };",
+            "text": "if exists girth then { circumference <= nodes - (numOfComponents - 1)*(mindeg + 1), circumference <= edges - (numOfComponents - 1)*mindeg, maxdeg >= 2 };",
             "name": "Theorem",
             "idnum": 71,
             "disp": ""

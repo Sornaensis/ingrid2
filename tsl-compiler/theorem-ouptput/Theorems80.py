@@ -260,7 +260,7 @@ class Theorem70(Theorem):
 
 class Theorem71(Theorem):
     def __init__(self):
-        super(Theorem71, self).__init__(71, "if defined girth then \n{\n    circumference <= nodes-((numOfComponents-(1.0))*(mindeg+1.0)),\n    circumference <= edges-((numOfComponents-(1.0))*mindeg),\n    maxdeg >= 2.0\n\n};", "")
+        super(Theorem71, self).__init__(71, "if exists girth then \n{\n    circumference <= nodes-((numOfComponents-(1.0))*(mindeg+1.0)),\n    circumference <= edges-((numOfComponents-(1.0))*mindeg),\n    maxdeg >= 2.0\n\n};", "")
     def involves(self, str_invar):
         return str_invar in ["girth","circumference","nodes","numOfComponents","mindeg","edges","maxdeg"]
     def run(self):
@@ -271,7 +271,7 @@ class Theorem71(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if minb("girth") != 'undt' :
+        if maxb("girth") != 'undt' :
             try:
                 set("circumference",  maxb("nodes")-((minb("numOfComponents")-(1.0))*(minb("mindeg")+1.0)), ind='Max')
             except:
