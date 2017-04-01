@@ -93,15 +93,15 @@ class Theorem4(Theorem):
         oddInvar = self.oddInvar
         congruent = self.congruent
         try:
-            set("spectralRadius",  (2.0*maxb("edges")*maxb("nodeCover")/(maxb("nodeCover")+1.0))**(1.0/2.0), ind='Max')
+            set("spectralRadius",  (2.0*maxb("edges")*minb("nodeCover")/(minb("nodeCover")+1.0))**(1.0/2.0), ind='Max')
         except:
             pass
         try:
-            set("edges",  1.0e26*minb("spectralRadius")**2.0*(minb("nodeCover")+1.0)/(2.000000000000014e26*minb("nodeCover")), ind='Min')
+            set("edges",  1.0e26*minb("spectralRadius")**2.0*(maxb("nodeCover")+1.0)/(2.000000000000014e26*maxb("nodeCover")), ind='Min')
         except:
             pass
         try:
-            set("nodeCover",  1.0e26*minb("spectralRadius")**2.0/(2.000000000000014e26*maxb("edges")-(1.0e26*minb("spectralRadius")**2.0)), ind='Min')
+            set("nodeCover",  1.0e26*maxb("spectralRadius")**2.0/(2.000000000000014e26*minb("edges")-(1.0e26*maxb("spectralRadius")**2.0)), ind='Max')
         except:
             pass
         return
@@ -124,11 +124,11 @@ class Theorem5(Theorem):
         except:
             pass
         try:
-            set("nodes",  sqrt(2.0)*sqrt(minb("edges")*minb("maxClique")/(minb("maxClique")-(1.0))), ind='Min')
+            set("nodes",  sqrt(2.0)*sqrt(minb("edges")*maxb("maxClique")/(maxb("maxClique")-(1.0))), ind='Min')
         except:
             pass
         try:
-            set("edges",  maxb("nodes")**2.0*(maxb("maxClique")-(1.0))/(2.0*maxb("maxClique")), ind='Max')
+            set("edges",  maxb("nodes")**2.0*(minb("maxClique")-(1.0))/(2.0*minb("maxClique")), ind='Max')
         except:
             pass
         return
@@ -171,7 +171,7 @@ class Theorem7(Theorem):
         congruent = self.congruent
         if maxb("diameter") != 'undt'  and (minb("mindeg") != 'undt'  and maxb("nodeConnec") != 'undt'  and minb("mindeg") > 3.0*maxb("nodeConnec")-(1.0)):
             try:
-                set("nodes",  1.0+minb("mindeg")+minb("diameter")*minb("nodeConnec")+(minb("diameter")/3.0)*(minb("mindeg")-(3.0*minb("nodeConnec"))+1.0), ind='Min')
+                set("nodes",  1.0+minb("mindeg")+minb("diameter")*maxb("nodeConnec")+(minb("diameter")/3.0)*(minb("mindeg")-(3.0*maxb("nodeConnec"))+1.0), ind='Min')
             except:
                 pass
             try:
@@ -193,11 +193,11 @@ class Theorem7(Theorem):
             except:
                 pass
             try:
-                set("diameter",  (-(2.0*minb("mindeg"))+3.0*maxb("nodeConnec")+maxb("nodes")-(2.0))/maxb("nodeConnec"), ind='Max')
+                set("diameter",  (-(2.0*minb("mindeg"))+3.0*minb("nodeConnec")+maxb("nodes")-(2.0))/minb("nodeConnec"), ind='Max')
             except:
                 pass
             try:
-                set("mindeg",  -(minb("diameter")*maxb("nodeConnec")/2.0)+3.0*maxb("nodeConnec")/2.0+maxb("nodes")/2.0-(1.0), ind='Max')
+                set("mindeg",  -(minb("diameter")*minb("nodeConnec")/2.0)+3.0*minb("nodeConnec")/2.0+maxb("nodes")/2.0-(1.0), ind='Max')
             except:
                 pass
         
@@ -221,7 +221,7 @@ class Theorem8(Theorem):
         except:
             pass
         try:
-            set("maxdeg",  -(maxb("mindeg")*minb("numOfComponents"))+maxb("mindeg")+maxb("nodes")-(minb("numOfComponents")), ind='Max')
+            set("maxdeg",  -(minb("mindeg")*minb("numOfComponents"))+minb("mindeg")+maxb("nodes")-(minb("numOfComponents")), ind='Max')
         except:
             pass
         try:
@@ -229,7 +229,7 @@ class Theorem8(Theorem):
         except:
             pass
         try:
-            set("numOfComponents",  (-(minb("maxdeg"))+maxb("mindeg")+maxb("nodes"))/(maxb("mindeg")+1.0), ind='Max')
+            set("numOfComponents",  (-(minb("maxdeg"))+minb("mindeg")+maxb("nodes"))/(minb("mindeg")+1.0), ind='Max')
         except:
             pass
         return
@@ -362,15 +362,15 @@ class Theorem14(Theorem):
         oddInvar = self.oddInvar
         congruent = self.congruent
         try:
-            set("chromaticNum",  minb("nodes")/(minb("nodes")-(minb("spectralRadius"))), ind='Min')
+            set("chromaticNum",  maxb("nodes")/(maxb("nodes")-(minb("spectralRadius"))), ind='Min')
         except:
             pass
         try:
-            set("nodes",  maxb("chromaticNum")*maxb("spectralRadius")/(maxb("chromaticNum")-(1.0)), ind='Max')
+            set("nodes",  maxb("chromaticNum")*minb("spectralRadius")/(maxb("chromaticNum")-(1.0)), ind='Min')
         except:
             pass
         try:
-            set("spectralRadius",  maxb("nodes")-(maxb("nodes")/maxb("chromaticNum")), ind='Max')
+            set("spectralRadius",  minb("nodes")-(minb("nodes")/maxb("chromaticNum")), ind='Max')
         except:
             pass
         return
@@ -465,7 +465,7 @@ class Theorem17(Theorem):
         except:
             pass
         try:
-            set("maxClique",  (minb("edgeCliqueCover")+sqrt(minb("edgeCliqueCover")*(minb("edgeCliqueCover")+8.0*minb("edges"))))/(2.0*minb("edgeCliqueCover")), ind='Min')
+            set("maxClique",  (maxb("edgeCliqueCover")+sqrt(maxb("edgeCliqueCover")*(maxb("edgeCliqueCover")+8.0*minb("edges"))))/(2.0*maxb("edgeCliqueCover")), ind='Min')
         except:
             pass
         return

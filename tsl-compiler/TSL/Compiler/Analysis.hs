@@ -26,12 +26,10 @@ isCoeff (Coeff _) = True
 isCoeff _         = False
 
 chooseBound :: InvarBoundSwitch -> InvarBoundSwitch -> InvarBoundSwitch
-chooseBound (InvAn af ad) (InvAn bf bd) | abs ad == abs bd && af && abs ad > 1  = InvAn af ad
-                                        | abs ad == abs bd && bf && abs ad > 1  = InvAn bf bd
-                                        | abs ad == abs bd && af && abs ad <= 1 = InvAn bf bd
-                                        | abs ad == abs bd && bf && abs ad <= 1 = InvAn af ad
-                                        | abs ad > abs bd                       = InvAn af ad
-                                        | otherwise                             = InvAn bf bd
+chooseBound (InvAn af ad) (InvAn bf bd) | abs ad == abs bd && af = InvAn af ad
+                                        | abs ad == abs bd && bf = InvAn bf bd
+                                        | abs ad > abs bd        = InvAn af ad
+                                        | otherwise              = InvAn bf bd
 chooseBound Complex       _             = Complex
 chooseBound _             Complex       = Complex
 chooseBound _             a@InvAn{}     = a

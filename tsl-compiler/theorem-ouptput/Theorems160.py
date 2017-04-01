@@ -20,7 +20,7 @@ class Theorem141(Theorem):
         except:
             pass
         try:
-            set("nodes",  (minb("circumference")+2.0*minb("edges"))/minb("circumference"), ind='Min')
+            set("nodes",  (maxb("circumference")+2.0*minb("edges"))/maxb("circumference"), ind='Min')
         except:
             pass
         return
@@ -336,11 +336,11 @@ class Theorem152(Theorem):
             except:
                 pass
             try:
-                set("nodeInd",  2.0*maxb("nodes")/5.0+sqrt(5.0*maxb("edges")-(maxb("nodes")**2.0))/5.0, ind='Max')
+                set("nodeInd",  2.0*minb("nodes")/5.0+sqrt(5.0*maxb("edges")-(minb("nodes")**2.0))/5.0, ind='Max')
             except:
                 pass
             try:
-                set("nodes",  2.0*minb("nodeInd")+sqrt(minb("edges")-(minb("nodeInd")**2.0)), ind='Min')
+                set("nodes",  2.0*maxb("nodeInd")+sqrt(minb("edges")-(maxb("nodeInd")**2.0)), ind='Min')
             except:
                 pass
         
@@ -514,15 +514,15 @@ class Theorem159(Theorem):
         except:
             pass
         try:
-            set("nodes",  (maxb("maxdeg")*maxb("mindeg")*maxb("nodeInd")+maxb("maxdeg")*maxb("nodeInd")-(maxb("maxdeg"))+maxb("mindeg")*maxb("nodeInd")+maxb("mindeg")+maxb("nodeInd"))/(maxb("mindeg")+1.0), ind='Max')
+            set("nodes",  (minb("maxdeg")*minb("mindeg")*maxb("nodeInd")+minb("maxdeg")*maxb("nodeInd")-(minb("maxdeg"))+minb("mindeg")*maxb("nodeInd")+minb("mindeg")+maxb("nodeInd"))/(minb("mindeg")+1.0), ind='Max')
         except:
             pass
         try:
-            set("maxdeg",  (-(minb("mindeg")*maxb("nodeInd"))+minb("mindeg")*minb("nodes")-(minb("mindeg"))-(maxb("nodeInd"))+minb("nodes"))/(minb("mindeg")*maxb("nodeInd")+maxb("nodeInd")-(1.0)), ind='Min')
+            set("maxdeg",  (-(maxb("mindeg")*maxb("nodeInd"))+maxb("mindeg")*minb("nodes")-(maxb("mindeg"))-(maxb("nodeInd"))+minb("nodes"))/(maxb("mindeg")*maxb("nodeInd")+maxb("nodeInd")-(1.0)), ind='Min')
         except:
             pass
         try:
-            set("mindeg",  (-(minb("maxdeg")*maxb("nodeInd"))+minb("maxdeg")-(maxb("nodeInd"))+minb("nodes"))/(minb("maxdeg")*maxb("nodeInd")+maxb("nodeInd")-(minb("nodes"))+1.0), ind='Min')
+            set("mindeg",  (-(maxb("maxdeg")*maxb("nodeInd"))+maxb("maxdeg")-(maxb("nodeInd"))+minb("nodes"))/(maxb("maxdeg")*maxb("nodeInd")+maxb("nodeInd")-(minb("nodes"))+1.0), ind='Min')
         except:
             pass
         return
@@ -550,21 +550,21 @@ class Theorem160(Theorem):
             except:
                 pass
             try:
-                set("maxdeg",  (minb("nodeInd")/5.0+minb("nodes"))/minb("nodeInd"), ind='Min')
+                set("maxdeg",  (maxb("nodeInd")/5.0+minb("nodes"))/maxb("nodeInd"), ind='Min')
             except:
                 pass
         
         elif (minb("maxClique") != 'undt'  and minb("maxClique") >= 2.0) and (maxb("maxClique") != 'undt'  and maxb("maxClique") <= 2.0) and (minb("nodes") != 'undt'  and minb("nodes") >= 3.0) and get("connected") == True  and (get("cycle") == False  or (get("cycle") == True  and maxb("nodes") != 'undt'  and minb("nodes") == maxb("nodes") and evenInvar("nodes"))) and ((minb("edges") != 'undt'  and maxb("nodes") != 'undt'  and minb("edges") >= maxb("nodes")) or (minb("maxdeg") != 'undt'  and minb("maxdeg") > 2.0) or (maxb("nodes") != 'undt'  and minb("nodes") == maxb("nodes") and oddInvar("nodes"))):
             try:
-                set("nodeInd",  minb("nodes")/minb("maxdeg")-(1.0/(minb("maxdeg")+1.0))+1.0/(maxb("mindeg")+1.0), ind='Min')
+                set("nodeInd",  minb("nodes")/maxb("maxdeg")-(1.0/(maxb("maxdeg")+1.0))+1.0/(maxb("mindeg")+1.0), ind='Min')
             except:
                 pass
             try:
-                set("nodes",  maxb("maxdeg")*(maxb("maxdeg")*maxb("mindeg")*maxb("nodeInd")+maxb("maxdeg")*maxb("nodeInd")-(maxb("maxdeg"))+maxb("mindeg")*maxb("nodeInd")+maxb("mindeg")+maxb("nodeInd"))/(maxb("maxdeg")*maxb("mindeg")+maxb("maxdeg")+maxb("mindeg")+1.0), ind='Max')
+                set("nodes",  minb("maxdeg")*(minb("maxdeg")*minb("mindeg")*maxb("nodeInd")+minb("maxdeg")*maxb("nodeInd")-(minb("maxdeg"))+minb("mindeg")*maxb("nodeInd")+minb("mindeg")+maxb("nodeInd"))/(minb("maxdeg")*minb("mindeg")+minb("maxdeg")+minb("mindeg")+1.0), ind='Max')
             except:
                 pass
             try:
-                set("maxdeg",  (-(maxb("mindeg")*maxb("nodeInd"))+maxb("mindeg")*maxb("nodes")-(maxb("mindeg"))-(maxb("nodeInd"))+maxb("nodes")+sqrt(maxb("mindeg")**2.0*maxb("nodeInd")**2.0+2.0*maxb("mindeg")**2.0*maxb("nodeInd")*maxb("nodes")+2.0*maxb("mindeg")**2.0*maxb("nodeInd")+maxb("mindeg")**2.0*maxb("nodes")**2.0-(2.0*maxb("mindeg")**2.0*maxb("nodes"))+maxb("mindeg")**2.0+2.0*maxb("mindeg")*maxb("nodeInd")**2.0+4.0*maxb("mindeg")*maxb("nodeInd")*maxb("nodes")+2.0*maxb("mindeg")*maxb("nodeInd")+2.0*maxb("mindeg")*maxb("nodes")**2.0-(6.0*maxb("mindeg")*maxb("nodes"))+maxb("nodeInd")**2.0+2.0*maxb("nodeInd")*maxb("nodes")+maxb("nodes")**2.0-(4.0*maxb("nodes"))))/(2.0*(maxb("mindeg")*maxb("nodeInd")+maxb("nodeInd")-(1.0))), ind='Max')
+                set("maxdeg",  (-(maxb("mindeg")*maxb("nodeInd"))+maxb("mindeg")*minb("nodes")-(maxb("mindeg"))-(maxb("nodeInd"))+minb("nodes")+sqrt(maxb("mindeg")**2.0*maxb("nodeInd")**2.0+2.0*maxb("mindeg")**2.0*maxb("nodeInd")*minb("nodes")+2.0*maxb("mindeg")**2.0*maxb("nodeInd")+maxb("mindeg")**2.0*minb("nodes")**2.0-(2.0*maxb("mindeg")**2.0*minb("nodes"))+maxb("mindeg")**2.0+2.0*maxb("mindeg")*maxb("nodeInd")**2.0+4.0*maxb("mindeg")*maxb("nodeInd")*minb("nodes")+2.0*maxb("mindeg")*maxb("nodeInd")+2.0*maxb("mindeg")*minb("nodes")**2.0-(6.0*maxb("mindeg")*minb("nodes"))+maxb("nodeInd")**2.0+2.0*maxb("nodeInd")*minb("nodes")+minb("nodes")**2.0-(4.0*minb("nodes"))))/(2.0*(maxb("mindeg")*maxb("nodeInd")+maxb("nodeInd")-(1.0))), ind='Min')
             except:
                 pass
             try:

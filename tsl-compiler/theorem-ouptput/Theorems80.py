@@ -218,15 +218,15 @@ class Theorem69(Theorem):
         oddInvar = self.oddInvar
         congruent = self.congruent
         try:
-            set("chromaticNum",  2.0*minb("edges")/(2.0*minb("edges")-(minb("spectralRadius")**2.0)), ind='Min')
+            set("chromaticNum",  2.0*maxb("edges")/(2.0*maxb("edges")-(minb("spectralRadius")**2.0)), ind='Min')
         except:
             pass
         try:
-            set("edges",  maxb("chromaticNum")*maxb("spectralRadius")**2.0/(2.0*(maxb("chromaticNum")-(1.0))), ind='Max')
+            set("edges",  maxb("chromaticNum")*minb("spectralRadius")**2.0/(2.0*(maxb("chromaticNum")-(1.0))), ind='Min')
         except:
             pass
         try:
-            set("spectralRadius",  sqrt(2.0)*sqrt(maxb("edges")-(maxb("edges")/maxb("chromaticNum"))), ind='Max')
+            set("spectralRadius",  sqrt(2.0)*sqrt(minb("edges")-(minb("edges")/maxb("chromaticNum"))), ind='Max')
         except:
             pass
         return
@@ -277,11 +277,11 @@ class Theorem71(Theorem):
             except:
                 pass
             try:
-                set("nodes",  minb("circumference")+minb("mindeg")*minb("numOfComponents")-(minb("mindeg"))+minb("numOfComponents")-(1.0), ind='Min')
+                set("nodes",  minb("circumference")+maxb("mindeg")*minb("numOfComponents")-(maxb("mindeg"))+minb("numOfComponents")-(1.0), ind='Min')
             except:
                 pass
             try:
-                set("numOfComponents",  (-(minb("circumference"))+maxb("mindeg")+maxb("nodes")+1.0)/(maxb("mindeg")+1.0), ind='Max')
+                set("numOfComponents",  (-(minb("circumference"))+minb("mindeg")+maxb("nodes")+1.0)/(minb("mindeg")+1.0), ind='Max')
             except:
                 pass
             try:
@@ -293,11 +293,11 @@ class Theorem71(Theorem):
             except:
                 pass
             try:
-                set("edges",  minb("circumference")+minb("mindeg")*minb("numOfComponents")-(minb("mindeg")), ind='Min')
+                set("edges",  minb("circumference")+maxb("mindeg")*minb("numOfComponents")-(maxb("mindeg")), ind='Min')
             except:
                 pass
             try:
-                set("numOfComponents",  (-(minb("circumference"))+maxb("edges")+maxb("mindeg"))/maxb("mindeg"), ind='Max')
+                set("numOfComponents",  (-(minb("circumference"))+maxb("edges")+minb("mindeg"))/minb("mindeg"), ind='Max')
             except:
                 pass
             try:
@@ -451,11 +451,11 @@ class Theorem75(Theorem):
         oddInvar = self.oddInvar
         congruent = self.congruent
         try:
-            set("edges",  (minb("nodes")/maxb("nodeInd"))*(minb("nodes")-(maxb("nodeInd")*(minb("nodes")/maxb("nodeInd")+1.0)/2.0)), ind='Min')
+            set("edges",  (maxb("nodes")/maxb("nodeInd"))*(maxb("nodes")-(maxb("nodeInd")*(maxb("nodes")/maxb("nodeInd")+1.0)/2.0)), ind='Min')
         except:
             pass
         try:
-            set("nodes",  maxb("nodeInd")/2.0+sqrt(maxb("nodeInd")*(8.0*maxb("edges")+maxb("nodeInd")))/2.0, ind='Max')
+            set("nodes",  minb("nodeInd")/2.0+sqrt(minb("nodeInd")*(8.0*minb("edges")+minb("nodeInd")))/2.0, ind='Min')
         except:
             pass
         try:
@@ -482,7 +482,7 @@ class Theorem76(Theorem):
         except:
             pass
         try:
-            set("nodeCliqueCover",  (2.0*minb("edgeCliqueCover")+minb("nodes"))/(minb("nodes")+2.0), ind='Min')
+            set("nodeCliqueCover",  (2.0*minb("edgeCliqueCover")+maxb("nodes"))/(maxb("nodes")+2.0), ind='Min')
         except:
             pass
         try:

@@ -719,15 +719,15 @@ class Theorem53(Theorem):
         except:
             pass
         try:
-            set("chromaticNum",  (minb("arboricity")*minb("nodes")+sqrt(minb("arboricity")*minb("nodes")*(minb("arboricity")*minb("nodes")+2.0*minb("girth")-(2.0))))/(2.0*minb("nodes")), ind='Min')
+            set("chromaticNum",  (minb("arboricity")*maxb("nodes")+sqrt(minb("arboricity")*maxb("nodes")*(minb("arboricity")*maxb("nodes")+2.0*minb("girth")-(2.0))))/(2.0*maxb("nodes")), ind='Min')
         except:
             pass
         try:
-            set("nodes",  minb("arboricity")*(-(maxb("girth"))+1.0)/(2.0*maxb("chromaticNum")*(minb("arboricity")-(maxb("chromaticNum")))), ind='Min')
+            set("nodes",  maxb("arboricity")*(-(maxb("girth"))+1.0)/(2.0*minb("chromaticNum")*(maxb("arboricity")-(minb("chromaticNum")))), ind='Min')
         except:
             pass
         try:
-            set("girth",  -(2.0*maxb("chromaticNum")*maxb("nodes"))+1.0+2.0*maxb("chromaticNum")**2.0*maxb("nodes")/minb("arboricity"), ind='Max')
+            set("girth",  -(2.0*maxb("chromaticNum")*minb("nodes"))+1.0+2.0*maxb("chromaticNum")**2.0*minb("nodes")/minb("arboricity"), ind='Max')
         except:
             pass
         return
@@ -787,11 +787,11 @@ class Theorem55(Theorem):
         except:
             pass
         try:
-            set("maxdeg",  2.0*maxb("edges")-(maxb("mindeg")*minb("nodes"))+maxb("mindeg"), ind='Max')
+            set("maxdeg",  2.0*maxb("edges")-(minb("mindeg")*minb("nodes"))+minb("mindeg"), ind='Max')
         except:
             pass
         try:
-            set("nodes",  (2.0*maxb("edges")-(minb("maxdeg"))+maxb("mindeg"))/maxb("mindeg"), ind='Max')
+            set("nodes",  (2.0*maxb("edges")-(minb("maxdeg"))+minb("mindeg"))/minb("mindeg"), ind='Max')
         except:
             pass
         try:
@@ -818,7 +818,7 @@ class Theorem56(Theorem):
         except:
             pass
         try:
-            set("nodes",  (2.0*minb("edges")+minb("maxdeg")-(maxb("mindeg")))/minb("maxdeg"), ind='Min')
+            set("nodes",  (2.0*minb("edges")+maxb("maxdeg")-(maxb("mindeg")))/maxb("maxdeg"), ind='Min')
         except:
             pass
         try:
@@ -826,7 +826,7 @@ class Theorem56(Theorem):
         except:
             pass
         try:
-            set("mindeg",  2.0*minb("edges")-(minb("maxdeg")*maxb("nodes"))+minb("maxdeg"), ind='Min')
+            set("mindeg",  2.0*minb("edges")-(maxb("maxdeg")*maxb("nodes"))+maxb("maxdeg"), ind='Min')
         except:
             pass
         return
@@ -873,15 +873,15 @@ class Theorem58(Theorem):
         oddInvar = self.oddInvar
         congruent = self.congruent
         try:
-            set("maxClique",  minb("nodes")/(minb("nodes")-(minb("spectralRadius")))-(1.0/3.0), ind='Min')
+            set("maxClique",  maxb("nodes")/(maxb("nodes")-(minb("spectralRadius")))-(1.0/3.0), ind='Min')
         except:
             pass
         try:
-            set("nodes",  maxb("spectralRadius")*(3.0*maxb("maxClique")+1.0)/(3.0*maxb("maxClique")-(2.0)), ind='Max')
+            set("nodes",  minb("spectralRadius")*(3.0*maxb("maxClique")+1.0)/(3.0*maxb("maxClique")-(2.0)), ind='Min')
         except:
             pass
         try:
-            set("spectralRadius",  maxb("nodes")*(3.0*maxb("maxClique")-(2.0))/(3.0*maxb("maxClique")+1.0), ind='Max')
+            set("spectralRadius",  maxb("nodes")*(3.0*minb("maxClique")-(2.0))/(3.0*minb("maxClique")+1.0), ind='Max')
         except:
             pass
         return
@@ -928,19 +928,19 @@ class Theorem60(Theorem):
             except:
                 pass
             try:
-                set("edges",  maxb("girth")*(2.0*maxb("genus")+maxb("nodes")-(2.0*minb("numOfComponents")))/(maxb("girth")-(2.0)), ind='Max')
+                set("edges",  minb("girth")*(2.0*maxb("genus")+maxb("nodes")-(2.0*minb("numOfComponents")))/(minb("girth")-(2.0)), ind='Max')
             except:
                 pass
             try:
-                set("girth",  2.0*maxb("edges")/(maxb("edges")-(2.0*maxb("genus"))-(maxb("nodes"))+2.0*minb("numOfComponents")), ind='Max')
+                set("girth",  2.0*minb("edges")/(minb("edges")-(2.0*maxb("genus"))-(maxb("nodes"))+2.0*minb("numOfComponents")), ind='Max')
             except:
                 pass
             try:
-                set("nodes",  minb("edges")-(2.0*minb("edges")/minb("girth"))-(2.0*maxb("genus"))+2.0*minb("numOfComponents"), ind='Min')
+                set("nodes",  maxb("edges")-(2.0*maxb("edges")/minb("girth"))-(2.0*maxb("genus"))+2.0*minb("numOfComponents"), ind='Min')
             except:
                 pass
             try:
-                set("numOfComponents",  -(maxb("edges")/2.0)+maxb("edges")/minb("girth")+maxb("genus")+maxb("nodes")/2.0, ind='Max')
+                set("numOfComponents",  -(minb("edges")/2.0)+minb("edges")/minb("girth")+maxb("genus")+maxb("nodes")/2.0, ind='Max')
             except:
                 pass
         

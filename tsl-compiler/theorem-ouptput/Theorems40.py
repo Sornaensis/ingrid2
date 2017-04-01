@@ -137,7 +137,7 @@ class Theorem26(Theorem):
         except:
             pass
         try:
-            set("nodes",  (3.0*minb("domination")+sqrt(8.0*minb("domination")**2.0*minb("edges")+9.0*minb("domination")**2.0-(12.0*minb("domination"))+4.0)-(2.0))/(2.0*minb("domination")), ind='Min')
+            set("nodes",  (3.0*maxb("domination")+sqrt(8.0*maxb("domination")**2.0*minb("edges")+9.0*maxb("domination")**2.0-(12.0*maxb("domination"))+4.0)-(2.0))/(2.0*maxb("domination")), ind='Min')
         except:
             pass
         try:
@@ -160,7 +160,7 @@ class Theorem27(Theorem):
         oddInvar = self.oddInvar
         congruent = self.congruent
         try:
-            set("edgeCover",  maxb("nodes")*maxb("maxdeg")/(1.0+maxb("maxdeg")), ind='Max')
+            set("edgeCover",  maxb("nodes")*minb("maxdeg")/(1.0+minb("maxdeg")), ind='Max')
         except:
             pass
         try:
@@ -168,7 +168,7 @@ class Theorem27(Theorem):
         except:
             pass
         try:
-            set("maxdeg",  -(maxb("edgeCover")/(maxb("edgeCover")-(maxb("nodes")))), ind='Min')
+            set("maxdeg",  -(maxb("edgeCover")/(maxb("edgeCover")-(minb("nodes")))), ind='Max')
         except:
             pass
         return
@@ -206,7 +206,7 @@ class Theorem28(Theorem):
             except:
                 pass
             try:
-                set("nodes",  minb("diameter")*minb("nodeConnec")+minb("maxdeg")-(4.0*minb("nodeConnec"))+3.0, ind='Min')
+                set("nodes",  minb("diameter")*maxb("nodeConnec")+minb("maxdeg")-(4.0*maxb("nodeConnec"))+3.0, ind='Min')
             except:
                 pass
             try:
@@ -214,7 +214,7 @@ class Theorem28(Theorem):
             except:
                 pass
             try:
-                set("diameter",  (-(minb("maxdeg"))+4.0*maxb("nodeConnec")+maxb("nodes")-(3.0))/maxb("nodeConnec"), ind='Max')
+                set("diameter",  (-(minb("maxdeg"))+4.0*minb("nodeConnec")+maxb("nodes")-(3.0))/minb("nodeConnec"), ind='Max')
             except:
                 pass
         
