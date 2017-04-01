@@ -4,6 +4,12 @@ class Theorem121(Theorem):
     def involves(self, str_invar):
         return str_invar in ["chromaticNum","nodes","nodeConnec","diameter"]
     def run(self):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
         try:
             set("chromaticNum",  maxb("nodes")-(minb("nodeConnec")*(minb("diameter")-(3.0)))-(2.0), ind='Max')
         except:
@@ -28,17 +34,23 @@ class Theorem122(Theorem):
     def involves(self, str_invar):
         return str_invar in ["edges","nodes","edgeCliqueCover"]
     def run(self):
-        if minb("edges") >= maxb("nodes")**2.0/4.0:
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (minb("edges") != 'undt'  and maxb("nodes") != 'undt'  and minb("edges") >= maxb("nodes")**2.0/4.0):
             try:
                 set("edgeCliqueCover",  ((1.0/2.0)*maxb("nodes")*(maxb("nodes")-(1.0))-(minb("edges")))+(1.0+sqrt(1.0+4.0*((1.0/2.0)*maxb("nodes")*(maxb("nodes")-(1.0))-(minb("edges"))))), ind='Max')
             except:
                 pass
             try:
-                set("nodes",  0.5*sqrt(8.0*minb("edgeCliqueCover")+8.0*minb("edges")+8.0*sqrt(4.0*minb("edgeCliqueCover")+1.0)+9.0)+0.5, ind='Min')
+                set("nodes",  sqrt(8.0*minb("edgeCliqueCover")+8.0*minb("edges")+8.0*sqrt(4.0*minb("edgeCliqueCover")+1.0)+9.0)/2.0+1.0/2.0, ind='Min')
             except:
                 pass
             try:
-                set("edges",  -(1.0*minb("edgeCliqueCover"))+0.5*maxb("nodes")**2.0-(0.5*maxb("nodes"))+1.0*sqrt(4.0*minb("edgeCliqueCover")+1.0)-(1.0), ind='Max')
+                set("edges",  -(minb("edgeCliqueCover"))+maxb("nodes")**2.0/2.0-(maxb("nodes")/2.0)+sqrt(4.0*minb("edgeCliqueCover")+1.0)-(1.0), ind='Max')
             except:
                 pass
         
@@ -50,7 +62,13 @@ class Theorem123(Theorem):
     def involves(self, str_invar):
         return str_invar in ["nodes","edges","mindeg","edgeConnec"]
     def run(self):
-        if maxb("nodes") <= 2.0*minb("edges"):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (maxb("nodes") != 'undt'  and minb("edges") != 'undt'  and maxb("nodes") <= 2.0*minb("edges")):
             try:
                 set("mindeg",  minb("edgeConnec"), ind='Min')
             except:
@@ -76,6 +94,12 @@ class Theorem124(Theorem):
     def involves(self, str_invar):
         return str_invar in ["connected","bandwidth","nodes","diameter"]
     def run(self):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
         if get("connected") == True :
             try:
                 set("bandwidth",  (minb("nodes")-(1.0))/maxb("diameter"), ind='Min')
@@ -98,7 +122,13 @@ class Theorem125(Theorem):
     def involves(self, str_invar):
         return str_invar in ["genus","girth","nodes"]
     def run(self):
-        if minb("genus") >= 1.0 and congruent("girth", 3.0, 4.0):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (minb("genus") != 'undt'  and minb("genus") >= 1.0) and congruent("girth", 3.0, 4.0):
             try:
                 set("nodes",  9.0*(minb("girth")-(1.0))/4.0+1.0, ind='Min')
             except:
@@ -108,7 +138,7 @@ class Theorem125(Theorem):
             except:
                 pass
         
-        elif minb("genus") >= 1.0:
+        elif (minb("genus") != 'undt'  and minb("genus") >= 1.0):
             try:
                 set("nodes",  9.0*(minb("girth")-(1.0))/4.0, ind='Min')
             except:
@@ -126,7 +156,13 @@ class Theorem126(Theorem):
     def involves(self, str_invar):
         return str_invar in ["nodes","mindeg","edgeConnec"]
     def run(self):
-        if maxb("nodes") <= minb("mindeg")*2.0:
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (maxb("nodes") != 'undt'  and minb("mindeg") != 'undt'  and maxb("nodes") <= minb("mindeg")*2.0):
             try:
                 set("nodes",  2.0*maxb("edgeConnec")+3.0, ind='Max')
             except:
@@ -144,7 +180,13 @@ class Theorem127(Theorem):
     def involves(self, str_invar):
         return str_invar in ["hamiltonian","nodes","maxdeg","edgeChromatic"]
     def run(self):
-        if get("hamiltonian") == True  and evenInvar("nodes") and minb("maxdeg") >= 3.0 and maxb("maxdeg") <= 3.0:
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if get("hamiltonian") == True  and evenInvar("nodes") and (minb("maxdeg") != 'undt'  and minb("maxdeg") >= 3.0) and (maxb("maxdeg") != 'undt'  and maxb("maxdeg") <= 3.0):
             try:
                 set("edgeChromatic",  minb("maxdeg"), ind='Min')
             except:
@@ -170,13 +212,19 @@ class Theorem128(Theorem):
     def involves(self, str_invar):
         return str_invar in ["nodes","edgeInd","maxdeg","edges"]
     def run(self):
-        if minb("nodes") >= 2.0*maxb("edgeInd")+1.0 and (maxb("maxdeg") <= 2.0*minb("edgeInd") and maxb("nodes") <= 2.0*minb("edgeInd")+floor(minb("edgeInd")/floor((maxb("maxdeg")+1.0)/2.0)) and oddInvar("maxdeg")):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (minb("nodes") != 'undt'  and maxb("edgeInd") != 'undt'  and minb("nodes") >= 2.0*maxb("edgeInd")+1.0) and ((maxb("maxdeg") != 'undt'  and minb("edgeInd") != 'undt'  and maxb("maxdeg") <= 2.0*minb("edgeInd")) and (maxb("nodes") != 'undt'  and minb("edgeInd") != 'undt'  and maxb("maxdeg") != 'undt'  and maxb("nodes") <= 2.0*minb("edgeInd")+floor(minb("edgeInd")/floor((maxb("maxdeg")+1.0)/2.0))) and oddInvar("maxdeg")):
             try:
                 set("edges",  min(maxb("nodes")*maxb("maxdeg")/2.0, maxb("edgeInd")*maxb("maxdeg")+floor(2.0*(maxb("nodes")-(maxb("edgeInd")))/(maxb("maxdeg")+3.0))*(maxb("maxdeg")-(1.0))/2.0), ind='Max')
             except:
                 pass
         
-        elif minb("nodes") >= 2.0*maxb("edgeInd")+1.0 and (maxb("maxdeg") <= 2.0*minb("edgeInd") and maxb("nodes") <= 2.0*minb("edgeInd")+floor(minb("edgeInd")/floor((maxb("maxdeg")+1.0)/2.0)) and evenInvar("maxdeg")):
+        elif (minb("nodes") != 'undt'  and maxb("edgeInd") != 'undt'  and minb("nodes") >= 2.0*maxb("edgeInd")+1.0) and ((maxb("maxdeg") != 'undt'  and minb("edgeInd") != 'undt'  and maxb("maxdeg") <= 2.0*minb("edgeInd")) and (maxb("nodes") != 'undt'  and minb("edgeInd") != 'undt'  and maxb("maxdeg") != 'undt'  and maxb("nodes") <= 2.0*minb("edgeInd")+floor(minb("edgeInd")/floor((maxb("maxdeg")+1.0)/2.0))) and evenInvar("maxdeg")):
             try:
                 set("edges",  maxb("nodes")*maxb("maxdeg")/2.0, ind='Max')
             except:
@@ -190,7 +238,7 @@ class Theorem128(Theorem):
             except:
                 pass
         
-        if minb("nodes") >= 2.0*maxb("edgeInd") and (maxb("maxdeg") <= 2.0*minb("edgeInd") and maxb("nodes") <= 2.0*minb("edgeInd")+floor(minb("edgeInd")/floor((maxb("maxdeg")+1.0)/2.0))):
+        if (minb("nodes") != 'undt'  and maxb("edgeInd") != 'undt'  and minb("nodes") >= 2.0*maxb("edgeInd")) and ((maxb("maxdeg") != 'undt'  and minb("edgeInd") != 'undt'  and maxb("maxdeg") <= 2.0*minb("edgeInd")) and (maxb("nodes") != 'undt'  and minb("edgeInd") != 'undt'  and maxb("maxdeg") != 'undt'  and maxb("nodes") <= 2.0*minb("edgeInd")+floor(minb("edgeInd")/floor((maxb("maxdeg")+1.0)/2.0)))):
             try:
                 set("edges",  maxb("edgeInd")*maxb("maxdeg")+floor(maxb("edgeInd")*floor((maxb("maxdeg")+1.0)/2.0))*floor(maxb("maxdeg")/2.0), ind='Max')
             except:
@@ -204,7 +252,7 @@ class Theorem128(Theorem):
             except:
                 pass
         
-        if minb("nodes") >= 2.0*maxb("edgeInd") and minb("maxdeg") >= 2.0*maxb("edgeInd")+1.0 and minb("nodes") >= maxb("edgeInd")+maxb("maxdeg"):
+        if (minb("nodes") != 'undt'  and maxb("edgeInd") != 'undt'  and minb("nodes") >= 2.0*maxb("edgeInd")) and (minb("maxdeg") != 'undt'  and maxb("edgeInd") != 'undt'  and minb("maxdeg") >= 2.0*maxb("edgeInd")+1.0) and (minb("nodes") != 'undt'  and maxb("edgeInd") != 'undt'  and maxb("maxdeg") != 'undt'  and minb("nodes") >= maxb("edgeInd")+maxb("maxdeg")):
             try:
                 set("edges",  maxb("edgeInd")*maxb("maxdeg"), ind='Max')
             except:
@@ -218,7 +266,7 @@ class Theorem128(Theorem):
             except:
                 pass
         
-        elif minb("nodes") >= 2.0*maxb("edgeInd") and minb("maxdeg") >= 2.0*maxb("edgeInd")+1.0 and maxb("nodes") < minb("edgeInd")+minb("maxdeg"):
+        elif (minb("nodes") != 'undt'  and maxb("edgeInd") != 'undt'  and minb("nodes") >= 2.0*maxb("edgeInd")) and (minb("maxdeg") != 'undt'  and maxb("edgeInd") != 'undt'  and minb("maxdeg") >= 2.0*maxb("edgeInd")+1.0) and (maxb("nodes") != 'undt'  and minb("edgeInd") != 'undt'  and minb("maxdeg") != 'undt'  and maxb("nodes") < minb("edgeInd")+minb("maxdeg")):
             try:
                 set("edges",  max(maxb("edgeInd")*(2.0*maxb("edgeInd")+1.0), floor(maxb("edgeInd")*(maxb("nodes")+maxb("maxdeg")-(maxb("edgeInd")))/2.0)), ind='Max')
             except:
@@ -232,7 +280,13 @@ class Theorem129(Theorem):
     def involves(self, str_invar):
         return str_invar in ["girth","mindeg","nodes","diameter"]
     def run(self):
-        if minb("girth") != 'undt'  and minb("girth") > 3.0:
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if minb("girth") != 'undt'  and (minb("girth") != 'undt'  and minb("girth") > 3.0):
             try:
                 set("mindeg",  (maxb("nodes")-(maxb("diameter"))+3.0*(maxb("diameter")/3.0+1.0)-(3.0))/(maxb("diameter")/3.0+1.0), ind='Max')
             except:
@@ -254,7 +308,13 @@ class Theorem130(Theorem):
     def involves(self, str_invar):
         return str_invar in ["diam","nodes","maxdeg","edges"]
     def run(self):
-        if minb("diam") >= 2.0 and maxb("diam") <= 2.0 and minb("nodes") >= maxb("maxdeg")*maxb("maxdeg")/8.0:
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (minb("diam") != 'undt'  and minb("diam") >= 2.0) and (maxb("diam") != 'undt'  and maxb("diam") <= 2.0) and (minb("nodes") != 'undt'  and maxb("maxdeg") != 'undt'  and minb("nodes") >= maxb("maxdeg")*maxb("maxdeg")/8.0):
             try:
                 set("edges",  minb("nodes")*(minb("nodes")-(1.0))/(2.0*maxb("maxdeg")), ind='Min')
             except:
@@ -268,7 +328,7 @@ class Theorem130(Theorem):
             except:
                 pass
         
-        elif minb("diam") >= 2.0 and maxb("diam") <= 2.0 and maxb("nodes") < minb("maxdeg")*minb("maxdeg")/8.0:
+        elif (minb("diam") != 'undt'  and minb("diam") >= 2.0) and (maxb("diam") != 'undt'  and maxb("diam") <= 2.0) and (maxb("nodes") != 'undt'  and minb("maxdeg") != 'undt'  and maxb("nodes") < minb("maxdeg")*minb("maxdeg")/8.0):
             try:
                 set("edges",  maxb("maxdeg")*minb("nodes")*(minb("nodes")-(1.0))/(maxb("maxdeg")*maxb("maxdeg")+8.0*minb("nodes")), ind='Min')
             except:
@@ -290,6 +350,12 @@ class Theorem131(Theorem):
     def involves(self, str_invar):
         return str_invar in ["chromaticNum","maxdeg","maxClique"]
     def run(self):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
         try:
             set("chromaticNum",  maxb("maxdeg")-(1.0)+(maxb("maxdeg")+1.0)/max(4.0, minb("maxClique")+1.0), ind='Max')
         except:
@@ -306,6 +372,12 @@ class Theorem132(Theorem):
     def involves(self, str_invar):
         return str_invar in ["nodes","mindeg","maxdeg"]
     def run(self):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
         if congruent("nodes", 3.0, 4.0):
             try:
                 set("mindeg",  (maxb("nodes")-(3.0))*(maxb("nodes")+1.0)/(4.0*(maxb("nodes")-(1.0)-(maxb("maxdeg")))), ind='Max')
@@ -342,6 +414,12 @@ class Theorem133(Theorem):
     def involves(self, str_invar):
         return str_invar in ["nodeInd","nodes","edges"]
     def run(self):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
         try:
             set("nodeInd",  ceil(minb("nodes")-(2.0*maxb("edges")/1.0+floor(2.0*maxb("edges")/minb("nodes"))))+ceil((minb("nodes")-(ceil(minb("nodes")-(2.0*maxb("edges")/1.0+floor(2.0*maxb("edges")/minb("nodes"))))*1.0+floor(2.0*maxb("edges")/minb("nodes"))))/(1.0+1.0+floor(2.0*maxb("edges")/minb("nodes")))), ind='Min')
         except:
@@ -354,13 +432,19 @@ class Theorem134(Theorem):
     def involves(self, str_invar):
         return str_invar in ["radius","diam","nodes","edges"]
     def run(self):
-        if minb("radius") >= 2.0 and maxb("radius") <= 2.0 and minb("diam") >= 2.0 and maxb("diam") <= 2.0 and minb("nodes") >= 4.0 and maxb("nodes") <= 4.0:
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (minb("radius") != 'undt'  and minb("radius") >= 2.0) and (maxb("radius") != 'undt'  and maxb("radius") <= 2.0) and (minb("diam") != 'undt'  and minb("diam") >= 2.0) and (maxb("diam") != 'undt'  and maxb("diam") <= 2.0) and (minb("nodes") != 'undt'  and minb("nodes") >= 4.0) and (maxb("nodes") != 'undt'  and maxb("nodes") <= 4.0):
             try:
                 set("edges",  4.0, ind='Min')
             except:
                 pass
         
-        elif minb("radius") >= 2.0 and maxb("radius") <= 2.0 and minb("diam") >= 2.0 and maxb("diam") <= 2.0 and minb("nodes") >= 5.0:
+        elif (minb("radius") != 'undt'  and minb("radius") >= 2.0) and (maxb("radius") != 'undt'  and maxb("radius") <= 2.0) and (minb("diam") != 'undt'  and minb("diam") >= 2.0) and (maxb("diam") != 'undt'  and maxb("diam") <= 2.0) and (minb("nodes") != 'undt'  and minb("nodes") >= 5.0):
             try:
                 set("edges",  2.0*minb("nodes")-(5.0), ind='Min')
             except:
@@ -378,6 +462,12 @@ class Theorem135(Theorem):
     def involves(self, str_invar):
         return str_invar in ["edges","nodeCover","numOfComponents"]
     def run(self):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
         try:
             set("edges",  2.0*minb("nodeCover")-(maxb("numOfComponents")), ind='Min')
         except:
@@ -398,7 +488,13 @@ class Theorem136(Theorem):
     def involves(self, str_invar):
         return str_invar in ["maxdeg","edgeInd","edges"]
     def run(self):
-        if maxb("maxdeg") <= 2.0*minb("edgeInd") and oddInvar("maxdeg"):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (maxb("maxdeg") != 'undt'  and minb("edgeInd") != 'undt'  and maxb("maxdeg") <= 2.0*minb("edgeInd")) and oddInvar("maxdeg"):
             try:
                 set("edges",  maxb("edgeInd")*maxb("maxdeg")+(maxb("maxdeg")-(1.0))/2.0*2.0*maxb("edgeInd")/(maxb("maxdeg")+1.0), ind='Max')
             except:
@@ -420,6 +516,12 @@ class Theorem137(Theorem):
     def involves(self, str_invar):
         return str_invar in []
     def run(self):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
         return
 
 class Theorem138(Theorem):
@@ -428,7 +530,13 @@ class Theorem138(Theorem):
     def involves(self, str_invar):
         return str_invar in ["edges","nodes","circumference"]
     def run(self):
-        if minb("edges") >= (1.0/2.0)*(maxb("nodes")*maxb("nodes")-(5.0*maxb("nodes"))+14.0):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (minb("edges") != 'undt'  and maxb("nodes") != 'undt'  and minb("edges") >= (1.0/2.0)*(maxb("nodes")*maxb("nodes")-(5.0*maxb("nodes"))+14.0)):
             try:
                 set("circumference",  minb("nodes")-(1.0), ind='Min')
             except:
@@ -446,7 +554,13 @@ class Theorem139(Theorem):
     def involves(self, str_invar):
         return str_invar in ["edges","circumference","nodes","girth"]
     def run(self):
-        if minb("edges") >= (1.0/4.0)*(maxb("circumference")*(2.0*maxb("nodes")-(maxb("circumference")))+1.0):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (minb("edges") != 'undt'  and maxb("circumference") != 'undt'  and maxb("nodes") != 'undt'  and minb("edges") >= (1.0/4.0)*(maxb("circumference")*(2.0*maxb("nodes")-(maxb("circumference")))+1.0)):
             try:
                 set("girth",  3.0, ind='Min')
             except:
@@ -464,7 +578,13 @@ class Theorem140(Theorem):
     def involves(self, str_invar):
         return str_invar in ["edges","nodes","crossing"]
     def run(self):
-        if minb("edges") >= 4.0*maxb("nodes"):
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (minb("edges") != 'undt'  and maxb("nodes") != 'undt'  and minb("edges") >= 4.0*maxb("nodes")):
             try:
                 set("crossing",  minb("edges")**3.0/(100.0*maxb("nodes")**2.0)+1.0, ind='Min')
             except:
