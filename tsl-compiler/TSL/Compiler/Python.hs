@@ -129,13 +129,13 @@ realizeAnalysis' v
             inv_check  = map (\(_,f) -> Fx $ Cond f 
                                             (Just . Fx $ 
                                                 RelExpr (Fx $ Relation RelNeq) 
-                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) inv_replce
+                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a'):inv_replce)
             a' = case bound of
                     Max -> Fx $ Function "minb" [a]
                     Min -> Fx $ Function "maxb" [a] 
         in  if null inv_check 
               then Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
-              else Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr))
+              else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr))
    | (InvarExpr (Fx (ExprF s e)) Nothing) <- v =
         case s of
             "undefined" -> Fx $ InvarExpr (Fx $ Function "set" [e, 
