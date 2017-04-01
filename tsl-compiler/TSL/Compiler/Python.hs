@@ -45,6 +45,7 @@ generatePythonClass (TSLTheorem (TSLInputTheorem name text disp idnum) ts)  =
              ++ "def involves(self, str_invar):\n"
              ++ "    return str_invar in " ++ show (L.nub $ concatMap getInvolves ts) ++ "\n"
              ++ "def run(self):\n"
+             ++ "    get = self.get\n"
              ++ "    set = self.set\n"
              ++ "    maxb = self.maxb\n"
              ++ "    minb = self.minb\n"

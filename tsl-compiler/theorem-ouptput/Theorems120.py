@@ -4,6 +4,7 @@ class Theorem101(Theorem):
     def involves(self, str_invar):
         return str_invar in ["connected","nodes","nodeCover","edgeCover"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -54,6 +55,7 @@ class Theorem102(Theorem):
     def involves(self, str_invar):
         return str_invar in ["edgeChromatic","bandwidth"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -76,6 +78,7 @@ class Theorem103(Theorem):
     def involves(self, str_invar):
         return str_invar in ["circumference","maxClique","mindeg"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -102,6 +105,7 @@ class Theorem104(Theorem):
     def involves(self, str_invar):
         return str_invar in ["circumference","maxClique","chromaticNum"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -128,6 +132,7 @@ class Theorem105(Theorem):
     def involves(self, str_invar):
         return str_invar in ["maxClique","chromaticNum","circumference"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -152,6 +157,7 @@ class Theorem106(Theorem):
     def involves(self, str_invar):
         return str_invar in ["edges","nodeCover","nodeInd","chromaticNum"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -182,6 +188,7 @@ class Theorem107(Theorem):
     def involves(self, str_invar):
         return str_invar in ["mindeg","maxdeg"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -204,6 +211,7 @@ class Theorem108(Theorem):
     def involves(self, str_invar):
         return str_invar in ["nodeCliqueCover","nodes","nodeInd","maxClique"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -234,6 +242,7 @@ class Theorem109(Theorem):
     def involves(self, str_invar):
         return str_invar in ["nodeCover","edgeInd"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -256,6 +265,7 @@ class Theorem110(Theorem):
     def involves(self, str_invar):
         return str_invar in ["mindeg","girth","circumference"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -284,6 +294,7 @@ class Theorem111(Theorem):
     def involves(self, str_invar):
         return str_invar in ["connected","diameter","nodeInd"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -308,6 +319,7 @@ class Theorem112(Theorem):
     def involves(self, str_invar):
         return str_invar in ["connected","nodeInd","mindeg","nodes"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -332,6 +344,7 @@ class Theorem113(Theorem):
     def involves(self, str_invar):
         return str_invar in ["edges","nodeInd","mindeg","maxClique"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -362,6 +375,7 @@ class Theorem114(Theorem):
     def involves(self, str_invar):
         return str_invar in ["edges","nodeCover","maxClique"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -388,6 +402,7 @@ class Theorem115(Theorem):
     def involves(self, str_invar):
         return str_invar in ["edges","chromaticNum","nodes","numOfComponents"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -418,6 +433,7 @@ class Theorem116(Theorem):
     def involves(self, str_invar):
         return str_invar in ["bipartite","nodes","genus"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -452,6 +468,7 @@ class Theorem117(Theorem):
     def involves(self, str_invar):
         return str_invar in ["complete","nodeConnec","mindeg","nodes"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -480,6 +497,7 @@ class Theorem118(Theorem):
     def involves(self, str_invar):
         return str_invar in ["nodes","edges","mindeg","circumference"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -500,6 +518,7 @@ class Theorem119(Theorem):
     def involves(self, str_invar):
         return str_invar in ["chromaticNum","maxClique","mindeg","nodes"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
@@ -528,6 +547,7 @@ class Theorem120(Theorem):
     def involves(self, str_invar):
         return str_invar in ["hamiltonian","nodes","chromaticNum","edges"]
     def run(self):
+        get = self.get
         set = self.set
         maxb = self.maxb
         minb = self.minb
