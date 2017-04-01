@@ -2,7 +2,10 @@
 {
     "theorems":[
 {
-            "text": "chromaticNum <= nodes - nodeConnec*(diameter - 3) - 2;",
+            "text": "
+            if exists diameter then { 
+                chromaticNum <= nodes - nodeConnec*(diameter - 3) - 2
+            };",
             "name": "Theorem",
             "idnum": 121,
             "disp": ""

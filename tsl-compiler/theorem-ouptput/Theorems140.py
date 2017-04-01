@@ -1,8 +1,8 @@
 class Theorem121(Theorem):
     def __init__(self):
-        super(Theorem121, self).__init__(121, "chromaticNum <= nodes-(nodeConnec*(diameter-(3.0)))-(2.0);", "")
+        super(Theorem121, self).__init__(121, "if exists diameter then \n{\n    chromaticNum <= nodes-(nodeConnec*(diameter-(3.0)))-(2.0)\n\n};", "")
     def involves(self, str_invar):
-        return str_invar in ["chromaticNum","nodes","nodeConnec","diameter"]
+        return str_invar in ["diameter","chromaticNum","nodes","nodeConnec"]
     def run(self):
         get = self.get
         set = self.set
@@ -11,22 +11,24 @@ class Theorem121(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        try:
-            set("chromaticNum",  maxb("nodes")-(minb("nodeConnec")*(minb("diameter")-(3.0)))-(2.0), ind='Max')
-        except:
-            pass
-        try:
-            set("nodes",  minb("chromaticNum")+minb("diameter")*maxb("nodeConnec")-(3.0*maxb("nodeConnec"))+2.0, ind='Min')
-        except:
-            pass
-        try:
-            set("nodeConnec",  (-(minb("chromaticNum"))+maxb("nodes")-(2.0))/(minb("diameter")-(3.0)), ind='Max')
-        except:
-            pass
-        try:
-            set("diameter",  (-(minb("chromaticNum"))+3.0*minb("nodeConnec")+maxb("nodes")-(2.0))/minb("nodeConnec"), ind='Max')
-        except:
-            pass
+        if maxb("diameter") != 'undt' :
+            try:
+                set("chromaticNum",  maxb("nodes")-(minb("nodeConnec")*(minb("diameter")-(3.0)))-(2.0), ind='Max')
+            except:
+                pass
+            try:
+                set("nodes",  minb("chromaticNum")+minb("diameter")*maxb("nodeConnec")-(3.0*maxb("nodeConnec"))+2.0, ind='Min')
+            except:
+                pass
+            try:
+                set("nodeConnec",  (-(minb("chromaticNum"))+maxb("nodes")-(2.0))/(minb("diameter")-(3.0)), ind='Max')
+            except:
+                pass
+            try:
+                set("diameter",  (-(minb("chromaticNum"))+3.0*minb("nodeConnec")+maxb("nodes")-(2.0))/minb("nodeConnec"), ind='Max')
+            except:
+                pass
+        
         return
 
 class Theorem122(Theorem):
