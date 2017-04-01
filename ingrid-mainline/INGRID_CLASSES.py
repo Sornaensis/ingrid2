@@ -461,6 +461,9 @@ class Theorem(object):
         """
         raise NotImplementedError
 
+    def congruent(self, str_invar, b, c):
+        return maxb(str_invar) == minb(str_invar) and minb(str_invar) != 'undt' and (minb(str_invar) - b) % c == 0
+
     def oddInvar(self, str_invar):
         return maxb(str_invar) == minb(str_invar) and minb(str_invar) != 'undt' and minb(str_invar) % 2 == 1
 
