@@ -20,7 +20,16 @@
             "disp": ""
         },
         {
-            "text": "edges >= (1/2)*nodes*(nodes-1) - (nodes-maxClique)*(nodes-mindeg-1);",
+            "text": "
+            let e1 = (maxb(nodes)*(maxb(nodes)-1)+1) / (2-(maxb(nodes)-minb(mindeg)-1)*(maxb(nodes)-minb(maxClique)));
+            let e2 = (minb(nodes)*(minb(nodes)-1)+1) / (2-(minb(nodes)-minb(mindeg)-1)*(minb(nodes)-minb(maxClique)));
+            setmin(edges, mininum(e1, e2));
+            let c1 = floor(minb(nodes)-(minb(nodes)*(minb(nodes)-1)-2*maxb(edges))/(2*(minb(nodes)-minb(mindeg)-1)));
+            let c2 = floor(maxb(nodes)-(maxb(nodes)*(maxb(nodes)-1)-2*maxb(edges))/(2*(maxb(nodes)-minb(mindeg)-1)));
+            if minb(nodes) > minb(mindeg)+1 and maxb(nodes) > minb(mindeg)+1 then 
+            {
+                setmax(maxClique, minimum(c1, c2))
+            };",
             "name": "Theorem",
             "idnum": 184,
             "disp": ""

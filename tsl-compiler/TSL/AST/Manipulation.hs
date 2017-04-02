@@ -16,6 +16,14 @@ invarMappingList = map (:[]) (filter (/='I') $ ['A'..'Z'] ++ ['a'..'z'])
 getAllInvars :: Fix Theorem -> [Fix Theorem]
 getAllInvars = map (Fx . Invar) . getInvolves
 --- | End helper functions
+isFunction :: Fix Theorem -> Bool
+isFunction (Fx (Function _ _)) = True
+isFunction _                   = False
+
+eqIFns :: Fix Theorem -> Fix Theorem -> Bool
+eqIFns (Fx (Function a [Fx (Invar i)])) (Fx (Function b [Fx (Invar j)])) = a == b && i == j
+eqIFns _ _ = False
+
 
 isLetStatement :: Fix Theorem -> Bool
 isLetStatement (Fx (Let _ _)) = True
@@ -64,7 +72,7 @@ theoremToSrc' (If a b c)            =
                        unlines (map ("    "++) (lines b)), "\n}",
                        maybe [] (" else "++) c] --,
                        --";\n"]
-theoremToSrc' (ExprF s a)           = s ++ " " ++ a
+theoremToSrc' (ExprF s a)           = s ++ (if null a then "" else " " ++ a)
 theoremToSrc' (ExprList as)         = L.intercalate ",\n" as
 theoremToSrc' (Expr (t:ts))         = t ++ concatMap (\s ->
                                                 case s of
@@ -79,7 +87,8 @@ theoremToSrc' (Neg a)               = "-(" ++ a ++ ")"
 theoremToSrc' (Number a)            = show a
 -- theoremToSrc' (Function "sqrt" es) = "(" ++ L.intercalate ", " es ++ ")**(1.0/2.0)"
 theoremToSrc' (Function s es)      = s ++ "(" ++ L.intercalate ", " es ++ ")"
-theoremToSrc' (Local s)            = "Local " ++ s
+theoremToSrc' (Local "True")       = "Local True"
+theoremToSrc' (Local s)            = s
 theoremToSrc' (Invar s)            = s
 theoremToSrc' (Paren e)            = "(" ++ e ++ ")"
 theoremToSrc' _                    = ""
@@ -92,6 +101,31 @@ extractLetStatements = foldr (\x ys ->
                                 case x of
                                     (Fx (Let (Fx (Invar s)) e)) -> (s,e):ys
                                     _                           -> ys) []
+
+getInvarFunctions :: Fix Theorem -> [Fix Theorem]
+getInvarFunctions = cata getInvarFunctions'
+
+getInvarFunctions' :: Theorem [Fix Theorem] -> [Fix Theorem]
+getInvarFunctions' (Function "maxb" [[Fx (Invar i)]]) = [Fx $ Function "maxb" [Fx $ Invar i]]
+getInvarFunctions' (Function "minb" [[Fx (Invar i)]]) = [Fx $ Function "minb" [Fx $ Invar i]]
+getInvarFunctions' (Function _ as) = concat as
+getInvarFunctions' (Let a b)  = a ++ b
+getInvarFunctions' (If a b c) = a ++ b ++ fromMaybe [] c
+getInvarFunctions' (InvarExpr a b) = a ++ fromMaybe [] b
+getInvarFunctions' (Cond a b)      =  a ++ fromMaybe [] b
+getInvarFunctions' (ExprList as)   = concat as
+getInvarFunctions' (ExprF _ a)     = a
+getInvarFunctions' (RelExpr a b)   = a ++ b
+getInvarFunctions' (Expr as)       = concat as
+getInvarFunctions' (Or a b)        = a ++ b
+getInvarFunctions' (And a b)       = a ++ b
+getInvarFunctions' (Mul a b)       = a ++ b
+getInvarFunctions' (Div a b)       = a ++ b
+getInvarFunctions' (Neg a)         = a
+getInvarFunctions' (Pow a b)       = a ++ b
+getInvarFunctions' (Paren a)       = a
+getInvarFunctions' (Invar i)       = [Fx $ Invar i]
+getInvarFunctions' _               = []
 
 containsFunc :: Fix Theorem -> Bool
 containsFunc = cata containsFunc'

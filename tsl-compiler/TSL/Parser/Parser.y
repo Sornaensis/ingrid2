@@ -23,10 +23,13 @@ import TSL.AST.AST
       not            { TokenNot }
       odd            { TokenOdd }
       even           { TokenEven }
+      nosolve        { TokenNoSolve }
       number         { TokenNum $$ }
       defined        { TokenDefined }
       exists         { TokenExists }
       undefined      { TokenUndefined }
+      setmin         { TokenSetMin }
+      setmax         { TokenSetMax }
       isset          { TokenIsset }
       istrue         { TokenIstrue }
       isfalse        { TokenIsfalse }
@@ -53,6 +56,7 @@ import TSL.AST.AST
 %%
 
 Theorem : Invarexpr ';' Theorem                 { $1 : $3 }
+         | nosolve Invarexpr ';' Theorem        { (Fx $ ExprF "nosolve" $2) : $4 }
          | Ifstmt ';' Theorem                   { $1 : $3 }
          | let Invar '==' Expr ';' Theorem      { (Fx $ Let $2 $4) : $6 }
          | null ';' Theorem                     { [Fx Empty] }
@@ -62,6 +66,8 @@ Invarexpr  : not Invar       { Fx $ InvarExpr (Fx $ ExprF     "not"       $2) No
            | even Invar      { Fx $ InvarExpr (Fx $ ExprF     "even"      $2) Nothing }
            | odd Invar       { Fx $ InvarExpr (Fx $ ExprF     "odd"       $2) Nothing }
            | undefined Invar { Fx $ InvarExpr (Fx $ ExprF     "undefined" $2) Nothing }
+           | setmin '(' Invar ',' Expr ')'  { Fx $ Function "setmin"  [$3,$5] }
+           | setmax '(' Invar ',' Expr ')'  { Fx $ Function "setmax"  [$3,$5] }
            | Invar Invarel   { Fx $ InvarExpr $1          $2 }
 
 Invarel : Relation Expr { Just (Fx $ RelExpr $1 $2) }
@@ -88,19 +94,24 @@ Cond : Condand    { $1 }
 Condand : Cond1   { $1 }
         | Condand and Cond1 { Fx $ And $1 $3 }
 
-Cond1 : Invar CondRel    { Fx $ Cond $1 $2 }
-      | istrue Expr      { Fx $ Cond (Fx $ ExprF "istrue"    $2) Nothing }
-      | isfalse Expr     { Fx $ Cond (Fx $ ExprF "isfalse"   $2) Nothing }
-      | not Invar        { Fx $ Cond (Fx $ ExprF "not"       $2) Nothing }
-      | even Invar       { Fx $ Cond (Fx $ ExprF "even"      $2) Nothing }
-      | odd Invar        { Fx $ Cond (Fx $ ExprF "odd"       $2) Nothing }
-      | isset Invar      { Fx $ Cond (Fx $ ExprF "isset"     $2) Nothing }
-      | defined Invar    { Fx $ Cond (Fx $ ExprF "defined"   $2) Nothing }
-      | exists Invar     { Fx $ Cond (Fx $ ExprF "exists"   $2) Nothing }
-      | undefined Invar  { Fx $ Cond (Fx $ ExprF "undefined" $2) Nothing }
-      | '(' Cond ')'     { Fx $ Paren $2 }
+Cond1 : Invar CondRel      { case $2 of
+                              Just (Fx (Cond (Fx (Function _ as)) pred)) -> 
+                                    case $1 of
+                                        Fx (Invar i) -> Fx $ Cond (Fx $ Function i as) pred
+                              _ -> Fx $ Cond $1 $2 }
+      | istrue Expr        { Fx $ Cond (Fx $ ExprF "istrue"    $2) Nothing }
+      | isfalse Expr       { Fx $ Cond (Fx $ ExprF "isfalse"   $2) Nothing }
+      | not Invar          { Fx $ Cond (Fx $ ExprF "not"       $2) Nothing }
+      | even Invar         { Fx $ Cond (Fx $ ExprF "even"      $2) Nothing }
+      | odd Invar          { Fx $ Cond (Fx $ ExprF "odd"       $2) Nothing }
+      | isset Invar        { Fx $ Cond (Fx $ ExprF "isset"     $2) Nothing }
+      | defined Invar      { Fx $ Cond (Fx $ ExprF "defined"   $2) Nothing }
+      | exists Invar       { Fx $ Cond (Fx $ ExprF "exists"   $2) Nothing }
+      | undefined Invar    { Fx $ Cond (Fx $ ExprF "undefined" $2) Nothing }
+      | '(' Cond ')'       { Fx $ Paren $2 }
 
-CondRel : Relation Expr  { Just $ Fx $ RelExpr $1 $2 }
+CondRel : '(' Invar ')' Relation Expr { Just $ Fx (Cond (Fx $ Function "" [$2]) (Just . Fx $ RelExpr $4 $5)) }
+        | Relation Expr  { Just $ Fx $ RelExpr $1 $2 }
         |                { Nothing }
  
 Relation : '=='   { Fx $ Relation RelEq  }
@@ -152,6 +163,9 @@ parseError _ = error "Parse error"
 data Token
       = TokenIf
       | TokenThen
+      | TokenNoSolve
+      | TokenSetMin
+      | TokenSetMax
       | TokenLet
       | TokenNull
       | TokenElse
@@ -224,8 +238,11 @@ lexNum cs = TokenNum num : lexer rest
 lexVar cs =
    case span (\c -> isAlpha c || isDigit c || c == '_') cs of
       ("undefined",rest) -> TokenUndefined : lexer rest
+      ("nosolve",rest)   -> TokenNoSolve : lexer rest
       ("defined",rest)   -> TokenDefined : lexer rest
       ("isfalse",rest)   -> TokenIsfalse : lexer rest
+      ("setmin",rest)    -> TokenSetMin : lexer rest
+      ("setmax",rest)    -> TokenSetMax : lexer rest
       ("istrue",rest)    -> TokenIstrue : lexer rest
       ("exists",rest)    -> TokenExists : lexer rest
       ("isset",rest)     -> TokenIsset : lexer rest

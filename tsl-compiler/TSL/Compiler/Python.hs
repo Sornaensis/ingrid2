@@ -41,7 +41,7 @@ generatePythonClass :: TSLTheorem -> String
 generatePythonClass (TSLTheorem (TSLInputTheorem name text disp idnum) ts)  = 
        (("class " ++ name ++ "(Theorem):\n")++) . indent $
                 "def __init__(self):\n"
-             ++ "    super(" ++ name ++ ", self).__init__(" ++ L.intercalate ", " [show idnum, show . concatMap show . theoremParser . lexer $ text, show disp] ++")\n"
+             ++ "    super(" ++ name ++ ", self).__init__(" ++ L.intercalate ", " [show idnum, show . unlines . map show . theoremParser . lexer $ text, show disp] ++")\n"
              ++ "def involves(self, str_invar):\n"
              ++ "    return str_invar in " ++ show (L.nub $ concatMap getInvolves ts) ++ "\n"
              ++ "def run(self):\n"
@@ -82,7 +82,7 @@ generatePython' (If a b c)            =
                        unlines (map ("    "++) (lines b)),
                        maybe [] ("\nel"++) c]
 -- generatePython' (ExprF "even" a)      = s ++ " " ++ a
-generatePython' (ExprF s a)       = s ++ " " ++ a
+generatePython' (ExprF s a)       = s ++ (if null a then "" else " " ++ a)
 generatePython' (ExprList as)           = L.intercalate "\n" as
 generatePython' (Expr (t:ts))           = t ++ concatMap (\s ->
                                                   case s of
@@ -95,16 +95,40 @@ generatePython' (Div a b)               = a ++ "/" ++ b
 generatePython' (Pow a b)               = a ++ "**" ++ b
 generatePython' (Neg a)                 = "-(" ++ a ++ ")"
 generatePython' (Number a)              = show a
-generatePython' (Function "setmin" es)  = "set(" ++ L.intercalate ", " es ++ ", ind=\'Min\')"
-generatePython' (Function "setmax" es)  = "set(" ++ L.intercalate ", " es ++ ", ind=\'Max\')"
+generatePython' (Function "setmin" es)  = "try:\n    set(" ++ L.intercalate ", " es ++ ", ind=\'Min\')\nexcept:\n    pass"
+generatePython' (Function "setmax" es)  = "try:\n    set(" ++ L.intercalate ", " es ++ ", ind=\'Max\')\nexcept:\n    pass"
 generatePython' (Function s es)         = s ++ "(" ++ L.intercalate ", " es ++ ")"
-generatePython' (Local s)               = "Local " ++ s
+generatePython' (Local "True")          = "Local True"
+generatePython' (Local s)               = show s
 generatePython' (Invar s)               = show s
 generatePython' (Paren e)               = "(" ++ e ++ ")"
 generatePython' _                       = ""
 
 realizeAnalysis' :: Theorem (Fix Theorem) -> Fix Theorem
 realizeAnalysis' v
+   | ExprF "nosolve" ivexpr <- v = cata realizeAnalysis' ivexpr
+   | Function "setmax" [i, e] <- v =
+        let ivs = map (\f -> Fx $ Cond f    
+                                       (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
+                                                            (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
+                      L.nubBy eqIFns . filter isFunction $ getInvarFunctions e
+        in  if null ivs 
+              then Fx $ Function "setmax" [i, e]
+              else
+               if length ivs == 1
+                 then Fx $ If (head ivs) (Fx $ Function "setmax" [i, e]) Nothing
+                 else Fx $ If (foldr1 (\x y -> Fx $ And x y) ivs) (Fx $ Function "setmax" [i, e]) Nothing
+   | Function "setmin" [i, e] <- v =
+        let ivs = map (\f -> Fx $ Cond f    
+                                       (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
+                                                            (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
+                      L.nubBy eqIFns . filter isFunction $ getInvarFunctions e
+        in  if null ivs 
+              then Fx $ Function "setmin" [i, e]
+              else
+               if length ivs == 1
+                 then Fx $ If (head ivs) (Fx $ Function "setmin" [i, e]) Nothing
+                 else Fx $ If (foldr1 (\x y -> Fx $ And x y) ivs) (Fx $ Function "setmin" [i, e]) Nothing
    | (Cond (Fx (ExprF s e)) Nothing) <- v =
         case s of
             "not" -> Fx $ 
@@ -124,7 +148,7 @@ realizeAnalysis' v
    | (Cond a (Just (Fx (RelExpr (Fx (Relation RelEq)) expr)))) <- v =
         cata realizeAnalysis' . Fx . Paren . Fx $ And (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelGte)) expr)))))
                                          (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelLte)) expr)))))
-   | (Cond a (Just (Fx (RelExpr rel expr)))) <- v =
+   | (Cond a@(Fx (Invar _)) (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = flipBound $ getBound rel
             invars = getInvolves expr
             inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
@@ -138,7 +162,10 @@ realizeAnalysis' v
                     Min -> Fx $ Function "maxb" [a] 
         in  if null inv_check 
               then Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
-              else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr))
+              else 
+                if length inv_check == 1
+                    then Fx. Paren . Fx $ And (head inv_check) (Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr))
+                    else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr))
    | (InvarExpr (Fx (ExprF s e)) Nothing) <- v =
         case s of
             "undefined" -> Fx $ InvarExpr (Fx $ Function "set" [e, 
@@ -159,7 +186,12 @@ realizeAnalysis' v
                                                         (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce)
         in if null inv_check
              then Fx $ InvarExpr a (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
-             else Fx $ If (foldr1 (\x y -> Fx $ And x y) inv_check)
+             else 
+                if length inv_check == 1 
+                    then Fx $ If (head inv_check)
+                                 (Fx $ InvarExpr a (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr))
+                                 Nothing
+                    else Fx $ If (foldr1 (\x y -> Fx $ And x y) inv_check)
                           (Fx $ InvarExpr a (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr))
                           Nothing
    | (Cond a Nothing) <- v =
