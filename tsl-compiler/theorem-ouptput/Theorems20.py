@@ -186,7 +186,7 @@ class Theorem7(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if maxb("diameter") != 'undt' and (minb("mindeg") != 'undt' and maxb("nodeConnec") != 'undt' and minb("mindeg") > 3.0*maxb("nodeConnec")-(1.0)):
+        if maxb("diameter") != 'undt' and minb("mindeg") > 3.0*maxb("nodeConnec")-(1.0):
             if minb("mindeg") != 'undt' and minb("diameter") != 'undt' and minb("nodeConnec") != 'undt':
                 try:
                     set("nodes",  1.0+minb("mindeg")+minb("diameter")*minb("nodeConnec")+(minb("diameter")/3.0)*(minb("mindeg")-(3.0*minb("nodeConnec"))+1.0), ind='Min')
@@ -385,15 +385,15 @@ class Theorem13(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if ((minb("girth") != 'undt' and maxb("diameter") != 'undt' and minb("girth") >= 2.0*maxb("diameter")+1.0) and (maxb("girth") != 'undt' and minb("diameter") != 'undt' and maxb("girth") <= 2.0*minb("diameter")+1.0)):
+        if (minb("girth") >= 2.0*maxb("diameter")+1.0 and maxb("girth") <= 2.0*minb("diameter")+1.0):
             set("regular", True)
         return
 
 class Theorem14(Theorem):
     def __init__(self):
-        super(Theorem14, self).__init__(14, "chromaticNum >= nodes/(nodes-(spectralRadius));\n", "")
+        super(Theorem14, self).__init__(14, "mut nothing is 0.0;\nchromaticNum >= nodes/(nodes-(spectralRadius));\n", "")
     def involves(self, str_invar):
-        return str_invar in ["chromaticNum","nodes","spectralRadius"]
+        return str_invar in ["nothing","chromaticNum","nodes","spectralRadius"]
     def run(self):
         get = self.get
         set = self.set
@@ -402,6 +402,7 @@ class Theorem14(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
+        nothing =  0.0
         if minb("nodes") != 'undt' and minb("spectralRadius") != 'undt':
             try:
                 set("chromaticNum",  minb("nodes")/(minb("nodes")-(minb("spectralRadius"))), ind='Min')
@@ -432,7 +433,7 @@ class Theorem15(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("mindeg") != 'undt' and minb("mindeg") >= 3.0):
+        if minb("mindeg") >= 3.0:
             if minb("girth") != 'undt' and minb("nodes") != 'undt' and maxb("numOfComponents") != 'undt':
                 try:
                     set("edges",  2.0**(minb("girth")/2.0)+minb("nodes")-(maxb("numOfComponents")), ind='Min')
@@ -471,7 +472,7 @@ class Theorem16(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if ((minb("nodeConnec") != 'undt' and minb("nodeConnec") >= 0.0) and (maxb("nodeConnec") != 'undt' and maxb("nodeConnec") <= 0.0)):
+        if (minb("nodeConnec") >= 0.0 and maxb("nodeConnec") <= 0.0):
             try:
                 set("edgeConnec",  0.0, ind='Min')
             except:
@@ -480,7 +481,7 @@ class Theorem16(Theorem):
                 set("edgeConnec",  0.0, ind='Max')
             except:
                 pass
-        if ((minb("edgeConnec") != 'undt' and minb("edgeConnec") >= 0.0) and (maxb("edgeConnec") != 'undt' and maxb("edgeConnec") <= 0.0)):
+        if (minb("edgeConnec") >= 0.0 and maxb("edgeConnec") <= 0.0):
             try:
                 set("nodeConnec",  0.0, ind='Min')
             except:
@@ -559,7 +560,7 @@ class Theorem19(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if ((minb("maxClique") != 'undt' and minb("maxClique") >= 2.0) and (maxb("maxClique") != 'undt' and maxb("maxClique") <= 2.0)):
+        if (minb("maxClique") >= 2.0 and maxb("maxClique") <= 2.0):
             if maxb("nodeInd") != 'undt':
                 try:
                     set("maxdeg",  maxb("nodeInd"), ind='Max')
@@ -604,7 +605,7 @@ class Theorem20(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if ((minb("chromaticNum") != 'undt' and minb("chromaticNum") >= 2.0) and (maxb("chromaticNum") != 'undt' and maxb("chromaticNum") <= 2.0)):
+        if (minb("chromaticNum") >= 2.0 and maxb("chromaticNum") <= 2.0):
             if minb("nodeCover") != 'undt':
                 try:
                     set("edgeInd",  minb("nodeCover"), ind='Min')
@@ -692,7 +693,7 @@ class Theorem20(Theorem):
             if maxb("circumference") != 'undt':
                 if even(maxb("circumference")-(1.0)):
                     set("circumference", minb("circumference")-(1.0), ind='Max')
-        if ((minb("chromaticNum") != 'undt' and minb("chromaticNum") >= 2.0) and (maxb("chromaticNum") != 'undt' and maxb("chromaticNum") <= 2.0)) and (minb("nodes") != 'undt' and minb("nodes") > 2.0):
+        if (minb("chromaticNum") >= 2.0 and maxb("chromaticNum") <= 2.0) and minb("nodes") > 2.0:
             set("complete", False)
         return
 

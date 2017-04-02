@@ -174,7 +174,9 @@ realizeAnalysis2' v
                 if length inv_check == 1
                     then Fx. Paren . Fx $ And (head inv_check) (Fx $ Cond a' (Just . Fx $ RelExpr rel expr))
                     else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a' (Just . Fx $ RelExpr rel expr))
-   | (InvarExpr (Fx (ExprF s e)) Nothing) <- v =
+   | (InvarExpr (Fx (ExprF s e)) rhs) <- v =
+    case rhs of
+      Nothing ->
         case s of
             "undefined" -> Fx $ InvarExpr (Fx $ Function "set" [e, 
                                                                 Fx $ ExprF "\'undt\'" (Fx Empty),
@@ -183,6 +185,9 @@ realizeAnalysis2' v
                                                           Fx $ ExprF "False" (Fx Empty)]) Nothing
             s@"even" -> evenOrOdd s e
             s@"odd"  -> evenOrOdd s e
+      Just (Fx (ExprF "" (Fx (ExprF "is" expr)))) ->
+        case s of
+            "mut" -> Fx $ ExprF (theoremToSrc e ++ " = ") expr
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
             invars = getInvolves expr

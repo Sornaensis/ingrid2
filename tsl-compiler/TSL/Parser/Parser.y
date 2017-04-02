@@ -19,7 +19,9 @@ import TSL.AST.AST
       else           { TokenElse }
       null           { TokenNull }
       and            { TokenAnd }
+      is             { TokenIs }
       or             { TokenOr }
+      mut            { TokenMut }
       not            { TokenNot }
       odd            { TokenOdd }
       even           { TokenEven }
@@ -66,6 +68,7 @@ Invarexpr  : not Invar       { Fx $ InvarExpr (Fx $ ExprF     "not"       $2) No
            | even Invar      { Fx $ InvarExpr (Fx $ ExprF     "even"      $2) Nothing }
            | odd Invar       { Fx $ InvarExpr (Fx $ ExprF     "odd"       $2) Nothing }
            | undefined Invar { Fx $ InvarExpr (Fx $ ExprF     "undefined" $2) Nothing }
+           | mut Invar is Expr { Fx $ InvarExpr (Fx $ ExprF "mut" $2) (Just . Fx $ ExprF "" (Fx $ ExprF "is" $4)) } 
            | setmin '(' Invar ',' Expr ')'  { Fx $ Function "setmin"  [$3,$5] }
            | setmax '(' Invar ',' Expr ')'  { Fx $ Function "setmax"  [$3,$5] }
            | Invar Invarel   { Fx $ InvarExpr $1          $2 }
@@ -166,6 +169,8 @@ data Token
       | TokenNoSolve
       | TokenSetMin
       | TokenSetMax
+      | TokenMut
+      | TokenIs
       | TokenLet
       | TokenNull
       | TokenElse
@@ -252,8 +257,10 @@ lexVar cs =
       ("even",rest)      -> TokenEven : lexer rest
       ("and",rest)       -> TokenAnd : lexer rest
       ("not",rest)       -> TokenNot : lexer rest
+      ("mut",rest)       -> TokenMut : lexer rest
       ("let",rest)       -> TokenLet : lexer rest
       ("odd",rest)       -> TokenOdd : lexer rest
+      ("is",rest)        -> TokenIs : lexer rest
       ("if",rest)        -> TokenIf : lexer rest
       ("or",rest)        -> TokenOr : lexer rest
       ('_':var,rest)     -> TokenLocalName ('_':var) : lexer rest

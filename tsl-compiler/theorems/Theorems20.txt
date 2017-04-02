@@ -78,7 +78,7 @@
             "disp": ""
         },
         {
-            "text": "chromaticNum >= nodes / (nodes - spectralRadius);",
+            "text": "mut nothing is 0; chromaticNum >= nodes / (nodes - spectralRadius);",
             "name": "Theorem",
             "idnum": 14,
             "disp": ""
