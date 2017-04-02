@@ -391,9 +391,9 @@ class Theorem13(Theorem):
 
 class Theorem14(Theorem):
     def __init__(self):
-        super(Theorem14, self).__init__(14, "mut nothing is 0.0;\nchromaticNum >= nodes/(nodes-(spectralRadius));\n", "")
+        super(Theorem14, self).__init__(14, "mut nothing is maxb(nodes)/2.0;\nsetmin(edges, nothing);\nchromaticNum >= nodes/(nodes-(spectralRadius));\n", "")
     def involves(self, str_invar):
-        return str_invar in ["nothing","chromaticNum","nodes","spectralRadius"]
+        return str_invar in ["nothing","nodes","edges","chromaticNum","spectralRadius"]
     def run(self):
         get = self.get
         set = self.set
@@ -402,7 +402,11 @@ class Theorem14(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        nothing =  0.0
+        nothing =  maxb("nodes")/2.0
+        try:
+            set("edges", "nothing", ind='Min')
+        except:
+            pass
         if minb("nodes") != 'undt' and minb("spectralRadius") != 'undt':
             try:
                 set("chromaticNum",  minb("nodes")/(minb("nodes")-(minb("spectralRadius"))), ind='Min')

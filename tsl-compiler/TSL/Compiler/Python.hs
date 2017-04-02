@@ -187,7 +187,7 @@ realizeAnalysis2' v
             s@"odd"  -> evenOrOdd s e
       Just (Fx (ExprF "" (Fx (ExprF "is" expr)))) ->
         case s of
-            "mut" -> Fx $ ExprF (theoremToSrc e ++ " = ") expr
+            "mut" -> Fx $ ExprF (theoremToSrc e ++ " =") expr
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
             invars = getInvolves expr
