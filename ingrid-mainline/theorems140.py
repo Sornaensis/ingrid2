@@ -7,6 +7,7 @@ def odd(x):
 def even(x):
     return not isinstance(x, str) and x % 2 == 0
 
+
 class Theorem1(Theorem):
     def __init__(self):
         super(Theorem1, self).__init__(1, "edges <= (1.0/2.0)*(nodes-(1.0))*(nodes-(2.0))+nodeConnec;", "")
@@ -4363,7 +4364,7 @@ class Theorem131(Theorem):
 
 class Theorem132(Theorem):
     def __init__(self):
-        super(Theorem132, self).__init__(132, "if istrue congruent(nodes, 3.0, 4.0) then \n{\n    mindeg <= (nodes-(3.0))*(nodes+1.0)/(4.0*(nodes-(1.0)-(maxdeg)))\n\n} else  \n{\n    mindeg <= (nodes-(1.0))**2.0/(4.0*(nodes-(1.0)-(maxdeg)))\n\n};", "")
+        super(Theorem132, self).__init__(132, "if isset nodes then \n{\n    if istrue congruent(nodes, 3.0, 4.0) then \n    {\n        mindeg <= (nodes-(3.0))*(nodes+1.0)/(4.0*(nodes-(1.0)-(maxdeg)))\n    \n    } else  \n    {\n        mindeg <= (nodes-(1.0))**2.0/(4.0*(nodes-(1.0)-(maxdeg)))\n    \n    }\n\n};", "")
     def involves(self, str_invar):
         return str_invar in ["nodes","mindeg","maxdeg"]
     def run(self):
@@ -4374,33 +4375,35 @@ class Theorem132(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if congruent("nodes", 3.0, 4.0):
-            try:
-                set("mindeg",  (maxb("nodes")-(3.0))*(maxb("nodes")+1.0)/(4.0*(maxb("nodes")-(1.0)-(maxb("maxdeg")))), ind='Max')
-            except:
-                pass
-            try:
-                set("nodes",  2.0*minb("mindeg")+2.0*sqrt(-(maxb("maxdeg")*minb("mindeg"))+minb("mindeg")**2.0+1.0)+1.0, ind='Min')
-            except:
-                pass
-            try:
-                set("maxdeg",  (4.0*maxb("mindeg")*(maxb("nodes")-(1.0))-(maxb("nodes")**2.0)+2.0*maxb("nodes")+3.0)/(4.0*maxb("mindeg")), ind='Min')
-            except:
-                pass
-        
-        elif True:
-            try:
-                set("mindeg",  (maxb("nodes")-(1.0))**2.0/(4.0*(maxb("nodes")-(1.0)-(maxb("maxdeg")))), ind='Max')
-            except:
-                pass
-            try:
-                set("nodes",  2.0*minb("mindeg")+2.0*sqrt(minb("mindeg")*(-(maxb("maxdeg"))+minb("mindeg")))+1.0, ind='Min')
-            except:
-                pass
-            try:
-                set("maxdeg",  (maxb("nodes")-(1.0))*(4.0*maxb("mindeg")-(maxb("nodes"))+1.0)/(4.0*maxb("mindeg")), ind='Min')
-            except:
-                pass
+        if maxb("nodes") != 'undt'  and minb("nodes") == maxb("nodes"):
+            if congruent("nodes", 3.0, 4.0):
+                try:
+                    set("mindeg",  (maxb("nodes")-(3.0))*(maxb("nodes")+1.0)/(4.0*(maxb("nodes")-(1.0)-(maxb("maxdeg")))), ind='Max')
+                except:
+                    pass
+                try:
+                    set("nodes",  2.0*minb("mindeg")+2.0*sqrt(-(maxb("maxdeg")*minb("mindeg"))+minb("mindeg")**2.0+1.0)+1.0, ind='Min')
+                except:
+                    pass
+                try:
+                    set("maxdeg",  (4.0*maxb("mindeg")*(maxb("nodes")-(1.0))-(maxb("nodes")**2.0)+2.0*maxb("nodes")+3.0)/(4.0*maxb("mindeg")), ind='Min')
+                except:
+                    pass
+            
+            elif True:
+                try:
+                    set("mindeg",  (maxb("nodes")-(1.0))**2.0/(4.0*(maxb("nodes")-(1.0)-(maxb("maxdeg")))), ind='Max')
+                except:
+                    pass
+                try:
+                    set("nodes",  2.0*minb("mindeg")+2.0*sqrt(minb("mindeg")*(-(maxb("maxdeg"))+minb("mindeg")))+1.0, ind='Min')
+                except:
+                    pass
+                try:
+                    set("maxdeg",  (maxb("nodes")-(1.0))*(4.0*maxb("mindeg")-(maxb("nodes"))+1.0)/(4.0*maxb("mindeg")), ind='Min')
+                except:
+                    pass
+            
         
         return
 
