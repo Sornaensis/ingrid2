@@ -72,13 +72,13 @@
             "text": "edgeInd >= nodes/(maxdeg + 1);" 
         }, 
         {
-            "text": "if girth == 2*diameter + 1 then { regular };",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 13,
             "disp": ""
         },
         {
-            "text": "mut nothing is 0; chromaticNum >= nodes / (nodes - spectralRadius);",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 14,
             "disp": ""
