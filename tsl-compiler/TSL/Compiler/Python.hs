@@ -80,11 +80,11 @@ generatePython' (If a b c)            =
     case a of
         "not Local True" ->
            concat ["if True:\n",
-                       unlines (map ("    "++) (lines b)),
+                       init $ unlines (map ("    "++) (lines b)),
                        maybe [] ("\n el"++) c]
         _            ->
            concat ["if ", a, ":\n",
-                       unlines (map ("    "++) (lines b)),
+                       init $ unlines (map ("    "++) (lines b)),
                        maybe [] ("\nel"++) c]
 -- generatePython' (ExprF "even" a)      = s ++ " " ++ a
 generatePython' (ExprF s a)       = s ++ (if null a then "" else " " ++ a)

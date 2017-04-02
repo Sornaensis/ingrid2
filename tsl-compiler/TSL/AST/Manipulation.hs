@@ -64,13 +64,13 @@ theoremToSrc' (If a b c)            =
     case a of
         "not Local True" ->
            concat [" \n{\n",
-                       unlines (map ("    "++) (lines b)), "\n}",
-                       maybe [] (" else "++) c] --,
+                       init $ unlines (map ("    "++) (lines b)), "\n}",
+                       maybe [] ("\nelse "++) c] --,
                        --";\n"]
         _            ->
            concat ["if ", a, " then \n{\n",
-                       unlines (map ("    "++) (lines b)), "\n}",
-                       maybe [] (" else "++) c] --,
+                       init $ unlines (map ("    "++) (lines b)), "\n}",
+                       maybe [] ("\nelse "++) c] --,
                        --";\n"]
 theoremToSrc' (ExprF s a)           = s ++ (if null a then "" else " " ++ a)
 theoremToSrc' (ExprList as)         = L.intercalate ",\n" as
