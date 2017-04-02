@@ -67,8 +67,10 @@ HLR (High Level Representation) | IR (Intermediate Representation) ==> TL (Targe
       ||          - Add conditional checks for 'undt' for all invariants within set()
       ||          - Add conditional checks for 'undt' for all invariants used in conditionals
     IR AST
-      ||      if final_pass
-      ||=======================
+      ||    if final_pass
+      ||========>>>>>>========
+      ||                     ||
+      || else                ||
       ||                     ||
   ____\/_____            ____\/_____
  | Serialize |          | TL        |  ---> Simply serialize IR to string and add TL boilerplate
