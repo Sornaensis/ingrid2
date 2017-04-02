@@ -265,7 +265,7 @@ class Theorem48(Theorem):
 
 class Theorem49(Theorem):
     def __init__(self):
-        super(Theorem49, self).__init__(49, "if cycle then \n{\n    planar,\n    not forest,\n    crossing == 0.0,\n    nodes >= 2.0,\n    edges >= 3.0,\n    arboricity == 2.0,\n    nodeCover == (nodes+1.0)/2.0,\n    edgeCover == (nodes+1.0)/2.0,\n    nodeInd == nodes/2.0,\n    edgeInd == nodes/2.0,\n    radius == edgeInd,\n    girth == circumference,\n    circumference == nodes,\n    edgeChromatic == chromaticNum,\n    nodes >= 2.0*nodeCover-(1.0),\n    nodes <= 2.0*nodeCover,\n    nodes >= 2.0*edgeInd,\n    nodes <= 2.0*edgeInd+1.0,\n    nodeConnec == 2.0,\n    regular,\n    bandwidth == 2.0\n\n};if cycle and nodes > 3.0 then \n{\n    maxClique == 2.0\n\n} else  \n{\n    maxClique == 3.0\n\n};if cycle and even nodes then \n{\n    chromaticNum == 2.0\n\n} else  \n{\n    chromaticNum == 3.0\n\n};if cycle and chromaticNum == 2.0 then \n{\n    even nodes\n\n} else  \n{\n    odd nodes\n\n};if cycle and maxClique == 2.0 then \n{\n    nodes >= 4.0\n\n} else  \n{\n    nodes == 3.0\n\n};if cycle and nodes == 3.0 then \n{\n    nodeCliqueCover == 1.0\n\n} else  \n{\n    nodeCliqueCover == nodeCover\n\n};", "")
+        super(Theorem49, self).__init__(49, "if cycle then \n{\n    planar,\n    not forest,\n    crossing == 0.0,\n    nodes >= 2.0,\n    edges >= 3.0,\n    arboricity == 2.0,\n    nodeCover == (nodes+1.0)/2.0,\n    edgeCover == (nodes+1.0)/2.0,\n    nodeInd == nodes/2.0,\n    edgeInd == nodes/2.0,\n    radius == edgeInd,\n    girth == circumference,\n    circumference == nodes,\n    edgeChromatic == chromaticNum,\n    nodes >= 2.0*nodeCover-(1.0),\n    nodes <= 2.0*nodeCover,\n    nodes >= 2.0*edgeInd,\n    nodes <= 2.0*edgeInd+1.0,\n    nodeConnec == 2.0,\n    regular,\n    bandwidth == 2.0,\n    if nodes > 3.0 then \n    {\n        maxClique == 2.0\n    \n    } else  \n    {\n        maxClique == 3.0\n    \n    },\n    if even nodes then \n    {\n        chromaticNum == 2.0\n    \n    } else  \n    {\n        chromaticNum == 3.0\n    \n    },\n    if chromaticNum == 2.0 then \n    {\n        even nodes\n    \n    } else  \n    {\n        odd nodes\n    \n    },\n    if maxClique == 2.0 then \n    {\n        nodes >= 4.0\n    \n    } else  \n    {\n        nodes == 3.0\n    \n    },\n    if nodes == 3.0 then \n    {\n        nodeCliqueCover == 1.0\n    \n    } else  \n    {\n        nodeCliqueCover == nodeCover\n    \n    }\n\n};", "")
     def involves(self, str_invar):
         return str_invar in ["cycle","planar","forest","crossing","nodes","edges","arboricity","nodeCover","edgeCover","nodeInd","edgeInd","radius","girth","circumference","edgeChromatic","chromaticNum","nodeConnec","regular","bandwidth","maxClique","nodeCliqueCover"]
     def run(self):
@@ -480,116 +480,120 @@ class Theorem49(Theorem):
                 set("bandwidth",  2.0, ind='Max')
             except:
                 pass
-        
-        if get("cycle") == True  and (minb("nodes") != 'undt'  and minb("nodes") > 3.0):
-            try:
-                set("maxClique",  2.0, ind='Min')
-            except:
-                pass
-            try:
-                set("maxClique",  2.0, ind='Max')
-            except:
-                pass
-        
-        elif True:
-            try:
-                set("maxClique",  3.0, ind='Min')
-            except:
-                pass
-            try:
-                set("maxClique",  3.0, ind='Max')
-            except:
-                pass
-        
-        if get("cycle") == True  and evenInvar("nodes"):
-            try:
-                set("chromaticNum",  2.0, ind='Min')
-            except:
-                pass
-            try:
-                set("chromaticNum",  2.0, ind='Max')
-            except:
-                pass
-        
-        elif True:
-            try:
-                set("chromaticNum",  3.0, ind='Min')
-            except:
-                pass
-            try:
-                set("chromaticNum",  3.0, ind='Max')
-            except:
-                pass
-        
-        if get("cycle") == True  and (minb("chromaticNum") != 'undt'  and minb("chromaticNum") >= 2.0) and (maxb("chromaticNum") != 'undt'  and maxb("chromaticNum") <= 2.0):
-            if minb("nodes") != 'undt' :
-                if even(minb("nodes")+1.0):
-                    set("nodes", minb("nodes")+1.0, ind='Min' )
+            if (minb("nodes") != 'undt'  and minb("nodes") > 3.0):
+                try:
+                    set("maxClique",  2.0, ind='Min')
+                except:
+                    pass
+                try:
+                    set("maxClique",  2.0, ind='Max')
+                except:
+                    pass
+            
+            elif True:
+                try:
+                    set("maxClique",  3.0, ind='Min')
+                except:
+                    pass
+                try:
+                    set("maxClique",  3.0, ind='Max')
+                except:
+                    pass
+            
+            
+            if evenInvar("nodes"):
+                try:
+                    set("chromaticNum",  2.0, ind='Min')
+                except:
+                    pass
+                try:
+                    set("chromaticNum",  2.0, ind='Max')
+                except:
+                    pass
+            
+            elif True:
+                try:
+                    set("chromaticNum",  3.0, ind='Min')
+                except:
+                    pass
+                try:
+                    set("chromaticNum",  3.0, ind='Max')
+                except:
+                    pass
+            
+            
+            if (minb("chromaticNum") != 'undt'  and minb("chromaticNum") >= 2.0) and (maxb("chromaticNum") != 'undt'  and maxb("chromaticNum") <= 2.0):
+                if minb("nodes") != 'undt' :
+                    if even(minb("nodes")+1.0):
+                        set("nodes", minb("nodes")+1.0, ind='Min' )
+                    
+                
+                
+                if maxb("nodes") != 'undt' :
+                    if even(maxb("nodes")-(1.0)):
+                        set("nodes", minb("nodes")-(1.0), ind='Max' )
+                    
+                
+            
+            elif True:
+                if minb("nodes") != 'undt' :
+                    if odd(minb("nodes")+1.0):
+                        set("nodes", minb("nodes")+1.0, ind='Min' )
+                    
+                
+                
+                if maxb("nodes") != 'undt' :
+                    if odd(maxb("nodes")-(1.0)):
+                        set("nodes", minb("nodes")-(1.0), ind='Max' )
+                    
                 
             
             
-            if maxb("nodes") != 'undt' :
-                if even(maxb("nodes")-(1.0)):
-                    set("nodes", minb("nodes")-(1.0), ind='Max' )
-                
+            if (minb("maxClique") != 'undt'  and minb("maxClique") >= 2.0) and (maxb("maxClique") != 'undt'  and maxb("maxClique") <= 2.0):
+                try:
+                    set("nodes",  4.0, ind='Min')
+                except:
+                    pass
             
-        
-        elif True:
-            if minb("nodes") != 'undt' :
-                if odd(minb("nodes")+1.0):
-                    set("nodes", minb("nodes")+1.0, ind='Min' )
-                
+            elif True:
+                try:
+                    set("nodes",  3.0, ind='Min')
+                except:
+                    pass
+                try:
+                    set("nodes",  3.0, ind='Max')
+                except:
+                    pass
             
             
-            if maxb("nodes") != 'undt' :
-                if odd(maxb("nodes")-(1.0)):
-                    set("nodes", minb("nodes")-(1.0), ind='Max' )
-                
+            if (minb("nodes") != 'undt'  and minb("nodes") >= 3.0) and (maxb("nodes") != 'undt'  and maxb("nodes") <= 3.0):
+                try:
+                    set("nodeCliqueCover",  1.0, ind='Min')
+                except:
+                    pass
+                try:
+                    set("nodeCliqueCover",  1.0, ind='Max')
+                except:
+                    pass
             
-        
-        if get("cycle") == True  and (minb("maxClique") != 'undt'  and minb("maxClique") >= 2.0) and (maxb("maxClique") != 'undt'  and maxb("maxClique") <= 2.0):
-            try:
-                set("nodes",  4.0, ind='Min')
-            except:
-                pass
-        
-        elif True:
-            try:
-                set("nodes",  3.0, ind='Min')
-            except:
-                pass
-            try:
-                set("nodes",  3.0, ind='Max')
-            except:
-                pass
-        
-        if get("cycle") == True  and (minb("nodes") != 'undt'  and minb("nodes") >= 3.0) and (maxb("nodes") != 'undt'  and maxb("nodes") <= 3.0):
-            try:
-                set("nodeCliqueCover",  1.0, ind='Min')
-            except:
-                pass
-            try:
-                set("nodeCliqueCover",  1.0, ind='Max')
-            except:
-                pass
-        
-        elif True:
-            try:
-                set("nodeCliqueCover",  minb("nodeCover"), ind='Min')
-            except:
-                pass
-            try:
-                set("nodeCover",  maxb("nodeCliqueCover"), ind='Max')
-            except:
-                pass
-            try:
-                set("nodeCliqueCover",  maxb("nodeCover"), ind='Max')
-            except:
-                pass
-            try:
-                set("nodeCover",  minb("nodeCliqueCover"), ind='Min')
-            except:
-                pass
+            elif True:
+                try:
+                    set("nodeCliqueCover",  minb("nodeCover"), ind='Min')
+                except:
+                    pass
+                try:
+                    set("nodeCover",  maxb("nodeCliqueCover"), ind='Max')
+                except:
+                    pass
+                try:
+                    set("nodeCliqueCover",  maxb("nodeCover"), ind='Max')
+                except:
+                    pass
+                try:
+                    set("nodeCover",  minb("nodeCliqueCover"), ind='Min')
+                except:
+                    pass
+            
         
         return
 

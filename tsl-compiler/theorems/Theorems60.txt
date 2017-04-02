@@ -50,7 +50,71 @@
             "disp": ""
         },
         {
-            "text": "if cycle then { planar, not forest, crossing == 0, nodes >= 2, edges >= 3, arboricity == 2, nodeCover == (nodes + 1)/2, edgeCover == (nodes + 1)/2, nodeInd == nodes/2, edgeInd == nodes/2, radius == edgeInd, girth == circumference, circumference == nodes, edgeChromatic == chromaticNum, nodes >= 2*nodeCover-1, nodes <= 2*nodeCover, nodes >= 2*edgeInd, nodes <= 2*edgeInd + 1, nodeConnec == 2, regular, bandwidth == 2 }; if cycle and nodes > 3 then { maxClique == 2 } else { maxClique == 3 }; if cycle and even nodes then { chromaticNum == 2 } else { chromaticNum == 3 }; if cycle and chromaticNum == 2 then { even nodes } else { odd nodes }; if cycle and maxClique == 2 then { nodes >= 4 } else { nodes == 3 }; if cycle and nodes == 3 then { nodeCliqueCover == 1 } else { nodeCliqueCover == nodeCover };",
+            "text": "
+            if cycle then 
+            { 
+                planar, 
+                not forest, 
+                crossing == 0, 
+                nodes >= 2, 
+                edges >= 3, 
+                arboricity == 2, 
+                nodeCover == (nodes + 1)/2, 
+                edgeCover == (nodes + 1)/2, 
+                nodeInd == nodes/2, 
+                edgeInd == nodes/2, 
+                radius == edgeInd, 
+                girth == circumference, 
+                circumference == nodes, 
+                edgeChromatic == chromaticNum, 
+                nodes >= 2*nodeCover-1, 
+                nodes <= 2*nodeCover, 
+                nodes >= 2*edgeInd, 
+                nodes <= 2*edgeInd + 1, 
+                nodeConnec == 2, 
+                regular, 
+                bandwidth == 2,
+                if nodes > 3 then 
+                { 
+                    maxClique == 2 
+                } 
+                else 
+                { 
+                    maxClique == 3 
+                },
+                if even nodes then 
+                { 
+                    chromaticNum == 2 
+                } 
+                else 
+                { 
+                    chromaticNum == 3 
+                }, 
+                if chromaticNum == 2 then 
+                { 
+                    even nodes 
+                } 
+                else 
+                { 
+                    odd nodes 
+                }, 
+                if maxClique == 2 then 
+                { 
+                    nodes >= 4 
+                } 
+                else 
+                { 
+                    nodes == 3 
+                }, 
+                if nodes == 3 then 
+                { 
+                    nodeCliqueCover == 1 
+                } 
+                else 
+                { 
+                    nodeCliqueCover == nodeCover 
+                }
+            };",
             "name": "Theorem",
             "idnum": 49,
             "disp": ""
