@@ -75,12 +75,12 @@ generatePython' (If a b c)            =
     case a of
         "not Local True" ->
            concat ["if True:\n",
-                       unlines (map ("    "++) (lines b)), "\n",
-                       maybe [] (" el"++) c]
+                       unlines (map ("    "++) (lines b)),
+                       maybe [] ("\n el"++) c]
         _            ->
            concat ["if ", a, ":\n",
-                       unlines (map ("    "++) (lines b)), "\n",
-                       maybe [] ("el"++) c]
+                       unlines (map ("    "++) (lines b)),
+                       maybe [] ("\nel"++) c]
 -- generatePython' (ExprF "even" a)      = s ++ " " ++ a
 generatePython' (ExprF s a)       = s ++ " " ++ a
 generatePython' (ExprList as)           = L.intercalate "\n" as
