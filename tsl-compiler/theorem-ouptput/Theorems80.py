@@ -11,7 +11,7 @@ class Theorem61(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if ((maxb("genus") != 'undt'  and maxb("genus") <= 1.0)):
+        if (maxb("genus") != 'undt'  and maxb("genus") <= 1.0):
             try:
                 set("edgeCliqueCover",  maxb("nodeCover")*maxb("nodeInd"), ind='Max')
             except:
@@ -40,7 +40,7 @@ class Theorem62(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (((minb("mindeg") != 'undt'  and maxb("nodes") != 'undt' ) and minb("mindeg") >= maxb("nodes")/2.0)):
+        if (minb("mindeg") != 'undt'  and maxb("nodes") != 'undt'  and minb("mindeg") >= maxb("nodes")/2.0):
             try:
                 set("nodeConnec",  minb("nodeInd"), ind='Min')
             except:
@@ -94,7 +94,7 @@ class Theorem64(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (((minb("nodes") != 'undt'  and minb("nodes") >= 3.0)) and (((minb("nodeConnec") != 'undt'  and maxb("nodeInd") != 'undt' ) and minb("nodeConnec") >= maxb("nodeInd")))):
+        if (minb("nodes") != 'undt'  and minb("nodes") >= 3.0) and (minb("nodeConnec") != 'undt'  and maxb("nodeInd") != 'undt'  and minb("nodeConnec") >= maxb("nodeInd")):
             set("hamiltonian", True )
         
         return
@@ -112,7 +112,7 @@ class Theorem65(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (((minb("edges") != 'undt'  and maxb("nodes") != 'undt' ) and minb("edges") >= (maxb("nodes")**2.0-(3.0*maxb("nodes"))+6.0))):
+        if (minb("edges") != 'undt'  and maxb("nodes") != 'undt'  and minb("edges") >= (maxb("nodes")**2.0-(3.0*maxb("nodes"))+6.0)):
             set("hamiltonian", True )
         
         return
@@ -130,7 +130,7 @@ class Theorem66(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (get("planar") == True  and ((minb("nodeConnec") != 'undt'  and minb("nodeConnec") >= 4.0))):
+        if get("planar") == True  and (minb("nodeConnec") != 'undt'  and minb("nodeConnec") >= 4.0):
             set("hamiltonian", True )
         
         return
@@ -166,7 +166,7 @@ class Theorem68(Theorem):
         if get("complete") == True :
             set("regular", True )
         
-        if (get("complete") == True  and evenInvar("nodes")):
+        if get("complete") == True  and evenInvar("nodes"):
             try:
                 set("edgeChromatic",  minb("nodes")-(1.0), ind='Min')
             except:
@@ -244,13 +244,13 @@ class Theorem70(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (((maxb("genus") != 'undt'  and maxb("genus") <= 1.0)) and (((minb("girth") != 'undt'  and minb("girth") >= 3.0)) and ((maxb("girth") != 'undt'  and maxb("girth") <= 3.0)))):
+        if (maxb("genus") != 'undt'  and maxb("genus") <= 1.0) and ((minb("girth") != 'undt'  and minb("girth") >= 3.0) and (maxb("girth") != 'undt'  and maxb("girth") <= 3.0)):
             try:
                 set("chromaticNum",  7.0, ind='Max')
             except:
                 pass
         
-        elif (((maxb("genus") != 'undt'  and maxb("genus") <= 1.0)) and ((minb("girth") != 'undt'  and minb("girth") >= 4.0))):
+        elif (maxb("genus") != 'undt'  and maxb("genus") <= 1.0) and (minb("girth") != 'undt'  and minb("girth") >= 4.0):
             try:
                 set("chromaticNum",  4.0, ind='Max')
             except:
@@ -324,7 +324,7 @@ class Theorem72(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("hamiltonian") == True  or ((((minb("circumference") != 'undt'  and maxb("nodes") != 'undt' ) and minb("circumference") >= maxb("nodes"))) and (((maxb("circumference") != 'undt'  and minb("nodes") != 'undt' ) and maxb("circumference") <= minb("nodes")))):
+        if get("hamiltonian") == True  or ((minb("circumference") != 'undt'  and maxb("nodes") != 'undt'  and minb("circumference") >= maxb("nodes")) and (maxb("circumference") != 'undt'  and minb("nodes") != 'undt'  and maxb("circumference") <= minb("nodes"))):
             set("hamiltonian", True )
             try:
                 set("circumference",  minb("nodes"), ind='Min')
@@ -504,7 +504,7 @@ class Theorem77(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if ((((minb("nodes") != 'undt'  and maxb("mindeg") != 'undt' ) and minb("nodes") >= 6.0*maxb("mindeg"))) and (((minb("edges") != 'undt'  and (maxb("nodes") != 'undt'  and minb("mindeg") != 'undt' )) and minb("edges") > (1.0/2.0)*(maxb("nodes")-(minb("mindeg")))*(maxb("nodes")-(minb("mindeg"))-(1.0))+minb("mindeg")**2.0))):
+        if (minb("nodes") != 'undt'  and maxb("mindeg") != 'undt'  and minb("nodes") >= 6.0*maxb("mindeg")) and (minb("edges") != 'undt'  and maxb("nodes") != 'undt'  and minb("mindeg") != 'undt'  and minb("edges") > (1.0/2.0)*(maxb("nodes")-(minb("mindeg")))*(maxb("nodes")-(minb("mindeg"))-(1.0))+minb("mindeg")**2.0):
             set("hamiltonian", True )
         
         return
@@ -522,7 +522,7 @@ class Theorem78(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (((minb("nodes") != 'undt'  and minb("nodes") >= 4.0)) and (((minb("edges") != 'undt'  and maxb("nodes") != 'undt' ) and minb("edges") >= 2.0*maxb("nodes")-(3.0)))):
+        if (minb("nodes") != 'undt'  and minb("nodes") >= 4.0) and (minb("edges") != 'undt'  and maxb("nodes") != 'undt'  and minb("edges") >= 2.0*maxb("nodes")-(3.0)):
             try:
                 set("girth",  (maxb("circumference")+2.0)/2.0, ind='Max')
             except:
@@ -588,7 +588,7 @@ class Theorem80(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if ((minb("girth") != 'undt'  and ((minb("girth") != 'undt'  and minb("girth") >= 4.0)))) or ((minb("girth") == 'undt'  and ((minb("nodes") != 'undt'  and minb("nodes") > 2.0)))):
+        if (minb("girth") != 'undt'  and (minb("girth") != 'undt'  and minb("girth") >= 4.0)) or (minb("girth") == 'undt'  and (minb("nodes") != 'undt'  and minb("nodes") > 2.0)):
             set("complete", False )
         
         return

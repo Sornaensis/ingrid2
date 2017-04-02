@@ -89,7 +89,7 @@ generatePython' (Expr (t:ts))         = t ++ concatMap (\s ->
                                                   ('-':_) -> s
                                                   _       -> '+':s) ts
 generatePython' (Or a b)              = a ++ " or " ++ b
-generatePython' (And a b)             = "(" ++ a ++ " and " ++ b ++ ")"
+generatePython' (And a b)             = a ++ " and " ++ b
 generatePython' (Mul a b)             = a ++ "*" ++ b
 generatePython' (Div a b)             = a ++ "/" ++ b
 generatePython' (Pow a b)             = a ++ "**" ++ b
@@ -120,7 +120,7 @@ realizeAnalysis' v
             "undefined" -> Fx $ 
                 Cond (Fx $ Function "minb" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "\'undt\'" (Fx Empty)))
    | (Cond a (Just (Fx (RelExpr (Fx (Relation RelEq)) expr)))) <- v =
-        cata realizeAnalysis' $ Fx $ And (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelGte)) expr)))))
+        cata realizeAnalysis' . Fx . Paren . Fx $ And (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelGte)) expr)))))
                                          (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelLte)) expr)))))
    | (Cond a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = flipBound $ getBound rel
