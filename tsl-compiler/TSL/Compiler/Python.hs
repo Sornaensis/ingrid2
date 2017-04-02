@@ -1,6 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 module TSL.Compiler.Python (
                     generatePythonClass
+                ,   generatePython
+                ,   realizeAnalysis
                 ,   generateSymPyIneq
                     ) where
 
@@ -36,6 +38,9 @@ import           TSL.Parser.Parser
 indent :: String -> String
 indent = unlines . map ("    " ++) . lines
 
+realizeAnalysis :: Fix Theorem -> Fix Theorem
+realizeAnalysis = cata realizeAnalysis'
+
 -- | Body
 generatePythonClass :: TSLTheorem -> String
 generatePythonClass (TSLTheorem (TSLInputTheorem name text disp idnum) ts)  = 
@@ -56,7 +61,7 @@ generatePythonClass (TSLTheorem (TSLInputTheorem name text disp idnum) ts)  =
              ++ "    return"
 
 generatePython :: Fix Theorem -> String
-generatePython = cata generatePython'  . cata realizeAnalysis'
+generatePython = cata generatePython'  . cata realizeAnalysis2' . cata realizeAnalysis'
 
 generatePython' :: Theorem String -> String
 generatePython' (Relation a) = show a
@@ -104,9 +109,9 @@ generatePython' (Invar s)               = show s
 generatePython' (Paren e)               = "(" ++ e ++ ")"
 generatePython' _                       = ""
 
-realizeAnalysis' :: Theorem (Fix Theorem) -> Fix Theorem
-realizeAnalysis' v
-   | ExprF "nosolve" ivexpr <- v = cata realizeAnalysis' ivexpr
+realizeAnalysis2' :: Theorem (Fix Theorem) -> Fix Theorem
+realizeAnalysis2' v
+   | ExprF "nosolve" ivexpr <- v = cata realizeAnalysis2' $ cata realizeAnalysis' ivexpr
    | Function "setmax" [i, e] <- v =
         let ivs = map (\f -> Fx $ Cond f    
                                        (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
@@ -145,8 +150,11 @@ realizeAnalysis' v
                 Cond (Fx $ Function "minb" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))) 
             "undefined" -> Fx $ 
                 Cond (Fx $ Function "minb" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "\'undt\'" (Fx Empty)))
+   | (Cond a (Just (Fx (RelExpr (Fx (Relation RelNeq)) expr)))) <- v =
+        cata realizeAnalysis2' . cata realizeAnalysis' . Fx . Paren . Fx $ Or (Fx $ Paren (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelGt)) expr))))))
+                                         (Fx $ Paren (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelLt)) expr))))))
    | (Cond a (Just (Fx (RelExpr (Fx (Relation RelEq)) expr)))) <- v =
-        cata realizeAnalysis' . Fx . Paren . Fx $ And (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelGte)) expr)))))
+        cata realizeAnalysis2' . cata realizeAnalysis' . Fx . Paren . Fx $ And (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelGte)) expr)))))
                                          (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelLte)) expr)))))
    | (Cond a@(Fx (Invar _)) (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = flipBound $ getBound rel
@@ -161,11 +169,11 @@ realizeAnalysis' v
                     Max -> Fx $ Function "minb" [a]
                     Min -> Fx $ Function "maxb" [a] 
         in  if null inv_check 
-              then Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
+              then Fx $ Cond a' (Just . Fx $ RelExpr rel expr)
               else 
                 if length inv_check == 1
-                    then Fx. Paren . Fx $ And (head inv_check) (Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr))
-                    else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr))
+                    then Fx. Paren . Fx $ And (head inv_check) (Fx $ Cond a' (Just . Fx $ RelExpr rel expr))
+                    else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a' (Just . Fx $ RelExpr rel expr))
    | (InvarExpr (Fx (ExprF s e)) Nothing) <- v =
         case s of
             "undefined" -> Fx $ InvarExpr (Fx $ Function "set" [e, 
@@ -185,19 +193,74 @@ realizeAnalysis' v
                                                 RelExpr (Fx $ Relation RelNeq) 
                                                         (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce)
         in if null inv_check
-             then Fx $ InvarExpr a (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
+             then Fx $ InvarExpr a (Just . Fx $ RelExpr rel expr)
              else 
                 if length inv_check == 1 
                     then Fx $ If (head inv_check)
-                                 (Fx $ InvarExpr a (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr))
+                                 (Fx $ InvarExpr a (Just . Fx $ RelExpr rel expr))
                                  Nothing
                     else Fx $ If (foldr1 (\x y -> Fx $ And x y) inv_check)
-                          (Fx $ InvarExpr a (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr))
+                          (Fx $ InvarExpr a (Just . Fx $ RelExpr rel expr))
                           Nothing
    | (Cond a Nothing) <- v =
         Fx $ Cond (Fx $ Function "get" [a]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "True" (Fx Empty)))
    | (InvarExpr a Nothing) <- v =
         Fx $ InvarExpr (Fx $ Function "set" [a, Fx $ ExprF "True" (Fx Empty)]) Nothing
+   | otherwise = Fx v
+   where
+        swapBound Max (i, InvAn True _ _) = (i, Fx $ Function "minb" [Fx $ Invar i])
+        swapBound Min (i, InvAn True _ _) = (i, Fx $ Function "maxb" [Fx $ Invar i])
+        swapBound Min (i, _)            = (i, Fx $ Function "minb" [Fx $ Invar i])
+        swapBound Max (i, _)            = (i, Fx $ Function "maxb" [Fx $ Invar i])
+        evenOrOdd s e = Fx $ ExprList [
+                            Fx $ If (Fx $ Cond (Fx $ Function "minb" [e])
+                                               (Just . Fx $ RelExpr (Fx $ Relation RelNeq) 
+                                                                     (Fx $ ExprF "\'undt\'" (Fx Empty))))
+                                    (Fx $ If (Fx $ Function s [Fx $ Expr [Fx $ Function "minb" [e]
+                                                                             , Fx $ Number 1]])
+                                             (Fx $ InvarExpr (Fx $ Function "set" [e 
+                                                                        ,    Fx $ Expr [Fx $ Function "minb" [e] 
+                                                                                   ,    Fx $ Number 1]
+                                                                        , Fx $ ExprF "ind=\'Min\'" (Fx Empty)])
+                                                             Nothing)
+                                             Nothing)
+                                    Nothing,
+                            Fx $ If (Fx $ Cond (Fx $ Function "maxb" [e])
+                                               (Just . Fx $ RelExpr (Fx $ Relation RelNeq) 
+                                                                     (Fx $ ExprF "\'undt\'" (Fx Empty))))
+                                    (Fx $ If (Fx $ Function s [Fx $ Expr [Fx $ Function "maxb" [e]
+                                                                             , Fx $ Neg $ Fx $ Number 1]])
+                                             (Fx $ InvarExpr (Fx $ Function "set" [e 
+                                                                        ,    Fx $ Expr [Fx $ Function "minb" [e] 
+                                                                                   ,    Fx $ Neg $ Fx $ Number 1]
+                                                                        , Fx $ ExprF "ind=\'Max\'" (Fx Empty)])
+                                                             Nothing)
+                                             Nothing)
+                                    Nothing ]
+
+realizeAnalysis' :: Theorem (Fix Theorem) -> Fix Theorem
+realizeAnalysis' v
+   | (Cond a (Just (Fx (RelExpr (Fx (Relation RelNeq)) expr)))) <- v =
+        cata realizeAnalysis' . Fx . Paren . Fx $ Or (Fx $ Paren (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelGt)) expr))))))
+                                         (Fx $ Paren (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelLt)) expr))))))
+   | (Cond a (Just (Fx (RelExpr (Fx (Relation RelEq)) expr)))) <- v =
+        cata realizeAnalysis' . Fx . Paren . Fx $ And (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelGte)) expr)))))
+                                         (Fx (Cond a (Just (Fx (RelExpr (Fx (Relation RelLte)) expr)))))
+   | (Cond a@(Fx (Invar _)) (Just (Fx (RelExpr rel expr)))) <- v =
+        let bound = flipBound $ getBound rel
+            invars = getInvolves expr
+            inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
+            inv_replce = map (swapBound bound) inv_mappings
+            a' = case bound of
+                    Max -> Fx $ Function "minb" [a]
+                    Min -> Fx $ Function "maxb" [a] 
+        in  Fx $ Cond a' (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
+   | (InvarExpr a@(Fx (Invar _)) (Just (Fx (RelExpr rel expr)))) <- v =
+        let bound = getBound rel
+            invars = getInvolves expr
+            inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
+            inv_replce = map (swapBound bound) inv_mappings
+        in Fx $ InvarExpr a (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
    | otherwise = Fx v
    where
         swapBound Max (i, InvAn True _ _) = (i, Fx $ Function "minb" [Fx $ Invar i])
