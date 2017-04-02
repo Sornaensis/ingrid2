@@ -139,7 +139,7 @@ class Theorem105(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("maxClique") != 'undt'  and minb("maxClique") >= 2.0) and (maxb("maxClique") != 'undt'  and maxb("maxClique") <= 2.0) and (minb("chromaticNum") != 'undt'  and minb("chromaticNum") >= 3.0):
+        if ((((minb("maxClique") != 'undt'  and minb("maxClique") >= 2.0)) and ((maxb("maxClique") != 'undt'  and maxb("maxClique") <= 2.0))) and ((minb("chromaticNum") != 'undt'  and minb("chromaticNum") >= 3.0))):
             try:
                 set("circumference",  2.0*minb("chromaticNum")-(1.0), ind='Min')
             except:
@@ -164,7 +164,7 @@ class Theorem106(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if maxb("nodeCover") != 'undt'  and maxb("chromaticNum") != 'undt'  and maxb("nodeInd") != 'undt' :
+        if ((maxb("nodeCover") != 'undt'  and maxb("chromaticNum") != 'undt' ) and maxb("nodeInd") != 'undt' ):
             try:
                 set("edges",  maxb("nodeCover")*(maxb("nodeInd")+maxb("nodeCover")*(minb("chromaticNum")-(1.0))/(2.0*minb("chromaticNum"))), ind='Max')
             except:
@@ -274,7 +274,7 @@ class Theorem110(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("mindeg") != 'undt'  and minb("mindeg") >= 4.0) and (minb("girth") != 'undt'  and minb("girth") >= 5.0):
+        if (((minb("mindeg") != 'undt'  and minb("mindeg") >= 4.0)) and ((minb("girth") != 'undt'  and minb("girth") >= 5.0))):
             try:
                 set("circumference",  (minb("girth")-(2.0))*(minb("mindeg")-(2.0))+5.0, ind='Min')
             except:
@@ -328,7 +328,7 @@ class Theorem112(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("connected") == True  and (maxb("nodeInd") != 'undt'  and minb("mindeg") != 'undt'  and maxb("nodeInd") <= minb("mindeg")):
+        if (get("connected") == True  and (((maxb("nodeInd") != 'undt'  and minb("mindeg") != 'undt' ) and maxb("nodeInd") <= minb("mindeg")))):
             try:
                 set("mindeg",  (minb("nodes")+2.0)/3.0, ind='Min')
             except:
@@ -442,7 +442,7 @@ class Theorem116(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("bipartite") == True  and evenInvar("nodes"):
+        if (get("bipartite") == True  and evenInvar("nodes")):
             try:
                 set("genus",  ((maxb("nodes")-(4.0))**2.0+15.0)/16.0, ind='Max')
             except:
@@ -452,7 +452,7 @@ class Theorem116(Theorem):
             except:
                 pass
         
-        if get("bipartite") == True  and oddInvar("nodes"):
+        if (get("bipartite") == True  and oddInvar("nodes")):
             try:
                 set("genus",  ((maxb("nodes")-(3.0))*(maxb("nodes")-(5.0))+15.0)/16.0, ind='Max')
             except:
@@ -506,7 +506,7 @@ class Theorem118(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if ((minb("nodes") != 'undt'  and minb("nodes") >= 6.0) and evenInvar("nodes") and (minb("edges") != 'undt'  and maxb("nodes") != 'undt'  and minb("edges") >= (maxb("nodes")**2.0)/4.0+1.0)) or ((minb("nodes") != 'undt'  and minb("nodes") >= 7.0) and oddInvar("nodes") and (minb("edges") != 'undt'  and maxb("nodes") != 'undt'  and maxb("mindeg") != 'undt'  and minb("edges") >= (maxb("nodes")-(1.0))**2.0/4.0+1.0+maxb("mindeg"))):
+        if (((((minb("nodes") != 'undt'  and minb("nodes") >= 6.0)) and evenInvar("nodes")) and (((minb("edges") != 'undt'  and maxb("nodes") != 'undt' ) and minb("edges") >= (maxb("nodes")**2.0)/4.0+1.0)))) or (((((minb("nodes") != 'undt'  and minb("nodes") >= 7.0)) and oddInvar("nodes")) and (((minb("edges") != 'undt'  and (maxb("nodes") != 'undt'  and maxb("mindeg") != 'undt' )) and minb("edges") >= (maxb("nodes")-(1.0))**2.0/4.0+1.0+maxb("mindeg"))))):
             try:
                 set("circumference",  5.0, ind='Min')
             except:
@@ -527,7 +527,7 @@ class Theorem119(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("chromaticNum") != 'undt'  and maxb("maxClique") != 'undt'  and minb("chromaticNum") >= maxb("maxClique")):
+        if (((minb("chromaticNum") != 'undt'  and maxb("maxClique") != 'undt' ) and minb("chromaticNum") >= maxb("maxClique"))):
             try:
                 set("mindeg",  (3.0*minb("maxClique")-(4.0))*maxb("nodes")/(3.0*minb("maxClique")-(1.0)), ind='Max')
             except:
@@ -556,7 +556,7 @@ class Theorem120(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("hamiltonian") == True  and (minb("nodes") != 'undt'  and maxb("chromaticNum") != 'undt'  and minb("nodes") >= maxb("chromaticNum")-(1.0)) and (minb("chromaticNum") != 'undt'  and minb("chromaticNum") >= 4.0):
+        if ((get("hamiltonian") == True  and (((minb("nodes") != 'undt'  and maxb("chromaticNum") != 'undt' ) and minb("nodes") >= maxb("chromaticNum")-(1.0)))) and ((minb("chromaticNum") != 'undt'  and minb("chromaticNum") >= 4.0))):
             try:
                 set("edges",  (minb("chromaticNum")-(1.0))*(minb("chromaticNum")-(2.0))/2.0+minb("nodes"), ind='Min')
             except:
@@ -570,7 +570,7 @@ class Theorem120(Theorem):
             except:
                 pass
         
-        elif get("hamiltonian") == True  and (minb("chromaticNum") != 'undt'  and minb("chromaticNum") >= 3.0) and (maxb("chromaticNum") != 'undt'  and maxb("chromaticNum") <= 3.0) and evenInvar("nodes"):
+        elif ((get("hamiltonian") == True  and (((minb("chromaticNum") != 'undt'  and minb("chromaticNum") >= 3.0)) and ((maxb("chromaticNum") != 'undt'  and maxb("chromaticNum") <= 3.0)))) and evenInvar("nodes")):
             try:
                 set("edges",  minb("nodes")+1.0, ind='Min')
             except:

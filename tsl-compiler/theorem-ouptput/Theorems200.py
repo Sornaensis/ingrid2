@@ -11,7 +11,7 @@ class Theorem181(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("nodeCliqueCover") != 'undt'  and maxb("nodeInd") != 'undt'  and minb("nodeCliqueCover") > maxb("nodeInd")):
+        if (((minb("nodeCliqueCover") != 'undt'  and maxb("nodeInd") != 'undt' ) and minb("nodeCliqueCover") > maxb("nodeInd"))):
             try:
                 set("maxdeg",  3.0*minb("nodes")/(3.0*maxb("nodeInd")-(1.0))-(1.0), ind='Min')
             except:
@@ -71,7 +71,7 @@ class Theorem183(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (maxb("nodeInd") != 'undt'  and maxb("nodeInd") <= 2.0):
+        if ((maxb("nodeInd") != 'undt'  and maxb("nodeInd") <= 2.0)):
             try:
                 set("maxClique",  (1.0/2.0)*(sqrt(9.0+8.0*minb("nodes"))-(3.0)), ind='Min')
             except:
@@ -127,7 +127,7 @@ class Theorem185(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (maxb("nodeCliqueCover") != 'undt'  and maxb("nodeCliqueCover") <= 2.0):
+        if ((maxb("nodeCliqueCover") != 'undt'  and maxb("nodeCliqueCover") <= 2.0)):
             try:
                 set("maxClique",  minb("chromaticNum"), ind='Min')
             except:
@@ -160,7 +160,7 @@ class Theorem186(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("nodeInd") != 'undt'  and minb("nodeInd") >= 2.0) and (maxb("nodeInd") != 'undt'  and maxb("nodeInd") <= 2.0) and (minb("nodeCliqueCover") != 'undt'  and minb("nodeCliqueCover") >= 4.0):
+        if ((((minb("nodeInd") != 'undt'  and minb("nodeInd") >= 2.0)) and ((maxb("nodeInd") != 'undt'  and maxb("nodeInd") <= 2.0))) and ((minb("nodeCliqueCover") != 'undt'  and minb("nodeCliqueCover") >= 4.0))):
             try:
                 set("nodes",  11.0, ind='Min')
             except:
@@ -181,7 +181,7 @@ class Theorem187(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("regular") == True  and (maxb("maxdeg") != 'undt'  and minb("nodes") != 'undt'  and maxb("maxdeg") <= minb("nodes")-(2.0)):
+        if (get("regular") == True  and (((maxb("maxdeg") != 'undt'  and minb("nodes") != 'undt' ) and maxb("maxdeg") <= minb("nodes")-(2.0)))):
             try:
                 set("maxClique",  (1.0/2.0)*maxb("nodes")-((minb("nodeInd")-(1.0))*(minb("nodeInd")-(2.0))/(2.0*(maxb("nodes")-(minb("maxdeg"))-(1.0)))), ind='Max')
             except:
@@ -257,7 +257,7 @@ class Theorem189(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("nodes") != 'undt'  and minb("nodes") > 10.0) or (maxb("nodes") != 'undt'  and maxb("nodes") < 9.0):
+        if ((minb("nodes") != 'undt'  and minb("nodes") > 10.0)) or ((maxb("nodes") != 'undt'  and maxb("nodes") < 9.0)):
             try:
                 set("thickness",  (maxb("nodes")+7.0)/6.0, ind='Max')
             except:
@@ -267,7 +267,7 @@ class Theorem189(Theorem):
             except:
                 pass
         
-        elif (minb("nodes") != 'undt'  and minb("nodes") >= 9.0) and (maxb("nodes") != 'undt'  and maxb("nodes") <= 9.0) or (minb("nodes") != 'undt'  and minb("nodes") >= 10.0) and (maxb("nodes") != 'undt'  and maxb("nodes") <= 10.0):
+        elif (((minb("nodes") != 'undt'  and minb("nodes") >= 9.0)) and ((maxb("nodes") != 'undt'  and maxb("nodes") <= 9.0))) or (((minb("nodes") != 'undt'  and minb("nodes") >= 10.0)) and ((maxb("nodes") != 'undt'  and maxb("nodes") <= 10.0))):
             try:
                 set("thickness",  3.0, ind='Max')
             except:
@@ -330,7 +330,7 @@ class Theorem192(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("maxClique") != 'undt'  and minb("maxClique") >= 2.0) and (maxb("maxClique") != 'undt'  and maxb("maxClique") <= 2.0):
+        if (((minb("maxClique") != 'undt'  and minb("maxClique") >= 2.0)) and ((maxb("maxClique") != 'undt'  and maxb("maxClique") <= 2.0))):
             try:
                 set("nodeInd",  minb("mindeg")*(minb("diameter")+4.0)/4.0, ind='Min')
             except:
@@ -382,7 +382,7 @@ class Theorem194(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("maxClique") != 'undt'  and minb("maxClique") >= 9.0) and (maxb("maxClique") != 'undt'  and maxb("maxClique") <= 9.0) or (minb("maxClique") != 'undt'  and minb("maxClique") >= 10.0) and (maxb("maxClique") != 'undt'  and maxb("maxClique") <= 10.0):
+        if (((minb("maxClique") != 'undt'  and minb("maxClique") >= 9.0)) and ((maxb("maxClique") != 'undt'  and maxb("maxClique") <= 9.0))) or (((minb("maxClique") != 'undt'  and minb("maxClique") >= 10.0)) and ((maxb("maxClique") != 'undt'  and maxb("maxClique") <= 10.0))):
             try:
                 set("thickness",  3.0, ind='Min')
             except:
@@ -479,7 +479,7 @@ class Theorem197(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("nodes") != 'undt'  and minb("nodes") >= 3.0):
+        if ((minb("nodes") != 'undt'  and minb("nodes") >= 3.0)):
             try:
                 set("edgeCliqueCover",  maxb("thickness")*(2.0*maxb("nodes")-(minb("numOfComponents"))-(3.0)), ind='Max')
             except:
@@ -566,7 +566,7 @@ class Theorem200(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("nodes") != 'undt'  and maxb("edgeInd") != 'undt'  and minb("nodes") > 2.0*maxb("edgeInd")+1.0):
+        if (((minb("nodes") != 'undt'  and maxb("edgeInd") != 'undt' ) and minb("nodes") > 2.0*maxb("edgeInd")+1.0)):
             try:
                 set("nodeCover",  2.0*maxb("edgeInd")-(minb("nodeConnec")), ind='Max')
             except:

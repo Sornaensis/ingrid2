@@ -126,7 +126,8 @@
             "disp": ""
         },
         {
-            "text": "if complete or mindeg == nodes - 1 or nodeInd == 1 or nodeCliqueCover == 1 or edgeCliqueCover == 1 or diameter == 1 then { complete, mindeg == nodes - 1, nodeInd == 1, nodeCliqueCover == 1, edgeCliqueCover == 1, diameter == 1};",
+            "text": "
+            if complete or mindeg == nodes - 1 or nodeInd == 1 or nodeCliqueCover == 1 or edgeCliqueCover == 1 or diameter == 1 then { complete, mindeg == nodes - 1, nodeInd == 1, nodeCliqueCover == 1, edgeCliqueCover == 1, diameter == 1};",
             "name": "Theorem",
             "idnum": 40,
             "disp": ""
