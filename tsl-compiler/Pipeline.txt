@@ -1,0 +1,79 @@
+HLR (High Level Representation) | IR (Intermediate Representation) ==> TL (Target Language)
+  ^                                 ^
+  |  _______________________________|
+   \/
+    \
+  Single Front end / Multi pass compiler
+
+  - Multiple TL can be supported with only the addition of a single function per TL
+    - Currently only python 3.0 supported
+
+
+  Source Code 
+      ||
+      ||
+  ____\/____
+ |  Lexer & | ---> Only check valid syntax (One syntax for both HLR and IR)
+ |  Parser  |
+      ||
+  Initial AST
+      ||
+  ____\/____
+ | Expr     | ---> Check High Level Expressions for errors:
+ |  Checker |       - Recursive Inequalities
+      ||            - Complex analysis for any inequality
+      ||            - Invalid setmax() setmin() or mut <var> is <expr>
+      ||              -- Expressions within these statemetns cannot have free standing invariants
+      ||            - Check that all functions contained within expressions are valid (no aribitrary functions)
+      ||
+  Initial AST
+      ||
+  ____\/____
+ | Rewrite  | ---> For: 'let bind = <expr>' replace all occurences of bind with <expr>
+ | Let binds|         - Mutual Recursion is a bad idea
+      ||              - Recursion is limited to two passes
+      ||              - Symbolic so that terms can be rewritten within inequalities 
+  AST w.o Lets
+      ||
+  ____\/____
+ | Equation | ---> Using SymPy, rewrite a >= ... for all terms 
+ | Solver   |      - Replace a == b with a >= b and a <= b 
+      ||           - Automatically hides complex functions (min, max, etc)
+      ||           - Performs LHS analysis on the first inequality and applies the outcome to each subsequent inequality
+      ||           - Equations that cannot be solved for all terms are detected here
+      ||
+    IR AST
+      ||
+  ____\/____
+ | Type     | ---> Type check all expressions
+ | Checker  |      - Ensure boolean values are not coerced to integers
+      ||           - Ensure non boolean values are not coerced to boolean values
+      ||           - Perform arity check on all functions
+      ||           - (PLANNED): Integer valued expressions (no references to lambda) with integer-like doubles
+      ||                should keep everything as integer arithmetic instead of double
+    IR AST
+      ||
+  ____\/____
+ | Ineq.    | ---> Perform analysis on all inequalities and conditional expressions that require analysis (free invariants)
+ | Analysis |      - Expand a == b to (a >= b and a <= b) for all conditionals
+      ||           - Expand a != b to (a > b or a < b) for all conditionals
+      ||           - Perform analysis on all Conditionals and Inequalities
+    IR AST
+      ||
+  ____\/____
+ | Expand   | ---> Expand all inequalities into imperative statements and desugar
+ | Analysis |     - a >= minb(b) --> setmin(a, minb(b))
+      ||          - Surround set() statements with try/except: pass
+      ||          - Add conditional checks for 'undt' for all invariants within set()
+      ||          - Add conditional checks for 'undt' for all invariants used in conditionals
+    IR AST
+      ||      if final_pass
+      ||=======================
+      ||                     ||
+  ____\/_____            ____\/_____
+ | Serialize |          | TL        |  ---> Simply serialize IR to string and add TL boilerplate
+ | to string |          | Generator |
+      ||                     ||
+    UTF-8 Text            UTF-8 String
+      ||                     ||
+      \/                     \/
