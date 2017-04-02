@@ -200,8 +200,8 @@ realizeAnalysis' v
         Fx $ InvarExpr (Fx $ Function "set" [a, Fx $ ExprF "True" (Fx Empty)]) Nothing
    | otherwise = Fx v
    where
-        swapBound Max (i, InvAn True _) = (i, Fx $ Function "minb" [Fx $ Invar i])
-        swapBound Min (i, InvAn True _) = (i, Fx $ Function "maxb" [Fx $ Invar i])
+        swapBound Max (i, InvAn True _ _) = (i, Fx $ Function "minb" [Fx $ Invar i])
+        swapBound Min (i, InvAn True _ _) = (i, Fx $ Function "maxb" [Fx $ Invar i])
         swapBound Min (i, _)            = (i, Fx $ Function "minb" [Fx $ Invar i])
         swapBound Max (i, _)            = (i, Fx $ Function "maxb" [Fx $ Invar i])
         evenOrOdd s e = Fx $ ExprList [
@@ -230,8 +230,8 @@ realizeAnalysis' v
                                              Nothing)
                                     Nothing ]
 
-swapBound Max (InvAn True _) = Min
-swapBound Min (InvAn True _) = Max
+swapBound Max (InvAn True _ _) = Min
+swapBound Min (InvAn True _ _) = Max
 swapBound Max _              = Max
 swapBound Min _              = Min
 
