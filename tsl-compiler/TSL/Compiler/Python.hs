@@ -83,23 +83,25 @@ generatePython' (If a b c)            =
                        maybe [] ("el"++) c]
 -- generatePython' (ExprF "even" a)      = s ++ " " ++ a
 generatePython' (ExprF s a)       = s ++ " " ++ a
-generatePython' (ExprList as)         = L.intercalate "\n" as
-generatePython' (Expr (t:ts))         = t ++ concatMap (\s ->
-                                                case s of
-                                                  ('-':_) -> s
-                                                  _       -> '+':s) ts
-generatePython' (Or a b)              = a ++ " or " ++ b
-generatePython' (And a b)             = a ++ " and " ++ b
-generatePython' (Mul a b)             = a ++ "*" ++ b
-generatePython' (Div a b)             = a ++ "/" ++ b
-generatePython' (Pow a b)             = a ++ "**" ++ b
-generatePython' (Neg a)               = "-(" ++ a ++ ")"
-generatePython' (Number a)            = show a
-generatePython' (Function s es)      = s ++ "(" ++ L.intercalate ", " es ++ ")"
-generatePython' (Local s)            = "Local " ++ s
-generatePython' (Invar s)            = show s
-generatePython' (Paren e)            = "(" ++ e ++ ")"
-generatePython' _                    = ""
+generatePython' (ExprList as)           = L.intercalate "\n" as
+generatePython' (Expr (t:ts))           = t ++ concatMap (\s ->
+                                                  case s of
+                                                    ('-':_) -> s
+                                                    _       -> '+':s) ts
+generatePython' (Or a b)                = a ++ " or " ++ b
+generatePython' (And a b)               = a ++ " and " ++ b
+generatePython' (Mul a b)               = a ++ "*" ++ b
+generatePython' (Div a b)               = a ++ "/" ++ b
+generatePython' (Pow a b)               = a ++ "**" ++ b
+generatePython' (Neg a)                 = "-(" ++ a ++ ")"
+generatePython' (Number a)              = show a
+generatePython' (Function "setmin" es)  = "set(" ++ L.intercalate ", " es ++ ", ind=\'Min\')"
+generatePython' (Function "setmax" es)  = "set(" ++ L.intercalate ", " es ++ ", ind=\'Max\')"
+generatePython' (Function s es)         = s ++ "(" ++ L.intercalate ", " es ++ ")"
+generatePython' (Local s)               = "Local " ++ s
+generatePython' (Invar s)               = show s
+generatePython' (Paren e)               = "(" ++ e ++ ")"
+generatePython' _                       = ""
 
 realizeAnalysis' :: Theorem (Fix Theorem) -> Fix Theorem
 realizeAnalysis' v
