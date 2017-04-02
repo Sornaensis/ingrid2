@@ -153,9 +153,9 @@ class Theorem105(Theorem):
 
 class Theorem106(Theorem):
     def __init__(self):
-        super(Theorem106, self).__init__(106, "edges <= nodeCover*(nodeInd+nodeCover*(chromaticNum-(1.0))/(2.0*chromaticNum));", "")
+        super(Theorem106, self).__init__(106, "if exists nodeCover and exists chromaticNum and exists nodeInd then \n{\n    edges <= nodeCover*(nodeInd+nodeCover*(chromaticNum-(1.0))/(2.0*chromaticNum))\n\n};", "")
     def involves(self, str_invar):
-        return str_invar in ["edges","nodeCover","nodeInd","chromaticNum"]
+        return str_invar in ["nodeCover","chromaticNum","nodeInd","edges"]
     def run(self):
         get = self.get
         set = self.set
@@ -164,22 +164,24 @@ class Theorem106(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        try:
-            set("edges",  maxb("nodeCover")*(maxb("nodeInd")+maxb("nodeCover")*(minb("chromaticNum")-(1.0))/(2.0*minb("chromaticNum"))), ind='Max')
-        except:
-            pass
-        try:
-            set("nodeCover",  -((minb("chromaticNum")*maxb("nodeInd")+sqrt(minb("chromaticNum")*(2.0*minb("chromaticNum")*minb("edges")+minb("chromaticNum")*maxb("nodeInd")**2.0-(2.0*minb("edges")))))/(minb("chromaticNum")-(1.0))), ind='Min')
-        except:
-            pass
-        try:
-            set("nodeInd",  minb("edges")/maxb("nodeCover")-(maxb("nodeCover")/2.0)+maxb("nodeCover")/(2.0*maxb("chromaticNum")), ind='Min')
-        except:
-            pass
-        try:
-            set("chromaticNum",  minb("nodeCover")**2.0/(-(2.0*maxb("edges"))+minb("nodeCover")**2.0+2.0*minb("nodeCover")*minb("nodeInd")), ind='Max')
-        except:
-            pass
+        if maxb("nodeCover") != 'undt'  and maxb("chromaticNum") != 'undt'  and maxb("nodeInd") != 'undt' :
+            try:
+                set("edges",  maxb("nodeCover")*(maxb("nodeInd")+maxb("nodeCover")*(minb("chromaticNum")-(1.0))/(2.0*minb("chromaticNum"))), ind='Max')
+            except:
+                pass
+            try:
+                set("nodeCover",  -((minb("chromaticNum")*maxb("nodeInd")+sqrt(minb("chromaticNum")*(2.0*minb("chromaticNum")*minb("edges")+minb("chromaticNum")*maxb("nodeInd")**2.0-(2.0*minb("edges")))))/(minb("chromaticNum")-(1.0))), ind='Min')
+            except:
+                pass
+            try:
+                set("nodeInd",  minb("edges")/maxb("nodeCover")-(maxb("nodeCover")/2.0)+maxb("nodeCover")/(2.0*maxb("chromaticNum")), ind='Min')
+            except:
+                pass
+            try:
+                set("chromaticNum",  minb("nodeCover")**2.0/(-(2.0*maxb("edges"))+minb("nodeCover")**2.0+2.0*minb("nodeCover")*minb("nodeInd")), ind='Max')
+            except:
+                pass
+        
         return
 
 class Theorem107(Theorem):

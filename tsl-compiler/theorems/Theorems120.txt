@@ -32,7 +32,11 @@
             "disp": ""
         },
         {
-            "text": "edges <= nodeCover*(nodeInd + nodeCover*(chromaticNum-1)/(2*chromaticNum));",
+            "text": "
+            if exists nodeCover and exists chromaticNum and exists nodeInd then 
+            {
+                edges <= nodeCover*(nodeInd + nodeCover*(chromaticNum-1)/(2*chromaticNum))
+            };",
             "name": "Theorem",
             "idnum": 106,
             "disp": ""
