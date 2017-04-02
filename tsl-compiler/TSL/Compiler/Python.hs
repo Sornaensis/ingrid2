@@ -153,7 +153,15 @@ realizeAnalysis' v
             invars = getInvolves expr
             inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
             inv_replce = map (swapBound bound) inv_mappings
-        in  Fx $ InvarExpr a (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
+            inv_check  = map (\(_,f) -> Fx $ Cond f 
+                                            (Just . Fx $ 
+                                                RelExpr (Fx $ Relation RelNeq) 
+                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce)
+        in if null inv_check
+             then Fx $ InvarExpr a (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr)
+             else Fx $ If (foldr1 (\x y -> Fx $ And x y) inv_check)
+                          (Fx $ InvarExpr a (Just . Fx $ RelExpr rel $ replaceAllInvar inv_replce expr))
+                          Nothing
    | (Cond a Nothing) <- v =
         Fx $ Cond (Fx $ Function "get" [a]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "True" (Fx Empty)))
    | (InvarExpr a Nothing) <- v =
