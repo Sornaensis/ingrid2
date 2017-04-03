@@ -38,6 +38,46 @@ invalidJson ex = responseLBS
         [ "message" .= show ex
         ]
 
+{-# LANGUAGE CPP                        #-}
+{-# LANGUAGE EmptyDataDecls             #-}
+{-# LANGUAGE FlexibleContexts           #-}
+{-# LANGUAGE GADTs                      #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE MultiParamTypeClasses      #-}
+{-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE QuasiQuotes                #-}
+{-# LANGUAGE TemplateHaskell            #-}
+{-# LANGUAGE TypeFamilies               #-}
+import           Control.Exception       (SomeException, handle)
+import           Control.Monad.IO.Class  (liftIO)
+import           Data.Aeson
+import           Data.String.Conversions
+import           Data.Text               (Text)
+import qualified Data.Text               as T
+import           Data.Text.Encoding      (encodeUtf8)
+import           Yesod
+
+
+import           TSL.Compiler.Compiler
+import           TSL.Compiler.Types
+
+data App = App
+
+mkYesod "App" [parseRoutes|
+/rpc/init RPCInitR GET 
+|]
+
+instance Yesod App where
+    makeSessionBackend _ = do
+        backend <- defaultClientSessionBackend 600 "keyfile.aes"
+        return $ Just backend
+
+instance RenderMessage App FormMessage where
+    renderMessage _ _ = defaultFormMessage
+
+main :: IO ()
+main = warp 6001 App
+
 -- Application-specific logic would go here.
 modValue :: Value -> IO Value
 modValue val = do (Just stdin, Just stdout, _, ingrid) <- createProcess (proc "python2" ["ingrid.py"]) 
