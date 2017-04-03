@@ -11,6 +11,12 @@
             "name": "Theorem",
             "idnum": 67,
             "disp": ""
+        },
+        {
+            "text": "chromaticNum >= 2*edges/(2*edges - spectralRadius**2);",
+            "name": "Theorem",
+            "idnum": 69,
+            "disp": ""
         }
         ]
 }
