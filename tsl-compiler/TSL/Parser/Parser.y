@@ -141,9 +141,13 @@ Arglist1 : Expr              { [$1] }
 Expr : Expr1 { Fx $ Expr $ reverse $1 }
 
 Expr1 : Term           { [$1] }
-     | '-' Term        { [Fx $ Neg $2] }
+     | '-' Term        { [case $2 of
+                            (Fx (Paren p)) -> Fx $ Neg p
+                            _              -> Fx $ Neg $2] }
      | Expr1 '+' Term  { $3 : $1 }
-     | Expr1 '-' Term  { (Fx $ Neg $3) : $1 }
+     | Expr1 '-' Term  { (case $3 of
+                            (Fx (Paren p)) -> Fx $ Neg p
+                            _              -> Fx $ Neg $3) : $1 }
 
 Term : Factor          { $1 }
      | Term '*' Factor { Fx $ Mul $1 $3 }
