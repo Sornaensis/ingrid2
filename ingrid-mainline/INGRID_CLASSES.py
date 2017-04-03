@@ -297,6 +297,7 @@ class IngridObj:
         """
         self.queue = Queue()
         self.invariants = {}
+        self.attributes = {}
         self.error_inv = None
         self.error_msg = None
         self.theorems_used = [{'Id': -1, 'Text': 'User Input', 'Name': 'User Input'}]
@@ -386,6 +387,26 @@ class IngridObj:
         else:
             return self.invariants[str_invar].get_val()
 
+            
+    def set_attr(self, str_attr, val):
+        if self.error_inv is not None:
+            return
+    
+        if not isinstance(val, basestring):
+            self.error_inv = 'Attribute Error'
+            self.error_msg = 'Error has occurred when checking an attribute - ask Kyle for more details.'
+            return
+    
+        self.attributes[str_attr] = val
+        
+    
+    def test_attr(self, str_attr, val):
+        if str_attr not in self.attributes.keys():
+            return False
+    
+        return self.attributes[str_attr] == val 
+    
+            
     def create_dict(self):
         """
         Creates a dictionary which will be converted to json for the frontend. This populates the 'Invariants',
@@ -484,3 +505,8 @@ class Theorem(object):
     def get(self, str_invar):
         return self.ingrid_obj.get(str_invar)
 
+    def set_attr(self, str_attr, val):
+        self.ingrid_obj.set_attr(str_attr, val)
+        
+    def test_attr(self, str_attr, val):
+        return self.ingrid_obj.test_attr(str_attr, val)
