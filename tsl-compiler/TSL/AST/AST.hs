@@ -55,10 +55,11 @@ newtype Fix f = Fx (f (Fix f))
 unFix :: Fix f -> f (Fix f)
 unFix (Fx x) = x
 
-type MAlgebra m f a = f (m a) -> m a
 
 cata :: Functor f => (f a -> a) -> Fix f -> a
 cata alg = alg . fmap (cata alg) . unFix
+
+type MAlgebra m f a = f (m a) -> m a
 
 mcata :: Functor f => MAlgebra m f a -> Fix f -> m a
 mcata alg = alg . fmap (mcata alg) . unFix

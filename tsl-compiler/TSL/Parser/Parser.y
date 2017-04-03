@@ -63,15 +63,15 @@ Theorem : Invarexpr ';' Theorem                 { $1 : $3 }
          | null ';' Theorem                     { [Fx Empty] }
          | {- empty -}                          { [] }
 
-Invarexpr  : not Invar       { Fx $ InvarExpr (Fx $ ExprF     "not"       $2) Nothing }
-           | even Invar      { Fx $ InvarExpr (Fx $ ExprF     "even"      $2) Nothing }
-           | odd Invar       { Fx $ InvarExpr (Fx $ ExprF     "odd"       $2) Nothing }
-           | undefined Invar { Fx $ InvarExpr (Fx $ ExprF     "undefined" $2) Nothing }
-           | nosolve Invarexpr { (Fx $ ExprF "nosolve" $2) }
-           | mut Invar is Expr { Fx $ InvarExpr (Fx $ ExprF "mut" $2) (Just . Fx $ ExprF "" (Fx $ ExprF "is" $4)) } 
+Invarexpr  : not Invar                      { Fx $ InvarExpr (Fx $ ExprF     "not"       $2) Nothing }
+           | even Invar                     { Fx $ InvarExpr (Fx $ ExprF     "even"      $2) Nothing }
+           | odd Invar                      { Fx $ InvarExpr (Fx $ ExprF     "odd"       $2) Nothing }
+           | undefined Invar                { Fx $ InvarExpr (Fx $ ExprF     "undefined" $2) Nothing }
+           | nosolve Invarexpr              { Fx $ ExprF "nosolve" $2 }
+           | Local is Expr                  { Fx $ InvarExpr (Fx $ ExprF "mut" $2) (Just . Fx $ ExprF "" (Fx $ ExprF "is" $4)) } 
            | setmin '(' Invar ',' Expr ')'  { Fx $ Function "setmin"  [$3,$5] }
            | setmax '(' Invar ',' Expr ')'  { Fx $ Function "setmax"  [$3,$5] }
-           | Invar Invarel   { Fx $ InvarExpr $1          $2 }
+           | Invar Invarel                  { Fx $ InvarExpr $1          $2 }
 
 Invarel : Relation Expr { Just (Fx $ RelExpr $1 $2) }
         |               { Nothing }
