@@ -111,7 +111,7 @@ generatePython' _                       = ""
 
 realizeAnalysis2' :: Theorem (Fix Theorem) -> Fix Theorem
 realizeAnalysis2' v
-   | ExprF "nosolve" ivexpr <- v = cata realizeAnalysis2' $ cata realizeAnalysis' ivexpr
+   | ExprF "nosolve" ivexpr <- v = cata realizeAnalysis2' . cata realizeAnalysis' . head . replaceAllEqSign $ ivexpr
    | Function "setmax" [i, e] <- v =
         let ivs = map (\f -> Fx $ Cond f    
                                        (Just . Fx $ RelExpr (Fx $ Relation RelNeq)

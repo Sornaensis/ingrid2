@@ -41,6 +41,12 @@
             "name": "Theorem",
             "idnum": 60,
             "disp": "Simple bounds issue"
+	},
+        {
+            "text": "chromaticNum >= 2*edges/(2*edges - spectralRadius**2);",
+            "name": "Theorem",
+            "idnum": 69,
+            "disp": ""
         }
         ]
 }
