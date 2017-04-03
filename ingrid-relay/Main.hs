@@ -8,19 +8,16 @@
 {-# LANGUAGE QuasiQuotes                #-}
 {-# LANGUAGE TemplateHaskell            #-}
 {-# LANGUAGE TypeFamilies               #-}
-import           Control.Exception          (SomeException)
 import           Control.Exception          (SomeException, handle)
 import           Control.Exception.Lifted   (handle)
 import           Control.Monad.IO.Class     (liftIO)
-import           Control.Monad.IO.Class     (liftIO)
-import           Data.Aeson                 (Value, decode, encode, object,
-                                             (.=))
 import           Data.Aeson
 import           Data.Aeson.Parser          (json)
 import           Data.ByteString            (ByteString)
 import qualified Data.ByteString.Lazy.Char8 as C
 import           Data.Conduit               (($$))
 import           Data.Conduit.Attoparsec    (sinkParser)
+import           Data.Maybe                 (fromMaybe)
 import           Data.String.Conversions
 import           Data.Text                  (Text)
 import qualified Data.Text                  as T
@@ -58,7 +55,10 @@ main = warp 4000 App
 getRPCInitR :: Handler Value
 getRPCInitR = do
     init <- decode <$> liftIO $ readFile "init.json"
-    returnJson $ fromMaybe (object []) init
+    returnJson $ 
+     case init of
+       Just v ->  v
+       Nothing -> object []
 
 postRPCRunR :: Handler Value
 postRPCRunR = do
