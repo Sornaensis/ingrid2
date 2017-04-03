@@ -286,6 +286,7 @@ realizeAnalysis' v
         swapBound Max (i, InvAn True _ _) = (i, Fx $ Function "minb" [Fx $ Invar i])
         swapBound Min (i, InvAn True _ _) = (i, Fx $ Function "maxb" [Fx $ Invar i])
         swapBound Max (i, _)              = (i, Fx $ Invar i)
+        swapBound Min (i, _)              = (i, Fx $ Invar i)
         evenOrOdd s e = Fx $ ExprList [
                             Fx $ If (Fx $ Cond (Fx $ Function "minb" [e])
                                                (Just . Fx $ RelExpr (Fx $ Relation RelNeq) 
