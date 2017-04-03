@@ -88,7 +88,7 @@ postRPCIRR = do
     json <- requireJsonBody :: Handler Value
     case decode . cs $ json of
         Just (String tls) ->
-            do theorems <- liftIO $ E.handle ((\_ -> return []) :: SomeException -> IO [TSLTheorem]) (genTheorem' 
+            do theorems <- liftIO $ E.handle ((\_ -> return []) :: SomeException -> IO [TSLTheorem]) (genTheorem 
                     (TSLInputTheorem "" tls "" 0))
                if null theorems
                   then returnJson $ object ["success" .= False, "output" .= ("Compiler error" :: Text)]
