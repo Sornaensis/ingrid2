@@ -20,7 +20,7 @@
             "disp": ""
         },
         {
-            "text": "if nodeConnec >= 1 or numOfComponents == 1 or radius <= nodes/2 or diameter <= nodes-1 then { nodeConnec >= 1, numOfComponents == 1, radius <= nodes/2, diameter <= nodes-1 };",
+            "text": "if connected or nodeConnec >= 0 or numOfComponents == 1 or radius <= nodes/2 or diameter <= nodes-1 then { connected, nodeConnec >= 0, numOfComponents == 1, radius <= nodes/2, diameter <= nodes-1 };",
             "name": "Theorem",
             "idnum": 44,
             "disp": ""
