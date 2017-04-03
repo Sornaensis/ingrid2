@@ -21,9 +21,6 @@ generateTheorem = generatePythonClass
 generateAllIneq :: [Fix Theorem] -> IO [Fix Theorem]
 generateAllIneq = fmap concat . mapM generateSymPyIneq
 
-genTheorem' :: String -> IO (TSLTheorem)
-genTheorem' = genTheorem . theoremParser . lexer
-
 genTheorem :: TSLInputTheorem -> IO TSLTheorem
 genTheorem (TSLInputTheorem n code d i) =
      do ts <- generateAllIneq
