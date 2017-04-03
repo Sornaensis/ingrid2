@@ -94,7 +94,7 @@ theoremToSrc' (Paren e)            = "(" ++ e ++ ")"
 theoremToSrc' _                    = ""
 
 instance Show [Fix Theorem] where
-    show = unlines . map (unlines . filter (not . null) . show)
+    show = unlines . filter (not . null) . map show
 
 instance Show (Fix Theorem) where
     show (Fx Empty) = ""
