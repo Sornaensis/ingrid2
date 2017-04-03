@@ -32,9 +32,11 @@ import           System.Process
 import           Yesod
 
 
+import           TSL.AST.AST
 import           TSL.Compiler.Compiler
 import           TSL.Compiler.Python
 import           TSL.Compiler.Types
+import           TSL.Parser.Parser
 
 data App = App
 
@@ -60,7 +62,7 @@ main = warp 4000 App
 getRPCInitR :: Handler Value
 getRPCInitR = do
     init <- liftIO $ decode' <$> C.readFile "init.json"
-    returnJson $ 
+    returnJson $
      case init of
        Just v ->  v
        Nothing -> object []
@@ -88,7 +90,7 @@ postRPCIRR = do
     json <- requireJsonBody :: Handler Value
     case decode . cs $ json of
         Just (String tls) ->
-            do theorems <- liftIO $ E.handle ((\_ -> return []) :: SomeException -> IO [TSLTheorem]) (mapM genTheorem tls)
+            do theorems <- liftIO $ E.handle ((\_ -> return []) :: SomeException -> IO [Fix Theorem]) (mapM (theorem . genTheorem) . theoremParser . lexer $ tls)
                if null theorems
                   then returnJson $ object ["success" .= False, "output" .= ("Compiler error" :: Text)]
                   else do
