@@ -39,7 +39,7 @@ postCompileTSLR = do
                if null theorems
                   then badResult json "Compiler Error"
                   else do
-                    let res = T.pack . concatMap (show . realizeAnalysis) $ theorems
+                    let res = T.pack . concatMap (map (show . realizeAnalysis) . theorem) $ theorems
                     defaultLayout
                      [whamlet|
                        <div>
