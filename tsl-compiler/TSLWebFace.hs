@@ -95,7 +95,7 @@ postRPCIRR = do
                if null theorems
                   then returnJson $ object ["success" .= False, "output" .= ("Compiler error" :: Text)]
                   else do
-                    let res = T.pack . show . concatMap (realizeAnalysis . theorem) $ theorems
+                    let res = T.pack . unlines . map (unlines . filter (not . null) . map (show . realizeAnalysis) . theorem) $ theorems
                     returnJson $ object ["success" .= True, "output" .= res]
         _  -> returnJson $ object ["success" .= False, "output" .= ("Compiler error" :: Text)]
 
@@ -110,7 +110,7 @@ postPreCompileTSLR = do
                if null theorems
                   then badResult json "Compiler Error"
                   else do
-                    let res = T.pack . (++";\n") . L.intercalate ";\n" . map (concatMap (show . realizeAnalysis) . theorem) $ theorems
+                    let res = T.pack . unlines . map (unlines . filter (not . null) . map (show . realizeAnalysis) . theorem) $ theorems
                     defaultLayout
                      [whamlet|
                        <div>
