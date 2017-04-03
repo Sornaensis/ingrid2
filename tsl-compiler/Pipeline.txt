@@ -61,7 +61,8 @@ HLR (High Level Representation) | IR (Intermediate Representation) ==> TL (Targe
     IR AST
       ||
       ||  if final_pass
-      ||========>>>>>>========
+      ||==>>>>==========>>>>
+      ||                    \\
       ||                     ||
       || else                ||
   ____\/_____                ||
