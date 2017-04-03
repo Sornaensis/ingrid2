@@ -86,7 +86,7 @@ postRPCRunR = do
 postRPCIRR :: Handler Value
 postRPCIRR = do
     json <- requireJsonBody :: Handler Value
-    case decode . cs . enode $ json of
+    case decode . cs . encode $ json of
         Just (String tls) ->
             do theorems <- liftIO $ E.handle ((\_ -> return []) :: SomeException -> IO [TSLTheorem]) (mapM genTheorem 
                     [(TSLInputTheorem "" (cs tls) "" 0)])
