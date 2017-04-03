@@ -89,7 +89,7 @@ postRPCIRR = do
     case decode . cs $ json of
         Just (String tls) ->
             do theorems <- liftIO $ E.handle ((\_ -> return []) :: SomeException -> IO [TSLTheorem]) (mapM genTheorem 
-                    [(TSLInputTheorem "" tls "" 0)])
+                    [(TSLInputTheorem "" (cs tls) "" 0)])
                if null theorems
                   then returnJson $ object ["success" .= False, "output" .= ("Compiler error" :: Text)]
                   else do
