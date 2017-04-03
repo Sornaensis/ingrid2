@@ -44,7 +44,7 @@
             "disp": ""
         },
         {
-            "text": "if complete then { regular }; if complete and even nodes then { edgeChromatic == nodes - 1 } else { edgeChromatic == nodes };",
+            "text": "if complete then { regular, if even nodes then { edgeChromatic == nodes - 1 } else { edgeChromatic == nodes } };",
             "name": "Theorem",
             "idnum": 68,
             "disp": ""
