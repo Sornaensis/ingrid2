@@ -18,6 +18,7 @@ import           Data.ByteString            (ByteString)
 import qualified Data.ByteString.Lazy.Char8 as C
 import           Data.Conduit               (($$))
 import           Data.Conduit.Attoparsec    (sinkParser)
+import qualified Data.List                  as L
 import           Data.Maybe                 (fromMaybe)
 import           Data.String.Conversions
 import           Data.Text                  (Text)
