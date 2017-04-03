@@ -111,7 +111,9 @@ Cond1 : Invar CondRel      { case $2 of
       | defined Invar      { Fx $ Cond (Fx $ ExprF "defined"   $2) Nothing }
       | exists Invar       { Fx $ Cond (Fx $ ExprF "exists"   $2) Nothing }
       | undefined Invar    { Fx $ Cond (Fx $ ExprF "undefined" $2) Nothing }
-      | '(' Cond ')'       { Fx $ Paren $2 }
+      | '(' Cond ')'       { case $2 of
+                              (Fx (Paren p)) -> p
+                              _              -> Fx $ Paren $2 }
 
 CondRel : '(' Invar ')' Relation Expr { Just $ Fx (Cond (Fx $ Function "" [$2]) (Just . Fx $ RelExpr $4 $5)) }
         | Relation Expr  { Just $ Fx $ RelExpr $1 $2 }
