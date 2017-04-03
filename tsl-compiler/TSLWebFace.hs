@@ -19,6 +19,7 @@ import           Yesod
 
 
 import           TSL.Compiler.Compiler
+import           TSL.Compiler.Python
 import           TSL.Compiler.Types
 
 data App = App
@@ -69,7 +70,7 @@ postCompileTSLR = do
       |]
 
 getCompileTSLR :: Handler Html
-getCompileTSLR = 
+getCompileTSLR =
     defaultLayout
         [whamlet|
           <div>
