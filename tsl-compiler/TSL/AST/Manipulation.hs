@@ -73,7 +73,7 @@ theoremToSrc' (If a b c)            =
                        maybe [] ("\nelse "++) c] --,
                        --";\n"]
 theoremToSrc' (ExprF s a)           = s ++ (if null a then "" else " " ++ a)
-theoremToSrc' (ExprList as)         = L.intercalate ",\n" as
+theoremToSrc' (ExprList as)         = L.intercalate ",\n" . filter (not . null) $ as
 theoremToSrc' (Expr (t:ts))         = t ++ concatMap (\s ->
                                                 case s of
                                                   ('-':_) -> s
