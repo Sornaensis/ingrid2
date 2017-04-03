@@ -95,7 +95,7 @@ postRPCIRR = do
                if null theorems
                   then returnJson $ object ["success" .= False, "output" .= ("Compiler error" :: Text)]
                   else do
-                    let res = T.pack . (++";\n") . L.intercalate ";\n" . map (concatMap (show . realizeAnalysis) . theorem) $ theorems
+                    let res = T.pack . (++";\n") . L.intercalate ";\n" . map (concatMap (theoremToSrc . realizeAnalysis) . theorem) $ theorems
                     returnJson $ object ["success" .= True, "output" .= res]
         _  -> returnJson $ object ["success" .= False, "output" .= ("Compiler error" :: Text)]
 
