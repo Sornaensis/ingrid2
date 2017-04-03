@@ -95,7 +95,7 @@ postRPCIRR = do
                   else do
                     let res = T.pack . unlines . concatMap (map (show . realizeAnalysis) . theorem) $ theorems
                     returnJson $ object ["success" .= True, "output" .= res]
-        _  -> badResult json "Input Error"
+        _  -> returnJson $ object ["success" .= True, "output" .= res]
 
 postPreCompileTSLR :: Handler Html
 postPreCompileTSLR = do
