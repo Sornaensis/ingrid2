@@ -32,6 +32,7 @@ import           Yesod
 
 
 import           TSL.Compiler.Compiler
+import           TSL.Compiler.Python
 import           TSL.Compiler.Types
 
 data App = App
@@ -39,6 +40,8 @@ data App = App
 mkYesod "App" [parseRoutes|
 /rpc/init RPCInitR GET
 /rpc RPCRunR POST
+/tsl CompileTSLR GET POST
+/tsl/ir PreCompileTSLR GET POST
 |]
 
 instance Yesod App where
@@ -77,3 +80,112 @@ postRPCRunR = do
                       return $ case reply of
                                 (Just resp) -> resp
                                 _           -> val
+
+postPreCompileTSLR :: Handler Html
+postPreCompileTSLR = do
+    json <- runInputPost $ ireq textField "theoremjson"
+    case decode . cs $ json of
+        Just (TSLInput tls) ->
+            do theorems <- liftIO $ handle ((\_ -> return []) :: SomeException -> IO [TSLTheorem]) (mapM genTheorem tls)
+               liftIO $ print . length $ theorems
+               if null theorems
+                  then badResult json "Compiler Error"
+                  else do
+                    let res = T.pack . unlines . map (concatMap (show . realizeAnalysis) . theorem) $ theorems
+                    defaultLayout
+                     [whamlet|
+                       <div>
+                           <div style="width:40%;float:left;">
+                                   <form method=post>
+                                       <textarea rows="40" cols="80" name=theoremjson>
+                                                 #{json}
+                                       <input type=submit>
+                           <div style="width:60%;float:left">
+                                       <textarea rows="40" cols="80" name=theoremjson>
+                                         #{res}
+                     |]
+        _  -> badResult json "Input Error"
+
+    where
+    badResult :: Text -> Text -> Handler Html
+    badResult json msg =
+     defaultLayout
+      [whamlet|
+        <div>
+            <div style="width:40%;float:left;">
+                    <form method=post>
+                        <textarea rows="40" cols="80" name=theoremjson>
+                                  #{json}
+                        <input type=submit>
+            <div style="width:60%;float:left">
+                        <pre>#{msg}
+      |]
+
+getPreCompileTSLR :: Handler Html
+getPreCompileTSLR =
+    defaultLayout
+        [whamlet|
+          <div>
+              <div style="width:40%;float:left;">
+                      <form method=post>
+                          <textarea rows="40" cols="80" name=theoremjson>
+                                Theorem Json Here
+                          <input type=submit>
+              <div style="width:60%;float:left">
+                              <pre>Enter Theorem JSON and Submit!
+        |]
+
+
+postCompileTSLR :: Handler Html
+postCompileTSLR = do
+    json <- runInputPost $ ireq textField "theoremjson"
+    case decode . cs $ json of
+        Just (TSLInput tls) ->
+            do theorems <- liftIO $ handle ((\_ -> return []) :: SomeException -> IO [TSLTheorem]) (mapM genTheorem tls)
+               liftIO $ print . length $ theorems
+               if null theorems
+                  then badResult json "Compiler Error"
+                  else do
+                    let res = T.pack . concatMap generateTheorem $ theorems
+                    defaultLayout
+                     [whamlet|
+                       <div>
+                           <div style="width:40%;float:left;">
+                                   <form method=post>
+                                       <textarea rows="40" cols="80" name=theoremjson>
+                                                 #{json}
+                                       <input type=submit>
+                           <div style="width:60%;float:left">
+                                       <textarea rows="40" cols="80" name=theoremjson>
+                                         #{res}
+                     |]
+        _  -> badResult json "Input Error"
+
+    where
+    badResult :: Text -> Text -> Handler Html
+    badResult json msg =
+     defaultLayout
+      [whamlet|
+        <div>
+            <div style="width:40%;float:left;">
+                    <form method=post>
+                        <textarea rows="40" cols="80" name=theoremjson>
+                                  #{json}
+                        <input type=submit>
+            <div style="width:60%;float:left">
+                        <pre>#{msg}
+      |]
+
+getCompileTSLR :: Handler Html
+getCompileTSLR =
+    defaultLayout
+        [whamlet|
+          <div>
+              <div style="width:40%;float:left;">
+                      <form method=post>
+                          <textarea rows="40" cols="80" name=theoremjson>
+                                Theorem Json Here
+                          <input type=submit>
+              <div style="width:60%;float:left">
+                              <pre>Enter Theorem JSON and Submit!
+        |]
