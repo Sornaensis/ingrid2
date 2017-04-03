@@ -156,7 +156,9 @@ Val : Func   { $1 }
     | Invar  { $1 }
     | Localvar { $1 }
     | number { Fx $ Number $1 }
-    | '(' Expr ')' { Fx $ Paren $2 }
+    | '(' Expr ')' { case $2 of
+                       (Fx (Paren p)) -> p
+                       _              -> Fx $ Paren $2 }
 
 {
 
