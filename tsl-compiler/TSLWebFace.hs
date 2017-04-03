@@ -8,7 +8,8 @@
 {-# LANGUAGE QuasiQuotes                #-}
 {-# LANGUAGE TemplateHaskell            #-}
 {-# LANGUAGE TypeFamilies               #-}
-import           Control.Exception          (SomeException, handle)
+import           Control.Exception          (SomeException)
+import qualified Control.Exception          as E
 import           Control.Exception.Lifted   (handle)
 import           Control.Monad.IO.Class     (liftIO)
 import           Data.Aeson
@@ -86,7 +87,7 @@ postPreCompileTSLR = do
     json <- runInputPost $ ireq textField "theoremjson"
     case decode . cs $ json of
         Just (TSLInput tls) ->
-            do theorems <- liftIO $ handle ((\_ -> return []) :: SomeException -> IO [TSLTheorem]) (mapM genTheorem tls)
+            do theorems <- liftIO $ E.handle ((\_ -> return []) :: SomeException -> IO [TSLTheorem]) (mapM genTheorem tls)
                liftIO $ print . length $ theorems
                if null theorems
                   then badResult json "Compiler Error"
@@ -141,7 +142,7 @@ postCompileTSLR = do
     json <- runInputPost $ ireq textField "theoremjson"
     case decode . cs $ json of
         Just (TSLInput tls) ->
-            do theorems <- liftIO $ handle ((\_ -> return []) :: SomeException -> IO [TSLTheorem]) (mapM genTheorem tls)
+            do theorems <- liftIO $ E.handle ((\_ -> return []) :: SomeException -> IO [TSLTheorem]) (mapM genTheorem tls)
                liftIO $ print . length $ theorems
                if null theorems
                   then badResult json "Compiler Error"
