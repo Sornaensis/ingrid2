@@ -60,22 +60,23 @@ HLR (High Level Representation) | IR (Intermediate Representation) ==> TL (Targe
       ||           - Perform analysis on all Conditionals and Inequalities
     IR AST
       ||
-  ____\/____
- | Expand   | ---> Expand all inequalities into imperative statements and desugar
- | Analysis |     - a >= minb(b) --> setmin(a, minb(b))
-      ||          - Surround set() statements with try/except: pass
-      ||          - Add conditional checks for 'undt' for all invariants within set()
-      ||          - Add conditional checks for 'undt' for all invariants used in conditionals
-    IR AST
-      ||    if final_pass
+      ||  if final_pass
       ||========>>>>>>========
       ||                     ||
       || else                ||
-      ||                     ||
-  ____\/_____            ____\/_____
- | Serialize |          | TL        |  ---> Simply serialize IR to string and add TL boilerplate
- | to string |          | Generator |
-      ||                     ||
-    UTF-8 Text            UTF-8 String
-      ||                     ||
-      \/                     \/
+  ____\/_____                ||
+ | Serialize |           ____\/____
+ | to string |          | Expand   | ---> Expand all inequalities into imperative statements and desugar all syntax
+      ||                | Analysis |     - a >= minb(b) --> setmin(a, minb(b))
+    UTF-8 Text               ||          - Surround set() statements with try/except: pass
+      ||                     ||          - Add conditional checks for 'undt' for all invariants within set()
+      \/                     ||          - Add conditional checks for 'undt' for all invariants used in conditionals
+    Output                 IR AST
+                         ____\/_____
+                        | TL        |  ---> Simply serialize() IR to string and add TL boilerplate
+                        | Generator |
+                             ||
+                         UTF-8 Text
+                             ||
+                             \/
+                           Output
