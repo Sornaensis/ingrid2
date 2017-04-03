@@ -94,7 +94,8 @@ theoremToSrc' (Paren e)            = "(" ++ e ++ ")"
 theoremToSrc' _                    = ""
 
 instance Show (Fix Theorem) where
-    show = (++";") . theoremToSrc
+    show (Fx Empty) = ""
+    show t          = (++";") . theoremToSrc $ t
 
 extractLetStatements :: [Fix Theorem] -> [(String, Fix Theorem)]
 extractLetStatements = foldr (\x ys ->
