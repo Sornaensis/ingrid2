@@ -90,7 +90,12 @@ theoremToSrc' (Function s es)      = s ++ "(" ++ L.intercalate ", " es ++ ")"
 theoremToSrc' (Local "True")       = "Local True"
 theoremToSrc' (Local s)            = s
 theoremToSrc' (Invar s)            = s
-theoremToSrc' (Paren e)            = "(" ++ e ++ ")"
+theoremToSrc' (Paren e)            | length e > 1 = let f = head e
+                                                        l = last e
+                                                    in if f == '(' && l == ')' 
+                                                            then "(" ++ (tail . init $ e) ++ ")"
+                                                            else "(" ++ e ++ ")"
+                                   | otherwise    = "(" ++ e ++ ")"
 theoremToSrc' _                    = ""
 
 instance Show (Fix Theorem) where
