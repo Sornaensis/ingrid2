@@ -93,7 +93,7 @@ postRPCIRR = do
                if null theorems
                   then returnJson $ object ["success" .= False, "output" .= ("Compiler error" :: Text)]
                   else do
-                    let res = T.pack . unlines . map show . realizeAnalysis . theorem $ theorems
+                    let res = T.pack . unlines . (map show . realizeAnalysis) . theorem $ theorems
                     returnJson $ object ["success" .= True, "output" .= res]
         _  -> badResult json "Input Error"
 
