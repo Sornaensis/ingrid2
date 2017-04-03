@@ -88,7 +88,7 @@ generatePython' (If a b c)            =
                        maybe [] ("\nel"++) c]
 -- generatePython' (ExprF "even" a)      = s ++ " " ++ a
 generatePython' (ExprF s a)       = s ++ (if null a then "" else " " ++ a)
-generatePython' (ExprList as)           = L.intercalate "\n" as
+generatePython' (ExprList as)           = L.intercalate "\n" . filter (not . null) $ as
 generatePython' (Expr (t:ts))           = t ++ concatMap (\s ->
                                                   case s of
                                                     ('-':_) -> s
