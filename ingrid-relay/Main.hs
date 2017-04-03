@@ -63,7 +63,8 @@ getRPCInitR = do
 postRPCRunR :: Handler Value
 postRPCRunR = do
     json <- requireJsonBody :: Handler Value
-    returnJson . liftIO $ modValue json
+    json' <- liftIO $ modValue json
+    returnJson json'
     where
     -- Application-specific logic would go here.
     modValue :: Value -> IO Value
