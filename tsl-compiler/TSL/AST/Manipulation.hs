@@ -93,6 +93,9 @@ theoremToSrc' (Invar s)            = s
 theoremToSrc' (Paren e)            = "(" ++ e ++ ")"
 theoremToSrc' _                    = ""
 
+instance Show [Fix Theorem] where
+    show = unlines . map (unlines . filter (not . null) . show)
+
 instance Show (Fix Theorem) where
     show (Fx Empty) = ""
     show t          = (++";") . theoremToSrc $ t
