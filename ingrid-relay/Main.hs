@@ -54,7 +54,7 @@ main = warp 4000 App
 
 getRPCInitR :: Handler Value
 getRPCInitR = do
-    init <- liftIO $ decode' <$> readFile "init.json"
+    init <- liftIO $ decode' <$> C.readFile "init.json"
     returnJson $ 
      case init of
        Just v ->  v
