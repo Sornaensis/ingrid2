@@ -27,6 +27,8 @@ arityOfFns = [
     ,   ("sqrt",      (1, 1))
     ,   ("cos",       (1, 1))
     ,   ("sin",       (1, 1))
+    ,   ("maxb",       (1, 1))
+    ,   ("minb",       (1, 1))
     ,   ("maximum",   (2, 2))
     ,   ("minimum",   (2, 2))
     ,   ("congruent", (2, 2))
