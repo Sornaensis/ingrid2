@@ -4,12 +4,36 @@ module TSL.AST.AST (
                 Relation(..),
                 Fix(..),
                 solveableFunctions,
+                validFunctions,
+                arityOfFns,
                 cata
                 ) where
 
 -- Functions we can solve for
 solveableFunctions :: [String]
 solveableFunctions = ["log","ln","sqrt","cos","sin"]
+
+-- Functions that are a part of our language
+validFunctions :: [String]
+validFunctions = solveableFunctions ++ 
+    ["setmin","setmax","maximum","minimum","congruent","pi"]
+
+        -- Check argument count
+        --     func    min    max
+arityOfFns :: [(String, (Int, Int))] 
+arityOfFns = [
+        ("log",       (1, 2))
+    ,   ("ln",        (1, 1))
+    ,   ("sqrt",      (1, 1))
+    ,   ("cos",       (1, 1))
+    ,   ("sin",       (1, 1))
+    ,   ("maximum",   (2, 2))
+    ,   ("minimum",   (2, 2))
+    ,   ("congruent", (2, 2))
+    ,   ("pi",        (0, 0))
+    ,   ("setmin",    (1, 1))
+    ,   ("setmax",    (1, 1))
+    ]
 
 -- A theorem is a list of theorems
 data Theorem a = Empty

@@ -24,10 +24,35 @@ eqIFns :: Fix Theorem -> Fix Theorem -> Bool
 eqIFns (Fx (Function a [Fx (Invar i)])) (Fx (Function b [Fx (Invar j)])) = a == b && i == j
 eqIFns _ _ = False
 
-
 isLetStatement :: Fix Theorem -> Bool
 isLetStatement (Fx (Let _ _)) = True
 isLetStatement _              = False
+
+checkFunctions :: Fix Theorem -> Bool
+checkFunctions = cata checkFunctions'
+
+checkFunctions' :: Theorem Bool -> Bool
+checkFunctions' (Let a b)       = a && b
+checkFunctions' (InvarExpr a b) = a && fromMaybe True b
+checkFunctions' (If a b c)      = a && b && fromMaybe True c
+checkFunctions' (Cond a b)      = a && fromMaybe True b
+checkFunctions' (RelExpr a b)   = a && b
+checkFunctions' (ExprList as)   = and as
+checkFunctions' (Expr as)       = and as
+checkFunctions' (ExprF _ a)     = a
+checkFunctions' (Or a b)        = a && b
+checkFunctions' (And a b)       = a && b
+checkFunctions' (Mul a b)       = a && b
+checkFunctions' (Div a b)       = a && b
+checkFunctions' (Pow a b)       = a && b
+checkFunctions' (Paren a)       = a
+checkFunctions' (Neg a)         = a
+checkFunctions' (Function f as) | Just (min, max) <- lookup f arityOfFns 
+                                    = let len = length as 
+                                      in  len <= max && len >= min
+                                | Nothing <- lookup f arityOfFns 
+                                    = False
+checkFunctions' _               = True
 
 getInvolves :: Fix Theorem -> [String]
 getInvolves = L.nub . cata getInvolves'

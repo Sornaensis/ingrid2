@@ -28,6 +28,7 @@ genTheorem (TSLInputTheorem n code d i) =
                   . (\(lets, ts) -> map ( replaceAllInvar lets
                                        .  replaceAllInvar lets) ts)
                   . (\ts -> (extractLetStatements ts, filter (not . isLetStatement) ts))
+                  . (\t -> if all checkFunctions t then t else error "Invalid Function Passed")
                   . theoremParser
                   . lexer $ trace code code
         return $ TSLTheorem (TSLInputTheorem (n ++ show i) code d i) $! trace (unlines . map (show . realizeAnalysis) $ ts) ts
