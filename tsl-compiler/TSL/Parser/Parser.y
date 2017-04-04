@@ -68,7 +68,7 @@ Invarexpr  : not Invar                      { Fx $ InvarExpr (Fx $ ExprF     "no
            | odd Invar                      { Fx $ InvarExpr (Fx $ ExprF     "odd"       $2) Nothing }
            | undefined Invar                { Fx $ InvarExpr (Fx $ ExprF     "undefined" $2) Nothing }
            | nosolve Invarexpr              { Fx $ ExprF "nosolve" $2 }
-           | Local is Expr                  { Fx $ InvarExpr (Fx $ ExprF "mut" $2) (Just . Fx $ ExprF "" (Fx $ ExprF "is" $4)) } 
+           | Localvar is Expr               { Fx $ InvarExpr $1 (Just . Fx $ ExprF "is" $3) } 
            | setmin '(' Invar ',' Expr ')'  { Fx $ Function "setmin"  [$3,$5] }
            | setmax '(' Invar ',' Expr ')'  { Fx $ Function "setmax"  [$3,$5] }
            | Invar Invarel                  { Fx $ InvarExpr $1          $2 }
@@ -102,6 +102,7 @@ Cond1 : Invar CondRel      { case $2 of
                                     case $1 of
                                         Fx (Invar i) -> Fx $ Cond (Fx $ Function i as) pred
                               _ -> Fx $ Cond $1 $2 }
+      | Localvar CondRel   { Fx $ Cond $1 $2 }
       | istrue Expr        { Fx $ Cond (Fx $ ExprF "istrue"    $2) Nothing }
       | isfalse Expr       { Fx $ Cond (Fx $ ExprF "isfalse"   $2) Nothing }
       | not Invar          { Fx $ Cond (Fx $ ExprF "not"       $2) Nothing }
@@ -128,7 +129,7 @@ Relation : '=='   { Fx $ Relation RelEq  }
 
 Invar : global  { Fx $ Invar $1 }
 
-Localvar : local   { Fx $ Local $1 }
+Localvar : local { Fx $ Local $1 }
 
 Func : global '(' Arglist ')'  { Fx $ Function $1 $3 }
 
