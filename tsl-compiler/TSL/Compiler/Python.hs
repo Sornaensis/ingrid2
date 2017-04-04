@@ -198,7 +198,7 @@ realizeAnalysis2' v
                                                           Fx $ ExprF "False" (Fx Empty)]) Nothing
             s@"even" -> evenOrOdd s e
             s@"odd"  -> evenOrOdd s e
-   | (InvarExpr (Fx (Local l)) (Just (Fx (ExprF "is" expr)))) <- v =
+   | (InvarExpr (Fx (Local l)) (Just (Fx (ExprF _ expr)))) <- v =
         Fx $ ExprF (l ++ " =") expr
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel

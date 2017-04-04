@@ -68,7 +68,7 @@ Invarexpr  : not Invar                      { Fx $ InvarExpr (Fx $ ExprF     "no
            | odd Invar                      { Fx $ InvarExpr (Fx $ ExprF     "odd"       $2) Nothing }
            | undefined Invar                { Fx $ InvarExpr (Fx $ ExprF     "undefined" $2) Nothing }
            | nosolve Invarexpr              { Fx $ ExprF "nosolve" $2 }
-           | Localvar is Expr               { Fx $ InvarExpr $1 (Just . Fx $ ExprF "is" $3) } 
+           | Localvar is Expr               { Fx $ InvarExpr $1 (Just . Fx $ ExprF " is" $3) } 
            | setmin '(' Invar ',' Expr ')'  { Fx $ Function "setmin"  [$3,$5] }
            | setmax '(' Invar ',' Expr ')'  { Fx $ Function "setmax"  [$3,$5] }
            | Invar Invarel                  { Fx $ InvarExpr $1          $2 }
