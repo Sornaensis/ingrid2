@@ -78,6 +78,7 @@ postRPCRunR = do
         (Object o) -> do
            (path, hdl) <- liftIO $ openTempFile "/home/sornaensis/ingrid" "ingrid_runner.py"
            ingridpy    <- liftIO $ readFile "/home/sornaensis/ingrid/ingrid.py"
+           liftIO $ print ingridpy
            liftIO $ hPutStrLn hdl ingridpy
            let thms = concat . zipWith mkAddenda [1200..] . fromMaybe [] $ (join $ decode' . encode <$> HML.lookup "Addenda" o)
            liftIO $ hPutStrLn hdl (unlines . map genTheoremPure $ thms)
