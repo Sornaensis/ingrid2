@@ -77,7 +77,7 @@ Invarexpr  : not Invar                        { Fx $ InvarExpr (Fx $ ExprF     "
            | Invar Invarel                    { Fx $ InvarExpr $1          $2 }
 
 Invarel : Relation Expr Annotation { case $3 of
-                                        Just ann -> Just . Fx $ And (Fx $ RelExpr $1 $2) (Fx $ ExprList ann) 
+                                        Just ann -> Just . Fx $ RelExpr $1 (And $2  (Fx $ ExprList ann))
                                         _        -> Just $ Fx (RelExpr $1 $2)}
         |                          { Nothing }
 
