@@ -35,6 +35,8 @@ arityOfFns = [
     ,   ("pi",        (0, 0))
     ,   ("setmin",    (1, 1))
     ,   ("setmax",    (1, 1))
+    ,   ("useMinFor", (1, 1))
+    ,   ("useMaxFor", (1, 1))
     ]
 
 -- A theorem is a list of theorems
