@@ -2150,7 +2150,7 @@ class Theorem58(Theorem):
         return
 class Theorem59(Theorem):
     def __init__(self):
-        super(Theorem59, self).__init__(59, "nosolve crossing <= (1.0/4.0)*floor(nodes/2.0)*floor((nodes-(1.0))/2.0)*floor((nodes-(2.0))/2.0)*floor((nodes-(3.0))/2.0);\nif complete and nodes <= 10.0 then \n{\n    nosolve crossing >= (1.0/4.0)*floor(nodes/2.0)*floor((nodes-(1.0))/2.0)*floor((nodes-(2.0))/2.0)*floor((nodes-(3.0))/2.0)\n};\n", "")
+        super(Theorem59, self).__init__(59, "crossing <= (1.0/4.0)*floor(nodes/2.0)*floor((nodes-(1.0))/2.0)*floor((nodes-(2.0))/2.0)*floor((nodes-(3.0))/2.0);\nif complete and nodes <= 10.0 then \n{\n    crossing >= (1.0/4.0)*floor(nodes/2.0)*floor((nodes-(1.0))/2.0)*floor((nodes-(2.0))/2.0)*floor((nodes-(3.0))/2.0)\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["crossing","nodes","complete"]
     def run(self):
@@ -2161,19 +2161,17 @@ class Theorem59(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (((maxb("nodes") != 'undt' and maxb("nodes") > 'undt')) or ((maxb("nodes") != 'undt' and maxb("nodes") < 'undt'))):
-            if maxb("nodes") != 'undt':
+        if maxb("nodes") != 'undt':
+            try:
+                set("crossing",  (1.0/4.0)*floor(maxb("nodes")/2.0)*floor((maxb("nodes")-(1.0))/2.0)*floor((maxb("nodes")-(2.0))/2.0)*floor((maxb("nodes")-(3.0))/2.0), ind='Max')
+            except:
+                pass
+        if get("complete") == True and (maxb("nodes") != 'undt' and maxb("nodes") <= 10.0):
+            if minb("nodes") != 'undt':
                 try:
-                    set("crossing",  (1.0/4.0)*floor(maxb("nodes")/2.0)*floor((maxb("nodes")-(1.0))/2.0)*floor((maxb("nodes")-(2.0))/2.0)*floor((maxb("nodes")-(3.0))/2.0), ind='Max')
+                    set("crossing",  (1.0/4.0)*floor(minb("nodes")/2.0)*floor((minb("nodes")-(1.0))/2.0)*floor((minb("nodes")-(2.0))/2.0)*floor((minb("nodes")-(3.0))/2.0), ind='Min')
                 except:
                     pass
-        if get("complete") == True and (maxb("nodes") != 'undt' and maxb("nodes") <= 10.0):
-            if (((minb("nodes") != 'undt' and minb("nodes") > 'undt')) or ((minb("nodes") != 'undt' and minb("nodes") < 'undt'))):
-                if minb("nodes") != 'undt':
-                    try:
-                        set("crossing",  (1.0/4.0)*floor(minb("nodes")/2.0)*floor((minb("nodes")-(1.0))/2.0)*floor((minb("nodes")-(2.0))/2.0)*floor((minb("nodes")-(3.0))/2.0), ind='Min')
-                    except:
-                        pass
         return
 class Theorem60(Theorem):
     def __init__(self):
