@@ -180,7 +180,7 @@
             "disp": ""
         },
         {
-            "text": "if defined girth and (nodeConnec > 0 or mindeg > 1) then { genus >= (1/2)*edges*(1-2/girth)-(nodes/2)+numOfComponents };",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 60,
             "disp": ""
