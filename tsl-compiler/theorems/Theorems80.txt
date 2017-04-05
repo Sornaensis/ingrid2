@@ -50,7 +50,7 @@
             "disp": ""
         },
         {
-            "text": "chromaticNum >= 2*edges/(2*edges - spectralRadius**2);",
+            "text": "chromaticNum >= 2*edges/(2*edges - spectralRadius**2) : useMaxFor(edges);",
             "name": "Theorem",
             "idnum": 69,
             "disp": ""
