@@ -82,7 +82,7 @@ postRPCRunR = do
            let thms = concat . zipWith mkAddenda [1200..] . fromMaybe [] $ (join $ decode' . encode <$> HML.lookup "Addenda" o)
            let thmtxt = unlines . map genTheoremPure $ thms
            let userthms = "def UserTheorems():\n    return ["++L.intercalate "," (map getAddenda thms)++"]\n\nMain()\n"
-           liftIO $ putStrLn $ unlines [ingridpy,thmtxt,userthms]
+           -- liftIO $ putStrLn $ unlines [ingridpy,thmtxt,userthms]
            liftIO $ hPutStrLn hdl thmtxt
            liftIO $ hPutStrLn hdl userthms
            json'  <- liftIO $ modValue json path
@@ -101,7 +101,6 @@ postRPCRunR = do
     modValue val fn = do
         (Just stdin, Just stdout, _, ingrid) <- createProcess (proc "python2" [fn])
                                              { std_in = CreatePipe, std_out = CreatePipe }
-        putStrLn . C.unpack . encode $ val
         hPutStrLn stdin . C.unpack . encode $ val
         hFlush stdin
         _ <- waitForProcess ingrid
