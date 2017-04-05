@@ -103,8 +103,9 @@ postRPCRunR = do
                                              { std_in = CreatePipe, std_out = CreatePipe }
         hPutStrLn stdin . cs . encode $ val
         hFlush stdin
-        _ <- waitForProcess ingrid
+        code <- waitForProcess ingrid
         resp <- hGetContents stdout
+        print code
         putStrLn resp
         removeLink fn
         return $ case decode . cs $ resp of
