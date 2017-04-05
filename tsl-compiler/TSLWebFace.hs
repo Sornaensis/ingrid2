@@ -78,11 +78,11 @@ postRPCRunR = do
         (Object o) -> do
            (path, hdl) <- liftIO $ openTempFile "/home/sornaensis/ingrid" "ingrid_runner.py"
            ingridpy    <- liftIO $ readFile "/home/sornaensis/ingrid/ingrid.py"
-           liftIO $ hPutStrLn hdl ingridpy
            let thms = concat . zipWith mkAddenda [1200..] . fromMaybe [] $ (join $ decode' . encode <$> HML.lookup "Addenda" o)
            let thmtxt = unlines . map genTheoremPure $ thms
            let userthms = "def UserTheorems():\n    return ["++L.intercalate "," (map getAddenda thms)++"]\n\nMain()\n"
            liftIO $ putStrLn $ unlines [ingridpy,thmtxt,userthms]
+           liftIO $ hPutStrLn hdl ingridpy
            liftIO $ hPutStrLn hdl thmtxt
            liftIO $ hPutStrLn hdl userthms
            json'  <- liftIO $ modValue json path
@@ -99,13 +99,12 @@ postRPCRunR = do
     getAddenda (TSLInputTheorem n _ _ i) = n ++ show i ++ "()"
     modValue :: Value -> FilePath -> IO Value
     modValue val fn = do
-        (Just stdin, Just stdout, Just stderr, ingrid) <- createProcess (proc "python2" [fn])
-                                             { std_in = CreatePipe, std_out = CreatePipe, std_err = CreatePipe }
+        (Just stdin, Just stdout, _, ingrid) <- createProcess (proc "python2" [fn])
+                                             { std_in = CreatePipe, std_out = CreatePipe }
         hPutStrLn stdin . cs . encode $ val
         hFlush stdin
         _ <- waitForProcess ingrid
         resp <- hGetContents stdout
-        putStrLn =<< hGetContents stderr
         removeLink fn
         return $ case decode . cs $ resp of
                   (Just resp) -> resp
