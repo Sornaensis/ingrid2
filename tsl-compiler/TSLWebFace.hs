@@ -8,6 +8,7 @@
 {-# LANGUAGE QuasiQuotes                #-}
 {-# LANGUAGE TemplateHaskell            #-}
 {-# LANGUAGE TypeFamilies               #-}
+import  System.IO.Temp
 import           Control.Exception          (SomeException)
 import qualified Control.Exception          as E
 import           Control.Exception.Lifted   (handle)
@@ -18,6 +19,7 @@ import           Data.ByteString            (ByteString)
 import qualified Data.ByteString.Lazy.Char8 as C
 import           Data.Conduit               (($$))
 import           Data.Conduit.Attoparsec    (sinkParser)
+import qualified Data.HashMap.Lazy          as HML
 import qualified Data.List                  as L
 import           Data.Maybe                 (fromMaybe)
 import           Data.String.Conversions
@@ -69,21 +71,32 @@ getRPCInitR = do
 
 postRPCRunR :: Handler Value
 postRPCRunR = do
-    json <- requireJsonBody :: Handler Value
-    json' <- liftIO $ modValue json
+    json        <- requireJsonBody :: Handler Value
+    (path, hdl) <- liftIO $ openTempFile "~/ingrid" "ingrid_runner.py"
+    ingridpy    <- liftIO $ readFile "ingrid.py"
+    liftIO $ hPutStrLn hdl ingridpy
+    let thms = concat . zipWith mkAddenda [1200..] . fromMaybe [] $ HML.lookup "Addenda" json 
+    liftIO $ hPutStrLn hdl (unlines . map genTheoremPure $ thms)
+    liftIO $ hPutStrLn hdl ("def UserTheorems():\n    return ["++concatMap getAddenda thms++"]\n")
+    json'  <- liftIO $ modValue json path
     returnJson json'
     where
-    -- Application-specific logic would go here.
-    modValue :: Value -> IO Value
-    modValue val = do (Just stdin, Just stdout, _, ingrid) <- createProcess (proc "python2" ["ingrid.py"])
-                                                           { std_in = CreatePipe, std_out = CreatePipe }
-                      hPutStrLn stdin . C.unpack . encode $ val
-                      hFlush stdin
-                      _ <- waitForProcess ingrid
-                      reply <- decode . C.pack <$> hGetContents stdout
-                      return $ case reply of
-                                (Just resp) -> resp
-                                _           -> val
+    mkAddenda obj i = fromMaybe [] $ do
+        text <- HML.lookup "Text" obj
+        name <- HML.lookup "Name" obj
+        return [TSLInputTheorem "Theorem" text name i]
+    getAddenda (TSLInputTheorem n _ _ i) = n ++ show i  
+    modValue :: Value -> FilePath -> IO Value
+    modValue val fn = do 
+        (Just stdin, Just stdout, _, ingrid) <- createProcess (proc "python2" [fn])
+                                             { std_in = CreatePipe, std_out = CreatePipe }
+        hPutStrLn stdin . C.unpack . encode $ val
+        hFlush stdin
+        _ <- waitForProcess ingrid
+        reply <- decode . C.pack <$> hGetContents stdout
+        return $ case reply of
+                  (Just resp) -> resp
+                  _           -> val
 
 postRPCIRR :: Handler Value
 postRPCIRR = do
