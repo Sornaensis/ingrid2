@@ -82,7 +82,7 @@ postRPCRunR = do
            let thms = concat . zipWith mkAddenda [1200..] . fromMaybe [] $ (join $ decode' . encode <$> HML.lookup "Addenda" o)
            let thmtxt = unlines . map genTheoremPure $ thms
            let userthms = "def UserTheorems():\n    return ["++L.intercalate "," (map getAddenda thms)++"]\n\nMain()\n"
-           liftIO $ putStrLn $ unlines [ingridpy,thmtxt,userthms]
+           liftIO $ writeFile "/home/sornaensis/ingrid/ingrid2.py" $ unlines [ingridpy,thmtxt,userthms]
            liftIO $ hPutStrLn hdl thmtxt
            liftIO $ hPutStrLn hdl userthms
            json'  <- liftIO $ modValue json path
