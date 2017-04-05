@@ -99,11 +99,12 @@ postRPCRunR = do
     getAddenda (TSLInputTheorem n _ _ i) = n ++ show i ++ "()"
     modValue :: Value -> FilePath -> IO Value
     modValue val fn = do
-        (Just stdin, Just stdout, _, ingrid) <- createProcess (proc "python2" [fn])
-                                             { std_in = CreatePipe, std_out = CreatePipe }
+        (Just stdin, Just stdout, Just stderr, ingrid) <- createProcess (proc "python2" [fn])
+                                             { std_in = CreatePipe, std_out = CreatePipe, std_err = CreatePipe }
         hPutStrLn stdin . cs . encode $ val
         hFlush stdin
         resp <- hGetContents stdout
+        putStrLn =<< hGetContents stderr
         removeLink fn
         return $ case decode . cs $ resp of
                   (Just resp) -> resp
