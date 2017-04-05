@@ -1390,7 +1390,7 @@ class Theorem43(Theorem):
         return
 class Theorem44(Theorem):
     def __init__(self):
-        super(Theorem44, self).__init__(44, "if connected or nodeConnec >= 0.0 or numOfComponents == 1.0 or radius <= nodes/2.0 or diameter <= nodes-(1.0) then \n{\n    connected,\n    nodeConnec >= 0.0,\n    numOfComponents == 1.0,\n    radius <= nodes/2.0,\n    diameter <= nodes-(1.0)\n};\n", "")
+        super(Theorem44, self).__init__(44, "if connected or nodeConnec >= 1.0 or numOfComponents == 1.0 or radius <= nodes/2.0 or diameter <= nodes-(1.0) then \n{\n    connected,\n    nodeConnec >= 1.0,\n    numOfComponents == 1.0,\n    radius <= nodes/2.0,\n    diameter <= nodes-(1.0)\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["connected","nodeConnec","numOfComponents","radius","nodes","diameter"]
     def run(self):
@@ -1401,10 +1401,10 @@ class Theorem44(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("connected") == True or (minb("nodeConnec") != 'undt' and minb("nodeConnec") >= 0.0) or ((minb("numOfComponents") != 'undt' and minb("numOfComponents") >= 1.0) and (maxb("numOfComponents") != 'undt' and maxb("numOfComponents") <= 1.0)) or (maxb("radius") != 'undt' and minb("nodes") != 'undt' and maxb("radius") <= minb("nodes")/2.0) or (maxb("diameter") != 'undt' and minb("nodes") != 'undt' and maxb("diameter") <= minb("nodes")-(1.0)):
+        if get("connected") == True or (minb("nodeConnec") != 'undt' and minb("nodeConnec") >= 1.0) or ((minb("numOfComponents") != 'undt' and minb("numOfComponents") >= 1.0) and (maxb("numOfComponents") != 'undt' and maxb("numOfComponents") <= 1.0)) or (maxb("radius") != 'undt' and minb("nodes") != 'undt' and maxb("radius") <= minb("nodes")/2.0) or (maxb("diameter") != 'undt' and minb("nodes") != 'undt' and maxb("diameter") <= minb("nodes")-(1.0)):
             set("connected", True)
             try:
-                set("nodeConnec",  0.0, ind='Min')
+                set("nodeConnec",  1.0, ind='Min')
             except:
                 pass
             try:
