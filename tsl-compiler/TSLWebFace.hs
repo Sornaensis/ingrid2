@@ -92,7 +92,7 @@ postRPCRunR = do
     getString (String s) = Just $ cs s
     getString _          = Nothing
     mkAddenda i (Object obj) = fromMaybe [] $ do
-        text <- getString =<< HML.lookup ("output" :: Text) =<< (join $ decode' . encode <$> HML.lookup "IR" obj)
+        text <- getString =<< HML.lookup "output" =<< ((join $ decode' . encode <$> HML.lookup "IR" obj) :: Maybe (HML.HashMap Text Value))
         name <- getString =<< HML.lookup "Name" obj
         return [TSLInputTheorem "Theorem" text name i]
     mkAddenda _ _          = []
