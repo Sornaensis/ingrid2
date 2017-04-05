@@ -83,7 +83,6 @@ postRPCRunR = do
            let thms = concat . zipWith mkAddenda [1200..] . fromMaybe [] $ (join $ decode' . encode <$> HML.lookup "Addenda" o)
            liftIO $ hPutStrLn hdl (unlines . map genTheoremPure $ thms)
            liftIO $ hPutStrLn hdl ("def UserTheorems():\n    return ["++concatMap getAddenda thms++"]\n\nMain()\n")
-           liftIO $ print =<< readFile path
            json'  <- liftIO $ modValue json path
            returnJson json'
         _          -> returnJson json
