@@ -105,7 +105,7 @@ postRPCRunR = do
         hFlush stdin
         _ <- waitForProcess ingrid
         reply <- decode . C.pack <$> hGetContents stdout
-        putStrLn =<< getContents stderr
+        putStrLn =<< hGetContents stderr
         putStrLn . show $ reply
         removeLink fn
         return $ case reply of
