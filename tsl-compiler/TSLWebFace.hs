@@ -107,7 +107,7 @@ postRPCRunR = do
         putStrLn =<< hGetContents stderr
         reply <- hGetContents stdout
         removeLink fn
-        return $ case decode . C.unpack $ reply of
+        return $ case decode . C.pack $ reply of
                   (Just resp) -> resp
                   _           -> val
 
