@@ -32,6 +32,7 @@ import           Network.Wai.Conduit        (sourceRequestBody)
 import           Network.Wai.Handler.Warp   (run)
 import           System.IO                  (hFlush, hGetContents, hPutStrLn)
 import           System.IO.Temp
+import           System.Posix.Files
 import           System.Process
 import           Yesod
 
@@ -101,6 +102,7 @@ postRPCRunR = do
         hFlush stdin
         _ <- waitForProcess ingrid
         reply <- decode . C.pack <$> hGetContents stdout
+        removeLink fn
         return $ case reply of
                   (Just resp) -> resp
                   _           -> val
