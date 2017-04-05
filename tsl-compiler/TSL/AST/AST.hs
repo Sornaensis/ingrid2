@@ -50,6 +50,7 @@ data Theorem a = Empty
                | RelExpr a a
                | Relation Relation
                | Expr [a]
+               | Adden a [a]
                | Or a a
                | And a a
                | Mul a a

@@ -116,6 +116,7 @@ theoremToSrc' (Local "True")       = "Local True"
 theoremToSrc' (Local s)            = s
 theoremToSrc' (Invar s)            = s
 theoremToSrc' (Paren e)            = "(" ++ e ++ ")"
+theoremToSrc' (Adden a bs)         = a ++ ":" ++ L.intercalate ":" bs
 theoremToSrc' _                    = ""
 
 instance Show (Fix Theorem) where

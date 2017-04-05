@@ -337,7 +337,7 @@ generateSymPyIneq (Fx (If c (Fx (ExprList elist)) elif)) = do
         return [Fx $ If c (Fx $ ExprList (concat elist')) elif']
 generateSymPyIneq e@(Fx (InvarExpr i (Just relexp))) =
         case relexp of 
-            (Fx (RelExpr r (Fx (And orig (Fx (ExprList ann)))))) ->
+            (Fx (RelExpr r (Fx (Adden orig ann)))) ->
               let  (Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp)))))    = func_map
                    (func_map, func_remap)                            = replaceAllFuncs (Fx $ InvarExpr i (Just (Fx $ RelExpr r orig)))
                    rationalFlag                                      = not $ containsFunc exp
