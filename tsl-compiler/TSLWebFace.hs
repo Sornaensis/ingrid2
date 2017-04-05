@@ -92,9 +92,9 @@ postRPCRunR = do
     getString (String s) = Just $ cs s
     getString _          = Nothing
     mkAddenda i (Object obj) = fromMaybe [] $ do
-        text <- getString =<< HML.lookup "IR" obj
+        code <- getString =<< HML.lookup "IR" obj
         name <- getString =<< HML.lookup "Name" obj
-        return [TSLInputTheorem "Theorem" text name i]
+        return [TSLInputTheorem "Theorem" code name i]
     mkAddenda _ _          = []
     getAddenda (TSLInputTheorem n _ _ i) = n ++ show i ++ "()"
     modValue :: Value -> FilePath -> IO Value
@@ -103,7 +103,8 @@ postRPCRunR = do
                                              { std_in = CreatePipe, std_out = CreatePipe, std_err = CreatePipe }
         hPutStrLn stdin . C.unpack . encode $ val
         hFlush stdin
-        _ <- waitForProcess ingrid
+        code <- waitForProcess ingrid
+        print code
         putStrLn =<< hGetContents stderr
         reply <- hGetContents stdout
         putStrLn reply
