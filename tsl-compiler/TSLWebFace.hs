@@ -100,7 +100,7 @@ postRPCRunR = do
     modValue :: Value -> FilePath -> IO Value
     modValue val fn = do
         (Just stdin, Just stdout, Just stderr, ingrid) <- createProcess (proc "python3" [fn])
-                                             { std_in = CreatePipe, std_out = CreatePipe, std_err = CreatePipe }
+                                             { cwd = "/home/sornaensis/ingrid", std_in = CreatePipe, std_out = CreatePipe, std_err = CreatePipe }
         hPutStrLn stdin . cs . encode $ val
         hFlush stdin
         _ <- waitForProcess ingrid
