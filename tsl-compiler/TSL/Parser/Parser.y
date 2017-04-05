@@ -37,6 +37,9 @@ import TSL.AST.AST
       isfalse        { TokenIsfalse }
       global         { TokenGlobalName $$ }
       local          { TokenLocalName $$ }
+      useMaxFor      { TokenUseMaxFor }
+      useMinFor      { TokenUseMinFor }
+      ':'            { TokenColon }
       '=='           { TokenEq }
       '>='           { TokenGte }
       '<='           { TokenLte }
@@ -73,8 +76,19 @@ Invarexpr  : not Invar                        { Fx $ InvarExpr (Fx $ ExprF     "
            | setmax '(' Invar ',' Expr ')'    { Fx $ Function "setmax"  [$3,$5] }
            | Invar Invarel                    { Fx $ InvarExpr $1          $2 }
 
-Invarel : Relation Expr { Just (Fx $ RelExpr $1 $2) }
-        |               { Nothing }
+Invarel : Relation Expr Annotation { case $3 of
+                                        Just ann -> Just . Fx $ And (Fx $ RelExpr $1 $2) (Fx $ ExprList ann) 
+                                        _        -> Just $ Fx (RelExpr $1 $2)}
+        |                          { Nothing }
+
+Annotation : ':' Annotation1 { Just . reverse $ $2 }
+           | {- Empty -}     { Nothing }
+
+Annotation1 : Annotation2 { [$1] }
+            | Annotation1 ':' Annotation2 { $3 : $1 } 
+
+Annotation2 : useMaxFor '(' Invar ')' { Fx $ Function "useMaxFor" [$3] }
+            | useMinFor '(' Invar ')' { Fx $ Function "useMinFor" [$3] }
 
 Invarexprlist : '{' Invarexprlist1 '}'      { Fx $ ExprList (reverse $2) }
 
@@ -176,6 +190,8 @@ data Token
       = TokenIf
       | TokenThen
       | TokenNoSolve
+      | TokenUseMaxFor
+      | TokenUseMinFor
       | TokenSetMin
       | TokenSetMax
       | TokenMut
@@ -189,6 +205,7 @@ data Token
       | TokenIsset
       | TokenIstrue
       | TokenIsfalse
+      | TokenColon
       | TokenNum Double
       | TokenGlobalName String
       | TokenLocalName String
@@ -244,6 +261,7 @@ lexer ('}':cs) = TokenCB : lexer cs
 lexer ('(':cs) = TokenOP : lexer cs
 lexer (')':cs) = TokenCP : lexer cs
 lexer (',':cs) = TokenComma : lexer cs
+lexer (':':cs) = TokenColon : lexer cs
 lexer (';':cs) = TokenSemiColon : lexer cs
 
 lexNum cs = TokenNum num : lexer rest
@@ -251,6 +269,8 @@ lexNum cs = TokenNum num : lexer rest
 
 lexVar cs =
    case span (\c -> isAlpha c || isDigit c || c == '_') cs of
+      ("useMaxFor",rest) -> TokenUseMaxFor : lexer rest
+      ("useMinFor",rest) -> TokenUseMinFor : lexer rest
       ("undefined",rest) -> TokenUndefined : lexer rest
       ("nosolve",rest)   -> TokenNoSolve : lexer rest
       ("defined",rest)   -> TokenDefined : lexer rest

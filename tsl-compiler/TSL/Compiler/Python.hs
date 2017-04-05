@@ -335,19 +335,20 @@ generateSymPyIneq (Fx (If c (Fx (ExprList elist)) elif)) = do
         elist' <- mapM generateSymPyIneq elist
         elif'  <- sequence $ (head <$>) . generateSymPyIneq <$> elif
         return [Fx $ If c (Fx $ ExprList (concat elist')) elif']
-generateSymPyIneq e@(Fx (InvarExpr _ (Just (Fx (RelExpr _ orig))))) =
-        let  (Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp)))))    = func_map
-             (func_map, func_remap)                            = replaceAllFuncs e 
-             rationalFlag                                      = not $ containsFunc exp
-             inequality                                        = theoremToSrc exp
-             lhs                                               = v
-             relation                                          = theoremToSrc rel
-             bound                                             = getBound rel
-             invar_analyses                                    = map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) invars
-             invars                                            = getInvolves orig
-        in fmap (map (adjustInequality invar_analyses) . (e:) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
-               invars
-                >>= \inv -> return $
+generateSymPyIneq e@(Fx (InvarExpr i (Just relexp))) =
+        case relexp of 
+            (Fx (And (Fx (RelExpr _ orig)) (Fx (ExprList ann)))) ->
+              let  (Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp)))))    = func_map
+                   (func_map, func_remap)                            = replaceAllFuncs (Fx $ InvarExpr i (Just orig))
+                   rationalFlag                                      = not $ containsFunc exp
+                   inequality                                        = theoremToSrc exp
+                   lhs                                               = v
+                   relation                                          = theoremToSrc rel
+                   bound                                             = getBound rel
+                   invar_analyses                                    = map (alterAnalysis ann) . map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) $ invars
+                   invars                                            = getInvolves orig
+              in fmap (map (adjustInequality invar_analyses) . (e:) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
+                     invars >>= \inv -> return $
                    do Py.initialize
                       equation    <- Py.toUnicode . T.pack $ inequality
                       variables   <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) (v:invars)
@@ -367,7 +368,44 @@ generateSymPyIneq e@(Fx (InvarExpr _ (Just (Fx (RelExpr _ orig))))) =
                       case rewrite of
                        (Just eqn) -> (++";") . T.unpack <$> Py.fromUnicode eqn
                        _          -> return ""
+            (Fx (RelExpr _ orig)) -> 
+              let  (Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp)))))    = func_map
+                   (func_map, func_remap)                            = replaceAllFuncs e 
+                   rationalFlag                                      = not $ containsFunc exp
+                   inequality                                        = theoremToSrc exp
+                   lhs                                               = v
+                   relation                                          = theoremToSrc rel
+                   bound                                             = getBound rel
+                   invar_analyses                                    = map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) invars
+                   invars                                            = getInvolves orig
+              in fmap (map (adjustInequality invar_analyses) . (e:) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
+                     invars >>= \inv -> return $
+                   do Py.initialize
+                      equation    <- Py.toUnicode . T.pack $ inequality
+                      variables   <- Py.toList =<< map Py.toObject <$> mapM (Py.toUnicode . T.pack) (v:invars)
+                      lhs         <- Py.toUnicode . T.pack $ lhs
+                      rel         <- Py.toUnicode . T.pack $ relation
+                      target      <- Py.toUnicode . T.pack $ inv
+                      ms          <- Py.importModule "mystic.symbolic"
+                      solver      <- Py.getAttribute ms =<< Py.toUnicode "solve_ingrid"
+                      rationalval <- if rationalFlag then Py.true else Py.false
+                      pyout       <- Py.callArgs solver [   Py.toObject lhs
+                                                    , Py.toObject rel
+                                                    , Py.toObject equation
+                                                    , Py.toObject variables
+                                                    , Py.toObject target
+                                                    , Py.toObject rationalval]
+                      rewrite     <- Py.cast pyout :: IO (Maybe Py.Unicode)
+                      case rewrite of
+                       (Just eqn) -> (++";") . T.unpack <$> Py.fromUnicode eqn
+                       _          -> return ""
+            _  -> return [e]
         where
+        alterAnalysis [] a = a
+        alterAnalysis (Fx (Function s [Fx (Invar j)]):anns) (i, an)  
+                        | "useMinFor" == s && i == j = (i, getIneq Min)
+                        | "useMaxFor" == s && i == j = (i, getIneq Max)
+                        | otherwise                  = alterAnalysis anns (i, an)
         adjustInequality imap ineq@(Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp))))) =
                    maybe ineq (\r -> Fx $ InvarExpr (Fx $ Invar v) (Just . Fx $ RelExpr r exp)) (lookup v imap) 
         adjustInequality _    ineq                                                               = ineq
