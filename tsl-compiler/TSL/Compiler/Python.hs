@@ -347,7 +347,7 @@ generateSymPyIneq e@(Fx (InvarExpr i (Just relexp))) =
                    bound                                             = getBound rel
                    invar_analyses                                    = map (alterAnalysis ann) . map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) $ invars
                    invars                                            = getInvolves orig
-              in fmap (map (adjustInequality invar_analyses) . (e:) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
+              in fmap (map (adjustInequality invar_analyses) . ((Fx $ InvarExpr i (Just (Fx $ RelExpr r orig))):) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
                      invars >>= \inv -> return $
                    do Py.initialize
                       equation    <- Py.toUnicode . T.pack $ inequality
