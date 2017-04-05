@@ -22,7 +22,6 @@ class Invariant:
         self.type = stype
         self.trace = trace
         if self.type == 'Bool':
-            sys.stderr.write(str(type(val)) + ' ' + str(val) + '\n')            
             if val == 'undt':
                 self.value = 'undt'
             else:
