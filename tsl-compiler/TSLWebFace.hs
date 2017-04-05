@@ -104,10 +104,10 @@ postRPCRunR = do
         hPutStrLn stdin . cs . encode $ val
         hFlush stdin
         _ <- waitForProcess ingrid
-        resp <- hGetContents stdout
+        reply <- hGetContents stdout
         putStrLn =<< hGetContents stderr
         removeLink fn
-        return $ case decode . cs $ resp of
+        return $ case decode . cs $ reply of
                   (Just resp) -> resp
                   _           -> val
 
