@@ -82,7 +82,7 @@ postRPCRunR = do
            liftIO $ hPutStrLn hdl ingridpy
            let thms = concat . zipWith mkAddenda [1200..] . fromMaybe [] $ (join $ decode' . encode <$> HML.lookup "Addenda" o)
            liftIO $ hPutStrLn hdl (unlines . map genTheoremPure $ thms)
-           liftIO $ hPutStrLn hdl ("def UserTheorems():\n    return ["++L.intercalate "," getAddenda thms++"]\n\nMain()\n")
+           liftIO $ hPutStrLn hdl ("def UserTheorems():\n    return ["++L.intercalate "," (getAddenda thms)++"]\n\nMain()\n")
            json'  <- liftIO $ modValue json path
            returnJson json'
         _          -> returnJson json
