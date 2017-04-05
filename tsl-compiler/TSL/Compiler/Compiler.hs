@@ -24,7 +24,7 @@ generateAllIneq = fmap concat . mapM generateSymPyIneq
 
 genTheoremPure :: TSLInputTheorem -> String
 genTheoremPure (TSLInputTheorem n code d i) =
-        let ir_past =
+        let ts =
                   concatMap replaceAllEqSign
                   . (\(lets, ts) -> map ( replaceAllInvar lets
                                        .  replaceAllInvar lets) ts)
