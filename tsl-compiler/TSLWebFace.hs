@@ -101,6 +101,7 @@ postRPCRunR = do
     modValue val fn = do
         (Just stdin, Just stdout, Just stderr, ingrid) <- createProcess (proc "python2" [fn])
                                              { std_in = CreatePipe, std_out = CreatePipe }
+        liftIO $ print val
         hPutStrLn stdin . C.unpack . encode $ val
         hFlush stdin
         _ <- waitForProcess ingrid
