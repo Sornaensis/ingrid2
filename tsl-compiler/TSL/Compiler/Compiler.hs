@@ -31,7 +31,7 @@ genTheoremPure (TSLInputTheorem n code d i) =
                   . (\ts -> (extractLetStatements ts, filter (not . isLetStatement) ts))
                   . (\t -> if all checkFunctions t then t else error "Invalid Function Passed")
                   . theoremParser
-                  . lexer $ trace code code
+                  . lexer $ code
         in generateTheorem $ 
             TSLTheorem (TSLInputTheorem (n ++ show i) code d i) $! ts
 
