@@ -101,13 +101,13 @@ postRPCRunR = do
     modValue val fn = do
         (Just stdin, Just stdout, Just stderr, ingrid) <- createProcess (proc "python2" [fn])
                                              { std_in = CreatePipe, std_out = CreatePipe, std_err = CreatePipe }
-        hPutStrLn stdin . cs . encode $ val
+        hPutStrLn stdin . C.unpack . encode $ val
         hFlush stdin
         _ <- waitForProcess ingrid
         putStrLn =<< hGetContents stderr
         reply <- hGetContents stdout
         removeLink fn
-        return $ case decode . cs $ reply of
+        return $ case decode . C.unpack $ reply of
                   (Just resp) -> resp
                   _           -> val
 
