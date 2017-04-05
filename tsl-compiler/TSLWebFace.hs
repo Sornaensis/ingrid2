@@ -8,10 +8,10 @@
 {-# LANGUAGE QuasiQuotes                #-}
 {-# LANGUAGE TemplateHaskell            #-}
 {-# LANGUAGE TypeFamilies               #-}
-import  System.IO.Temp
 import           Control.Exception          (SomeException)
 import qualified Control.Exception          as E
 import           Control.Exception.Lifted   (handle)
+import           Control.Monad              (join)
 import           Control.Monad.IO.Class     (liftIO)
 import           Data.Aeson
 import           Data.Aeson.Parser          (json)
@@ -31,6 +31,7 @@ import           Network.Wai                (Application, Response, responseLBS)
 import           Network.Wai.Conduit        (sourceRequestBody)
 import           Network.Wai.Handler.Warp   (run)
 import           System.IO                  (hFlush, hGetContents, hPutStrLn)
+import           System.IO.Temp
 import           System.Process
 import           Yesod
 
@@ -72,22 +73,28 @@ getRPCInitR = do
 postRPCRunR :: Handler Value
 postRPCRunR = do
     json        <- requireJsonBody :: Handler Value
-    (path, hdl) <- liftIO $ openTempFile "~/ingrid" "ingrid_runner.py"
-    ingridpy    <- liftIO $ readFile "ingrid.py"
-    liftIO $ hPutStrLn hdl ingridpy
-    let thms = concat . zipWith mkAddenda [1200..] . fromMaybe [] $ HML.lookup "Addenda" json 
-    liftIO $ hPutStrLn hdl (unlines . map genTheoremPure $ thms)
-    liftIO $ hPutStrLn hdl ("def UserTheorems():\n    return ["++concatMap getAddenda thms++"]\n")
-    json'  <- liftIO $ modValue json path
-    returnJson json'
+    case json of
+        (Object o) -> do
+           (path, hdl) <- liftIO $ openTempFile "~/ingrid" "ingrid_runner.py"
+           ingridpy    <- liftIO $ readFile "ingrid.py"
+           liftIO $ hPutStrLn hdl ingridpy
+           let thms = concat . zipWith mkAddenda [1200..] . fromMaybe [] $ (join $ decode' . encode <$> HML.lookup "Addenda" o)
+           liftIO $ hPutStrLn hdl (unlines . map genTheoremPure $ thms)
+           liftIO $ hPutStrLn hdl ("def UserTheorems():\n    return ["++concatMap getAddenda thms++"]\n")
+           json'  <- liftIO $ modValue json path
+           returnJson json'
+        _          -> returnJson json
     where
-    mkAddenda obj i = fromMaybe [] $ do
-        text <- HML.lookup "Text" obj
-        name <- HML.lookup "Name" obj
+    getString (String s) = Just $ cs s
+    getString _          = Nothing
+    mkAddenda i (Object obj) = fromMaybe [] $ do
+        text <- getString =<< HML.lookup "Text" obj
+        name <- getString =<< HML.lookup "Name" obj
         return [TSLInputTheorem "Theorem" text name i]
-    getAddenda (TSLInputTheorem n _ _ i) = n ++ show i  
+    mkAddenda _ _          = []
+    getAddenda (TSLInputTheorem n _ _ i) = n ++ show i
     modValue :: Value -> FilePath -> IO Value
-    modValue val fn = do 
+    modValue val fn = do
         (Just stdin, Just stdout, _, ingrid) <- createProcess (proc "python2" [fn])
                                              { std_in = CreatePipe, std_out = CreatePipe }
         hPutStrLn stdin . C.unpack . encode $ val
