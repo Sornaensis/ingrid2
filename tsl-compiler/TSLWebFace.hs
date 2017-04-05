@@ -106,6 +106,7 @@ postRPCRunR = do
         _ <- waitForProcess ingrid
         putStrLn =<< hGetContents stderr
         reply <- hGetContents stdout
+        putStrLn reply
         removeLink fn
         return $ case decode . C.pack $ reply of
                   (Just resp) -> resp
