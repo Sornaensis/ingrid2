@@ -346,8 +346,9 @@ generateSymPyIneq e@(Fx (InvarExpr i (Just relexp))) =
                    relation                                          = theoremToSrc rel
                    bound                                             = getBound rel
                    invar_analyses                                    = map (alterAnalysis ann) . map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) $ invars
+                   invar_doanalysis                                  = concatMap (alterAnalysis2 ann) $ invars
                    invars                                            = getInvolves orig
-              in fmap (map (adjustInequality invar_analyses) . ((Fx $ InvarExpr i (Just (Fx $ RelExpr r orig))):) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
+              in fmap (map (adjustInequality invar_analyses) . ((replaceAllInvar invar_doanalysis . Fx $ InvarExpr i (Just (Fx $ RelExpr r orig))):) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
                      invars >>= \inv -> return $
                    do Py.initialize
                       equation    <- Py.toUnicode . T.pack $ inequality
@@ -401,10 +402,15 @@ generateSymPyIneq e@(Fx (InvarExpr i (Just relexp))) =
                        _          -> return ""
             _  -> return [e]
         where
+        alterAnalysis2 [] _ = []
+        alterAnalysis2 (Fx (Function s [Fx (Invar j)]):anns) i  
+                        | "useMinFor" == s && i == j = [(i, Fx $ Function "minb" [Fx $ Invar i])]
+                        | "useMaxFor" == s && i == j = [(i, Fx $ Function "maxb" [Fx $ Invar i])]
+                        | otherwise                  = alterAnalysis2 anns i
         alterAnalysis [] a = a
         alterAnalysis (Fx (Function s [Fx (Invar j)]):anns) (i, an)  
-                        | "useMinFor" == s && i == j = (i, getIneq Min)
-                        | "useMaxFor" == s && i == j = (i, getIneq Max)
+                        | "useMinFor" == s && i == j = (i, getIneq Max)
+                        | "useMaxFor" == s && i == j = (i, getIneq Min)
                         | otherwise                  = alterAnalysis anns (i, an)
         adjustInequality imap ineq@(Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp))))) =
                    maybe ineq (\r -> Fx $ InvarExpr (Fx $ Invar v) (Just . Fx $ RelExpr r exp)) (lookup v imap) 
