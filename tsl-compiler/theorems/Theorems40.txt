@@ -60,7 +60,7 @@
             "disp": ""
         },
         {
-            "text": "edgeCliqueCover <= edges - (1/2)*maxClique(maxClique - 1)+1;",
+            "text": "edgeCliqueCover <= edges - (1/2)*maxClique*(maxClique - 1)+1;",
             "name": "Theorem",
             "idnum": 29,
             "disp": ""
