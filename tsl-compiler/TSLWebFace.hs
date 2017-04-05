@@ -82,7 +82,7 @@ postRPCRunR = do
            liftIO $ hPutStrLn hdl ingridpy
            let thms = concat . zipWith mkAddenda [1200..] . fromMaybe [] $ (join $ decode' . encode <$> HML.lookup "Addenda" o)
            liftIO $ hPutStrLn hdl (unlines . map genTheoremPure $ thms)
-           liftIO $ hPutStrLn hdl ("def UserTheorems():\n    return ["++concatMap getAddenda thms++"]\n\nMain()\n")
+           liftIO $ hPutStrLn hdl ("def UserTheorems():\n    return ["++L.intercalate "," getAddenda thms++"]\n\nMain()\n")
            json'  <- liftIO $ modValue json path
            returnJson json'
         _          -> returnJson json
@@ -94,7 +94,7 @@ postRPCRunR = do
         name <- getString =<< HML.lookup "Name" obj
         return [TSLInputTheorem "Theorem" text name i]
     mkAddenda _ _          = []
-    getAddenda (TSLInputTheorem n _ _ i) = n ++ show i
+    getAddenda (TSLInputTheorem n _ _ i) = n ++ show i ++ "()"
     modValue :: Value -> FilePath -> IO Value
     modValue val fn = do
         (Just stdin, Just stdout, _, ingrid) <- createProcess (proc "python2" [fn])
