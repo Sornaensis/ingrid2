@@ -104,7 +104,7 @@ generatePython' (Function "setmin" es)  = "try:\n    set(" ++ L.intercalate ", "
 generatePython' (Function "setmax" es)  = "try:\n    set(" ++ L.intercalate ", " es ++ ", ind=\'Max\')\nexcept:\n    pass"
 generatePython' (Function s es)         = s ++ "(" ++ L.intercalate ", " es ++ ")"
 generatePython' (Local "True")          = "Local True"
-generatePython' (Local s)               = show s
+generatePython' (Local s)               = s
 generatePython' (Invar s)               = show s
 generatePython' (Paren e)               = "(" ++ e ++ ")"
 generatePython' _                       = ""
