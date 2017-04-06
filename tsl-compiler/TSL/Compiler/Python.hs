@@ -247,7 +247,7 @@ realizeAnalysis2' v
                                     (Fx $ If (Fx $ Function s [Fx $ Expr [Fx $ Function "maxb" [e]
                                                                              , Fx $ Neg $ Fx $ Number 1]])
                                              (Fx $ InvarExpr (Fx $ Function "set" [e 
-                                                                        ,    Fx $ Expr [Fx $ Function "minb" [e] 
+                                                                        ,    Fx $ Expr [Fx $ Function "maxb" [e] 
                                                                                    ,    Fx $ Neg $ Fx $ Number 1]
                                                                         , Fx $ ExprF "ind=\'Max\'" (Fx Empty)])
                                                              Nothing)
