@@ -203,9 +203,6 @@ containsInvar' _               = False
 replaceAllEqSign :: Fix Theorem -> [Fix Theorem]
 replaceAllEqSign (Fx (If c (Fx (ExprList as)) elif)) =
         return . Fx $ If c (Fx $ ExprList (concatMap replaceAllEqSign as)) (head . replaceAllEqSign <$> elif)
-replaceAllEqSign (Fx (ExprF "nosolve" ivexpr)) | (Fx (InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelEq)) exp))))) <- ivexpr=
-    [Fx $ ExprF "nosolve" $ Fx $ InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelGte)) exp))),
-      Fx $ ExprF "nosolve" $ Fx $ InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelLte)) exp)))]
 replaceAllEqSign (Fx (InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelEq)) exp))))) =
         [Fx $ InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelGte)) exp))),
          Fx $ InvarExpr i (Just (Fx (RelExpr (Fx (Relation RelLte)) exp)))]
