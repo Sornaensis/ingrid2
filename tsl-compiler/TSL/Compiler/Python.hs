@@ -111,7 +111,6 @@ generatePython' _                       = ""
 
 realizeAnalysis2' :: Theorem (Fix Theorem) -> Fix Theorem
 realizeAnalysis2' v
-   | ExprF "nosolve" ivexpr <- v = cata realizeAnalysis2' . cata realizeAnalysis' $ ivexpr
    | Function "setmax" [i, e] <- v =
         let ivs = map (\f -> Fx $ Cond f    
                                        (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
@@ -337,6 +336,9 @@ generateSymPyIneq (Fx (If c (Fx (ExprList elist)) elif)) = do
         return [Fx $ If c (Fx $ ExprList (concat elist')) elif']
 generateSymPyIneq e@(Fx (InvarExpr i (Just relexp))) =
         case relexp of 
+            (Fx (ExprF "nosolve" ivexpr)) -> do
+                solv <- generateSymPyIneq ivexpr
+                if not . null $ solv then return [head solv] else return []
             (Fx (RelExpr r (Fx (Adden orig ann)))) ->
               let  (Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp)))))    = func_map
                    (func_map, func_remap)                            = replaceAllFuncs (Fx $ InvarExpr i (Just (Fx $ RelExpr r orig)))
