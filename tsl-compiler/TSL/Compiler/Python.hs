@@ -334,11 +334,11 @@ generateSymPyIneq (Fx (If c (Fx (ExprList elist)) elif)) = do
         elist' <- mapM generateSymPyIneq elist
         elif'  <- sequence $ (head <$>) . generateSymPyIneq <$> elif
         return [Fx $ If c (Fx $ ExprList (concat elist')) elif']
+generateSymPyIneq (Fx (ExprF "nosolve" ivexpr)) = do
+                solv <- generateSymPyIneq ivexpr
+                return $ if not . null $ solv then [head solv] else []
 generateSymPyIneq e@(Fx (InvarExpr i (Just relexp))) =
         case relexp of 
-            (Fx (ExprF "nosolve" ivexpr)) -> do
-                solv <- generateSymPyIneq ivexpr
-                if not . null $ solv then return [head solv] else return []
             (Fx (RelExpr r (Fx (Adden orig ann)))) ->
               let  (Fx (InvarExpr (Fx (Invar v)) (Just (Fx (RelExpr rel exp)))))    = func_map
                    (func_map, func_remap)                            = replaceAllFuncs (Fx $ InvarExpr i (Just (Fx $ RelExpr r orig)))
