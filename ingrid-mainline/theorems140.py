@@ -2150,7 +2150,7 @@ class Theorem58(Theorem):
         return
 class Theorem59(Theorem):
     def __init__(self):
-        super(Theorem59, self).__init__(59, "crossing <= (1.0/4.0)*floor(nodes/2.0)*floor((nodes-(1.0))/2.0)*floor((nodes-(2.0))/2.0)*floor((nodes-(3.0))/2.0);\nif complete and nodes <= 10.0 then \n{\n    crossing >= (1.0/4.0)*floor(nodes/2.0)*floor((nodes-(1.0))/2.0)*floor((nodes-(2.0))/2.0)*floor((nodes-(3.0))/2.0)\n};\n", "")
+        super(Theorem59, self).__init__(59, "nosolve crossing <= (1.0/4.0)*floor(nodes/2.0)*floor((nodes-(1.0))/2.0)*floor((nodes-(2.0))/2.0)*floor((nodes-(3.0))/2.0);\nif complete and nodes <= 10.0 then \n{\n    nosolve crossing >= (1.0/4.0)*floor(nodes/2.0)*floor((nodes-(1.0))/2.0)*floor((nodes-(2.0))/2.0)*floor((nodes-(3.0))/2.0)\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["crossing","nodes","complete"]
     def run(self):
