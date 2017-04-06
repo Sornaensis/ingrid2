@@ -195,8 +195,8 @@ realizeAnalysis2' v
                                                                 Fx $ ExprF "ind=\'Min\'" (Fx Empty)]) Nothing
             "not" -> Fx $ InvarExpr (Fx $ Function "set" [e, 
                                                           Fx $ ExprF "False" (Fx Empty)]) Nothing
-            s@"even" -> evenOrOdd (s++"Invar") e
-            s@"odd"  -> evenOrOdd (s++"Invar") e
+            s@"even" -> evenOrOdd s e
+            s@"odd"  -> evenOrOdd s e
    | (InvarExpr (Fx (Local l)) (Just (Fx (ExprF _ expr)))) <- v =
         Fx $ ExprF (l ++ " =") expr
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
