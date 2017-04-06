@@ -198,7 +198,7 @@ realizeAnalysis2' v
             s@"even" -> evenOrOdd s e
             s@"odd"  -> evenOrOdd s e
    | (InvarExpr (Fx (Local l)) (Just (Fx (ExprF _ expr)))) <- v =
-        let (Fx (InvarExpr _ (Just (Fx (RelExpr _ expr'))))) = cata realizeAnalysis2' (Fx $ InvarExpr (Fx $ Invar "") (Just (Fx $ RelExpr (Fx $ Relation RelNeq) expr)))
+        let (Fx (InvarExpr _ (Just (Fx (RelExpr _ expr'))))) = cata realizeAnalysis2' (Fx $ InvarExpr (Fx $ Invar "") (Just (Fx $ RelExpr (Fx $ Relation RelLte) expr)))
         in Fx $ ExprF (l ++ " =") expr'
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
