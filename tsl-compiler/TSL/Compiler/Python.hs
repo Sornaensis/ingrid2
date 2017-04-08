@@ -104,7 +104,7 @@ generatePython' (Function "setmin" es)  = "try:\n    set(" ++ L.intercalate ", "
 generatePython' (Function "setmax" es)  = "try:\n    set(" ++ L.intercalate ", " es ++ ", ind=\'Max\')\nexcept:\n    pass"
 generatePython' (Function s es)         = s ++ "(" ++ L.intercalate ", " es ++ ")"
 generatePython' (Local "True")          = "Local True"
-generatePython' (Local s)               = show s
+generatePython' (Local s)               = s
 generatePython' (Invar s)               = show s
 generatePython' (Paren e)               = "(" ++ e ++ ")"
 generatePython' _                       = ""
@@ -198,7 +198,11 @@ realizeAnalysis2' v
             s@"even" -> evenOrOdd s e
             s@"odd"  -> evenOrOdd s e
    | (InvarExpr (Fx (Local l)) (Just (Fx (ExprF _ expr)))) <- v =
-        Fx $ ExprF (l ++ " =") expr
+        case cata realizeAnalysis2' (Fx $ InvarExpr (Fx $ Invar "") (Just (Fx $ RelExpr (Fx $ Relation RelLte) expr))) of
+            (Fx (If c
+                    (Fx (InvarExpr _ (Just (Fx (RelExpr _ expr'))))) 
+                    Nothing)) -> Fx $ If c (Fx $ ExprF (l ++ " =") expr') Nothing 
+            _                 -> Fx $ ExprF (l ++ " =") expr
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
             invars = getInvolves expr
@@ -247,7 +251,7 @@ realizeAnalysis2' v
                                     (Fx $ If (Fx $ Function s [Fx $ Expr [Fx $ Function "maxb" [e]
                                                                              , Fx $ Neg $ Fx $ Number 1]])
                                              (Fx $ InvarExpr (Fx $ Function "set" [e 
-                                                                        ,    Fx $ Expr [Fx $ Function "minb" [e] 
+                                                                        ,    Fx $ Expr [Fx $ Function "maxb" [e] 
                                                                                    ,    Fx $ Neg $ Fx $ Number 1]
                                                                         , Fx $ ExprF "ind=\'Max\'" (Fx Empty)])
                                                              Nothing)
