@@ -16,7 +16,7 @@ HLR (High Level Representation) | IR (Intermediate Representation) ==> TL (Targe
  |  Lexer & | ---> Only check valid syntax (One syntax for both HLR and IR)
  |  Parser  |
       ||
-  Initial AST
+    HLR AST
       ||
   ____\/____
  | Expr     | ---> Check High Level Expressions for errors:
@@ -26,23 +26,30 @@ HLR (High Level Representation) | IR (Intermediate Representation) ==> TL (Targe
       ||              -- Expressions within these statemetns cannot have free standing invariants
       ||            - Check that all functions contained within expressions are valid (no aribitrary functions)
       ||
-  Initial AST
+    HLR AST
       ||
   ____\/____
  | Rewrite  | ---> For: 'let bind = <expr>' replace all occurences of bind with <expr>
  | Let binds|         - Mutual Recursion is a bad idea
       ||              - Recursion is limited to two passes
       ||              - Symbolic so that terms can be rewritten within inequalities 
-  AST w.o Lets
-      ||
-  ____\/____
- | Equation | ---> Using SymPy, rewrite a >= ... for all terms 
- | Solver   |      - Replace a == b with a >= b and a <= b 
-      ||           - Automatically hides complex functions (min, max, etc)
-      ||           - Performs LHS analysis on the first inequality and applies the outcome to each subsequent inequality
-      ||           - Equations that cannot be solved for all terms are detected here
-      ||
-    IR AST
+    HLR AST
+      ||                 if Stage 1 -->
+      ||>>>========================================================
+      ||                                                          ||                       Impure Computation
+      || else                                               ______||_________________________________________________________________________________________________________________________
+      ||  |                                                |  ____\/____                                                                                                                     | 
+      ||  V                                                | | Equation | ---> Using SymPy, rewrite a >= ... for all terms                                                                   |
+      ||                                                   | | Solver   |      - Replace a == b with a >= b and a <= b                                                                       | 
+      ||                                                   |      ||           - Automatically hides complex functions (min, max, etc)                                                       |  
+      ||                                                   |      ||           - Performs LHS analysis on the first inequality and applies the outcome to each subsequent inequality         |  
+      ||                                                   |      ||           - Equations that cannot be solved for all terms are detected here                                             |  
+      ||                                                   |      ||                                                                                                                         |  
+      ||                                                   |    HLR AST w. Expanded Inequalities                                                                                             |  
+      ||                                                   |      ||                                                                                                                         | 
+      ||                                                   -------||--------------------------------------------------------------------------------------------------------------------------
+      ||                                                          \/ 
+      ||<<<======================================================//
       ||
   ____\/____
  | Type     | ---> Type check all expressions
@@ -60,11 +67,13 @@ HLR (High Level Representation) | IR (Intermediate Representation) ==> TL (Targe
       ||           - Perform analysis on all Conditionals and Inequalities
     IR AST
       ||
-      ||  if final_pass
-      ||==>>>>==========>>>>
-      ||                    \\
+      ||  if Output is TL -->
+      ||>>>===================
       ||                     ||
       || else                ||
+      ||  |                  ||
+      ||  V                  ||
+      ||                     ||
   ____\/_____                ||
  | Serialize |           ____\/____
  | to string |          | Expand   | ---> Expand all inequalities into imperative statements and desugar all syntax
