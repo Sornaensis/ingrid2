@@ -164,6 +164,7 @@ realizeAnalysis2' v
                                             (Just . Fx $ 
                                                 RelExpr (Fx $ Relation RelNeq) 
                                                         (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a):inv_replce)
+                         ++ map (\l -> Fx $ ExprF (generatePython l ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
         in  if null inv_check 
               then Fx $ Cond a (Just . Fx $ RelExpr rel expr)
               else 
@@ -179,6 +180,7 @@ realizeAnalysis2' v
                                             (Just . Fx $ 
                                                 RelExpr (Fx $ Relation RelNeq) 
                                                         (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a'):inv_replce)
+                         ++ map (\l -> Fx $ ExprF (generatePython l ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
             a' = case bound of
                     Max -> Fx $ Function "minb" [a]
                     Min -> Fx $ Function "maxb" [a] 
@@ -211,7 +213,7 @@ realizeAnalysis2' v
             inv_check  = map (\(_,f) -> Fx $ Cond f 
                                             (Just . Fx $ 
                                                 RelExpr (Fx $ Relation RelNeq) 
-                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce)
+                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce) 
         in if null inv_check
              then Fx $ InvarExpr a (Just . Fx $ RelExpr rel expr)
              else 

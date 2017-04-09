@@ -82,9 +82,6 @@ postRPCRunR = do
            let thmtxt = unlines . map genTheoremPure $ thms
            let userthms = "def UserTheorems():\n    return ["++L.intercalate "," (map getAddenda thms)++"]\n\nMain()\n"
            liftIO $ putStrLn $ unlines [ingridpy,thmtxt,userthms]
-           -- liftIO $ hPutStrLn hdl ingridpy
-           -- liftIO $ hPutStrLn hdl thmtxt
-           -- liftIO $ hPutStrLn hdl userthms
            json'  <- liftIO $ modValue json (unlines [ingridpy,thmtxt,userthms])
            returnJson json'
         _          -> returnJson json

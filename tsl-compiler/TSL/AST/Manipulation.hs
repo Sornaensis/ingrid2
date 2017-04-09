@@ -54,6 +54,28 @@ checkFunctions' (Function f as) | Just (min, max) <- lookup f arityOfFns
                                     = False
 checkFunctions' _               = True
 
+getLocals :: Fix Theorem -> [String]
+getLocals = L.nub . cata getLocals'
+
+getLocals' :: Theorem [String] -> [String]
+getLocals' (Local a) = return a
+getLocals' (InvarExpr a b) = a ++ fromMaybe [] b
+getLocals' (If a b c) = a ++ b ++ fromMaybe [] c
+getLocals' (Cond a b) = a ++ fromMaybe [] b
+getLocals' (RelExpr a b) = a ++ b
+getLocals' (ExprList as) = concat as
+getLocals' (Expr as) = concat as
+getLocals' (ExprF _ a) = a
+getLocals' (Or a b) = a ++ b
+getLocals' (And a b) = a ++ b
+getLocals' (Mul a b) = a ++ b
+getLocals' (Div a b) = a ++ b
+getLocals' (Pow a b) = a ++ b
+getLocals' (Paren a) = a
+getLocals' (Neg a) = a
+getLocals' (Function _ as) = concat as
+getLocals' _         = []
+
 getInvolves :: Fix Theorem -> [String]
 getInvolves = L.nub . cata getInvolves'
 
