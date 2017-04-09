@@ -41,7 +41,91 @@
             "name": "Theorem",
             "idnum": 60,
             "disp": "Simple bounds issue"
-	}
+	},
+{
+            "text": "if maxClique == 2 then {nodeCover <= nodes *(1 - ((2*edges)/nodes * log(2*edges/nodes) - (2*edges/nodes) +1)/(2*edges/nodes -1)**2)};",
+            "name": "Theorem",
+            "idnum": 442,
+            "disp": "Original code has some different conditions, and we do not solve for edges or nodes"
+        },
+{
+            "text": "bandwidth <= nodes - (mindeg + 1)*(numOfComponents -1) - 1 - (nodes - nodeCover - numOfComponents + 1)/2;",
+            "name": "Theorem",
+            "idnum": 443,
+            "disp": "Uses incorrect bounds in numOfCompenents Inequality"
+        },
+{
+            "text": "let m = (nodes - chromaticNum)/(nodes - nodeCover - 1); edges >= m*(nodes - chromaticNum) + chromaticNum*(chromaticNum - 1)/2 - (nodes - nodeCover - 1)*m*(m+1)/2;",
+            "name": "Theorem",
+            "idnum": 445,
+            "disp": "Uses incorrect bounds, (also original does not solve for other invariants, so we have to check the other bounds manually)"
+        },
+{
+            "text": "edges <= ((nodes - nodeCliqueCover)*(nodeCliqueCover + maxdeg - 1) + mindeg)/2;",
+            "name": "Theorem",
+            "idnum": 448,
+            "disp": "Incorrect bounds for edges <=... should use min nodeCliqueCover"
+        },
+{
+            "text": "if nodeInd == 2 and mindeg >= nodes - 5 then {edges <= nodes*(nodes-13)/2 + 13*maxClique};",
+            "name": "Theorem",
+            "idnum": 449,
+            "disp": "Original code has an unstated if statement which uses mindeg when setting nodes"
+        },
+{
+            "text": "if mindeg <= minimum(nodes-7, nodes - nodeInd - 2) then {mindeg <= ((nodes - 1)*(maxClique - 1) - 2)/maxClique};",
+            "name": "Theorem",
+            "idnum": 451,
+            "disp": "Incorrect bounds"
+        },
+{
+            "text": "edges <= nodes*(nodes - 1)/2 - ((nodes-nodeConnec)/(maxClique-1))*(nodes-nodeConnec) - nodeConnec*(nodeConnec - 1)/2 + (maxClique - 1)*((nodes-nodeConnec)/(maxClique-1))*(((nodes-nodeConnec)/(maxClique-1))+1)/2;",
+            "name": "Theorem",
+            "idnum": 453,
+            "disp": "Incorrect bounds, and original code only solves for edges"
+        },
+{
+            "text": "if nodeInd == 2 and maxClique >= 2*nodes/5 then {maxClique >= (2*nodes + sqrt(nodes*(3*nodes-5)/2 - 5*edges))/5};",
+            "name": "Theorem",
+            "idnum": 421,
+            "disp": "incorrect bounds used when solving for edges, and original code did not solve for nodes"
+        },
+{
+            "text": "if not forest then {bandwidth >= (2*nodeCover*(girth - 2) - nodes*(girth-3))/(2*(nodes-nodeCover))};",
+            "name": "Theorem",
+            "idnum": 422,
+            "disp": "Incorrect bounds"
+        },
+{
+            "text": "nodeCover <= nodes - maxdeg / (chromaticNum - 1);",
+            "name": "Theorem",
+            "idnum": 423,
+            "disp": "Incorrect bounds"
+        },
+{
+            "text": "if connected and (not cycle or (cycle and isset nodes and even nodes)) and (edges >= nodes or maxdeg > 2 or (isset nodes and odd nodes)) then {nodeCover <= (nodes * (maxdeg**2 + maxdeg - 1))/(maxdeg*(maxdeg+1)) - nodes**2/(nodes+2*edges)};",
+            "name": "Theorem",
+            "idnum": 424,
+            "disp": "Incorrect bounds"
+        },
+{
+            "text": "if nodeConnec >= 2 and nodeCover <= nodes - 2 then {circumference >= (2*(2*nodes - nodeCover - 2)/(nodes - nodeCover))};",
+            "name": "Theorem",
+            "idnum": 430,
+            "disp": "Incorrect bounds"
+        },
+{
+            "text": "if girth >= 6 then {nodeCover <= nodes*maxdeg**2 / (maxdeg**2 + 2*maxdeg -1)};",
+            "name": "Theorem",
+            "idnum": 431,
+            "disp": ""
+        },
+{
+            "text": "let t = ((girth-2)/2); if girth >= 4 and mindeg >= 3 and odd t  then {nodeCover <= nodes - maxdeg*((mindeg-1)**(t-1)-1)/(mindeg*(mindeg-2))} else if girth >= 4 and mindeg >= 3 and even t  then {nodeCover <= nodes - maxdeg*(mindeg-1)*((mindeg-1)**t-1)/(mindeg*(mindeg-2))-1};",
+            "name": "Theorem",
+            "idnum": 437,
+            "disp": "We do not solve for mindeg"
+        }
         ]
 }
 

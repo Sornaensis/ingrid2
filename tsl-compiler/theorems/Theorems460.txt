@@ -26,7 +26,7 @@
             "disp": ""
         },
         {
-            "text": "let m = floor((nodes - chromaticNum)/(nodes - nodeCover - 1)); edges >= m*(nodes - chromaticNum) + chromaticNum*(chromaticNum - 1)/2 - (nodes - nodeCover - 1)*m*(m+1)/2;",
+            "text": "let m = (nodes - chromaticNum)/(nodes - nodeCover - 1); edges >= m*(nodes - chromaticNum) + chromaticNum*(chromaticNum - 1)/2 - (nodes - nodeCover - 1)*m*(m+1)/2;",
             "name": "Theorem",
             "idnum": 445,
             "disp": ""
@@ -59,7 +59,7 @@
             "text": "if nodeInd < nodeCliqueCover and nodeCliqueCover == nodes - mindeg - 1 and mindeg <= nodes - 10 then {nodes <= 2*mindeg + 2} else if nodeInd < nodeCliqueCover and nodeCliqueCover == nodes - mindeg - 1 and mindeg >= nodes - 10 then {nodes <= 2*mindeg + 3};",
             "name": "Theorem",
             "idnum": 450,
-            "disp": ""
+            "disp": "Original Code is WRONG!"
         },
         {
             "text": "if mindeg <= min(nodes-7, nodes - nodeInd - 2) then {mindeg <= ((nodes - 1)*(maxClique - 1) - 2)/maxClique};",
@@ -74,7 +74,7 @@
             "disp": ""
         },
         {
-            "text": "edges <= nodes*(nodes - 1)/2 - floor((nodes-nodeConnec)/(maxClique-1))*(nodes-nodeConnec) - nodeConnec*(nodeConnec - 1)/2 + (maxClique - 1)*floor((nodes-nodeConnec)/(maxClique-1))*(floor((nodes-nodeConnec)/(maxClique-1))+1)/2;",
+            "text": "edges <= nodes*(nodes - 1)/2 - ((nodes-nodeConnec)/(maxClique-1))*(nodes-nodeConnec) - nodeConnec*(nodeConnec - 1)/2 + (maxClique - 1)*((nodes-nodeConnec)/(maxClique-1))*(((nodes-nodeConnec)/(maxClique-1))+1)/2;",
             "name": "Theorem",
             "idnum": 453,
             "disp": ""
