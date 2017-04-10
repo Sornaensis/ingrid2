@@ -3054,9 +3054,9 @@ class Theorem90(Theorem):
         return
 class Theorem91(Theorem):
     def __init__(self):
-        super(Theorem91, self).__init__(91, "let s = floor((girth-(1.0))/4.0);\nif mindeg >= 3.0 and s >= 1.0 then \n{\n    nodes >= girth*(mindeg-(1.0))**s\n};\n", "")
+        super(Theorem91, self).__init__(91, "let s = floor((girth-(1.0))/4.0);\n_s is (minb(girth)-(1.0))/4.0;\nif mindeg >= 3.0 and _s >= 1.0 then \n{\n    nodes >= girth*(mindeg-(1.0))**s\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["mindeg","girth","nodes"]
+        return str_invar in ["girth","mindeg","nodes"]
     def run(self):
         get = self.get
         set = self.set
@@ -3065,7 +3065,9 @@ class Theorem91(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("mindeg") != 'undt' and minb("mindeg") >= 3.0) and floor(("girth"-(1.0))/4.0) >= 1.0:
+        if minb("girth") != 'undt':
+            _s = (minb("girth")-(1.0))/4.0
+        if (minb("mindeg") != 'undt' and minb("mindeg") >= 3.0) and _s >= 1.0:
             if minb("girth") != 'undt' and minb("mindeg") != 'undt':
                 try:
                     set("nodes",  minb("girth")*(minb("mindeg")-(1.0))**floor((minb("girth")-(1.0))/4.0), ind='Min')
