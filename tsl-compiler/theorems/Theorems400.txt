@@ -38,7 +38,7 @@
             "disp": ""
         },
         {
-            "text": "if mindeg >= 2 and girth >= 5 then { domination <= (nodes - girth/3 - (g - 4)*(mindeg - 2)*(mindeg - 3)/2 - 2*(mindeg - 2)+1)/2 };",
+            "text": "if mindeg >= 2 and girth >= 5 then { domination <= (nodes - girth/3 - (girth - 4)*(mindeg - 2)*(mindeg - 3)/2 - 2*(mindeg - 2)+1)/2 };",
             "name": "Theorem",
             "idnum": 387,
             "disp": ""

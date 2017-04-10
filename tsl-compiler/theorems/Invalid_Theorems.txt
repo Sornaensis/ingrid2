@@ -161,6 +161,84 @@
             "name": "Theorem",
             "idnum": 420,
             "disp": "Incorrect bounds"
+        },
+{
+            "text": "if not forest then { nodes >= maxdeg + numOfComponents - 2 + ((circumference*(girth-3)+2)/(girth/2)) };",
+            "name": "Theorem",
+            "idnum": 383,
+            "disp": "Incorrect bounds"
+        },
+{
+            "text": "if mindeg >= 2 and girth >= 5 then { domination <= (nodes - girth/3 - (girth - 4)*(mindeg - 2)*(mindeg - 3)/2 - 2*(mindeg - 2)+1)/2 };",
+            "name": "Theorem",
+            "idnum": 387,
+            "disp": "Incorrect bounds when solving nodes"
+        },
+{
+            "text": "if mindeg >= 2 and girth >= 9 then { domination <= (nodes-girth/3-(girth-4)*(mindeg-2)*(mindeg-3)/2+1)/2 };",
+            "name": "Theorem",
+            "idnum": 388,
+            "disp": "Incorrect bounds when solving for girth"
+        },
+{
+            "text": "let t = (girth - 2)/2; if girth >= 4 and mindeg >= 3 and odd t  then {nodeInd >= maxdeg*((mindeg-1)**(t+1)-1)/(mindeg*(mindeg-2))} else if girth >= 4 and mindeg >= 3 and even t  then {nodeInd >= maxdeg*(mindeg-1)*((mindeg-1)**t-1)/(mindeg*(mindeg-2)) + 1};",
+            "name": "Theorem",
+            "idnum": 362,
+            "disp": "Incorrect bounds and they solve for mindeg"
+        },
+{
+            "text": "if diameter == 2 and nodeConnec >= 3 then { edges >= (nodes-1)*(nodeConnec+1)/(2 - nodeConnec**2 + 2*nodeConnec) : useMaxFor(nodeConnec)};",
+            "name": "Theorem",
+            "idnum": 363,
+            "disp": "They use do some strange things with setting minimum with different bounds"
+        },
+{
+            "text": "if diameter == 2 and nodeConnec >= 3 and nodes >= 3*nodeConnec**2 + 6 then { edges >= (nodes - 1)*(nodeConnec + 1)/2 };",
+            "name": "Theorem",
+            "idnum": 364,
+            "disp": "Incorrect bounds when setting nodes"
+        },
+{
+            "text": "if connected and regular then { edgeArboricity <= 4 + (6*genus+2)/(nodes - 1) };",
+            "name": "Theorem",
+            "idnum": 375,
+            "disp": "Incorrect bounds when setting genus and nodes"
+        },
+{
+            "text": "genus <= (thickness - 1)*(nodes - 1);",
+            "name": "Theorem",
+            "idnum": 376,
+            "disp": "Incorrect bounds when setting thickness and nodes"
+        },
+{
+            "text": "if girth >= 5 then {edges <= nodes*sqrt(nodes - 1)/2};",
+            "name": "Theorem",
+            "idnum": 343,
+            "disp": "Incorrect bouds when setting nodes"
+        },
+{
+            "text": "if not forest and nodes >= floor((3*girth-3)/2) then { edges <= nodes*(nodes-1)/((3*girth-5)/2) - numOfComponents + 1 };",
+            "name": "Theorem",
+            "idnum": 344,
+            "disp": "Incorrect bounds"
+        },
+{
+            "text": "if not forest and (nodeConnec > 0 or mindeg > 1) then { genus >= (edges*(1-2/girth-2/mindeg)+2*numOfComponents)/2 };",
+            "name": "Theorem",
+            "idnum": 346,
+            "disp": "Incorrect bounds"
+        },
+{
+            "text": "let t = floor(girth/2); if mindeg == 1 then {nodes >= 1 + maxdeg - (maxdeg - 1)*(mindeg - 1)**(t-1)*(1+(-1)**girth)/2} else if mindeg == 2 then {nodes >= 1 + maxdeg*t - (maxdeg - 1)*(mindeg - 1)**(t-1)*(1+(-1)**girth)/2} else if mindeg >= 3 then {nodes >= 1 + maxdeg*(((mindeg-1)**t-1)/(mindeg-2)) - (maxdeg - 1)*(mindeg - 1)**(t-1)*(1+(-1)**girth)/2};",
+            "name": "Theorem",
+            "idnum": 355,
+            "disp": "Incorrect bounds (using variables, we can make this much better"
+        },
+{
+            "text": "if regular then { edgeInd >= nodes*maxdeg/(2*(maxdeg + 1)) };",
+            "name": "Theorem",
+            "idnum": 357,
+            "disp": "Incorrect bounds"
         }
         ]
 }
