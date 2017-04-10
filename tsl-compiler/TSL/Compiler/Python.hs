@@ -200,11 +200,16 @@ realizeAnalysis2' v
             s@"even" -> evenOrOdd s e
             s@"odd"  -> evenOrOdd s e
    | (InvarExpr (Fx (Local l)) (Just (Fx (ExprF _ expr)))) <- v =
-        case cata realizeAnalysis2' (Fx $ InvarExpr (Fx $ Invar "") (Just (Fx $ RelExpr (Fx $ Relation RelLte) expr))) of
-            (Fx (If c
-                    (Fx (InvarExpr _ (Just (Fx (RelExpr _ expr'))))) 
-                    Nothing)) -> Fx $ If c (Fx $ ExprF (l ++ " =") expr') Nothing 
-            _                 -> Fx $ ExprF (l ++ " =") expr
+        let invs = map (\f -> Fx $ Cond f    
+                                       (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
+                                                            (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
+                      L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr
+        in if null invs 
+            then  Fx $ ExprF (l ++ " =") expr
+            else  
+              if length invs == 1 
+                then Fx $ If (head invs) (Fx $ ExprF (l ++ " =") expr) Nothing 
+                else Fx $ If (foldr1 (\x y -> Fx $ And x y) invs) (Fx $ ExprF (l ++ " =") expr) Nothing
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
             invars = getInvolves expr
