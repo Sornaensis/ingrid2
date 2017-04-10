@@ -5,6 +5,7 @@ module TSL.AST.Manipulation where
 import qualified Data.List   as L
 
 import           Data.Maybe  (fromMaybe)
+import           Data.Monoid
 import           TSL.AST.AST
 
 import           Debug.Trace
@@ -47,12 +48,45 @@ checkFunctions' (Div a b)       = a && b
 checkFunctions' (Pow a b)       = a && b
 checkFunctions' (Paren a)       = a
 checkFunctions' (Neg a)         = a
-checkFunctions' (Function f as) | Just (min, max) <- lookup f arityOfFns 
-                                    = let len = length as 
+checkFunctions' (Function f as) | Just (min, max) <- lookup f arityOfFns
+                                    = let len = length as
                                       in  len <= max && len >= min
-                                | Nothing <- lookup f arityOfFns 
+                                | Nothing <- lookup f arityOfFns
                                     = False
 checkFunctions' _               = True
+
+checkNakedInvars :: Fix Theorem -> Bool
+checkNakedInvars l = case cata checkNakedInvars' l of
+                        Naked -> True
+                        _     -> False
+
+-- data NakedInvar = Naked | Expr | NoNaked deriving Eq
+
+-- instance Monoid NakedInvar where
+--     mempty = NoNaked
+--     Naked `mappend` _     = Expr
+--     _     `mappend` Naked = Expr
+
+-- checkNakedInvars' :: Fix (NakedInvar) -> NakedInvar
+-- checkNakedInvars' (Invar a) = Naked
+-- checkNakedInvars' (InvarExpr a b) = a <> fromMaybe NoNaked b
+-- checkNakedInvars' (If a b c) = a <> b <> fromMaybe NoNaked c
+-- checkNakedInvars' (Cond a b) = a <> fromMaybe False b
+-- checkNakedInvars' (RelExpr a b) = a <> b
+-- checkNakedInvars' (ExprList as) = any as
+-- checkNakedInvars' (Expr as) = any as
+-- checkNakedInvars' (ExprF _ a) = a
+-- checkNakedInvars' (Or a b) = a <> b
+-- checkNakedInvars' (And a b) = a <> b
+-- checkNakedInvars' (Mul a b) = a <> b
+-- checkNakedInvars' (Div a b) = a <> b
+-- checkNakedInvars' (Pow a b) = a <> b
+-- checkNakedInvars' (Paren a) = a
+-- checkNakedInvars' (Neg a) = a
+-- checkNakedInvars' (Function s [Naked]) | s == "minb" || s == "maxb" = NoNaked
+--                                        | s == "minb" || s == "maxb" = Naked
+-- checkNakedInvars' (Function _ as)  = any as
+-- checkNakedInvars' _         = NoNaked
 
 getLocals :: Fix Theorem -> [String]
 getLocals = L.nub . cata getLocals'
@@ -194,7 +228,7 @@ containsFunc' (Mul a b)       = a || b
 containsFunc' (Div a b)       = a || b
 containsFunc' (Neg a)         = a
 containsFunc' (Pow a b)       = a || b
-containsFunc' (Function f _)  | f == "ln" || 
+containsFunc' (Function f _)  | f == "ln" ||
                                 f == "log" ||
                                 f == "exp" =  True
                               | otherwise  = False
