@@ -86,7 +86,7 @@
             "disp": ""
         },
         {
-            "text": "edges >= (nodes/nodeInd)*(nodes-nodeInd*(nodes/nodeInd+1)/2);",
+            "text": "_nind is maxb(nodeInd); edges >= (nodes/_nind)*(nodes-_nind*(nodes/_nind+1)/2);",
             "name": "Theorem",
             "idnum": 75,
             "disp": ""
