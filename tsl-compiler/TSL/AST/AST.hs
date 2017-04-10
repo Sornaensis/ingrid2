@@ -33,7 +33,7 @@ arityOfFns = [
     ,   ("minb",       (1, 1))
     ,   ("maximum",   (2, 2))
     ,   ("minimum",   (2, 2))
-    ,   ("congruent", (2, 2))
+    ,   ("congruent", (3, 3))
     ,   ("pi",        (0, 0))
     ,   ("setmin",    (1, 1))
     ,   ("setmax",    (1, 1))
