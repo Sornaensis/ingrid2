@@ -2645,9 +2645,9 @@ class Theorem74(Theorem):
         return
 class Theorem75(Theorem):
     def __init__(self):
-        super(Theorem75, self).__init__(75, "edges >= (nodes/nodeInd)*(nodes-(nodeInd*(nodes/nodeInd+1.0)/2.0));\n", "")
+        super(Theorem75, self).__init__(75, "_nind is maxb(nodeInd);\nedges >= (nodes/_nind)*(nodes-(_nind*(nodes/_nind+1.0)/2.0));\n", "")
     def involves(self, str_invar):
-        return str_invar in ["edges","nodes","nodeInd"]
+        return str_invar in ["nodeInd","edges","nodes"]
     def run(self):
         get = self.get
         set = self.set
@@ -2656,19 +2656,16 @@ class Theorem75(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if minb("nodes") != 'undt' and minb("nodeInd") != 'undt':
+        if maxb("nodeInd") != 'undt':
+            _nind = maxb("nodeInd")
+        if minb("nodes") != 'undt':
             try:
-                set("edges",  (minb("nodes")/maxb("nodeInd"))*(minb("nodes")-(maxb("nodeInd")*(minb("nodes")/maxb("nodeInd")+1.0)/2.0)), ind='Min')
+                set("edges",  (minb("nodes")/_nind)*(minb("nodes")-(_nind*(minb("nodes")/_nind+1.0)/2.0)), ind='Min')
             except:
                 pass
-        if maxb("nodeInd") != 'undt' and maxb("edges") != 'undt':
+        if maxb("edges") != 'undt':
             try:
-                set("nodes",  maxb("nodeInd")/2.0+sqrt(maxb("nodeInd")*(8.0*maxb("edges")+maxb("nodeInd")))/2.0, ind='Max')
-            except:
-                pass
-        if minb("nodes") != 'undt' and minb("edges") != 'undt':
-            try:
-                set("nodeInd",  minb("nodes")**2.0/(2.0*maxb("edges")+minb("nodes")), ind='Min')
+                set("nodes",  _nind/2.0+sqrt(_nind*(_nind+8.0*maxb("edges")))/2.0, ind='Max')
             except:
                 pass
         return
@@ -3319,4 +3316,3 @@ class Theorem100(Theorem):
                 except:
                     pass
         return
-
