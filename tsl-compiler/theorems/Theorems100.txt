@@ -61,7 +61,13 @@
             "disp": ""
         },
         {
-            "text": "let s = floor((girth - 1)/4); if mindeg >= 3 and s >= 1 then { nodes >= girth*(mindeg - 1)**s };",
+            "text": "
+	    let s = floor((girth - 1)/4);
+	    _s is (minb(girth)-1)/4;
+	    if mindeg >= 3 and _s >= 1 then 
+	    { 
+		nodes >= girth*(mindeg - 1)**s 
+	    };",
             "name": "Theorem",
             "idnum": 91,
             "disp": ""
