@@ -2,7 +2,7 @@
 {
     "theorems":[
 {
-            "text": "if planar and nodes >= 4 then { edges <= 3*nodes - 9 + min(3, edgeConnec) };",
+            "text": "if planar and nodes >= 4 then { edges <= 3*nodes - 9 + minimum(3, edgeConnec) };",
             "name": "Theorem",
             "idnum": 381,
             "disp": ""
@@ -38,7 +38,7 @@
             "disp": ""
         },
         {
-            "text": "if mindeg >= 2 and girth >= 5 then { domination <= (nodes - girth/3 - (g - 4)*(mindeg - 2)*(mindeg - 3)/2 - 2*(mindeg - 2)+1)/2 };",
+            "text": "if mindeg >= 2 and girth >= 5 then { domination <= (nodes - girth/3 - (girth - 4)*(mindeg - 2)*(mindeg - 3)/2 - 2*(mindeg - 2)+1)/2 };",
             "name": "Theorem",
             "idnum": 387,
             "disp": ""
@@ -98,7 +98,7 @@
             "disp": ""
         },
         {
-            "text": "if girth >= 5+ log(max(1,genus),3) then {arboricity <= 2};",
+            "text": "if girth >= 5+ log(maximum(1,genus),3) then {arboricity <= 2};",
             "name": "Theorem",
             "idnum": 397,
             "disp": ""

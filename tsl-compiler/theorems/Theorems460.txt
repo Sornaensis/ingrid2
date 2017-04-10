@@ -62,7 +62,7 @@
             "disp": "Original Code is WRONG!"
         },
         {
-            "text": "if mindeg <= min(nodes-7, nodes - nodeInd - 2) then {mindeg <= ((nodes - 1)*(maxClique - 1) - 2)/maxClique};",
+            "text": "if mindeg <= minimum(nodes-7, nodes - nodeInd - 2) then {mindeg <= ((nodes - 1)*(maxClique - 1) - 2)/maxClique};",
             "name": "Theorem",
             "idnum": 451,
             "disp": ""
