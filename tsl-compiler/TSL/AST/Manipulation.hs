@@ -55,10 +55,10 @@ checkFunctions' (Function f as) | Just (min, max) <- lookup f arityOfFns
                                     = False
 checkFunctions' _               = True
 
-checkNakedInvars :: Fix Theorem -> Bool
-checkNakedInvars l = case cata checkNakedInvars' l of
-                        Naked -> True
-                        _     -> False
+-- checkNakedInvars :: Fix Theorem -> Bool
+-- checkNakedInvars l = case cata checkNakedInvars' l of
+--                         Naked -> True
+--                         _     -> False
 
 -- data NakedInvar = Naked | Expr | NoNaked deriving Eq
 
