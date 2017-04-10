@@ -137,6 +137,30 @@
             "name": "Theorem",
             "idnum": 437,
             "disp": "We do not solve for mindeg"
+        },
+{
+            "text": "bandwidth <= nodes - (mindeg + 1)*(numOfComponents -1) - 1 - (nodeInd - numOfComponents + 1)/2;",
+            "name": "Theorem",
+            "idnum": 402,
+            "disp": "Incorrect bounds when solving nodeInd"
+        },
+{
+            "text": "if edges > (nodes - 1)**2/4 and edges <= (nodes-1)*(nodes-2)/2 then {mindeg <= edgeConnec - 1 + (nodes - sqrt(4*edges + 2*nodes - nodes**2))/2};",
+            "name": "Theorem",
+            "idnum": 406,
+            "disp": "They use wierd min/max implementation"
+        },
+{
+            "text": "if maxClique <= 2 and nodeCover <= 3*nodes/5 then {nodeCover <= (3*nodes - sqrt(5*edges - nodes**2))/5};",
+            "name": "Theorem",
+            "idnum": 419,
+            "disp": "Incorrect bounds"
+        },
+{
+            "text": "if maxClique <= 2 and nodeInd <= 2*nodes/5 then {nodeInd >= (2*nodes + sqrt(5*edges - nodes**2))/5};",
+            "name": "Theorem",
+            "idnum": 420,
+            "disp": "Incorrect bounds"
         }
         ]
 }
