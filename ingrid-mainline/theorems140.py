@@ -261,7 +261,7 @@ class Theorem7(Theorem):
 
 class Theorem8(Theorem):
     def __init__(self):
-        super(Theorem8, self).__init__(8, "nodes >= maxdeg+1.0+(mindeg+1.0)*(numOfComponents-(1.0));\n", "")
+        super(Theorem8, self).__init__(8, "nodes >= minb(maxdeg)+1.0+(minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0));\nmaxdeg <= -(minb(mindeg)*minb(numOfComponents))+minb(mindeg)+maxb(nodes)-(minb(numOfComponents));\nmindeg <= (-(minb(maxdeg))+maxb(nodes)-(minb(numOfComponents)))/(minb(numOfComponents)-(1.0));\nnumOfComponents <= (-(minb(maxdeg))+minb(mindeg)+maxb(nodes))/(minb(mindeg)+1.0);\n", "")
     def involves(self, str_invar):
         return str_invar in ["nodes","maxdeg","mindeg","numOfComponents"]
     def run(self):
@@ -277,19 +277,19 @@ class Theorem8(Theorem):
                 set("nodes",  minb("maxdeg")+1.0+(minb("mindeg")+1.0)*(minb("numOfComponents")-(1.0)), ind='Min')
             except:
                 pass
-        if maxb("mindeg") != 'undt' and minb("numOfComponents") != 'undt' and maxb("nodes") != 'undt':
+        if maxb("mindeg") != 'undt' and maxb("numOfComponents") != 'undt' and maxb("nodes") != 'undt':
             try:
-                set("maxdeg",  -(maxb("mindeg")*minb("numOfComponents"))+maxb("mindeg")+maxb("nodes")-(minb("numOfComponents")), ind='Max')
+                set("maxdeg",  -(minb("mindeg")*minb("numOfComponents"))+minb("mindeg")+maxb("nodes")-(minb("numOfComponents")), ind='Max')
             except:
                 pass
-        if minb("maxdeg") != 'undt' and maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt':
+        if maxb("maxdeg") != 'undt' and maxb("nodes") != 'undt' and maxb("numOfComponents") != 'undt':
             try:
                 set("mindeg",  (-(minb("maxdeg"))+maxb("nodes")-(minb("numOfComponents")))/(minb("numOfComponents")-(1.0)), ind='Max')
             except:
                 pass
-        if minb("maxdeg") != 'undt' and maxb("mindeg") != 'undt' and maxb("nodes") != 'undt':
+        if maxb("maxdeg") != 'undt' and maxb("mindeg") != 'undt' and maxb("nodes") != 'undt':
             try:
-                set("numOfComponents",  (-(minb("maxdeg"))+maxb("mindeg")+maxb("nodes"))/(maxb("mindeg")+1.0), ind='Max')
+                set("numOfComponents",  (-(minb("maxdeg"))+minb("mindeg")+maxb("nodes"))/(minb("mindeg")+1.0), ind='Max')
             except:
                 pass
         return
