@@ -841,7 +841,7 @@ class Theorem26(Theorem):
         return
 class Theorem27(Theorem):
     def __init__(self):
-        super(Theorem27, self).__init__(27, "edgeCover <= nodes*maxdeg/(1.0+maxdeg);\n", "")
+        super(Theorem27, self).__init__(27, "edgeCover <= maxb(nodes)*maxb(maxdeg)/(1.0+maxb(maxdeg));\nnodes >= minb(edgeCover)+minb(edgeCover)/maxb(maxdeg);\nmaxdeg >= -(minb(edgeCover)/(minb(edgeCover)-(maxb(nodes))));\n", "")
     def involves(self, str_invar):
         return str_invar in ["edgeCover","nodes","maxdeg"]
     def run(self):
@@ -864,7 +864,7 @@ class Theorem27(Theorem):
                 pass
         if minb("edgeCover") != 'undt' and minb("nodes") != 'undt':
             try:
-                set("maxdeg",  -(maxb("edgeCover")/(maxb("edgeCover")-(maxb("nodes")))), ind='Min')
+                set("maxdeg",  -(minb("edgeCover")/(minb("edgeCover")-(maxb("nodes")))), ind='Min')
             except:
                 pass
         return
