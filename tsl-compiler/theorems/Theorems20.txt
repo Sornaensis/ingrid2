@@ -60,7 +60,10 @@ if exists diameter then
             "name": "Theorem",
             "disp": "",
             "idnum": 8,
-            "text": "nodes >= maxdeg + 1 + (mindeg + 1)*(numOfComponents - 1);" 
+            "text": "nodes >= minb(maxdeg)+1.0+(minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0));
+maxdeg <= -(minb(mindeg)*minb(numOfComponents))+minb(mindeg)+maxb(nodes)-(minb(numOfComponents));
+mindeg <= (-(minb(maxdeg))+maxb(nodes)-(minb(numOfComponents)))/(minb(numOfComponents)-(1.0));
+numOfComponents <= (-(minb(maxdeg))+minb(mindeg)+maxb(nodes))/(minb(mindeg)+1.0);" 
         }, 
         { 
             "name": "Theorem",
