@@ -2617,7 +2617,7 @@ class Theorem73(Theorem):
         return
 class Theorem74(Theorem):
     def __init__(self):
-        super(Theorem74, self).__init__(74, "bandwidth <= nodes-(nodeInd/2.0)-(1.0);\n", "")
+        super(Theorem74, self).__init__(74, "", "")
     def involves(self, str_invar):
         return str_invar in ["bandwidth","nodes","nodeInd"]
     def run(self):
@@ -2628,21 +2628,6 @@ class Theorem74(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if maxb("nodes") != 'undt' and maxb("nodeInd") != 'undt':
-            try:
-                set("bandwidth",  maxb("nodes")-(minb("nodeInd")/2.0)-(1.0), ind='Max')
-            except:
-                pass
-        if minb("bandwidth") != 'undt' and minb("nodeInd") != 'undt':
-            try:
-                set("nodes",  minb("bandwidth")+minb("nodeInd")/2.0+1.0, ind='Min')
-            except:
-                pass
-        if maxb("bandwidth") != 'undt' and maxb("nodes") != 'undt':
-            try:
-                set("nodeInd",  -(2.0*minb("bandwidth"))+2.0*maxb("nodes")-(2.0), ind='Max')
-            except:
-                pass
         return
 class Theorem75(Theorem):
     def __init__(self):
