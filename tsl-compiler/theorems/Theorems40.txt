@@ -38,7 +38,11 @@
             "disp": ""
         },
         {
-            "text": "edgeCover <= nodes*maxdeg/(1 + maxdeg);",
+            "text": "edgeCover <= maxb(nodes)*maxb(maxdeg)/(1.0+maxb(maxdeg));
+nodes >= minb(edgeCover)+minb(edgeCover)/maxb(maxdeg);
+maxdeg >= -(minb(edgeCover)/(minb(edgeCover)-(maxb(nodes))));
+
+",
             "name": "Theorem",
             "idnum": 27,
             "disp": ""

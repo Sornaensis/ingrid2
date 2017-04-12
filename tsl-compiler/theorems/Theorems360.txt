@@ -7,7 +7,7 @@
             "disp": ""
         },
         {
-            "text": "if girth >= 5 and girth <= nodes/2 then {edges <= (nodes**2 - nodes*girth + 2*girth)/girth};",
+            "text": "if girth >= 5 and girth <= nodes/2 then {edges <= (nodes**2 - nodes*girth + 2*girth)/girth : useMinFor(girth)};",
             "name": "Theorem",
             "idnum": 342,
             "disp": ""
@@ -61,25 +61,52 @@
             "disp": ""
         },
         {
-            "text": "if girth >= max((nodes+1)/2, 5) and edges >= nodes + 3 then { if girth <= 7 then { girth <= 6 } else { girth <= 8 }, nodes == 2*girth - 1, nodeConnec == 2, edgeConnec == 2, mindeg == 2, edges == nodes + 3, nonplanar };",
+            "text": "if girth >= max((nodes+1)/2, 5) and edges >= nodes + 3 then { if girth <= 7 then { girth <= 6 } else { girth <= 8 }, nodes == 2*girth - 1, nodeConnec == 2, edgeConnec == 2, mindeg == 2, edges == nodes + 3, not planar };",
             "name": "Theorem",
             "idnum": 351,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "_t is floor((minb(girth)-1)/2);
+if minb(mindeg) <= 2 then 
+{
+    _s is (_t - 1)
+}
+else 
+{
+    _s is ((minb(mindeg)-1)**(_t-1) -1)/(minb(mindeg)-2)
+};
+
+if girth >= 5 then 
+{
+    edges <= nodes*(0.5+sqrt((nodes-minb(mindeg)-1)/_s+0.25))/2
+};",
             "name": "Theorem",
             "idnum": 352,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "_t is floor((minb(girth))/2);
+_k is floor(minb(edges)/maxb(nodes));
+if _k <= 1 then 
+{
+    _r is _t - 1
+}
+else
+{
+    _r is (k**(t-1) - 1)/(k-1)
+};
+
+if girth >= 5 then
+{
+    edges <= nodes*(0.5 + sqrt((nodes - _k - 2)/_r + 0.25))/2  
+};",
             "name": "Theorem",
             "idnum": 353,
             "disp": ""
         },
         {
-            "text": "let k = floor((nodes-floor((girth-1)/2))/girth); if not forest then {edges <= nodes + k*(2*nodes - girth*(k-1))/(2*floor((girth-1)/4)) };",
+            "text": "let k = floor((nodes-floor((girth-1)/2))/girth); if not forest then {nosolve edges <= nodes + k*(2*nodes - girth*(k-1))/(2*floor((girth-1)/4)) };",
             "name": "Theorem",
             "idnum": 354,
             "disp": ""

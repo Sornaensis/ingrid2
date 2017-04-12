@@ -1,7 +1,7 @@
 {
     "theorems":[
 {
-            "text": "if regular then { nodeInd <= nodes/2 + (maxClique**2 + 3*maxClique - 2)/(2*mindeg) };",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 81,
             "disp": ""
@@ -13,7 +13,7 @@
             "disp": ""
         },
         {
-            "text": "if genus > 0 then { arboricity <= 9 + (1+48*genus)**(1/2)/4 };",
+            "text": "if exists genus and genus > 0 then { arboricity <= 9 + (1+48*genus)**(1/2)/4 };",
             "name": "Theorem",
             "idnum": 83,
             "disp": ""
@@ -31,19 +31,19 @@
             "disp": ""
         },
         {
-            "text": "let u = floor((nodes - mindeg - 3)/(mindeg+1)**2); let k = floor((floor((nodes - u*(mindeg+1)**2)/(mindeg+2)-1))/2); if mindeg <= maxdeg - 2 and nodes < maxdeg + mindeg then {edgeInd >= minimum(floor(nodes/2), mindeg)} else if mindeg <= maxdeg - 2 and nodes >= maxdeg + mindeg then {edgeInd >= ceil(nodes*mindeg/(mindeg+maxdeg))} else if (mindeg == maxdeg and even mindeg) or (mindeg == maxdeg - 1 and odd mindeg) then {edgeInd >= ceil(nodes*maxdeg/(2*(maxdeg+1)))} else if mindeg == maxdeg - 1 then {edgeInd >= ceil((nodes*mindeg+1)/(2*(mindeg+1)))} else if (mindeg == maxdeg and odd mindeg) and nodes == mindeg + 1 then {edgeInd >= nodes/2} else if (mindeg == maxdeg and odd mindeg) and nodes > mindeg + 1 then {edgeInd >= (nodes-u*(mindeg-1))/2-k};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 86,
             "disp": ""
         },
         {
-            "text": "if genus > 0 then { mindeg <= 5 + (1 + 48*genus)**(1/2)/2 };",
+            "text": "if exists genus and genus > 0 then { mindeg <= 5 + (1 + 48*genus)**(1/2)/2 };",
             "name": "Theorem",
             "idnum": 87,
             "disp": ""
         },
         {
-            "text": "if genus > 0 and maxClique <= 2 then { edgeConnec <= 2 + 2*genus**(1/2) };",
+            "text": "if exists genus and genus > 0 and maxClique <= 2 then { edgeConnec <= 2 + 2*genus**(1/2) };",
             "name": "Theorem",
             "idnum": 88,
             "disp": ""
@@ -61,7 +61,13 @@
             "disp": ""
         },
         {
-            "text": "let s = floor((girth - 1)/4); if mindeg >= 3 and s >= 1 then { nodes >= girth*(mindeg - 1)**s };",
+            "text": "
+	    let s = floor((girth - 1)/4);
+	    _s is (minb(girth)-1)/4;
+	    if mindeg >= 3 and _s >= 1 then 
+	    { 
+		nodes >= girth*(mindeg - 1)**s 
+	    };",
             "name": "Theorem",
             "idnum": 91,
             "disp": ""
@@ -73,13 +79,13 @@
             "disp": ""
         },
         {
-            "text": "if diameter == 2 and ((even nodes and even mindeg and nodes >= mindeg**3 + mindeg + 1) or ((odd nodes or odd mindeg) and nodes > mindeg**3 + 1)) then { edges >= ((nodes-1)*(mindeg+1)+1)/2 };",
+            "text": "if isset diameter and diameter == 2 and ((even nodes and even mindeg and nodes >= mindeg**3 + mindeg + 1) or ((odd nodes or odd mindeg) and nodes > mindeg**3 + 1)) then { edges >= ((nodes-1)*(mindeg+1)+1)/2 };",
             "name": "Theorem",
             "idnum": 93,
             "disp": ""
         },
         {
-            "text": "if diameter == 2 and (nodeConnec > 2 or nodeConnec < 2) and ((even nodes and even nodeConnec and nodes >= nodeConnec**3 + nodeConnec + 1) or ((odd nodes or odd nodeConnec) and nodes > nodeConnec**3 + 1)) then { edges >= ((nodes-1)*(nodeConnec+1)+1)/2 };",
+            "text": "if isset diameter and diameter == 2 and (nodeConnec > 2 or nodeConnec < 2) and ((even nodes and even nodeConnec and nodes >= nodeConnec**3 + nodeConnec + 1) or ((odd nodes or odd nodeConnec) and nodes > nodeConnec**3 + 1)) then { edges >= ((nodes-1)*(nodeConnec+1)+1)/2 };",
             "name": "Theorem",
             "idnum": 94,
             "disp": ""
@@ -91,7 +97,7 @@
             "disp": ""
         },
         {
-            "text": "if defined girth then { nodes >= (girth - 1)*(arboricity - 1) + 1 };",
+            "text": "if exists girth and arboricity > 2 then { nosolve nodes >= (girth - 1)*(arboricity - 1) + 1 };",
             "name": "Theorem",
             "idnum": 96,
             "disp": ""
@@ -103,7 +109,7 @@
             "disp": ""
         },
         {
-            "text": "let t = (girth/girth-2); if girth >= 4 and genus >= 2 and chromaticNum >= 1 + 2*t then {chromaticNum <= (3 + 6*t + sqrt(57-60*t+36*t*t+48*t*genus))/6};",
+            "text": "let t = (girth/girth-2); if exists genus and girth >= 4 and genus >= 2 and chromaticNum >= 1 + 2*t then {nosolve chromaticNum <= (3 + 6*t + sqrt(57-60*t+36*t*t+48*t*genus))/6 : useMinFor (girth) : useMaxFor(genus)};",
             "name": "Theorem",
             "idnum": 98,
             "disp": ""

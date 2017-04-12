@@ -1,4 +1,3 @@
-
 {
     "theorems":[
 {
@@ -14,19 +13,23 @@
             "disp": ""
         },
         {
-            "text": "circumference >= maxClique*mindeg/(maxClique - 1);",
+            "text": "circumference >= maxb(maxClique)*minb(mindeg)/(maxb(maxClique)-(1.0));
+maxClique >= maxb(circumference)/(maxb(circumference)-(minb(mindeg)));
+mindeg <= maxb(circumference)-(maxb(circumference)/maxb(maxClique));",
             "name": "Theorem",
             "idnum": 103,
             "disp": ""
         },
         {
-            "text": "circumference >= maxClique*(chromaticNum-1)/(maxClique-1);",
+            "text": "circumference >= maxb(maxClique)*(minb(chromaticNum)-(1.0))/(maxb(maxClique)-(1.0));
+maxClique >= maxb(circumference)/(-(minb(chromaticNum))+maxb(circumference)+1.0);
+chromaticNum <= maxb(circumference)-(maxb(circumference)/maxb(maxClique))+1.0;",
             "name": "Theorem",
             "idnum": 104,
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 and chromaticNum >= 3 then { circumference >= 2*chromaticNum - 1 };",
+            "text": "if maxClique == 2 and maxb(chromaticNum) >= 3 then { circumference >= 2*chromaticNum - 1 };",
             "name": "Theorem",
             "idnum": 105,
             "disp": ""
@@ -35,7 +38,7 @@
             "text": "
             if exists nodeCover and exists chromaticNum and exists nodeInd then 
             {
-                edges <= nodeCover*(nodeInd + nodeCover*(chromaticNum-1)/(2*chromaticNum))
+                edges <= nodeCover*(nodeInd + nodeCover*(chromaticNum-1)/(2*chromaticNum)) : useMaxFor(chromaticNum)
             };",
             "name": "Theorem",
             "idnum": 106,
@@ -60,7 +63,12 @@
             "disp": ""
         },
         {
-            "text": "if mindeg >= 4 and girth >= 5 then { circumference >= (girth-2)*(mindeg-2)+5 };",
+            "text": "if minb(mindeg) >= 4.0 and minb(girth) >= 5.0 then 
+{
+    circumference >= (minb(girth)-(2.0))*(minb(mindeg)-(2.0))+5.0,
+    girth <= (maxb(circumference)+2.0*minb(mindeg)-(9.0))/(minb(mindeg)-(2.0)),
+    mindeg <= (maxb(circumference)+2.0*minb(girth)-(9.0))/(minb(girth)-(2.0))
+};",
             "name": "Theorem",
             "idnum": 110,
             "disp": ""
@@ -72,7 +80,7 @@
             "disp": ""
         },
         {
-            "text": "if connected and nodeInd <= mindeg then { mindeg >= (nodes+2)/3 };",
+            "text": "if connected and nodeInd <= mindeg and mindeg >= (nodes+2)/3 then { hamiltonian };",
             "name": "Theorem",
             "idnum": 112,
             "disp": ""
