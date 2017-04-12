@@ -179,8 +179,8 @@ realizeAnalysis2' v
             inv_check  = map (\(_,f) -> Fx $ Cond f 
                                             (Just . Fx $ 
                                                 RelExpr (Fx $ Relation RelNeq) 
-                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a):inv_replce)
-                         ++ map (\l -> Fx $ ExprF (generatePython l ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
+                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce)
+                         ++ map (\l -> Fx $ ExprF (generatePython l ++ " in vars()") (Fx Empty)) ((a:) $ Fx . Local <$> getLocals expr)
         in  if null inv_check 
               then Fx $ Cond a (Just . Fx $ RelExpr rel expr)
               else 
