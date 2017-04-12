@@ -151,7 +151,17 @@ mindeg >= (-(maxb(maxdeg)*maxb(nodeInd))+maxb(maxdeg)-(maxb(nodeInd))+minb(nodes
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 and maxdeg >= 3 then { nodeInd >= nodes/(maxdeg - (1/5)) } else if maxClique == 2 and nodes >= 3 and connected and (not cycle or (cycle and isset nodes and even nodes)) and (edges >= nodes or maxdeg > 2 or (isset nodes and odd nodes)) then { nodeInd >= nodes/maxdeg - 1/(maxdeg+1) + 1/(mindeg + 1) };",
+            "text": "if maxClique == 2 then 
+{ 
+   if maxdeg >= 3 then 
+   {
+        nodeInd >= nodes/(maxb(maxdeg) - (1/5)),
+        maxdeg >= (maxb(nodeInd)/5.0+minb(nodes))/maxb(nodeInd)
+    } else if nodes >= 3 and connected and (not cycle or (cycle and isset nodes and even nodes)) and (edges >= nodes or maxdeg > 2 or (isset nodes and odd nodes)) then 
+    { 
+        nodeInd >= nodes/maxb(maxdeg) - 1/(maxb(maxdeg)+1) + 1/(mindeg + 1) 
+    }
+};",
             "name": "Theorem",
             "idnum": 160,
             "disp": ""
