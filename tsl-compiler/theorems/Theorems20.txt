@@ -27,7 +27,11 @@
             "name": "Theorem",
             "disp": "",
             "idnum": 5,
-            "text": "maxClique >= nodes**2/(nodes**2-2*edges);" 
+            "text": "maxClique >= nodes**2/(nodes**2-2*minb(edges));
+if exists maxClique then 
+{
+    edges <= maxb(nodes)**2.0*(minb(maxClique)-(1.0))/(2.0*minb(maxClique))
+};" 
         }, 
         { 
             "name": "Theorem",
