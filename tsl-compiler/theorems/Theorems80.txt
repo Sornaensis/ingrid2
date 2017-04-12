@@ -110,7 +110,14 @@
             "disp": ""
         },
         {
-            "text": "if not forest then { nodeInd >= girth/2, radius >= girth/2, edgeInd >= circumference/2 };",
+            "text": "if not forest then 
+{
+    nodeInd >= maxb(girth)/2.0,
+    radius >= maxb(girth)/2.0,
+    girth <= minimum(maxb(radius)*2.0+1.0, 2.0*maxb(nodeInd)+1.0),
+    edgeInd >= minb(circumference)/2.0,
+    circumference <= 2.0*maxb(edgeInd)
+};",
             "name": "Theorem",
             "idnum": 79,
             "disp": ""
