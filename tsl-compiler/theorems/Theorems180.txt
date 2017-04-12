@@ -45,7 +45,9 @@ if genus > 2 and girth >= 4 then
             "disp": ""
         },
         {
-            "text": "if diameter > 1 and nodeConnec > 1 then { edges >= (nodes*diameter-2*diameter + 1)/(diameter - 1) };",
+            "text": "
+            if diameter > 1 and nodeConnec > 1 and maxb(nodeConnec) > 1 then { edges >= (nodes*maxb(diameter)-2*maxb(diameter) + 1)/(maxb(diameter) - 1),
+diameter >= (maxb(edges)+1.0)/(maxb(edges)-(minb(nodes))+2.0) };",
             "name": "Theorem",
             "idnum": 166,
             "disp": ""
