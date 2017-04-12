@@ -39,7 +39,19 @@ nodes >= (maxb(circumference)+2.0*minb(edges))/maxb(circumference);",
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 and (maxdeg >= nodes-2 or nodes <= 4) then {chromaticNum <= 2} else if maxClique == 2 and nodes >= 5 and nodes <= 10 then {chromaticNum <= 3} else if maxClique == 2 then {chromaticNum <= (nodes - maxdeg + 10)/4};",
+            "text": "if maxClique == 2 then 
+{
+    if maxdeg >= nodes-2 or nodes <= 4 then 
+    {
+        chromaticNum <= 2
+    } else if nodes >= 5 and nodes <= 10 then 
+    {
+        chromaticNum <= 3
+    } else
+    {
+        chromaticNum <= (nodes - maxdeg + 10)/4
+    }
+};",
             "name": "Theorem",
             "idnum": 147,
             "disp": ""
