@@ -142,7 +142,10 @@ nodes >= (maxb(circumference)+2.0*minb(edges))/maxb(circumference);",
             "disp": ""
         },
         {
-            "text": "nodeInd >= (nodes - 1)/(maxdeg + 1) + 1/(mindeg + 1);",
+            "text": "
+nodeInd >= (nodes-(1.0))/(maxb(maxdeg)+1.0)+1.0/(maxb(mindeg)+1.0);
+maxdeg >= (-(maxb(mindeg)*maxb(nodeInd))+maxb(mindeg)*minb(nodes)-(maxb(mindeg))-(maxb(nodeInd))+minb(nodes))/(maxb(mindeg)*maxb(nodeInd)+maxb(nodeInd)-(1.0));
+mindeg >= (-(maxb(maxdeg)*maxb(nodeInd))+maxb(maxdeg)-(maxb(nodeInd))+minb(nodes))/(maxb(maxdeg)*maxb(nodeInd)+maxb(nodeInd)-(minb(nodes))+1.0);",
             "name": "Theorem",
             "idnum": 159,
             "disp": ""
