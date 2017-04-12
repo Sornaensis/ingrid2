@@ -26,7 +26,7 @@
             "disp": ""
         },
         {
-            "text": "if mindeg == 2 then {edgeCover <= nodes * max(4, maxdeg)/(2+max(4,maxdeg))};",
+            "text": "if mindeg == 2 then {edgeCover <= nodes * maximum(4, maxdeg)/(2+maximum(4,maxdeg))};",
             "name": "Theorem",
             "idnum": 205,
             "disp": ""

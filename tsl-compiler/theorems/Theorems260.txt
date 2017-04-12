@@ -62,25 +62,53 @@
             "disp": ""
         },
         {
-            "text": "if defined girth then {edge >= (girth - 1)*(arboricity - 1) ** 2 + (arboricity - 1)};",
+            "text": "if defined girth then {edges >= (girth - 1)*(arboricity - 1) ** 2 + (arboricity - 1)};",
             "name": "Theorem",
             "idnum": 251,
             "disp": ""
         },
         {
-            "text": "if nodeConnec >= 2 and girth >= 4 and istrue congruent(girth, 1, 4) then {edgeInd >= maxdeg*(girth-1)/4} else if nodeConnec >= 2 and girth >= 4 and (istrue congruent(girth, 2, 4) or (maxdeg == 2 and istrue congruent(girth, 3, 4))) then {edgeInd >= maxdeg*(girth-1)/4 + 1} else if nodeConnec>=2 and girth>=4 and (istrue congruent(g, 0, 4) or (maxdeg>=3 and istrue congruent(g,3,4))) then {edgeInd >= maxdeg*(girth-1)/4 + 2};",
+            "text": "if nodeConnec >= 2 and girth >= 4 then
+{
+    if istrue congruent(girth, 1, 4) then
+    {
+        edgeInd >= maxdeg * (girth - 4)/4
+    }
+    else if istrue congruent(girth, 2, 4) or (maxdeg == 2 and istrue congruent(girth, 3, 4)) then 
+    {
+        edgeInd >= maxdeg*(girth-4)/4 + 1
+    }
+    else if (istrue congruent(girth, 0, 4) or (istrue congruent(girth, 3, 4) and maxdeg >= 3)) then
+    {
+        edgeInd >= maxdeg*(girth-4)/4 + 2
+    }
+};",
             "name": "Theorem",
             "idnum": 252,
             "disp": ""
         },
         {
-            "text": "if nodeConnec >= 1 then { maxdeg <= (nodes - 1)/((girth-1)/4 *(nodeConnec-1)+1) };",
+            "text": "if nodeConnec >= 1 then { maxdeg <= (nodes - 1)/((girth-4)/4 *(nodeConnec-1)+1) };",
             "name": "Theorem",
             "idnum": 253,
             "disp": ""
         },
         {
-            "text": "if nodeInd == 2 and (mindeg == 1 or nodes <= 4) then {nodeCliqueCover <= 2} else if nodeInd == 2 and (nodes >= 5 and nodes <= 10) then {nodeInd <= 3} else if nodeInd == 2 then {nodeCliqueCover <= (mindeg + 11)/4};",
+            "text": "if nodeInd == 2 then
+{
+    if mindeg == 1 or nodes <= 4 then
+    {
+        nodeCliqueCover <= 2
+    }
+    else if nodes >= 5 and nodes <= 10 then 
+    {
+        nodeInd <= 3
+    } 
+    else 
+    {
+        nodeCliqueCover <= (mindeg + 11)/4
+    }
+};",
             "name": "Theorem",
             "idnum": 254,
             "disp": ""
@@ -98,7 +126,19 @@
             "disp": ""
         },
         {
-            "text": "if diam >= 3 and (odd diam or nodeConnec == 1) then {edgeInd >= nodeConnec * (diam-1)/2} else if diam >= 3 and (even diam and nodeConnec >= 2) then {edgeInd >= nodeConnec *(diam-1)/2};",
+            "text": "if (even diameter and nodeConnec >= 2) then
+{
+    _k is 2
+}
+else if (odd diameter or nodeConnec == 1) then 
+{
+    _k is 1
+};
+
+if diam >= 3  then
+{
+    edgeInd >= nodeConnec * (diameter - 1)/2 + _k
+};",
             "name": "Theorem",
             "idnum": 257,
             "disp": ""
