@@ -153,7 +153,18 @@ if minb(domination) >= 2.0 then
             "disp": ""
         },
         {
-            "text": "if regular and maxdeg >= nodes / 2 and maxdeg <= nodes - 2 and ((odd nodes and even maxdeg) or (odd maxdeg and even nodes)) then { chromaticNum <= minimum(maxdeg, 3*nodes/5) } else if regular and maxdeg >= nodes/2 and maxdeg <= nodes - 2 then { chromaticNum <= minimum(maxdeg, (2*(nodes-maxdeg)-3)*nodes/(3*(nodes-maxdeg)-4)) };",
+            "text": "
+            "text": "
+if regular and nodes > 5 then 
+{
+    if maxdeg >= nodes / 2 and maxdeg <= nodes - 2 and ((odd nodes and even maxdeg) or (odd maxdeg and even nodes)) then 
+    { 
+        chromaticNum <= minimum(maxdeg, 3*nodes/5) 
+    } else if maxdeg >= nodes/2 and maxdeg <= nodes - 2 then 
+    { 
+        chromaticNum <= minimum(maxdeg, (2*(nodes-maxdeg)-3)*nodes/(3*(nodes-maxdeg)-4)) 
+    }
+};",
             "name": "Theorem",
             "idnum": 180,
             "disp": ""
