@@ -2,7 +2,7 @@
 {
     "theorems":[
 {
-            "text": "if nodeConnec >= 2 and nodes <= 3*mindeg and edges <= ((nodes-1)*mindeg - 1)/2 then {Hamiltonian};",
+            "text": "if nodeConnec >= 2 and nodes <= 3*mindeg and edges <= ((nodes-1)*mindeg - 1)/2 then {hamiltonian};",
             "name": "Theorem",
             "idnum": 281,
             "disp": ""
@@ -44,7 +44,20 @@
             "disp": ""
         },
         {
-            "text": "if diameter == 2 and maxClique == 2 and regular and not bipartite and istrue congruent(maxdeg, 0, 2) then {nodes >= 3*maxdeg - maxdeg/2}; if diameter == 2 and maxClique == 2 and regular and bipartite and istrue congruent(maxdeg, 0, 3) then {nodes >= 3*maxdeg - maxdeg/3};",
+            "text": "if (minb(diameter) >= 2.0 and maxb(diameter) <= 2.0) and (minb(maxClique) >= 2.0 and maxb(maxClique) <= 2.0) and regular and not bipartite then 
+{
+    if istrue congruent(maxdeg, 0.0, 2.0) then 
+    {
+        nodes >= minb(maxdeg)*5.0/2.0,
+        maxdeg <= 2.0*maxb(nodes)/5.0
+    }
+    else if istrue congruent(maxdeg, 0.0, 3.0) then 
+    {
+        nodes >= minb(maxdeg)*8.0/3.0,
+        maxdeg <= 3.0*maxb(nodes)/8.0
+    }
+};
+",
             "name": "Theorem",
             "idnum": 288,
             "disp": ""
@@ -62,7 +75,7 @@
             "disp": ""
         },
         {
-            "text": "domination <= nodes*(1 + ln(mindeg))/(mindeg+1);",
+            "text": "nosolve domination <= nodes*(1 + ln(mindeg))/(mindeg+1);",
             "name": "Theorem",
             "idnum": 291,
             "disp": ""
@@ -74,10 +87,15 @@
             "disp": ""
         },
         {
-            "text": "if connected and maxdeg == 2 and mindeg == 1 then {nodes == diameter + 1} else if connected and maxdeg == 2 and mindeg == 2 then {nodes  >= 2*diameter, nodes <= 2*diameter + 1};",
+            "text": "if connected and maxdeg == 2 then
+{
+    nodes >= mindeg * diameter - mindeg + 2,
+    nodes <= mindeg * diameter + 1
+};
+",
             "name": "Theorem",
             "idnum": 293,
-            "disp": "HELP - ensure this is correct"
+            "disp": ""
         },
         {
             "text": "edgeCliqueCover <= (nodes - maxClique + 2)**2/4;",
@@ -86,7 +104,7 @@
             "disp": ""
         },
         {
-            "text": "edges <= max(edgeInd*(2*edgeInd + 1), edgeInd*nodes - edgeInd*(edgeInd + 1)/2);",
+            "text": "edges <= maximum(edgeInd*(2*edgeInd + 1), edgeInd*nodes - edgeInd*(edgeInd + 1)/2);",
             "name": "Theorem",
             "idnum": 295,
             "disp": ""
