@@ -30,7 +30,7 @@
             "disp": ""
         },
         {
-            "text": "if edges > nodes**2/4 then {edgeCliqueCover <= ((1/2)*nodes*(nodes-1) - edges) + (1 + sqrt(1 + 4*((1/2)*nodes*(nodes-1) - edges)))};",
+            "text": ""if edges > nodes**2/4 then {nosolve edgeCliqueCover <= ((1/2)*nodes*(nodes-1) - edges) + (1 + sqrt(1 + 4*((1/2)*nodes*(nodes-1) - edges)))};",
             "name": "Theorem",
             "idnum": 122,
             "disp": ""
