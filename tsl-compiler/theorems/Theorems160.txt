@@ -2,7 +2,8 @@
 {
     "theorems":[
 {
-            "text": "circumference >= 2*edges/(nodes-1);",
+            "text": "circumference >= 2*edges/(maxb(nodes)-1);
+nodes >= (maxb(circumference)+2.0*minb(edges))/maxb(circumference);",
             "name": "Theorem",
             "idnum": 141,
             "disp": ""
