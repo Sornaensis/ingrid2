@@ -4378,9 +4378,9 @@ class Theorem136(Theorem):
         return
 class Theorem137(Theorem):
     def __init__(self):
-        super(Theorem137, self).__init__(137, "\n", "")
+        super(Theorem137, self).__init__(137, "edges <= nodes*(nodes-(1.0))/2.0;\nedges >= (nodes+1.0)/2.0;\n", "")
     def involves(self, str_invar):
-        return str_invar in []
+        return str_invar in ["edges","nodes"]
     def run(self):
         get = self.get
         set = self.set
@@ -4389,6 +4389,26 @@ class Theorem137(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
+        if maxb("nodes") != 'undt':
+            try:
+                set("edges",  maxb("nodes")*(maxb("nodes")-(1.0))/2.0, ind='Max')
+            except:
+                pass
+        if minb("edges") != 'undt':
+            try:
+                set("nodes",  sqrt(8.0*minb("edges")+1.0)/2.0+1.0/2.0, ind='Min')
+            except:
+                pass
+        if minb("nodes") != 'undt':
+            try:
+                set("edges",  (minb("nodes")+1.0)/2.0, ind='Min')
+            except:
+                pass
+        if maxb("edges") != 'undt':
+            try:
+                set("nodes",  2.0*maxb("edges")-(1.0), ind='Max')
+            except:
+                pass
         return
 class Theorem138(Theorem):
     def __init__(self):
