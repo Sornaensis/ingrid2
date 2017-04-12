@@ -3471,7 +3471,7 @@ class Theorem105(Theorem):
         return
 class Theorem106(Theorem):
     def __init__(self):
-        super(Theorem106, self).__init__(106, "if exists nodeCover and exists chromaticNum and exists nodeInd then \n{\n    edges <= nodeCover*(nodeInd+nodeCover*(chromaticNum-(1.0))/(2.0*chromaticNum)):useMaxFor(chromaticNum)\n};\n", "")
+        super(Theorem106, self).__init__(106, "if exists nodeCover and exists chromaticNum and exists nodeInd then \n{\n    edges <= maxb(nodeCover)*(maxb(nodeInd)+maxb(nodeCover)*(maxb(chromaticNum)-(1.0))/(2.0*maxb(chromaticNum))),\n    nodeCover >= -((maxb(chromaticNum)*maxb(nodeInd)+sqrt(maxb(chromaticNum)*(2.0*maxb(chromaticNum)*maxb(edges)+maxb(chromaticNum)*maxb(nodeInd)**2.0-(2.0*maxb(edges)))))/(maxb(chromaticNum)-(1.0))),\n    nodeInd >= minb(edges)/maxb(nodeCover)-(maxb(nodeCover)/2.0)+maxb(nodeCover)/(2.0*maxb(chromaticNum)),\n    chromaticNum >= maxb(nodeCover)**2.0/(-(2.0*minb(edges))+maxb(nodeCover)**2.0+2.0*maxb(nodeCover)*maxb(nodeInd))\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["nodeCover","chromaticNum","nodeInd","edges"]
     def run(self):
@@ -3495,7 +3495,7 @@ class Theorem106(Theorem):
                     pass
             if minb("edges") != 'undt' and minb("nodeCover") != 'undt' and minb("chromaticNum") != 'undt':
                 try:
-                    set("nodeInd",  minb("edges")/minb("nodeCover")-(minb("nodeCover")/2.0)+minb("nodeCover")/(2.0*maxb("chromaticNum")), ind='Min')
+                    set("nodeInd",  minb("edges")/maxb("nodeCover")-(maxb("nodeCover")/2.0)+maxb("nodeCover")/(2.0*maxb("chromaticNum")), ind='Min')
                 except:
                     pass
             if minb("nodeCover") != 'undt' and minb("edges") != 'undt' and minb("nodeInd") != 'undt':
