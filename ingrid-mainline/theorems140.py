@@ -835,7 +835,7 @@ class Theorem26(Theorem):
                 pass
         if maxb("nodes") != 'undt' and minb("edges") != 'undt':
             _z = 2.0*maxb("nodes")/(2.0*minb("edges")-(maxb("nodes")**2.0)+3.0*maxb("nodes"))
-        if (_z in vars() and _z > 0.0):
+        if ('_z' in vars() and _z > 0.0):
             try:
                 set("domination",  _z, ind='Max')
             except:
