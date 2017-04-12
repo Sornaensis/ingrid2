@@ -99,6 +99,8 @@ class Invariant:
         
         # gets ceiling for integer invariants
         if self.type == 'Integer' and val != 'undt':
+            if val < 0:
+                return True, False
             if abs(val - round(val)) < 0.0001:
                 val = int(round(val))
             else:
@@ -148,6 +150,8 @@ class Invariant:
 
         # gets floor for integer invariants
         if self.type == 'Integer' and val != 'undt':
+            if val < 0:
+                return True, False
             if abs(val - round(val)) < 0.0001:
                 val = int(round(val))
             else:
