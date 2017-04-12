@@ -812,7 +812,7 @@ class Theorem25(Theorem):
         return
 class Theorem26(Theorem):
     def __init__(self):
-        super(Theorem26, self).__init__(26, "edges <= (1.0/2.0)*(maxb(nodes)-(1.0))*(maxb(nodes)-(2.0))+maxb(nodes)/minb(domination)-(1.0);\nnodes >= (3.0*minb(domination)+sqrt(8.0*minb(domination)**2.0*minb(edges)+9.0*minb(domination)**2.0-(12.0*minb(domination))+4.0)-(2.0))/(2.0*minb(domination));\n_z is 2.0*maxb(nodes)/(2.0*minb(edges)-(maxb(nodes)**2.0)+3.0*maxb(nodes));\nif _z > 0.0 then \n{\n    domination <= _z\n};\n", "")
+        super(Theorem26, self).__init__(26, "edges <= (1.0/2.0)*(nodes-(1.0))*(nodes-(2.0))+nodes/domination-(1.0);\n", "")
     def involves(self, str_invar):
         return str_invar in ["edges","nodes","domination"]
     def run(self):
@@ -833,11 +833,9 @@ class Theorem26(Theorem):
                 set("nodes",  (3.0*minb("domination")+sqrt(8.0*minb("domination")**2.0*minb("edges")+9.0*minb("domination")**2.0-(12.0*minb("domination"))+4.0)-(2.0))/(2.0*minb("domination")), ind='Min')
             except:
                 pass
-        if maxb("nodes") != 'undt' and minb("edges") != 'undt':
-            _z = 2.0*maxb("nodes")/(2.0*minb("edges")-(maxb("nodes")**2.0)+3.0*maxb("nodes"))
-        if ('_z' in vars() and _z > 0.0):
+        if maxb("nodes") != 'undt' and maxb("edges") != 'undt':
             try:
-                set("domination",  _z, ind='Max')
+                set("domination",  2.0*maxb("nodes")/(2.0*minb("edges")-(maxb("nodes")**2.0)+3.0*maxb("nodes")), ind='Max')
             except:
                 pass
         return
