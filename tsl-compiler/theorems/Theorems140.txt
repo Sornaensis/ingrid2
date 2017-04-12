@@ -92,7 +92,7 @@
             "disp": ""
         },
         {
-            "text": "chromaticNum <= maxdeg - 1 + (maxdeg+1)/max(4, maxClique + 1);",
+            "text": "chromaticNum <= maxdeg - 1 + (maxdeg+1)/maximum(4, maxb(maxClique) + 1);",
             "name": "Theorem",
             "idnum": 131,
             "disp": ""
