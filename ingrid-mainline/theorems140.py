@@ -2729,7 +2729,7 @@ class Theorem78(Theorem):
         return
 class Theorem79(Theorem):
     def __init__(self):
-        super(Theorem79, self).__init__(79, "if not forest then \n{\n    nodeInd >= girth/2.0,\n    radius >= girth/2.0,\n    edgeInd >= circumference/2.0\n};\n", "")
+        super(Theorem79, self).__init__(79, "if not forest then \n{\n    nodeInd >= maxb(girth)/2.0,\n    radius >= maxb(girth)/2.0,\n    girth <= minimum(maxb(radius)*2.0+1.0, 2.0*maxb(nodeInd)+1.0),\n    edgeInd >= minb(circumference)/2.0,\n    circumference <= 2.0*maxb(edgeInd)\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["forest","nodeInd","girth","radius","edgeInd","circumference"]
     def run(self):
@@ -2743,22 +2743,17 @@ class Theorem79(Theorem):
         if get("forest") == False:
             if minb("girth") != 'undt':
                 try:
-                    set("nodeInd",  minb("girth")/2.0, ind='Min')
-                except:
-                    pass
-            if maxb("nodeInd") != 'undt':
-                try:
-                    set("girth",  2.0*maxb("nodeInd"), ind='Max')
+                    set("nodeInd",  maxb("girth")/2.0, ind='Min')
                 except:
                     pass
             if minb("girth") != 'undt':
                 try:
-                    set("radius",  minb("girth")/2.0, ind='Min')
+                    set("radius",  maxb("girth")/2.0, ind='Min')
                 except:
                     pass
-            if maxb("radius") != 'undt':
+            if maxb("radius") != 'undt' and maxb("nodeInd") != 'undt':
                 try:
-                    set("girth",  2.0*maxb("radius"), ind='Max')
+                    set("girth",  minimum(maxb("radius")*2.0+1.0, 2.0*maxb("nodeInd")+1.0), ind='Max')
                 except:
                     pass
             if minb("circumference") != 'undt':
