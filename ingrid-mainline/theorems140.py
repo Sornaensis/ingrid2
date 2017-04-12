@@ -132,7 +132,7 @@ class Theorem4(Theorem):
 
 class Theorem5(Theorem):
     def __init__(self):
-        super(Theorem5, self).__init__(5, "maxClique >= nodes**2.0/(nodes**2.0-(2.0*minb(edges)));\nif exists maxClique then \n{\n    edges <= maxb(nodes)**2.0*(minb(maxClique)-(1.0))/(2.0*minb(maxClique))\n};\n", "")
+        super(Theorem5, self).__init__(5, "maxClique >= nodes**2.0/(nodes**2.0-(2.0*minb(edges)));\nedges <= maxb(nodes)**2.0*(maxb(maxClique)-(1.0))/(2.0*maxb(maxClique));\n", "")
     def involves(self, str_invar):
         return str_invar in ["maxClique","nodes","edges"]
     def run(self):
@@ -153,12 +153,11 @@ class Theorem5(Theorem):
                 set("nodes",  sqrt(2.0)*sqrt(minb("edges")*minb("maxClique")/(minb("maxClique")-(1.0))), ind='Min')
             except:
                 pass
-        if maxb("maxClique") != 'undt':
-            if maxb("nodes") != 'undt' and maxb("maxClique") != 'undt':
-                try:
-                    set("edges",  maxb("nodes")**2.0*(minb("maxClique")-(1.0))/(2.0*minb("maxClique")), ind='Max')
-                except:
-                    pass
+        if maxb("nodes") != 'undt' and maxb("maxClique") != 'undt':
+            try:
+                set("edges",  maxb("nodes")**2.0*(maxb("maxClique")-(1.0))/(2.0*maxb("maxClique")), ind='Max')
+            except:
+                pass
         return
 
 class Theorem6(Theorem):
