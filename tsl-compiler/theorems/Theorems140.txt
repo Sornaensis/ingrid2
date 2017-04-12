@@ -136,7 +136,7 @@
             "disp": ""
         },
         {
-            "text": "if maxdeg <= 2*edgeInd and odd maxdeg then {edges <= edgeInd*maxdeg + (maxdeg-1)/2 * 2*edgeInd/(maxdeg+1)};",
+            "text": "if maxdeg <= 2*edgeInd and odd maxdeg then {edges <= edgeInd*maxb(maxdeg) + (maxb(maxdeg)-1)/2 * 2*edgeInd/(maxb(maxdeg)+1)};",
             "name": "Theorem",
             "idnum": 136,
             "disp": ""
