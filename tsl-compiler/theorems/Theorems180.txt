@@ -1,4 +1,3 @@
-
 {
     "theorems":[
 {
@@ -104,7 +103,7 @@
             "disp": "Replaced by r280"
         },
         {
-            "text": "nodeCliqueCover <= nodes - mindeg - (nodes - mindeg)/max(4,nodeInd + 1);",
+            "text": "nodeCliqueCover <= nodes - mindeg - (nodes - mindeg)/maximum(4,nodeInd + 1);",
             "name": "Theorem",
             "idnum": 178,
             "disp": ""
@@ -116,7 +115,7 @@
             "disp": ""
         },
         {
-            "text": "if regular and maxdeg >= nodes / 2 and maxdeg <= nodes - 2 and ((odd nodes and even maxdeg) or (odd maxdeg and even nodes)) then { chromaticNum <= min(maxdeg, 3*nodes/5) } else if regular and maxdeg >= nodes/2 and maxdeg <= nodes - 2 then { chromaticNum <= min(maxdeg, (2*(nodes-maxdeg)-3)*nodes/(3*(nodes-maxdeg)-4)) };",
+            "text": "if regular and maxdeg >= nodes / 2 and maxdeg <= nodes - 2 and ((odd nodes and even maxdeg) or (odd maxdeg and even nodes)) then { chromaticNum <= minimum(maxdeg, 3*nodes/5) } else if regular and maxdeg >= nodes/2 and maxdeg <= nodes - 2 then { chromaticNum <= minimum(maxdeg, (2*(nodes-maxdeg)-3)*nodes/(3*(nodes-maxdeg)-4)) };",
             "name": "Theorem",
             "idnum": 180,
             "disp": ""
