@@ -180,7 +180,7 @@ realizeAnalysis2' v
                                             (Just . Fx $ 
                                                 RelExpr (Fx $ Relation RelNeq) 
                                                         (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce)
-                         ++ map (\(Fx (Local l)) -> Fx $ ExprF (l ++ " in vars()") (Fx Empty)) ((a:) $ Fx . Local <$> getLocals expr)
+                         ++ map (\(Fx (Local l)) -> Fx $ ExprF ("\'" ++ l ++ "\'" ++ " in vars()") (Fx Empty)) ((a:) $ Fx . Local <$> getLocals expr)
         in  if null inv_check 
               then Fx $ Cond a (Just . Fx $ RelExpr rel expr)
               else 
