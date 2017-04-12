@@ -112,8 +112,8 @@
         {
             "text": "if not forest then 
 {
-    nodeInd >= maxb(girth)/2.0,
-    radius >= maxb(girth)/2.0,
+    nodeInd >= minb(girth)/2.0,
+    radius >= minb(girth)/2.0,
     girth <= minimum(maxb(radius)*2.0+1.0, 2.0*maxb(nodeInd)+1.0),
     edgeInd >= minb(circumference)/2.0,
     circumference <= 2.0*maxb(edgeInd)
