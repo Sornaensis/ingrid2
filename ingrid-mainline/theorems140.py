@@ -3871,7 +3871,7 @@ class Theorem119(Theorem):
         return
 class Theorem120(Theorem):
     def __init__(self):
-        super(Theorem120, self).__init__(120, "if hamiltonian and nodes >= chromaticNum-(1.0) and chromaticNum >= 4.0 then \n{\n    edges >= (chromaticNum-(1.0))*(chromaticNum-(2.0))/2.0+nodes\n}\nelse if hamiltonian and chromaticNum == 3.0 and even nodes then \n{\n    edges >= nodes+1.0\n};\n", "")
+        super(Theorem120, self).__init__(120, "if hamiltonian and nodes > chromaticNum and chromaticNum >= 4.0 then \n{\n    edges >= (chromaticNum-(1.0))*(chromaticNum-(2.0))/2.0+nodes\n}\nelse if hamiltonian and chromaticNum == 3.0 and even nodes then \n{\n    edges >= nodes+1.0\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["hamiltonian","nodes","chromaticNum","edges"]
     def run(self):
@@ -3882,7 +3882,7 @@ class Theorem120(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("hamiltonian") == True and (minb("nodes") != 'undt' and maxb("chromaticNum") != 'undt' and minb("nodes") >= maxb("chromaticNum")-(1.0)) and (minb("chromaticNum") != 'undt' and minb("chromaticNum") >= 4.0):
+        if get("hamiltonian") == True and (minb("nodes") != 'undt' and maxb("chromaticNum") != 'undt' and minb("nodes") > maxb("chromaticNum")) and (minb("chromaticNum") != 'undt' and minb("chromaticNum") >= 4.0):
             if minb("chromaticNum") != 'undt' and minb("nodes") != 'undt':
                 try:
                     set("edges",  (minb("chromaticNum")-(1.0))*(minb("chromaticNum")-(2.0))/2.0+minb("nodes"), ind='Min')
