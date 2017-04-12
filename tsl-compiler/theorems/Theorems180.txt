@@ -104,7 +104,9 @@ maxdeg >= (-(maxb(maxClique))-(maxb(mindeg))-(maxb(nodeInd))+minb(nodes)+1.0)/(m
             "disp": ""
         },
         {
-            "text": "bandwidth >= (1/2)*(2*nodes-1-sqrt((2*nodes-1)**2-8*edges));",
+            "text": "
+_P is maxb(nodes);
+bandwidth >= (1/2)*(2*_P-1-sqrt((2*_P-1)**2-8*edges));",
             "name": "Theorem",
             "idnum": 175,
             "disp": ""
