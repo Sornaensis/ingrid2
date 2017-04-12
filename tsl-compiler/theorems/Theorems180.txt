@@ -132,7 +132,22 @@ nodeCliqueCover <= nodes - mindeg - (nodes - mindeg)/_k : useMinFor(mindeg);",
             "disp": ""
         },
         {
-            "text": "if domination >= 2 then { edges <= (1/2)*(nodes-nodeInd)*(nodes+nodeInd-2*domination + 2) };",
+            "text": "
+if minb(domination) >= 2.0 then 
+{
+    edges <= (1.0/2.0)*(maxb(nodes)-(minb(nodeInd)))*(maxb(nodes)+minb(nodeInd)-(2.0*minb(domination))+2.0),
+    nodes >= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*minb(nodeInd))-(2.0*minb(domination))+2.0*minb(edges)+minb(nodeInd)**2.0+2.0*minb(nodeInd)+1.0)-(1.0),
+    nodeInd <= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*minb(nodes))-(2.0*minb(domination))-(2.0*minb(edges))+minb(nodes)**2.0+2.0*minb(nodes)+1.0)-(1.0),
+    _k is maxb(nodes)-2*minb(edges),
+    if minb(nodeInd) > _k then
+    {
+        _k is minb(nodeInd)
+    } else if maxb(nodeInd) < _k then
+    {
+        _k is maxb(nodeInd)
+    },    
+    domination <= ((maxb(nodes)+_k+2)*(maxb(nodes)-_k)-2*minb(edges))/(2*(maxb(nodes)-_k))
+};",
             "name": "Theorem",
             "idnum": 179,
             "disp": ""
