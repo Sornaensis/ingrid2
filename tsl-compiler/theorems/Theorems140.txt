@@ -115,7 +115,10 @@
             "disp": ""
         },
         {
-            "text": "let z = 1 + floor(2*edges/nodes); let k = ceil(nodes - 2*edges/z); nodeInd >= k + ceil((nodes - k*z)/(1+z));",
+            "text": "let z = 1 + floor(2*edges/nodes); let k = ceil(nodes - 2*edges/z); if isset edges and isset nodes then 
+{
+    nodeInd >= k + ceil((nodes - k*z)/(1+z)) : useMinFor(edges) : useMaxFor(nodes)
+};",
             "name": "Theorem",
             "idnum": 133,
             "disp": ""
