@@ -81,7 +81,14 @@ nodes >= (maxb(circumference)+2.0*minb(edges))/maxb(circumference);",
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 and nodeInd >= 2*nodes/5 and nodeInd <= nodes/2 then { edges <= nodeInd**2 + 4*(nodes/2 - nodeInd)**2 };",
+            "text": 
+            if (minb(maxClique) >= 2.0 and maxb(maxClique) <= 2.0) and minb(nodeInd) >= 2.0*maxb(nodes)/5.0 and maxb(nodeInd) <= minb(nodes)/2.0 then 
+{
+    edges <= maxb(nodeInd)**2.0+4.0*(maxb(nodes)/2.0-(maxb(nodeInd)))**2.0,
+    nodeInd >= 2.0*maxb(nodes)/5.0+sqrt(5.0*minb(edges)-(maxb(nodes)**2.0))/5.0,
+    nodes >= 2.0*maxb(nodeInd)+sqrt(minb(edges)-(maxb(nodeInd)**2.0))
+};
+",
             "name": "Theorem",
             "idnum": 152,
             "disp": ""
