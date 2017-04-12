@@ -171,6 +171,22 @@ realizeAnalysis2' v
                 if length inv_check == 1
                     then Fx. Paren . Fx $ And (head inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
                     else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
+   | (Cond a@(Fx (Local _)) (Just (Fx (RelExpr rel expr)))) <- v =
+        let bound = flipBound $ getBound rel
+            invars = getInvolves expr
+            inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
+            inv_replce = map (swapBound bound) inv_mappings
+            inv_check  = map (\(_,f) -> Fx $ Cond f 
+                                            (Just . Fx $ 
+                                                RelExpr (Fx $ Relation RelNeq) 
+                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a):inv_replce)
+                         ++ map (\l -> Fx $ ExprF (generatePython l ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
+        in  if null inv_check 
+              then Fx $ Cond a (Just . Fx $ RelExpr rel expr)
+              else 
+                if length inv_check == 1
+                    then Fx. Paren . Fx $ And (head inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
+                    else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
    | (Cond a@(Fx (Invar _)) (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = flipBound $ getBound rel
             invars = getInvolves expr
