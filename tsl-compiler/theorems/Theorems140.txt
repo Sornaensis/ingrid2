@@ -160,7 +160,14 @@
             "disp": ""
         },
         {
-            "text": "if edges >= 4*nodes then {crossing >= edges**3/(100*nodes**2) + 1};",
+            "text": "if minb(edges) >= 4.0*maxb(nodes) then 
+{
+    crossing >= minb(edges)**3.0/(100.0*maxb(nodes)**2.0)+1.0,
+    edges <= (100.0*maxb(crossing)*maxb(nodes)**2.0-(100.0*maxb(nodes)**2.0))**(1.0/3.0),
+    nodes >= sqrt(minb(edges)**3.0/(maxb(crossing)-(1.0)))/10.0
+};
+
+",
             "name": "Theorem",
             "idnum": 140,
             "disp": ""
