@@ -99,14 +99,15 @@
         },
         {
             "text": "
+            _P is maxb(nodes);
             if isset nodes then {
                 if istrue congruent(nodes, 3, 4) then 
                 {
-                    mindeg <= (nodes-3)*(nodes+1)/(4*(nodes-1-maxdeg))
+                    mindeg <= (_P-3)*(_P+1)/(4*(_P-1-maxdeg))
                 } 
                 else 
                 {
-                    mindeg <= (nodes-1)**2 / (4*(nodes-1-maxdeg))
+                    mindeg <= (_P-1)**2 / (4*(_P-1-maxdeg))
                 }
             };",
             "name": "Theorem",
