@@ -141,7 +141,8 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "edges <= nodes*(nodes-1)/2;
+                     edges >= (nodes+1)/2;",
             "name": "Theorem", 
             "idnum": 137,
             "disp": ""
