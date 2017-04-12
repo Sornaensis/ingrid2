@@ -56,7 +56,7 @@
             "disp": ""
         },
         {
-            "text": "if edges >= max(((nodes - mindeg)*(nodes - mindeg - 1))/2 + mindeg*mindeg + 1, (floor((nodes+2)/2)*(floor((nodes+2)/2)-1))/2 + floor((nodes-1)/2)**2 +1) then {hamiltonian};",
+            "text": "if edges >= maximum(((nodes - mindeg)*(nodes - mindeg - 1))/2 + mindeg*mindeg + 1, (floor((nodes+2)/2)*(floor((nodes+2)/2)-1))/2 + floor((nodes-1)/2)**2 +1) then {hamiltonian};",
             "name": "Theorem",
             "idnum": 330,
             "disp": ""
@@ -80,13 +80,13 @@
             "disp": ""
         },
         {
-            "text": "if connected and mindeg >= 3 and girth >= 5 then {domination <= (nodes - floor(diameter/3)*(mindeg - 1) - 1 - (mindeg-1)*(mindeg-2)/2)/2};",
+            "text": "if connected and mindeg >= 3 and girth >= 5 then {domination <= (nodes - (diameter/3)*(mindeg - 1) - 1 - (mindeg-1)*(mindeg-2)/2)/2};",
             "name": "Theorem",
             "idnum": 334,
             "disp": ""
         },
         {
-            "text": "if bandwidth >= nodes/2 then {edges >= (2*floor(nodes/2) - 1)*(nodes/(nodes - 2))**(bandwidth - floor(nodes/2))};",
+            "text": "if bandwidth >= nodes/2 then {nosolve edges >= (2*floor(nodes/2) - 1)*(nodes/(nodes - 2))**(bandwidth - floor(nodes/2))};",
             "name": "Theorem",
             "idnum": 335,
             "disp": ""
@@ -104,7 +104,7 @@
             "disp": ""
         },
         {
-            "text": "if connected and girth >= 5 and mindeg >= 4 then {domination <= (nodes - maxdeg - mindeg*(mindeg - 3)/3)/2};",
+            "text": "if connected and girth >= 5 and mindeg >= 4 then {domination <= (nodes - maxdeg - mindeg*(mindeg - 3)/2)/2};",
             "name": "Theorem",
             "idnum": 338,
             "disp": ""

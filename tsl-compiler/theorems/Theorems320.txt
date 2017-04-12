@@ -1,4 +1,3 @@
-
 {
     "theorems":[
 {
@@ -20,13 +19,13 @@
             "disp": ""
         },
         {
-            "text": "let x = mindeg*floor((mindeg+3)/2)-1; if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and even nodes  then {edgeInd >= (nodes - 2*floor((nodes + 1)/(2*x)))/2} else if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and odd nodes  then {edgeInd >= (nodes-max(2*floor((nodes + 1 + x)/(2*x)), 1))/2};",
+            "text": "let x = mindeg*((mindeg+3)/2)-1; if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and even nodes  then {edgeInd >= (nodes - 2*((nodes + 1)/(2*x)))/2} else if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and odd nodes  then {edgeInd >= (nodes-maximum(2*((nodes + 1 + x)/(2*x)), 1))/2};",
             "name": "Theorem",
             "idnum": 304,
             "disp": ""
         },
         {
-            "text": "if mindeg == maxdeg and maxdeg == 3 then {edgeInd >= nodes/2 - floor((nodes + 3)/18) - floor(numOfComponents + 4)/6};",
+            "text": "if mindeg == maxdeg and maxdeg == 3 then {edgeInd >= nodes/2 - ((nodes + 3)/18) - (numOfComponents + 4)/6};",
             "name": "Theorem",
             "idnum": 305,
             "disp": ""
@@ -38,7 +37,7 @@
             "disp": ""
         },
         {
-            "text": "if edgeConnec > 0 then { edgeConnec >= min(mindeg, (nodes * (maxdeg - 2))/((maxdeg - 1)**(diameter - 1) + maxdeg*(maxdeg - 2) - 1)) };",
+            "text": "if edgeConnec > 0 then { edgeConnec >= minimum(mindeg, (nodes * (maxdeg - 2))/((maxdeg - 1)**(diameter - 1) + maxdeg*(maxdeg - 2) - 1)) };",
             "name": "Theorem",
             "idnum": 307,
             "disp": ""
@@ -50,7 +49,7 @@
             "disp": ""
         },
         {
-            "text": "if mindeg == maxdeg and maxdeg == 3 and nodeConnec == 3 and planar then {circumference >= min(nodes, 17)};",
+            "text": "if mindeg == maxdeg and maxdeg == 3 and nodeConnec == 3 and planar then {circumference >= minimum(nodes, 17)};",
             "name": "Theorem",
             "idnum": 309,
             "disp": ""
@@ -74,19 +73,19 @@
             "disp": ""
         },
         {
-            "text": "if planar and nodeConnec >= 3 then {circumference >= min(nodes, 2*mindeg)};",
+            "text": "if planar and nodeConnec >= 3 then {circumference >= minimum(nodes, 2*mindeg)};",
             "name": "Theorem",
             "idnum": 313,
             "disp": ""
         },
         {
-            "text": "if regular and nodeConnec >= 2 and nodes < 3*mindeg + 4 then {circumference >= min(nodes, 3*mindeg)};",
+            "text": "if regular and nodeConnec >= 2 and nodes < 3*mindeg + 4 then {circumference >= minimum(nodes, 3*mindeg)};",
             "name": "Theorem",
             "idnum": 314,
             "disp": ""
         },
         {
-            "text": "if regular and nodeConnec >= 2 then {circumference >= min(min(nodes, 3*mindeg), 2*mindeg + 4)};",
+            "text": "if regular and nodeConnec >= 2 then {circumference >= minimum(minimum(nodes, 3*mindeg), 2*mindeg + 4)};",
             "name": "Theorem",
             "idnum": 315,
             "disp": ""
@@ -110,7 +109,7 @@
             "disp": ""
         },
         {
-            "text": "let m = mod(2*e, maxdeg); if spectralRadius >= (2*edges*(2*maxdeg-1) - 2*m*(maxdeg-m))**(1/4) then { girth <= 4 };",
+            "text": "let m = 2*e-floor(2*e/maxdeg)*maxdeg; if spectralRadius >= (2*edges*(2*maxdeg-1) - 2*m*(maxdeg-m))**(1/4) then { girth <= 4 };",
             "name": "Theorem",
             "idnum": 319,
             "disp": ""
