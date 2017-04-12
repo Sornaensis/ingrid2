@@ -124,7 +124,9 @@ bandwidth >= (1/2)*(2*_P-1-sqrt((2*_P-1)**2-8*edges));",
             "disp": "Replaced by r280"
         },
         {
-            "text": "nodeCliqueCover <= nodes - mindeg - (nodes - mindeg)/maximum(4,nodeInd + 1);",
+            "text": "
+_k is maximum(4,maxb(nodeInd) + 1);
+nodeCliqueCover <= nodes - mindeg - (nodes - mindeg)/_k : useMinFor(mindeg);",
             "name": "Theorem",
             "idnum": 178,
             "disp": ""
