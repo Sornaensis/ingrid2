@@ -35,14 +35,7 @@
             "disp": ""
         },
         {
-            "text": "edges <= (1.0/2.0)*(maxb(nodes)-(1.0))*(maxb(nodes)-(2.0))+maxb(nodes)/minb(domination)-(1.0);
-nodes >= (3.0*minb(domination)+sqrt(8.0*minb(domination)**2.0*minb(edges)+9.0*minb(domination)**2.0-(12.0*minb(domination))+4.0)-(2.0))/(2.0*minb(domination));
-_z is 2.0*maxb(nodes)/(2.0*minb(edges)-(maxb(nodes)**2.0)+3.0*maxb(nodes));
-if _z > 0.0 then 
-{
-    domination <= _z
-};
-",
+            "text": "edges <= (1.0/2.0)*(nodes-(1.0))*(nodes-(2.0))+nodes/domination-(1.0);",
             "name": "Theorem",
             "idnum": 26,
             "disp": ""
