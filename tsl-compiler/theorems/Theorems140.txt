@@ -1,4 +1,3 @@
-
 {
     "theorems":[
 {
@@ -30,7 +29,7 @@
             "disp": ""
         },
         {
-            "text": ""if edges > nodes**2/4 then {nosolve edgeCliqueCover <= ((1/2)*nodes*(nodes-1) - edges) + (1 + sqrt(1 + 4*((1/2)*nodes*(nodes-1) - edges)))};",
+            "text": "if edges > nodes**2/4 then {nosolve edgeCliqueCover <= ((1/2)*nodes*(nodes-1) - edges) + (1 + sqrt(1 + 4*((1/2)*nodes*(nodes-1) - edges)))};",
             "name": "Theorem",
             "idnum": 122,
             "disp": ""
@@ -66,7 +65,7 @@
             "disp": ""
         },
         {
-            "text": "if nodes >= 2*edgeInd+1 and (maxdeg <= 2*edgeInd and nodes <= 2*edgeInd+ floor(edgeInd/floor((maxdeg+1)/2)) and odd maxdeg) then {edges <= min(nodes*maxdeg/2, edgeInd*maxdeg + floor(2*(nodes-edgeInd)/(maxdeg+3))*(maxdeg-1)/2)} else if nodes >= 2*edgeInd+1 and (maxdeg <= 2*edgeInd and nodes <= 2*edgeInd+ floor(edgeInd/floor((maxdeg+1)/2)) and even maxdeg) then {edges <= nodes*maxdeg/2}; if nodes >= 2*edgeInd and (maxdeg <= 2*edgeInd and nodes <= 2*edgeInd+ floor(edgeInd/floor((maxdeg+1)/2))) then {edges <= edgeInd*maxdeg + floor(edgeInd*floor((maxdeg+1)/2))*floor(maxdeg/2)}; if nodes >= 2*edgeInd and maxdeg >= 2*edgeInd+1 and nodes >= edgeInd + maxdeg then {edges <= edgeInd*maxdeg} else if nodes >= 2*edgeInd and maxdeg >= 2*edgeInd+1 and nodes < edgeInd + maxdeg then {edges <= max(edgeInd*(2*edgeInd+1), floor(edgeInd*(nodes + maxdeg - edgeInd)/2))};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 128,
             "disp": ""
