@@ -71,7 +71,7 @@ diameter >= (maxb(edges)+1.0)/(maxb(edges)-(minb(nodes))+2.0) };",
             "disp": ""
         },
         {
-            "text": "if connected and not complete then { nodeInd >= (nodes**3 + 3*nodes + 1)/(nodes*(2*edges+nodes)) };",
+            "text": "if connected and not complete then { _P is minb(nodes), nodeInd >= (_P**3 + 3*_P + 1)/(_P*(2*edges+_P)) };",
             "name": "Theorem",
             "idnum": 170,
             "disp": ""
