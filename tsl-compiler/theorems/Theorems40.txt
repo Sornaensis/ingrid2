@@ -2,7 +2,10 @@
 {
     "theorems":[
 {
-            "text": "genus <= ((nodes-3)*(nodes-4)+11)/12;",
+            "text": "if nodes < 5 then 
+            {
+                genus <= ((nodes-3)*(nodes-4)+11)/12
+            };",
             "name": "Theorem",
             "idnum": 21,
             "disp": ""
