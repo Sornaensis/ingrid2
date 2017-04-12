@@ -95,7 +95,10 @@ diameter >= (maxb(edges)+1.0)/(maxb(edges)-(minb(nodes))+2.0) };",
             "disp": ""
         },
         {
-            "text": "nodeInd >= (nodes + 2*maxdeg + 1 - maxClique - mindeg)/(maxdeg + 1);",
+            "text": "
+_maxdeg is maxb(maxdeg);
+nodeInd >= (nodes + 2*_maxdeg + 1 - maxClique - mindeg)/(_maxdeg + 1);
+maxdeg >= (-(maxb(maxClique))-(maxb(mindeg))-(maxb(nodeInd))+minb(nodes)+1.0)/(maxb(nodeInd)-(2.0));",
             "name": "Theorem",
             "idnum": 174,
             "disp": ""
