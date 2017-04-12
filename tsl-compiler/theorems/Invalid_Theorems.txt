@@ -365,6 +365,30 @@
             "name": "Theorem",
             "idnum": 304,
             "disp": "Incorrect bounds"
+        },
+        {
+            "text": "if connected and maxdeg >= 3 then {nodes <= 1 + mindeg*((maxdeg-1)^diameter - 1)/(maxdeg-2)};",
+            "name": "Theorem",
+            "idnum": 265,
+            "disp": "incorrect bounds for mindeg.... "
+        },
+        {
+            "text": "if not forest then {bandwidth >= (girth - 1)*(arboricity - 2) + 2};",
+            "name": "Theorem",
+            "idnum": 268,
+            "disp": "wrong bounds used for arboricity when setting girth, same ab/(a+b) problem as all the others"
+        },
+        {
+            "text": "if not forest then {bandwidth >= (girth - 1)*nodes/(2*nodeInd) - girth + 2};",
+            "name": "Theorem",
+            "idnum": 269,
+            "disp": "wrong bounds"
+        },
+        {
+            "text": "if hamiltonian then {nodes >= (maxdeg - 1)*(girth - 2) + 2};",
+            "name": "Theorem",
+            "idnum": 274,
+            "disp": "more division problem"
         }
         ]
 }

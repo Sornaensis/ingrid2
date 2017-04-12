@@ -32,7 +32,7 @@
             "disp": ""
         },
         {
-            "text": "if diameter >= 2 and maxdeg >= 3 then {maxdeg >= ceil((nodes-1)/mindeg)**(1/(diameter-1))};",
+            "text": "if diameter >= 2 and maxdeg >= 3 then {maxdeg >= ceil((nodes-2)/(mindeg+1))**(1/(diameter-1))};",
             "name": "Theorem",
             "idnum": 266,
             "disp": ""
@@ -56,7 +56,7 @@
             "disp": ""
         },
         {
-            "text": "if not forest then {domination <= nodes - floor(2*circumference/3)};",
+            "text": "if not forest then {domination <= nodes - (2*circumference/3)};",
             "name": "Theorem",
             "idnum": 270,
             "disp": ""
@@ -74,13 +74,13 @@
             "disp": ""
         },
         {
-            "text": "if tree then {radius == floor((diameter+1)/2)};",
+            "text": "if tree then {radius == ((diameter+1)/2)};",
             "name": "Theorem",
             "idnum": 273,
             "disp": ""
         },
         {
-            "text": "if Hamiltonian then {nodes >= (maxdeg - 1)*(girth - 2) + 2};",
+            "text": "if hamiltonian then {nodes >= (maxdeg - 1)*(girth - 2) + 2};",
             "name": "Theorem",
             "idnum": 274,
             "disp": ""
