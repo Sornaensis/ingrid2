@@ -1,12 +1,6 @@
 {
     "theorems":[
         {
-            "text": "if connected and radius <= min(2,nodes/2) then { edges <= (1/2)*nodes*(nodes-radius) } else if connected and radius >= 3 and radius <= nodes/2 then { edges <= (1/2)*(nodes**2+4*radius*nodes+5*nodes+4*radius**2-6*radius) };",
-            "name": "Theorem",
-            "idnum": 30,
-            "disp": ""
-        },
-        {
             "text": "null;",
             "name": "Theorem",
             "idnum": 67,
