@@ -4209,9 +4209,9 @@ class Theorem130(Theorem):
         return
 class Theorem131(Theorem):
     def __init__(self):
-        super(Theorem131, self).__init__(131, "_k is maximum(4.0, maxb(maxClique)+1.0);\nchromaticNum <= maxb(maxdeg)-(1.0)+(maxb(maxdeg)+1.0)/_k;\nmaxdeg >= (_k*minb(chromaticNum)-(1.0))/(_k-(1.0))-(1.0);\n", "")
+        super(Theorem131, self).__init__(131, "_k is maximum(4.0, maxb(maxClique)+1.0);\n_z is (maxb(maxdeg)+1.0)/_k;\nchromaticNum <= maxb(maxdeg)+1.0-(_z);\nmaxdeg >= (_k*minb(chromaticNum)-(1.0))/(_k-(1.0))-(1.0);\n", "")
     def involves(self, str_invar):
-        return str_invar in ["maxClique","chromaticNum","maxdeg"]
+        return str_invar in ["maxClique","maxdeg","chromaticNum"]
     def run(self):
         get = self.get
         set = self.set
@@ -4223,8 +4223,10 @@ class Theorem131(Theorem):
         if maxb("maxClique") != 'undt':
             _k = maximum(4.0, maxb("maxClique")+1.0)
         if maxb("maxdeg") != 'undt':
+            _z = (maxb("maxdeg")+1.0)/_k
+        if maxb("maxdeg") != 'undt':
             try:
-                set("chromaticNum",  maxb("maxdeg")-(1.0)+(maxb("maxdeg")+1.0)/_k, ind='Max')
+                set("chromaticNum",  maxb("maxdeg")+1.0-(_z), ind='Max')
             except:
                 pass
         if minb("chromaticNum") != 'undt':
@@ -4233,7 +4235,6 @@ class Theorem131(Theorem):
             except:
                 pass
         return
-
 class Theorem132(Theorem):
     def __init__(self):
         super(Theorem132, self).__init__(132, "_P is maxb(nodes);\nif isset nodes then \n{\n    if istrue congruent(nodes, 3.0, 4.0) then \n    {\n        mindeg <= (_P-(3.0))*(_P+1.0)/(4.0*(_P-(1.0)-(maxdeg)))\n    }\n    else  \n    {\n        mindeg <= (_P-(1.0))**2.0/(4.0*(_P-(1.0)-(maxdeg)))\n    }\n};\n", "")
