@@ -1,7 +1,6 @@
 {
     "theorems":[
         {
-<<<<<<< HEAD
             "text": "if connected and radius <= min(2,nodes/2) then { edges <= (1/2)*nodes*(nodes-radius) } else if connected and radius >= 3 and radius <= nodes/2 then { edges <= (1/2)*(nodes**2+4*radius*nodes+5*nodes+4*radius**2-6*radius) };",
             "name": "Theorem",
             "idnum": 30,
@@ -25,25 +24,17 @@
             "idnum": 56,
             "disp": "Simple bounds issue"
         },
-=======
             "text": "null;",
             "name": "Theorem",
             "idnum": 67,
             "disp": ""
         },
->>>>>>> 1d10782856903f7e02e04bc9fc1e075bc417729e
         {
             "text": "maxClique >= nodes/(nodes-spectralRadius)-1/3;",
             "name": "Theorem",
             "idnum": 58,
             "disp": "Bounds incorrect"
         },
-	{
-            "text": "if defined girth and (nodeConnec > 0 or mindeg > 1) then { genus >= (1/2)*edges*(1-2/girth)-(nodes/2)+numOfComponents };",
-            "name": "Theorem",
-            "idnum": 60,
-            "disp": "Simple bounds issue"
-	},
         {
             "text": "if regular then { nodeInd <= nodes/2 + (maxClique**2 + 3*maxClique - 2)/(2*mindeg) };",
             "name": "Theorem",
