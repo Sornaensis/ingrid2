@@ -2,7 +2,10 @@
 {
     "theorems":[
 {
-            "text": "genus <= ((nodes-3)*(nodes-4)+11)/12;",
+            "text": "if nodes < 5 then 
+            {
+                genus <= ((nodes-3)*(nodes-4)+11)/12
+            };",
             "name": "Theorem",
             "idnum": 21,
             "disp": ""
@@ -32,7 +35,7 @@
             "disp": ""
         },
         {
-            "text": "edges <= (1/2)*(nodes - 1)*(nodes-2)+nodes/domination - 1;",
+            "text": "edges <= (1.0/2.0)*(nodes-(1.0))*(nodes-(2.0))+nodes/domination-(1.0);",
             "name": "Theorem",
             "idnum": 26,
             "disp": ""

@@ -1,8 +1,21 @@
-
 {
     "theorems":[
 {
-            "text": "if genus > 2 and girth >= 4 and mindeg >= (5 + (16*genus + 1)**(1/2))/2 and mindeg == (3 + (16*genus + 9)**(1/2))/2 then { regular, hamiltonian, nodes == 2*mindeg+2 } else if genus > 2 and girth >= 4 and mindeg >= (5 + (16*genus + 1)**(1/2))/2 then { regular, hamiltonian, nodes == 2*mindeg }; ",
+            "text": "
+if genus > 2 and girth >= 4 then
+{
+    if mindeg >= (5 + (16*genus + 1)**(1/2))/2 and mindeg == (3 + (16*genus + 9)**(1/2))/2 then 
+    { 
+        regular, 
+        hamiltonian, 
+        nodes == 2*mindeg+2 
+    } else if mindeg >= (5 + (16*genus + 1)**(1/2))/2 then 
+    { 
+        regular, 
+        hamiltonian, 
+        nodes == 2*mindeg 
+    }
+}; ",
             "name": "Theorem",
             "idnum": 161,
             "disp": ""
@@ -32,7 +45,9 @@
             "disp": ""
         },
         {
-            "text": "if diameter > 1 and nodeConnec > 1 then { edges >= (nodes*diameter-2*diameter + 1)/(diameter - 1) };",
+            "text": "
+            if diameter > 1 and nodeConnec > 1 and maxb(nodeConnec) > 1 then { edges >= (nodes*maxb(diameter)-2*maxb(diameter) + 1)/(maxb(diameter) - 1),
+diameter >= (maxb(edges)+1.0)/(maxb(edges)-(minb(nodes))+2.0) };",
             "name": "Theorem",
             "idnum": 166,
             "disp": ""
@@ -56,7 +71,7 @@
             "disp": ""
         },
         {
-            "text": "if connected and not complete then { nodeInd >= (nodes**3 + 3*nodes + 1)/(nodes*(2*edges+nodes)) };",
+            "text": "if connected and not complete then { _P is minb(nodes), nodeInd >= (_P**3 + 3*_P + 1)/(_P*(2*edges+_P)) };",
             "name": "Theorem",
             "idnum": 170,
             "disp": ""
@@ -80,13 +95,18 @@
             "disp": ""
         },
         {
-            "text": "nodeInd >= (nodes + 2*maxdeg + 1 - maxClique - mindeg)/(maxdeg + 1);",
+            "text": "
+_maxdeg is maxb(maxdeg);
+nodeInd >= (nodes + 2*_maxdeg + 1 - maxClique - mindeg)/(_maxdeg + 1);
+maxdeg >= (-(maxb(maxClique))-(maxb(mindeg))-(maxb(nodeInd))+minb(nodes)+1.0)/(maxb(nodeInd)-(2.0));",
             "name": "Theorem",
             "idnum": 174,
             "disp": ""
         },
         {
-            "text": "bandwidth >= (1/2)*(2*nodes-1-sqrt((2*nodes-1)**2-8*edges));",
+            "text": "
+_P is maxb(nodes);
+bandwidth >= (1/2)*(2*_P-1-sqrt((2*_P-1)**2-8*edges));",
             "name": "Theorem",
             "idnum": 175,
             "disp": ""
@@ -104,19 +124,47 @@
             "disp": "Replaced by r280"
         },
         {
-            "text": "nodeCliqueCover <= nodes - mindeg - (nodes - mindeg)/max(4,nodeInd + 1);",
+            "text": "
+_k is maximum(4,maxb(nodeInd) + 1);
+nodeCliqueCover <= nodes - mindeg - (nodes - mindeg)/_k : useMinFor(mindeg);",
             "name": "Theorem",
             "idnum": 178,
             "disp": ""
         },
         {
-            "text": "if domination >= 2 then { edges <= (1/2)*(nodes-nodeInd)*(nodes+nodeInd-2*domination + 2) };",
+            "text": "
+if minb(domination) >= 2.0 then 
+{
+    edges <= (1.0/2.0)*(maxb(nodes)-(minb(nodeInd)))*(maxb(nodes)+minb(nodeInd)-(2.0*minb(domination))+2.0),
+    nodes >= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*minb(nodeInd))-(2.0*minb(domination))+2.0*minb(edges)+minb(nodeInd)**2.0+2.0*minb(nodeInd)+1.0)-(1.0),
+    nodeInd <= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*minb(nodes))-(2.0*minb(domination))-(2.0*minb(edges))+minb(nodes)**2.0+2.0*minb(nodes)+1.0)-(1.0),
+    _k is maxb(nodes)-2*minb(edges),
+    if minb(nodeInd) > _k then
+    {
+        _k is minb(nodeInd)
+    } else if maxb(nodeInd) < _k then
+    {
+        _k is maxb(nodeInd)
+    },    
+    domination <= ((maxb(nodes)+_k+2)*(maxb(nodes)-_k)-2*minb(edges))/(2*(maxb(nodes)-_k))
+};",
             "name": "Theorem",
             "idnum": 179,
             "disp": ""
         },
         {
-            "text": "if regular and maxdeg >= nodes / 2 and maxdeg <= nodes - 2 and ((odd nodes and even maxdeg) or (odd maxdeg and even nodes)) then { chromaticNum <= min(maxdeg, 3*nodes/5) } else if regular and maxdeg >= nodes/2 and maxdeg <= nodes - 2 then { chromaticNum <= min(maxdeg, (2*(nodes-maxdeg)-3)*nodes/(3*(nodes-maxdeg)-4)) };",
+            "text": "
+            "text": "
+if regular and nodes > 5 then 
+{
+    if maxdeg >= nodes / 2 and maxdeg <= nodes - 2 and ((odd nodes and even maxdeg) or (odd maxdeg and even nodes)) then 
+    { 
+        chromaticNum <= minimum(maxdeg, 3*nodes/5) 
+    } else if maxdeg >= nodes/2 and maxdeg <= nodes - 2 then 
+    { 
+        chromaticNum <= minimum(maxdeg, (2*(nodes-maxdeg)-3)*nodes/(3*(nodes-maxdeg)-4)) 
+    }
+};",
             "name": "Theorem",
             "idnum": 180,
             "disp": ""

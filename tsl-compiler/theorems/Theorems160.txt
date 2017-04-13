@@ -2,7 +2,8 @@
 {
     "theorems":[
 {
-            "text": "circumference >= 2*edges/(nodes-1);",
+            "text": "circumference >= 2*edges/(maxb(nodes)-1);
+nodes >= (maxb(circumference)+2.0*minb(edges))/maxb(circumference);",
             "name": "Theorem",
             "idnum": 141,
             "disp": ""
@@ -38,7 +39,19 @@
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 and (maxdeg >= nodes-2 or nodes <= 4) then {chromaticNum <= 2} else if maxClique == 2 and nodes >= 5 and nodes <= 10 then {chromaticNum <= 3} else if maxClique == 2 then {chromaticNum <= (nodes - maxdeg + 10)/4};",
+            "text": "if maxClique == 2 then 
+{
+    if maxdeg >= nodes-2 or nodes <= 4 then 
+    {
+        chromaticNum <= 2
+    } else if nodes >= 5 and nodes <= 10 then 
+    {
+        chromaticNum <= 3
+    } else
+    {
+        chromaticNum <= (nodes - maxdeg + 10)/4
+    }
+};",
             "name": "Theorem",
             "idnum": 147,
             "disp": ""
@@ -68,7 +81,14 @@
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 and nodeInd >= 2*nodes/5 and nodeInd <= nodes/2 then { edges <= nodeInd**2 + 4*(nodes/2 - nodeInd)**2 };",
+            "text": 
+            if (minb(maxClique) >= 2.0 and maxb(maxClique) <= 2.0) and minb(nodeInd) >= 2.0*maxb(nodes)/5.0 and maxb(nodeInd) <= minb(nodes)/2.0 then 
+{
+    edges <= maxb(nodeInd)**2.0+4.0*(maxb(nodes)/2.0-(maxb(nodeInd)))**2.0,
+    nodeInd >= 2.0*maxb(nodes)/5.0+sqrt(5.0*minb(edges)-(maxb(nodes)**2.0))/5.0,
+    nodes >= 2.0*maxb(nodeInd)+sqrt(minb(edges)-(maxb(nodeInd)**2.0))
+};
+",
             "name": "Theorem",
             "idnum": 152,
             "disp": ""
@@ -104,19 +124,44 @@
             "disp": ""
         },
         {
-            "text": "if connected and edges <= nodes + 3 then { genus <= 0 } else if connected and edges <= nodes + 6 then { genus <= 1 } else if connected and edges <= nodes + 9 then { genus <= 2 };",
+            "text": "if connected then
+{
+    if edges <= nodes + 3 then 
+    { 
+        genus <= 0 
+    } else if edges <= nodes + 6 then 
+    { 
+        genus <= 1 
+    } else if edges <= nodes + 9 then 
+    { 
+        genus <= 2 
+    }
+};",
             "name": "Theorem",
             "idnum": 158,
             "disp": ""
         },
         {
-            "text": "nodeInd >= (nodes - 1)/(maxdeg + 1) + 1/(mindeg + 1);",
+            "text": "
+nodeInd >= (nodes-(1.0))/(maxb(maxdeg)+1.0)+1.0/(maxb(mindeg)+1.0);
+maxdeg >= (-(maxb(mindeg)*maxb(nodeInd))+maxb(mindeg)*minb(nodes)-(maxb(mindeg))-(maxb(nodeInd))+minb(nodes))/(maxb(mindeg)*maxb(nodeInd)+maxb(nodeInd)-(1.0));
+mindeg >= (-(maxb(maxdeg)*maxb(nodeInd))+maxb(maxdeg)-(maxb(nodeInd))+minb(nodes))/(maxb(maxdeg)*maxb(nodeInd)+maxb(nodeInd)-(minb(nodes))+1.0);",
             "name": "Theorem",
             "idnum": 159,
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 and maxdeg >= 3 then { nodeInd >= nodes/(maxdeg - (1/5)) } else if maxClique == 2 and nodes >= 3 and connected and (not cycle or (cycle and isset nodes and even nodes)) and (edges >= nodes or maxdeg > 2 or (isset nodes and odd nodes)) then { nodeInd >= nodes/maxdeg - 1/(maxdeg+1) + 1/(mindeg + 1) };",
+            "text": "if maxClique == 2 then 
+{ 
+   if maxdeg >= 3 then 
+   {
+        nodeInd >= nodes/(maxb(maxdeg) - (1/5)),
+        maxdeg >= (maxb(nodeInd)/5.0+minb(nodes))/maxb(nodeInd)
+    } else if nodes >= 3 and connected and (not cycle or (cycle and isset nodes and even nodes)) and (edges >= nodes or maxdeg > 2 or (isset nodes and odd nodes)) then 
+    { 
+        nodeInd >= nodes/maxb(maxdeg) - 1/(maxb(maxdeg)+1) + 1/(mindeg + 1) 
+    }
+};",
             "name": "Theorem",
             "idnum": 160,
             "disp": ""

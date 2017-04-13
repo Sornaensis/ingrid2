@@ -1,17 +1,35 @@
-
 {
     "theorems":[
 {
             "text": "
-            if exists diameter then { 
-                chromaticNum <= nodes - nodeConnec*(diameter - 3) - 2
+            if exists diameter then 
+            {
+                _nodeConnec is minb(nodeConnec),
+                if minb(diameter) < 3 then
+                {
+                    _nodeConnec is maxb(nodeConnec)
+                },
+                chromaticNum <= maxb(nodes)-(_nodeConnec*(minb(diameter)-(3.0)))-(2.0),
+                nodes >= minb(chromaticNum)+minb(diameter)*_nodeConnec-(3.0*_nodeConnec)+2.0,
+                if minb(diameter) > 3 then
+                {
+                    nodeConnec <= (-(minb(chromaticNum))+maxb(nodes)-(2.0))/(minb(diameter)-(3.0))
+                }
+                else if maxb(diameter) < 3 then
+                {
+                    nodeConnec >= (minb(chromaticNum)-maxb(nodes)+1)/(3.0-minb(diameter))+1
+                },
+                if minb(nodeConnec) > 0 then
+                {
+                    diameter <= (-(minb(chromaticNum))+3.0*maxb(nodeConnec)+maxb(nodes)-(2.0))/maxb(nodeConnec)
+                }
             };",
             "name": "Theorem",
             "idnum": 121,
             "disp": ""
         },
         {
-            "text": "if edges >= nodes**2/4 then {edgeCliqueCover <= ((1/2)*nodes*(nodes-1) - edges) + (1 + sqrt(1 + 4*((1/2)*nodes*(nodes-1) - edges)))};",
+            "text": "if edges > nodes**2/4 then {nosolve edgeCliqueCover <= ((1/2)*nodes*(nodes-1) - edges) + (1 + sqrt(1 + 4*((1/2)*nodes*(nodes-1) - edges)))};",
             "name": "Theorem",
             "idnum": 122,
             "disp": ""
@@ -47,39 +65,48 @@
             "disp": ""
         },
         {
-            "text": "if nodes >= 2*edgeInd+1 and (maxdeg <= 2*edgeInd and nodes <= 2*edgeInd+ floor(edgeInd/floor((maxdeg+1)/2)) and odd maxdeg) then {edges <= min(nodes*maxdeg/2, edgeInd*maxdeg + floor(2*(nodes-edgeInd)/(maxdeg+3))*(maxdeg-1)/2)} else if nodes >= 2*edgeInd+1 and (maxdeg <= 2*edgeInd and nodes <= 2*edgeInd+ floor(edgeInd/floor((maxdeg+1)/2)) and even maxdeg) then {edges <= nodes*maxdeg/2}; if nodes >= 2*edgeInd and (maxdeg <= 2*edgeInd and nodes <= 2*edgeInd+ floor(edgeInd/floor((maxdeg+1)/2))) then {edges <= edgeInd*maxdeg + floor(edgeInd*floor((maxdeg+1)/2))*floor(maxdeg/2)}; if nodes >= 2*edgeInd and maxdeg >= 2*edgeInd+1 and nodes >= edgeInd + maxdeg then {edges <= edgeInd*maxdeg} else if nodes >= 2*edgeInd and maxdeg >= 2*edgeInd+1 and nodes < edgeInd + maxdeg then {edges <= max(edgeInd*(2*edgeInd+1), floor(edgeInd*(nodes + maxdeg - edgeInd)/2))};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 128,
             "disp": ""
         },
         {
-            "text": "if defined girth and girth > 3 then {mindeg <= (nodes - diameter + 3*(diameter/3 + 1) -3)/ (diameter/3+1)};",
+            "text": "if defined diameter and diameter > 3 then {
+    mindeg <= (nodes - minb(diameter) + 3*(minb(diameter)/3 + 1) -3)/ (minb(diameter)/3+1)
+};",
             "name": "Theorem",
             "idnum": 129,
             "disp": ""
         },
         {
-            "text": "if diameter == 2 and nodes >= maxdeg * maxdeg / 8 then {edges >= nodes *(nodes - 1)/(2 * maxdeg)} else if diameter == 2 and nodes < maxdeg * maxdeg /8 then {edges >= maxdeg * nodes * (nodes - 1)/ (maxdeg * maxdeg + 8*nodes)};",
+            "text": "if diameter == 2 and nodes >= maxdeg * maxdeg / 8 then 
+{
+    edges >= nodes *(nodes - 1)/(2 * maxdeg)
+} else if diameter == 2 and nodes < maxdeg * maxdeg /8 then 
+{
+    nosolve edges >= maxdeg * nodes * (nodes - 1)/ (maxdeg * maxdeg + 8*nodes)
+};",
             "name": "Theorem",
             "idnum": 130,
             "disp": ""
         },
         {
-            "text": "chromaticNum <= maxdeg - 1 + (maxdeg+1)/max(4, maxClique + 1);",
+            "text": "chromaticNum <= maxdeg - 1 + (maxdeg+1)/maximum(4, maxb(maxClique) + 1);",
             "name": "Theorem",
             "idnum": 131,
             "disp": ""
         },
         {
             "text": "
+            _P is maxb(nodes);
             if isset nodes then {
                 if istrue congruent(nodes, 3, 4) then 
                 {
-                    mindeg <= (nodes-3)*(nodes+1)/(4*(nodes-1-maxdeg))
+                    mindeg <= (_P-3)*(_P+1)/(4*(_P-1-maxdeg))
                 } 
                 else 
                 {
-                    mindeg <= (nodes-1)**2 / (4*(nodes-1-maxdeg))
+                    mindeg <= (_P-1)**2 / (4*(_P-1-maxdeg))
                 }
             };",
             "name": "Theorem",
@@ -87,7 +114,10 @@
             "disp": ""
         },
         {
-            "text": "let z = 1 + floor(2*edges/nodes); let k = ceil(nodes - 2*edges/z); nodeInd >= k + ceil((nodes - k*z)/(1+z));",
+            "text": "let z = 1 + floor(2*edges/nodes); let k = ceil(nodes - 2*edges/z); if isset edges and isset nodes then 
+{
+    nodeInd >= k + ceil((nodes - k*z)/(1+z)) : useMinFor(edges) : useMaxFor(nodes)
+};",
             "name": "Theorem",
             "idnum": 133,
             "disp": ""
@@ -105,13 +135,14 @@
             "disp": ""
         },
         {
-            "text": "if maxdeg <= 2*edgeInd and odd maxdeg then {edges <= edgeInd*maxdeg + (maxdeg-1)/2 * 2*edgeInd/(maxdeg+1)};",
+            "text": "if maxdeg <= 2*edgeInd and odd maxdeg then {edges <= edgeInd*maxb(maxdeg) + (maxb(maxdeg)-1)/2 * 2*edgeInd/(maxb(maxdeg)+1)};",
             "name": "Theorem",
             "idnum": 136,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "edges <= nodes*(nodes-1)/2;
+                     edges >= (nodes+1)/2;",
             "name": "Theorem", 
             "idnum": 137,
             "disp": ""
@@ -129,7 +160,14 @@
             "disp": ""
         },
         {
-            "text": "if edges >= 4*nodes then {crossing >= edges**3/(100*nodes**2) + 1};",
+            "text": "if minb(edges) >= 4.0*maxb(nodes) then 
+{
+    crossing >= minb(edges)**3.0/(100.0*maxb(nodes)**2.0)+1.0,
+    edges <= (100.0*maxb(crossing)*maxb(nodes)**2.0-(100.0*maxb(nodes)**2.0))**(1.0/3.0),
+    nodes >= sqrt(minb(edges)**3.0/(maxb(crossing)-(1.0)))/10.0
+};
+
+",
             "name": "Theorem",
             "idnum": 140,
             "disp": ""
