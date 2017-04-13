@@ -26,13 +26,18 @@
             "disp": ""
         },
         {
-            "text": "edgeCliqueCover <= nodeCliqueCover + nodes*(maxdeg + 1 - nodes/nodeCliqueCover)/2;",
+            "text": "edgeCliqueCover <= maxb(nodeCliqueCover)+maxb(nodes)*(maxb(maxdeg)+1.0-(maxb(nodes)/maxb(nodeCliqueCover)))/2.0;
+",
             "name": "Theorem",
             "idnum": 285,
             "disp": ""
         },
         {
-            "text": "edges >= (maxdeg + (chromaticNum - 1)**2 + (nodes -chromaticNum)*mindeg)/2;",
+            "text": "edges >= (minb(maxdeg)+(minb(chromaticNum)-(1.0))**2.0+(minb(nodes)-(minb(chromaticNum)))*minb(mindeg))/2.0;
+maxdeg <= maxb(chromaticNum)*maxb(mindeg)+2.0*maxb(edges)-(maxb(mindeg)*minb(nodes))-((maxb(chromaticNum)-(1.0))**2.0);
+nodes <= (maxb(chromaticNum)*minb(mindeg)+2.0*maxb(edges)-(minb(maxdeg))-((maxb(chromaticNum)-(1.0))**2.0))/minb(mindeg);
+mindeg <= (-(2.0*maxb(edges))+minb(maxdeg)+(maxb(chromaticNum)-(1.0))**2.0)/(maxb(chromaticNum)-(maxb(nodes)));
+",
             "name": "Theorem",
             "idnum": 286,
             "disp": ""

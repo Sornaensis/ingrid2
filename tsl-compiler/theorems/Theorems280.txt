@@ -14,7 +14,7 @@
             "disp": ""
         },
         {
-            "text": "maxdeg >= (nodes - 1)^(1/radius);",
+            "text": "nosolve maxdeg >= (nodes - 1)^(1/radius);",
             "name": "Theorem",
             "idnum": 263,
             "disp": ""
@@ -26,7 +26,12 @@
             "disp": ""
         },
         {
-            "text": "if connected and maxdeg >= 3 then {nodes <= 1 + mindeg*((maxdeg-1)^diameter - 1)/(maxdeg-2)};",
+            "text": if connected and minb(maxdeg) >= 3.0 then 
+{
+    nodes <= 1.0+maxb(mindeg)*((maxb(maxdeg)-(1.0))**maxb(diameter)-(1.0))/(maxb(maxdeg)-(2.0)),
+    mindeg >= (maxb(maxdeg)*minb(nodes)-(maxb(maxdeg))-(2.0*minb(nodes))+2.0)/((maxb(maxdeg)-(1.0))**maxb(diameter)-(1.0))
+};
+",
             "name": "Theorem",
             "idnum": 265,
             "disp": ""
@@ -44,13 +49,25 @@
             "disp": ""
         },
         {
-            "text": "if not forest then {bandwidth >= (girth - 1)*(arboricity - 2) + 2};",
+            "text": "if not forest then 
+{
+    bandwidth >= (minb(girth)-(1.0))*(minb(arboricity)-(2.0))+2.0,
+    girth <= (minb(arboricity)+maxb(bandwidth)-(4.0))/(minb(arboricity)-(2.0)),
+    arboricity <= (maxb(bandwidth)+2.0*minb(girth)-(4.0))/(minb(girth)-(1.0))
+};",
             "name": "Theorem",
             "idnum": 268,
             "disp": ""
         },
         {
-            "text": "if not forest then {bandwidth >= (girth - 1)*nodes/(2*nodeInd) - girth + 2};",
+            "text": "if not forest then 
+{
+    bandwidth >= (minb(girth)-(1.0))*minb(nodes)/(2.0*maxb(nodeInd))-(minb(girth))+2.0,
+    girth <= (-(2.0*maxb(bandwidth)*maxb(nodeInd))+4.0*maxb(nodeInd)-(minb(nodes)))/(2.0*maxb(nodeInd)-(minb(nodes))),
+    nodes <= 2.0*maxb(nodeInd)*(maxb(bandwidth)+minb(girth)-(2.0))/(minb(girth)-(1.0)),
+    nodeInd >= minb(nodes)*(minb(girth)-(1.0))/(2.0*(maxb(bandwidth)+minb(girth)-(2.0)))
+};
+",
             "name": "Theorem",
             "idnum": 269,
             "disp": ""
@@ -80,19 +97,32 @@
             "disp": ""
         },
         {
-            "text": "if hamiltonian then {nodes >= (maxdeg - 1)*(girth - 2) + 2};",
+            "text": "if hamiltonian then 
+{
+    nodes >= (minb(maxdeg)-(1.0))*(minb(girth)-(2.0))+2.0,
+    maxdeg <= (minb(girth)+maxb(nodes)-(4.0))/(minb(girth)-(2.0)),
+    girth <= (2.0*minb(maxdeg)+maxb(nodes)-(4.0))/(minb(maxdeg)-(1.0))
+};",
             "name": "Theorem",
             "idnum": 274,
             "disp": ""
         },
         {
-            "text": "nodeInd >= maxdeg/(chromaticNum-1);",
+            "text": "nodeInd >= minb(maxdeg)/(maxb(chromaticNum)-(1.0));
+maxdeg <= maxb(nodeInd)*(maxb(chromaticNum)-(1.0));
+chromaticNum >= (minb(maxdeg)+maxb(nodeInd))/maxb(nodeInd);
+
+",
             "name": "Theorem",
             "idnum": 275,
             "disp": ""
         },
         {
-            "text": "maxClique >= (nodes - mindeg - 1)/(nodeCliqueCover-1);",
+            "text": "maxClique >= (minb(nodes)-(maxb(mindeg))-(1.0))/(maxb(nodeCliqueCover)-(1.0));
+nodes <= maxb(maxClique)*maxb(nodeCliqueCover)-(maxb(maxClique))+maxb(mindeg)+1.0;
+mindeg >= -(maxb(maxClique)*maxb(nodeCliqueCover))+maxb(maxClique)+minb(nodes)-(1.0);
+nodeCliqueCover >= (maxb(maxClique)-(maxb(mindeg))+minb(nodes)-(1.0))/maxb(maxClique);
+",
             "name": "Theorem",
             "idnum": 276,
             "disp": ""

@@ -38,13 +38,22 @@
             "disp": ""
         },
         {
-            "text": "nodeInd <= nodes /(1+mindeg/maxdeg);",
+            "text": "nodeInd <= maxb(nodes)/(1.0+minb(mindeg)/maxb(maxdeg));
+nodes >= minb(nodeInd)*(maxb(maxdeg)+minb(mindeg))/maxb(maxdeg);
+mindeg <= maxb(maxdeg)*(-(minb(nodeInd))+maxb(nodes))/minb(nodeInd);
+maxdeg >= -(minb(mindeg)*minb(nodeInd)/(minb(nodeInd)-(maxb(nodes))));
+
+",
             "name": "Theorem",
             "idnum": 247,
             "disp": ""
         },
         {
-            "text": "nodeCover >= nodes/(1+maxdeg/mindeg);",
+            "text": "nodeCover >= minb(nodes)/(1.0+maxb(maxdeg)/minb(mindeg));
+nodes <= maxb(nodeCover)*(maxb(maxdeg)+minb(mindeg))/minb(mindeg);
+maxdeg >= minb(mindeg)*(-(maxb(nodeCover))+minb(nodes))/maxb(nodeCover);
+mindeg <= -(maxb(maxdeg)*maxb(nodeCover)/(maxb(nodeCover)-(minb(nodes))));
+",
             "name": "Theorem",
             "idnum": 248,
             "disp": ""
@@ -56,7 +65,9 @@
             "disp": ""
         },
         {
-            "text": "nodeCover <= nodes/(1+1/bandwidth);",
+            "text": "nodeCover <= (nodes)/(1.0+1.0/maxb(bandwidth));
+bandwidth >= -(minb(nodeCover)/(minb(nodeCover)-(maxb(nodes))));
+",
             "name": "Theorem",
             "idnum": 250,
             "disp": ""
@@ -126,18 +137,19 @@
             "disp": ""
         },
         {
-            "text": "if (even diameter and nodeConnec >= 2) then
+            "text": "
+if (even diameter and minb(nodeConnec) >= 2.0) then 
 {
-    _k is 2
+    _k is 2.0
 }
-else if (odd diameter or nodeConnec == 1) then 
+else  
 {
-    _k is 1
+    _k is 1.0
 };
-
-if diam >= 3  then
+if minb(diam) >= 3.0 then 
 {
-    edgeInd >= nodeConnec * (diameter - 1)/2 + _k
+    edgeInd >= (nodeConnec)*(minb(diameter)-(1.0))/2.0+_k,
+    diameter <= (-(2.0*_k)+2.0*maxb(edgeInd)+minb(nodeConnec))/minb(nodeConnec)
 };",
             "name": "Theorem",
             "idnum": 257,
@@ -156,7 +168,8 @@ if diam >= 3  then
             "disp": ""
         },
         {
-            "text": "let c = edges - nodes + numOfComponents; genus <= c/2-c/(4*log(c)/log(2));",
+            "text": "let c = edges - nodes + numOfComponents; 
+nosolve genus <= c/2-c/(4*log(c)/log(2));",
             "name": "Theorem",
             "idnum": 260,
             "disp": ""

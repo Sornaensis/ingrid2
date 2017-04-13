@@ -20,7 +20,14 @@
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 and nodes < 2*nodeCover and nodeCover <= 3*nodes/5 then {nodeCover <= (2*nodes-sqrt(5*edges - nodes**2))/5};",
+            "text": "if (minb(maxClique) >= 2.0 and maxb(maxClique) <= 2.0) and maxb(nodes) < 2.0*minb(nodeCover) and maxb(nodeCover) <= 3.0*minb(nodes)/5.0 then 
+{
+    nodeCover <= (2.0*maxb(nodes)-(sqrt(5.0*minb(edges)-(maxb(nodes)**2.0))))/5.0,
+    nodes >= 2.0*minb(nodeCover)+sqrt(minb(edges)-(minb(nodeCover)**2.0)),
+    edges <= minb(nodes)**2.0/5.0+(5.0*minb(nodeCover)-(2.0*minb(nodes)))**2.0/5.0
+};
+
+",
             "name": "Theorem",
             "idnum": 204,
             "disp": ""
@@ -38,7 +45,17 @@
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 and maxdeg >= 3 then {nodeCover <= nodes*(maxdeg-(6/5)/(maxdeg-(1/5)))} else if nodes>=3 and connected and not complete and not cycle or (cycle and isset nodes and even nodes) then {nodeCover <= nodes *(maxdeg - 1)/maxdeg + 1/(maxdeg+1) - 1/(mindeg+1)};",
+            "text": "if maxClique == 2 then 
+{
+    if maxdeg >= 3 then 
+    {
+        nodeCover <= nodes*(maxdeg-(6/5)/(maxdeg-(1/5)))
+    } 
+    else if nodes>=3 and connected and not complete and not cycle or (cycle and isset nodes and even nodes) then 
+    {
+        nosolve nodeCover <= nodes *(maxdeg - 1)/maxdeg + 1/(maxdeg+1) - 1/(mindeg+1)
+    }
+};",
             "name": "Theorem",
             "idnum": 207,
             "disp": ""
@@ -50,19 +67,32 @@
             "disp": ""
         },
         {
-            "text": "nodeCover <= nodes * (1-2/(maxdeg+maxClique+1));",
+            "text": "nodeCover <= maxb(nodes)*(1.0-(2.0/(maxb(maxdeg)+maxb(maxClique)+1.0)));
+nodes >= minb(nodeCover)*(maxb(maxClique)+minb(maxdeg)+1.0)/(maxb(maxClique)+minb(maxdeg)-(1.0));
+maxdeg >= (-(minb(maxClique)*minb(nodeCover))+minb(maxClique)*maxb(nodes)-(minb(nodeCover))-(maxb(nodes)))/(minb(nodeCover)-(maxb(nodes)));
+maxClique >= (-(maxb(maxdeg)*minb(nodeCover))+maxb(maxdeg)*minb(nodes)-(minb(nodeCover))-(minb(nodes)))/(minb(nodeCover)-(minb(nodes)));
+",
             "name": "Theorem",
             "idnum": 209,
             "disp": ""
         },
         {
-            "text": "nodeCover <= ((nodes-2)*maxdeg + maxClique + mindeg - 1)/(maxdeg+1);",
+            "text": "nodes >= (-(maxb(maxClique))+maxb(maxdeg)*(minb(nodeCover)+2.0)-(maxb(mindeg))+minb(nodeCover)+1.0)/maxb(maxdeg);
+maxdeg >= (maxb(maxClique)+minb(mindeg)-(minb(nodeCover))-(1.0))/(minb(nodeCover)-(minb(nodes))+2.0);
+nodeCover <= ((maxb(nodes)-(2.0))*maxb(maxdeg)+maxb(maxClique)+maxb(mindeg)-(1.0))/(maxb(maxdeg)+1.0);
+maxClique >= maxb(maxdeg)*minb(nodeCover)-(maxb(maxdeg)*maxb(nodes))+2.0*maxb(maxdeg)-(maxb(mindeg))+minb(nodeCover)+1.0;
+mindeg >= -(maxb(maxClique))+maxb(maxdeg)*minb(nodeCover)-(maxb(maxdeg)*maxb(nodes))+2.0*maxb(maxdeg)+minb(nodeCover)+1.0;
+",
             "name": "Theorem",
             "idnum": 210,
             "disp": ""
         },
         {
-            "text": "if nodeCover > nodes - nodeCliqueCover then {nodeCover <= nodes*maxdeg/(maxdeg+1) - (1/3)};",
+            "text": "if nodeCover > nodes - nodeCliqueCover then 
+{
+    nodeCover <= nodes*maxb(maxdeg)/(maxb(maxdeg)+1) - (1/3),
+    maxdeg >= -((3.0*minb(nodeCover)+1.0)/(3.0*minb(nodeCover)-(3.0*maxb(nodes))+1.0))
+};",
             "name": "Theorem",
             "idnum": 211,
             "disp": ""

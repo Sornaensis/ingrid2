@@ -138,71 +138,6 @@
             "idnum": 437,
             "disp": "We do not solve for mindeg"
         },
-        {
-            "text": "if maxClique == 2 and nodes < 2*nodeCover and nodeCover <= 3*nodes/5 then {nodeCover <= (2*nodes-sqrt(5*edges - nodes**2))/5};",
-            "name": "Theorem",
-            "idnum": 204,
-            "disp": "Incorrect bounds but only for edges"
-        },
-        {
-            "text": "if maxClique == 2 and maxdeg >= 3 then {nodeCover <= nodes*(maxdeg-(6/5)/(maxdeg-(1/5)))} else if nodes>=3 and connected and not complete and not cycle or (cycle and isset nodes and even nodes) then {nodeCover <= nodes *(maxdeg - 1)/maxdeg + 1/(maxdeg+1) - 1/(mindeg+1)};",
-            "name": "Theorem",
-            "idnum": 207,
-            "disp": "Written wrong and wrong bounds for maxdeg and nodes"
-        },
-        {
-            "text": "nodeCover <= nodes * (1-2/(maxdeg+maxClique+1));",
-            "name": "Theorem",
-            "idnum": 209,
-            "disp": "Wrong bounds"
-        },
-        {
-            "text": "nodeCover <= ((nodes-2)*maxdeg + maxClique + mindeg - 1)/(maxdeg+1);",
-            "name": "Theorem",
-            "idnum": 210,
-            "disp": ""
-        },
-        {
-            "text": "if nodeCover > nodes - nodeCliqueCover then {nodeCover <= nodes*maxdeg/(maxdeg+1) - (1/3)};",
-            "name": "Theorem",
-            "idnum": 211,
-            "disp": "wrong bounds for maxdeg"
-        },
-        {
-            "text": "nodeInd <= nodes /(1+mindeg/maxdeg);",
-            "name": "Theorem",
-            "idnum": 247,
-            "disp": "Incorrect bounds for mindeg when solving for maxdeg"
-        },
-        {
-            "text": "nodeCover >= nodes/(1+maxdeg/mindeg);",
-            "name": "Theorem",
-            "idnum": 248,
-            "disp": "wrong bound used for maxdeg when solving for mindeg."
-        },
-        {
-            "text": "nodeCover <= nodes/(1+1/bandwidth);",
-            "name": "Theorem",
-            "idnum": 250,
-            "disp": "another a/(1+a/b) == ab/(a+b) problem"
-        },
-        {
-            "text": "if (even diameter and nodeConnec >= 2) then
-                        {
-                            _k is 2
-                        }
-                        else if (odd diameter or nodeConnec == 1) then 
-                        {
-                            _k is 1
-                        };
-
-                        if diam >= 3  then
-                        {
-                            edgeInd >= nodeConnec * (diameter - 1)/2 + _k
-                        };",
-            "name": "Theorem",
-            "idnum": 257,
-            "disp": "wrong bounds used for nodeConnec when solving for diameter. same a/(1+a/b) == ab/(a+b)"
 
 {
             "text": "bandwidth <= nodes - (mindeg + 1)*(numOfComponents -1) - 1 - (nodeInd - numOfComponents + 1)/2;",
@@ -365,42 +300,6 @@
             "name": "Theorem",
             "idnum": 304,
             "disp": "Incorrect bounds"
-        },
-        {
-            "text": "if connected and maxdeg >= 3 then {nodes <= 1 + mindeg*((maxdeg-1)^diameter - 1)/(maxdeg-2)};",
-            "name": "Theorem",
-            "idnum": 265,
-            "disp": "incorrect bounds for mindeg.... "
-        },
-        {
-            "text": "if not forest then {bandwidth >= (girth - 1)*(arboricity - 2) + 2};",
-            "name": "Theorem",
-            "idnum": 268,
-            "disp": "wrong bounds used for arboricity when setting girth, same ab/(a+b) problem as all the others"
-        },
-        {
-            "text": "if not forest then {bandwidth >= (girth - 1)*nodes/(2*nodeInd) - girth + 2};",
-            "name": "Theorem",
-            "idnum": 269,
-            "disp": "wrong bounds"
-        },
-        {
-            "text": "if hamiltonian then {nodes >= (maxdeg - 1)*(girth - 2) + 2};",
-            "name": "Theorem",
-            "idnum": 274,
-            "disp": "more division problem"
-        },
-        {
-            "text": "edgeCliqueCover <= nodeCliqueCover + nodes*(maxdeg + 1 - nodes/nodeCliqueCover)/2;",
-            "name": "Theorem",
-            "idnum": 285,
-            "disp": "incorrect bounds for maxdeg in nodeCliqueCover"
-        },
-        {
-            "text": "edges >= (maxdeg + (chromaticNum - 1)**2 + (nodes -chromaticNum)*mindeg)/2;",
-            "name": "Theorem",
-            "idnum": 286,
-            "disp": ""
         }
         ]
 }
