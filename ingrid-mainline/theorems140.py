@@ -4209,9 +4209,9 @@ class Theorem130(Theorem):
         return
 class Theorem131(Theorem):
     def __init__(self):
-        super(Theorem131, self).__init__(131, "chromaticNum <= maxdeg-(1.0)+(maxdeg+1.0)/maximum(4.0, maxb(maxClique)+1.0);\n", "")
+        super(Theorem131, self).__init__(131, "_k is maximum(4.0, maxb(maxClique)+1.0);\nchromaticNum <= maxb(maxdeg)-(1.0)+(maxb(maxdeg)+1.0)/_k;\nmaxdeg >= (_k*minb(chromaticNum)-(1.0))/(_k-(1.0))-(1.0);\n", "")
     def involves(self, str_invar):
-        return str_invar in ["chromaticNum","maxdeg","maxClique"]
+        return str_invar in ["maxClique","chromaticNum","maxdeg"]
     def run(self):
         get = self.get
         set = self.set
@@ -4220,17 +4220,20 @@ class Theorem131(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if maxb("maxdeg") != 'undt' and maxb("maxClique") != 'undt':
+        if maxb("maxClique") != 'undt':
+            _k = maximum(4.0, maxb("maxClique")+1.0)
+        if maxb("maxdeg") != 'undt':
             try:
-                set("chromaticNum",  maxb("maxdeg")-(1.0)+(maxb("maxdeg")+1.0)/maximum(4.0, maxb("maxClique")+1.0), ind='Max')
+                set("chromaticNum",  maxb("maxdeg")-(1.0)+(maxb("maxdeg")+1.0)/_k, ind='Max')
             except:
                 pass
-        if minb("maxClique") != 'undt' and minb("chromaticNum") != 'undt':
+        if minb("chromaticNum") != 'undt':
             try:
-                set("maxdeg",  (maximum(4.0, maxb("maxClique")+1.0)*minb("chromaticNum")+maximum(4.0, maxb("maxClique")+1.0)-(1.0))/(maximum(4.0, maxb("maxClique")+1.0)+1.0), ind='Min')
+                set("maxdeg",  (_k*minb("chromaticNum")-(1.0))/(_k-(1.0))-(1.0), ind='Min')
             except:
                 pass
         return
+
 class Theorem132(Theorem):
     def __init__(self):
         super(Theorem132, self).__init__(132, "_P is maxb(nodes);\nif isset nodes then \n{\n    if istrue congruent(nodes, 3.0, 4.0) then \n    {\n        mindeg <= (_P-(3.0))*(_P+1.0)/(4.0*(_P-(1.0)-(maxdeg)))\n    }\n    else  \n    {\n        mindeg <= (_P-(1.0))**2.0/(4.0*(_P-(1.0)-(maxdeg)))\n    }\n};\n", "")
