@@ -56,7 +56,7 @@
                 planar, 
                 not forest, 
                 crossing == 0, 
-                nodes >= 2, 
+                nodes >= 3, 
                 edges >= 3, 
                 arboricity == 2, 
                 nodeCover == (nodes + 1)/2, 
@@ -150,13 +150,20 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "edges >= (minb(maxdeg)+(minb(nodes)-(1.0))*minb(mindeg))/2.0;
+maxdeg <= 2.0*maxb(edges)-(minb(mindeg)*minb(nodes))+minb(mindeg);
+nodes <= (2.0*maxb(edges)-(minb(maxdeg))+minb(mindeg))/minb(mindeg);
+mindeg <= (2.0*maxb(edges)-(minb(maxdeg)))/(minb(nodes)-(1.0));
+",
             "name": "Theorem",
             "idnum": 55,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "edges <= ((maxb(nodes)-(1.0))*maxb(maxdeg)+maxb(mindeg))/2.0;
+nodes >= (2.0*minb(edges)+maxb(maxdeg)-(maxb(mindeg)))/maxb(maxdeg);
+maxdeg >= (2.0*minb(edges)-(maxb(mindeg)))/(maxb(nodes)-(1.0));
+mindeg >= 2.0*minb(edges)-(maxb(maxdeg)*maxb(nodes))+maxb(maxdeg);",
             "name": "Theorem",
             "idnum": 56,
             "disp": ""

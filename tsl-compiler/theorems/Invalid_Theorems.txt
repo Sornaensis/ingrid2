@@ -6,12 +6,6 @@
             "idnum": 30,
             "disp": ""
         },
-        {
-            "text": "null;",
-            "name": "Theorem",
-            "idnum": 67,
-            "disp": ""
-        },
 	{
             "text": "arboricity <= chromaticNum - chromaticNum/(1 + nodes/((girth - 1)/2)*chromaticNum);",
             "name": "Theorem",
