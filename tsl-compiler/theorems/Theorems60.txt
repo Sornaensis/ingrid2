@@ -138,7 +138,12 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if defined girth then
+{
+    _P is maxb(nodes),
+    arboricity <= chromaticNum - chromaticNum/(1 + _P/((girth - 1)/2)*chromaticNum),
+    nodes >= minb(arboricity)*(-(minb(girth))+1.0)/(2.0*maxb(chromaticNum)*(minb(arboricity)-(maxb(chromaticNum))))
+};",
             "name": "Theorem",
             "idnum": 53,
             "disp": ""

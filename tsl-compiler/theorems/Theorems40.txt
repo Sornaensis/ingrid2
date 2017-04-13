@@ -73,7 +73,16 @@ maxdeg >= -(minb(edgeCover)/(minb(edgeCover)-(maxb(nodes))));
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if connected then
+{
+    if radius <= minimum(2,nodes/2) then 
+    { 
+        nosolve edges <= (1/2)*nodes*(nodes-radius) 
+    } else if radius >= 3 and radius <= nodes/2 then 
+    { 
+        nosolve edges <= (1/2)*(nodes**2+4*radius*nodes+5*nodes+4*radius**2-6*radius) 
+    }
+};",
             "name": "Theorem",
             "idnum": 30,
             "disp": ""
