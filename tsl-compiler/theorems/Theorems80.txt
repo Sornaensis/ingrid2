@@ -38,7 +38,7 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if connected and cycle and isset nodes and even nodes and not complete then {chromaticNum <= maxdeg};",
             "name": "Theorem",
             "idnum": 67,
             "disp": ""
