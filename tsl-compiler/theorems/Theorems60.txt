@@ -180,7 +180,9 @@ mindeg >= 2.0*minb(edges)-(maxb(maxdeg)*maxb(nodes))+maxb(maxdeg);",
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "_P is maxb(nodes);
+maxClique >= _P/(_P-spectralRadius)-1/3;
+nodes >= minb(spectralRadius)*(3.0*maxb(maxClique)+1.0)/(3.0*maxb(maxClique)-(2.0));",
             "name": "Theorem",
             "idnum": 58,
             "disp": ""
