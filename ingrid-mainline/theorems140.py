@@ -6050,7 +6050,7 @@ class Theorem194(Theorem):
         return
 class Theorem195(Theorem):
     def __init__(self):
-        super(Theorem195, self).__init__(195, "nosolve maxClique >= nodes+(1.0/2.0)*(nodeInd-(1.0))*(nodeInd-(2.0))+(nodes/2.0)*(nodes-(1.0))+edges:useMaxFor(nodes);\n", "")
+        super(Theorem195, self).__init__(195, "nosolve maxClique >= nodes+(1.0/2.0)*(nodeInd-(1.0))*(nodeInd-(2.0))+(nodes/2.0)*(nodes-(1.0))+edges;\n", "")
     def involves(self, str_invar):
         return str_invar in ["maxClique","nodes","nodeInd","edges"]
     def run(self):
@@ -6063,7 +6063,7 @@ class Theorem195(Theorem):
         congruent = self.congruent
         if minb("nodes") != 'undt' and minb("nodeInd") != 'undt' and minb("edges") != 'undt':
             try:
-                set("maxClique",  maxb("nodes")+(1.0/2.0)*(minb("nodeInd")-(1.0))*(minb("nodeInd")-(2.0))+(maxb("nodes")/2.0)*(maxb("nodes")-(1.0))+minb("edges"), ind='Min')
+                set("maxClique",  minb("nodes")+(1.0/2.0)*(minb("nodeInd")-(1.0))*(minb("nodeInd")-(2.0))+(minb("nodes")/2.0)*(minb("nodes")-(1.0))+minb("edges"), ind='Min')
             except:
                 pass
         return
