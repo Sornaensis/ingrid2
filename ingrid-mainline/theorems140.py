@@ -6050,7 +6050,7 @@ class Theorem194(Theorem):
         return
 class Theorem195(Theorem):
     def __init__(self):
-        super(Theorem195, self).__init__(195, "maxClique >= nodes+(1.0/2.0)*(nodeInd-(1.0))*(nodeInd-(2.0))+(nodes/2.0)*(nodes-(1.0))+edges:useMaxFor(nodes);\n", "")
+        super(Theorem195, self).__init__(195, "nosolve maxClique >= nodes+(1.0/2.0)*(nodeInd-(1.0))*(nodeInd-(2.0))+(nodes/2.0)*(nodes-(1.0))+edges:useMaxFor(nodes);\n", "")
     def involves(self, str_invar):
         return str_invar in ["maxClique","nodes","nodeInd","edges"]
     def run(self):
@@ -6064,21 +6064,6 @@ class Theorem195(Theorem):
         if minb("nodes") != 'undt' and minb("nodeInd") != 'undt' and minb("edges") != 'undt':
             try:
                 set("maxClique",  maxb("nodes")+(1.0/2.0)*(minb("nodeInd")-(1.0))*(minb("nodeInd")-(2.0))+(maxb("nodes")/2.0)*(maxb("nodes")-(1.0))+minb("edges"), ind='Min')
-            except:
-                pass
-        if minb("edges") != 'undt' and minb("maxClique") != 'undt' and minb("nodeInd") != 'undt':
-            try:
-                set("nodes",  sqrt(-(8.0*maxb("edges"))+8.0*minb("maxClique")-(4.0*maxb("nodeInd")**2.0)+12.0*maxb("nodeInd")-(7.0))/2.0-(1.0/2.0), ind='Min')
-            except:
-                pass
-        if maxb("edges") != 'undt' and maxb("maxClique") != 'undt' and maxb("nodes") != 'undt':
-            try:
-                set("nodeInd",  sqrt(-(8.0*minb("edges"))+8.0*maxb("maxClique")-(4.0*minb("nodes")**2.0)-(4.0*minb("nodes"))+1.0)/2.0+3.0/2.0, ind='Max')
-            except:
-                pass
-        if maxb("maxClique") != 'undt' and maxb("nodeInd") != 'undt' and maxb("nodes") != 'undt':
-            try:
-                set("edges",  maxb("maxClique")-(minb("nodeInd")**2.0/2.0)+3.0*minb("nodeInd")/2.0-(minb("nodes")**2.0/2.0)-(minb("nodes")/2.0)-(1.0), ind='Max')
             except:
                 pass
         return
@@ -6224,3 +6209,4 @@ class Theorem200(Theorem):
                 except:
                     pass
         return
+
