@@ -154,7 +154,6 @@ if minb(domination) >= 2.0 then
         },
         {
             "text": "
-            "text": "
 if regular and nodes > 5 then 
 {
     if maxdeg >= nodes / 2 and maxdeg <= nodes - 2 and ((odd nodes and even maxdeg) or (odd maxdeg and even nodes)) then 
