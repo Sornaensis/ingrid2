@@ -1,4 +1,3 @@
-
 {
     "theorems":[
 {
@@ -26,7 +25,7 @@
             "disp": ""
         },
         {
-            "text": if connected and minb(maxdeg) >= 3.0 then 
+            "text":" if connected and minb(maxdeg) >= 3.0 then 
 {
     nodes <= 1.0+maxb(mindeg)*((maxb(maxdeg)-(1.0))**maxb(diameter)-(1.0))/(maxb(maxdeg)-(2.0)),
     mindeg >= (maxb(maxdeg)*minb(nodes)-(maxb(maxdeg))-(2.0*minb(nodes))+2.0)/((maxb(maxdeg)-(1.0))**maxb(diameter)-(1.0))
