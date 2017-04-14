@@ -6817,11 +6817,11 @@ class Theorem222(Theorem):
             except:
                 pass
         return
-class Theorem223(Theorem):
+class Theorem225(Theorem):
     def __init__(self):
-        super(Theorem223, self).__init__(223, "nodeInd <= nodeCliqueCover;\n", "")
+        super(Theorem225, self).__init__(225, "radius <= diameter;\n", "")
     def involves(self, str_invar):
-        return str_invar in ["nodeInd","nodeCliqueCover"]
+        return str_invar in ["radius","diameter"]
     def run(self):
         get = self.get
         set = self.set
@@ -6830,14 +6830,14 @@ class Theorem223(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if maxb("nodeCliqueCover") != 'undt':
+        if maxb("diameter") != 'undt':
             try:
-                set("nodeInd",  maxb("nodeCliqueCover"), ind='Max')
+                set("radius",  maxb("diameter"), ind='Max')
             except:
                 pass
-        if minb("nodeInd") != 'undt':
+        if minb("radius") != 'undt':
             try:
-                set("nodeCliqueCover",  minb("nodeInd"), ind='Min')
+                set("diameter",  minb("radius"), ind='Min')
             except:
                 pass
         return
