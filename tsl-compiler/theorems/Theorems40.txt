@@ -61,14 +61,12 @@ maxdeg >= -(minb(edgeCover)/(minb(edgeCover)-(maxb(nodes))));
     { 
         if minb(nodeConnec) = 0 then
         {
-            _nodeConnec is 1
+            maxdeg <= nodes - (diameter - 4)-3
         }
         else
         {
-            _nodeConnec is minb(nodeConnec)
-        },
-        maxdeg <= nodes - _nodeConnec*(diameter - 4)-3,
-        nodeConnec <= (-(minb(maxdeg))+maxb(nodes)-(3.0))/(minb(diameter)-(4.0))
+            maxdeg <= nodes - nodeConnec*(diameter - 4)-3
+        }
     }
 };",
             "name": "Theorem",
