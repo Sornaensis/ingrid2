@@ -61,7 +61,21 @@ if minb(nodes) > minb(mindeg)+1 and maxb(nodes) > minb(mindeg)+1 then
             "disp": ""
         },
         {
-            "text": "if undefined girth then { thickness == 1 } else { thickness >= edges*(1-2/girth)/(nodes - 2) };",
+            "text": "
+            if undefined girth then 
+{ 
+    thickness == 1 
+} 
+else 
+{ 
+    thickness >= minb(edges)*(1-2/minb(girth))/(nodes - 2),
+    edges <= minb(girth)*maxb(thickness)*(maxb(nodes)-(2.0))/(minb(girth)-(2.0)),
+    _g is 2.0*minb(edges)/(minb(edges)-(maxb(nodes)*maxb(thickness))+2.0*maxb(thickness)),
+    if _g > 2 and _g <= minb(nodes) then 
+    {
+        girth <= _g
+    }
+};",
             "name": "Theorem",
             "idnum": 188,
             "disp": ""
