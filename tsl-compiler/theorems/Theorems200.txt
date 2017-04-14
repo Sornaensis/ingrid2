@@ -7,7 +7,9 @@
             "disp": ""
         },
         {
-            "text": "maxClique >= 2*nodes/(nodes-mindeg+nodeInd);",
+            "text": "
+maxClique >= 2*maxb(nodes)/(maxb(nodes)-mindeg+nodeInd);
+nodes >= maxb(maxClique)*(minb(mindeg)-(maxb(nodeInd)))/(maxb(maxClique)-(2.0));",
             "name": "Theorem",
             "idnum": 182,
             "disp": ""
