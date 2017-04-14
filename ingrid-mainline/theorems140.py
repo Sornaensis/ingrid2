@@ -2855,7 +2855,7 @@ class Theorem83(Theorem):
         return
 class Theorem84(Theorem):
     def __init__(self):
-        super(Theorem84, self).__init__(84, "if maxClique == 2.0 then \n{\n    arboricity <= 2.0+genus**(1.0/2.0)\n};\n", "")
+        super(Theorem84, self).__init__(84, "if maxClique == 2.0 then \n{\n    arboricity <= 2.0+maxb(genus)**(1.0/2.0),\n    if minb(arboricity) > 3.0 then \n    {\n        arboricity <= 2.0+maxb(genus)**(1.0/2.0)\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["maxClique","arboricity","genus"]
     def run(self):
@@ -2872,11 +2872,12 @@ class Theorem84(Theorem):
                     set("arboricity",  2.0+maxb("genus")**(1.0/2.0), ind='Max')
                 except:
                     pass
-            if minb("arboricity") != 'undt':
-                try:
-                    set("genus",  (minb("arboricity")-(2.0))**2.0, ind='Min')
-                except:
-                    pass
+            if (minb("arboricity") != 'undt' and minb("arboricity") > 3.0):
+                if maxb("genus") != 'undt':
+                    try:
+                        set("arboricity",  2.0+maxb("genus")**(1.0/2.0), ind='Max')
+                    except:
+                        pass
         return
 class Theorem85(Theorem):
     def __init__(self):
