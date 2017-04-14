@@ -115,21 +115,25 @@ else
             "name": "Theorem",
             "idnum": 194,
             "disp": ""
-        },
-        {
-            "text": "maxClique >= nodes + (1/2)*(nodeInd-1)*(nodeInd-2)+(nodes/2)*(nodes-1)+edges;",
+        },{
+            "text": "maxClique >= nodes + (1/2)*(nodeInd-1)*(nodeInd-2)+(nodes/2)*(nodes-1)+edges : useMaxFor(nodes);",
             "name": "Theorem",
             "idnum": 195,
             "disp": ""
         },
         {
-            "text": "edges <= (nodes/2)*(nodes-1)-maxClique*(nodes-maxdeg-1)-(1/2)*(nodeInd-1)*(nodeInd-2);",
+            "text": "nosolve edges <= (nodes/2)*(nodes-1)-maxClique*(nodes-maxdeg-1)-(1/2)*(nodeInd-1)*(nodeInd-2);",
             "name": "Theorem",
             "idnum": 196,
             "disp": ""
         },
         {
-            "text": "if nodes >= 3 then { edgeCliqueCover <= thickness*(2*nodes-numOfComponents-3) };",
+            "text": "
+if nodes >= 3 then 
+{ 
+    edgeCliqueCover <= thickness*(2*maxb(nodes)-numOfComponents-3),
+    nodes >= (minb(edgeCliqueCover)+maxb(thickness)*(minb(numOfComponents)+3.0))/(2.0*maxb(thickness))    
+};",
             "name": "Theorem",
             "idnum": 197,
             "disp": ""
