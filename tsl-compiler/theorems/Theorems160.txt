@@ -105,7 +105,9 @@ nodes >= (maxb(circumference)+2.0*minb(edges))/maxb(circumference);",
             "disp": "RETIRED by R265"
         },
         {
-            "text": "if mindeg == 2 then { nodes <= (2 + maximum(4, maxdeg))/edgeInd/2 };",
+            "text": "if mindeg == 2 then {
+    nodes <= (2 + maximum(4, maxb(maxdeg)))*edgeInd/2 
+};",
             "name": "Theorem",
             "idnum": 155,
             "disp": ""
