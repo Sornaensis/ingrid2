@@ -1,4 +1,3 @@
-
 {
     "theorems":[
 {
@@ -21,15 +20,15 @@
         },
         {
             "text": "
-            let e1 = (maxb(nodes)*(maxb(nodes)-1)+1) / (2-(maxb(nodes)-minb(mindeg)-1)*(maxb(nodes)-minb(maxClique)));
-            let e2 = (minb(nodes)*(minb(nodes)-1)+1) / (2-(minb(nodes)-minb(mindeg)-1)*(minb(nodes)-minb(maxClique)));
-            setmin(edges, mininum(e1, e2));
-            let c1 = floor(minb(nodes)-(minb(nodes)*(minb(nodes)-1)-2*maxb(edges))/(2*(minb(nodes)-minb(mindeg)-1)));
-            let c2 = floor(maxb(nodes)-(maxb(nodes)*(maxb(nodes)-1)-2*maxb(edges))/(2*(maxb(nodes)-minb(mindeg)-1)));
-            if minb(nodes) > minb(mindeg)+1 and maxb(nodes) > minb(mindeg)+1 then 
-            {
-                setmax(maxClique, minimum(c1, c2))
-            };",
+            _e1 is (maxb(nodes)*(maxb(nodes)-1)+1) / (2-(maxb(nodes)-minb(mindeg)-1)*(maxb(nodes)-minb(maxClique)));
+_e2 is (minb(nodes)*(minb(nodes)-1)+1) / (2-(minb(nodes)-minb(mindeg)-1)*(minb(nodes)-minb(maxClique)));
+edges >= minimum(_e1,_e2);
+_c1 is floor(minb(nodes)-(minb(nodes)*(minb(nodes)-1)-2*maxb(edges))/(2*(minb(nodes)-minb(mindeg)-1)));
+_c2 is floor(maxb(nodes)-(maxb(nodes)*(maxb(nodes)-1)-2*maxb(edges))/(2*(maxb(nodes)-minb(mindeg)-1)));
+if minb(nodes) > minb(mindeg)+1 and maxb(nodes) > minb(mindeg)+1 then 
+{
+    maxClique <= minimum(_c1, _c2)
+};",
             "name": "Theorem",
             "idnum": 184,
             "disp": ""
@@ -71,7 +70,7 @@
             "disp": ""
         },
         {
-            "text": "thickness <= max(bandwidth/2,1);",
+            "text": "thickness <= maximum(bandwidth/2,1);",
             "name": "Theorem",
             "idnum": 191,
             "disp": ""
