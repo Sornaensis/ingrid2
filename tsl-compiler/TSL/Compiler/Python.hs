@@ -376,7 +376,7 @@ generateSymPyIneq e@(Fx (InvarExpr i (Just relexp))) =
                    bound                                             = getBound rel
                    invar_analyses                                    = map (alterAnalysis ann) . map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) $ invars
                    invar_doanalysis                                  = concatMap (alterAnalysis2 ann) $ invars
-                   invars                                            = filter ((==NotFound) . flip invarAnalysis exp) $ getInvolves orig
+                   invars                                            = getInvolves orig
               in fmap (map (adjustInequality invar_analyses) . ((replaceAllInvar invar_doanalysis . Fx $ InvarExpr i (Just (Fx $ RelExpr r orig))):) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
                      invars >>= \inv -> return $
                    do Py.initialize
@@ -407,7 +407,7 @@ generateSymPyIneq e@(Fx (InvarExpr i (Just relexp))) =
                    relation                                          = theoremToSrc rel
                    bound                                             = getBound rel
                    invar_analyses                                    = map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) invars
-                   invars                                            = filter ((==NotFound) . flip invarAnalysis exp) $ getInvolves orig
+                   invars                                            = getInvolves orig
               in fmap (map (adjustInequality invar_analyses) . (e:) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
                      invars >>= \inv -> return $
                    do Py.initialize
