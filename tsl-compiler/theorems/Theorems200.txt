@@ -116,7 +116,7 @@ else
             "idnum": 194,
             "disp": ""
         },{
-            "text": "maxClique >= nodes + (1/2)*(nodeInd-1)*(nodeInd-2)+(nodes/2)*(nodes-1)+edges : useMaxFor(nodes);",
+            "text": "nosolve maxClique >= nodes + (1/2)*(nodeInd-1)*(nodeInd-2)+(nodes/2)*(nodes-1)+edges : useMaxFor(nodes);",
             "name": "Theorem",
             "idnum": 195,
             "disp": ""
