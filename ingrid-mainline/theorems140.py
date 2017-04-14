@@ -4293,9 +4293,9 @@ class Theorem133(Theorem):
         return
 class Theorem134(Theorem):
     def __init__(self):
-        super(Theorem134, self).__init__(134, "if radius == 2.0 and diam == 2.0 and nodes == 4.0 then \n{\n    edges >= 4.0\n}\nelse if radius == 2.0 and diam == 2.0 and nodes >= 5.0 then \n{\n    edges >= 2.0*nodes-(5.0)\n};\n", "")
+        super(Theorem134, self).__init__(134, "if radius == 2.0 and diameter == 2.0 and nodes == 4.0 then \n{\n    edges >= 4.0\n}\nelse if radius == 2.0 and diameter == 2.0 and nodes >= 5.0 then \n{\n    edges >= 2.0*nodes-(5.0)\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["radius","diam","nodes","edges"]
+        return str_invar in ["radius","diameter","nodes","edges"]
     def run(self):
         get = self.get
         set = self.set
@@ -4304,12 +4304,12 @@ class Theorem134(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if ((minb("radius") != 'undt' and minb("radius") >= 2.0) and (maxb("radius") != 'undt' and maxb("radius") <= 2.0)) and ((minb("diam") != 'undt' and minb("diam") >= 2.0) and (maxb("diam") != 'undt' and maxb("diam") <= 2.0)) and ((minb("nodes") != 'undt' and minb("nodes") >= 4.0) and (maxb("nodes") != 'undt' and maxb("nodes") <= 4.0)):
+        if ((minb("radius") != 'undt' and minb("radius") >= 2.0) and (maxb("radius") != 'undt' and maxb("radius") <= 2.0)) and ((minb("diameter") != 'undt' and minb("diameter") >= 2.0) and (maxb("diameter") != 'undt' and maxb("diameter") <= 2.0)) and ((minb("nodes") != 'undt' and minb("nodes") >= 4.0) and (maxb("nodes") != 'undt' and maxb("nodes") <= 4.0)):
             try:
                 set("edges",  4.0, ind='Min')
             except:
                 pass
-        elif ((minb("radius") != 'undt' and minb("radius") >= 2.0) and (maxb("radius") != 'undt' and maxb("radius") <= 2.0)) and ((minb("diam") != 'undt' and minb("diam") >= 2.0) and (maxb("diam") != 'undt' and maxb("diam") <= 2.0)) and (minb("nodes") != 'undt' and minb("nodes") >= 5.0):
+        elif ((minb("radius") != 'undt' and minb("radius") >= 2.0) and (maxb("radius") != 'undt' and maxb("radius") <= 2.0)) and ((minb("diameter") != 'undt' and minb("diameter") >= 2.0) and (maxb("diameter") != 'undt' and maxb("diameter") <= 2.0)) and (minb("nodes") != 'undt' and minb("nodes") >= 5.0):
             if minb("nodes") != 'undt':
                 try:
                     set("edges",  2.0*minb("nodes")-(5.0), ind='Min')
