@@ -139,7 +139,9 @@ if nodes >= 3 then
             "disp": ""
         },
         {
-            "text": "nodeCover <= nodes - nodes/chromaticNum;",
+            "text": "
+nodeCover <= maxb(nodes) - maxb(nodes)/chromaticNum;
+nodes >= maxb(chromaticNum)*minb(nodeCover)/(maxb(chromaticNum)-(1.0));",
             "name": "Theorem",
             "idnum": 198,
             "disp": ""
