@@ -48,7 +48,14 @@ if minb(nodes) > minb(mindeg)+1 and maxb(nodes) > minb(mindeg)+1 then
             "disp": ""
         },
         {
-            "text": "if regular and maxdeg <= nodes - 2 then { maxClique <= (1/2)*nodes-(nodeInd - 1)*(nodeInd - 2)/(2*(nodes - maxdeg - 1)) };",
+            "text": "
+            if regular and maxdeg <= nodes - 2 then 
+{ 
+    maxClique <= (1.0/2.0)*maxb(nodes)-((minb(nodeInd)-(1.0))*(minb(nodeInd)-(2.0))/(2.0*(maxb(nodes)-(minb(maxdeg))-(1.0)))),
+    nodes >= minb(maxClique)+minb(maxdeg)/2.0+sqrt(4.0*minb(maxClique)**2.0-(4.0*minb(maxClique)*minb(maxdeg))-(4.0*minb(maxClique))+minb(maxdeg)**2.0+2.0*minb(maxdeg)+4.0*minb(nodeInd)**2.0-(12.0*minb(nodeInd))+9.0)/2.0+1.0/2.0,
+    nodeInd <= sqrt(8.0*minb(maxClique)*minb(maxdeg)-(8.0*minb(maxClique)*maxb(nodes))+8.0*minb(maxClique)-(4.0*minb(maxdeg)*maxb(nodes))+4.0*maxb(nodes)**2.0-(4.0*maxb(nodes))+1.0)/2.0+3.0/2.0,
+    maxdeg <= (2.0*minb(maxClique)*maxb(nodes)-(2.0*minb(maxClique))+minb(nodeInd)**2.0-(3.0*minb(nodeInd))-(maxb(nodes)**2.0)+maxb(nodes)+2.0)/(2.0*minb(maxClique)-(maxb(nodes))) 
+};",
             "name": "Theorem",
             "idnum": 187,
             "disp": ""
