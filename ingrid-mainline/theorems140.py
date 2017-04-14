@@ -4917,7 +4917,7 @@ class Theorem154(Theorem):
         return
 class Theorem155(Theorem):
     def __init__(self):
-        super(Theorem155, self).__init__(155, "if mindeg == 2.0 then \n{\n    nodes <= (2.0+maximum(4.0, maxdeg))/edgeInd/2.0\n};\n", "")
+        super(Theorem155, self).__init__(155, "if mindeg == 2.0 then \n{\n    nodes <= (2.0+maximum(4.0, maxb(maxdeg)))*edgeInd/2.0\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["mindeg","nodes","maxdeg","edgeInd"]
     def run(self):
@@ -4931,7 +4931,12 @@ class Theorem155(Theorem):
         if ((minb("mindeg") != 'undt' and minb("mindeg") >= 2.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 2.0)):
             if maxb("maxdeg") != 'undt' and maxb("edgeInd") != 'undt':
                 try:
-                    set("nodes",  (2.0+maximum(4.0, maxb("maxdeg")))/minb("edgeInd")/2.0, ind='Max')
+                    set("nodes",  (2.0+maximum(4.0, maxb("maxdeg")))*maxb("edgeInd")/2.0, ind='Max')
+                except:
+                    pass
+            if minb("nodes") != 'undt' and minb("maxdeg") != 'undt':
+                try:
+                    set("edgeInd",  2.0*minb("nodes")/(maximum(4.0, maxb("maxdeg"))+2.0), ind='Min')
                 except:
                     pass
         return
