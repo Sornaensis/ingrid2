@@ -99,7 +99,7 @@ else
 
 if girth >= 5 then
 {
-    edges <= nodes*(0.5 + sqrt((nodes - _k - 2)/_r + 0.25))/2  
+    nosolve edges <= nodes*(0.5 + sqrt((nodes - _k - 2)/_r + 0.25))/2  
 };",
             "name": "Theorem",
             "idnum": 353,
