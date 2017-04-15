@@ -100,7 +100,11 @@ else
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 then { nodeInd >= mindeg * (diameter+4)/4 };",
+            "text": "
+if maxClique == 2.0 and exists diameter then 
+{
+    nodeInd >= mindeg*(diameter+4.0)/4.0
+};",
             "name": "Theorem",
             "idnum": 192,
             "disp": ""
