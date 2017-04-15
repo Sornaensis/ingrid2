@@ -19,7 +19,7 @@
             "disp": ""
         },
         {
-            "text": "let x = mindeg*((mindeg+3)/2)-1; if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and even nodes  then {edgeInd >= (nodes - 2*((nodes + 1)/(2*x)))/2} else if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and odd nodes  then {edgeInd >= (nodes-maximum(2*((nodes + 1 + x)/(2*x)), 1))/2};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 304,
             "disp": ""

@@ -8,13 +8,13 @@
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 then {nodeCover <= nodes *(1 - ((2*edges)/nodes * log(2*edges/nodes) - (2*edges/nodes) +1)/(2*edges/nodes -1)**2)};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 442,
             "disp": ""
         },
         {
-            "text": "bandwidth <= nodes - (mindeg + 1)*(numOfComponents -1) - 1 - (nodes - nodeCover - numOfComponents + 1)/2;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 443,
             "disp": ""
@@ -26,7 +26,7 @@
             "disp": ""
         },
         {
-            "text": "let m = (nodes - chromaticNum)/(nodes - nodeCover - 1); edges >= m*(nodes - chromaticNum) + chromaticNum*(chromaticNum - 1)/2 - (nodes - nodeCover - 1)*m*(m+1)/2;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 445,
             "disp": ""
@@ -44,13 +44,13 @@
             "disp": ""
         },
         {
-            "text": "edges <= ((nodes - nodeCliqueCover)*(nodeCliqueCover + maxdeg - 1) + mindeg)/2;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 448,
             "disp": ""
         },
         {
-            "text": "if nodeInd == 2 and mindeg >= nodes - 5 then {edges <= nodes*(nodes-13)/2 + 13*maxClique};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 449,
             "disp": ""
@@ -62,7 +62,7 @@
             "disp": "Original Code is WRONG!"
         },
         {
-            "text": "if mindeg <= minimum(nodes-7, nodes - nodeInd - 2) then {mindeg <= ((nodes - 1)*(maxClique - 1) - 2)/maxClique};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 451,
             "disp": ""
@@ -74,7 +74,7 @@
             "disp": ""
         },
         {
-            "text": "edges <= nodes*(nodes - 1)/2 - ((nodes-nodeConnec)/(maxClique-1))*(nodes-nodeConnec) - nodeConnec*(nodeConnec - 1)/2 + (maxClique - 1)*((nodes-nodeConnec)/(maxClique-1))*(((nodes-nodeConnec)/(maxClique-1))+1)/2;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 453,
             "disp": ""
