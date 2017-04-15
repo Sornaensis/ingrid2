@@ -5801,7 +5801,7 @@ class Theorem187(Theorem):
         return
 class Theorem188(Theorem):
     def __init__(self):
-        super(Theorem188, self).__init__(188, "if undefined girth then \n{\n    thickness == 1.0\n}\nelse  \n{\n    thickness >= minb(edges)*(1.0-(2.0/minb(girth)))/(nodes-(2.0)),\n    edges <= minb(girth)*maxb(thickness)*(maxb(nodes)-(2.0))/(minb(girth)-(2.0)),\n    _g is 2.0*minb(edges)/(minb(edges)-(maxb(nodes)*maxb(thickness))+2.0*maxb(thickness)),\n    if _g > 2.0 and _g <= minb(nodes) then \n    {\n        girth <= _g\n    }\n};\n", "")
+        super(Theorem188, self).__init__(188, "if undefined girth then \n{\n    thickness == 1.0\n}\nelse if exists girth then \n{\n    thickness >= minb(edges)*(1.0-(2.0/minb(girth)))/(maxb(nodes)-(2.0)),\n    nodes >= minb(edges)/maxb(thickness)-(2.0*minb(edges)/(minb(girth)*maxb(thickness)))+2.0,\n    edges <= minb(girth)*maxb(thickness)*(maxb(nodes)-(2.0))/(minb(girth)-(2.0)),\n    _g is 2.0*minb(edges)/(minb(edges)-(maxb(nodes)*maxb(thickness))+2.0*maxb(thickness)),\n    if _g > 2.0 and _g <= minb(nodes) then \n    {\n        girth <= _g\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["girth","thickness","edges","nodes"]
     def run(self):
@@ -5821,7 +5821,7 @@ class Theorem188(Theorem):
                 set("thickness",  1.0, ind='Max')
             except:
                 pass
-        elif True:
+        elif maxb("girth") != 'undt':
             if minb("edges") != 'undt' and minb("girth") != 'undt' and minb("nodes") != 'undt':
                 try:
                     set("thickness",  minb("edges")*(1.0-(2.0/minb("girth")))/(maxb("nodes")-(2.0)), ind='Min')
@@ -5829,7 +5829,7 @@ class Theorem188(Theorem):
                     pass
             if minb("edges") != 'undt' and minb("thickness") != 'undt' and minb("girth") != 'undt':
                 try:
-                    set("nodes",  minb("edges")/minb("thickness")-(2.0*minb("edges")/(minb("girth")*minb("thickness")))+2.0, ind='Min')
+                    set("nodes",  minb("edges")/maxb("thickness")-(2.0*minb("edges")/(minb("girth")*maxb("thickness")))+2.0, ind='Min')
                 except:
                     pass
             if maxb("girth") != 'undt' and maxb("thickness") != 'undt' and maxb("nodes") != 'undt':
@@ -5838,7 +5838,10 @@ class Theorem188(Theorem):
                 except:
                     pass
             if minb("edges") != 'undt' and maxb("nodes") != 'undt' and maxb("thickness") != 'undt':
-                _g = 2.0*minb("edges")/(minb("edges")-(maxb("nodes")*maxb("thickness"))+2.0*maxb("thickness"))
+                try:
+                    _g = 2.0*minb("edges")/(minb("edges")-(maxb("nodes")*maxb("thickness"))+2.0*maxb("thickness"))
+                except:
+                    pass
             if ('_g' in vars() and _g > 2.0) and (minb("nodes") != 'undt' and '_g' in vars() and _g <= minb("nodes")):
                 try:
                     set("girth",  _g, ind='Max')
