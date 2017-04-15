@@ -121,7 +121,7 @@ chromaticNum <= maxb(circumference)-(maxb(circumference)/maxb(maxClique))+1.0;",
 
 if nodeConnec < 2*mindeg - nodes + 2 then
 {
-    not complete
+    complete
 };",
             "name": "Theorem",
             "idnum": 117,
