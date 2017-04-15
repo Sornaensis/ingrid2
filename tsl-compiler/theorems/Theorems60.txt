@@ -50,7 +50,7 @@
         },
         {
             "text": "
- if cycle then 
+  if cycle then 
             { 
                 planar, 
                 not forest, 
@@ -85,15 +85,15 @@
                 { 
                     chromaticNum == 2 
                 } 
-                else 
+                else if odd nodes then
                 { 
                     chromaticNum == 3 
                 }, 
-                if chromaticNum == 2 then 
+                if maxb(chromaticNum) == 2 then 
                 { 
                     even nodes 
                 } 
-                else 
+                else if minb(chromaticNum) == 3 then
                 { 
                     odd nodes 
                 }, 
