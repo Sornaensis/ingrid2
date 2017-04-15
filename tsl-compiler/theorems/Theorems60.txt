@@ -51,7 +51,6 @@
         },
         {
             "text": "
-
             if cycle then 
             { 
                 planar, 
@@ -99,11 +98,11 @@
                 { 
                     odd nodes 
                 }, 
-                if maxClique == 2 then 
+                if maxb(maxClique) == 2 then 
                 { 
                     nodes >= 4 
                 } 
-                else 
+                else if minb(maxClique) == 3
                 { 
                     nodes == 3 
                 }, 
