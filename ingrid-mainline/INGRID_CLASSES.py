@@ -345,7 +345,7 @@ class IngridObj:
                     continue
                 self.current_theorem = theorem
                 #try:
-                    theorem.run()
+                theorem.run()
                 #except:
                 #    self.error_inv = 'Runtime Error'
                 #    self.error_msg = 'Something blew up in theorem ' + str(theorem.id)
