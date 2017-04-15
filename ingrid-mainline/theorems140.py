@@ -1537,7 +1537,7 @@ class Theorem47(Theorem):
         return
 class Theorem48(Theorem):
     def __init__(self):
-        super(Theorem48, self).__init__(48, "if forest then \n{\n    planar,\n    chromaticNum == 2.0,\n    mindeg == 2.0\n};\n", "")
+        super(Theorem48, self).__init__(48, "if forest then \n{\n    planar,\n    chromaticNum == 2.0,\n    mindeg == 1.0\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["forest","planar","chromaticNum","mindeg"]
     def run(self):
@@ -1559,11 +1559,11 @@ class Theorem48(Theorem):
             except:
                 pass
             try:
-                set("mindeg",  2.0, ind='Min')
+                set("mindeg",  1.0, ind='Min')
             except:
                 pass
             try:
-                set("mindeg",  2.0, ind='Max')
+                set("mindeg",  1.0, ind='Max')
             except:
                 pass
         return
