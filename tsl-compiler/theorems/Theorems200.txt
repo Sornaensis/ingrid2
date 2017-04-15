@@ -148,7 +148,9 @@ nodes >= maxb(chromaticNum)*minb(nodeCover)/(maxb(chromaticNum)-(1.0));",
             "disp": ""
         },
         {
-            "text": "bandwidth <= nodes - 1 - (nodes - nodeCover)/2;",
+            "text": "bandwidth <= maxb(nodes)-(1.0)-((maxb(nodes)-(maxb(nodeCover)))/2.0);
+nodes >= 2.0*minb(bandwidth)-(maxb(nodeCover))+1.0;
+nodeCover >= 2.0*minb(bandwidth)-(maxb(nodes))+1.0;",
             "name": "Theorem",
             "idnum": 199,
             "disp": ""
