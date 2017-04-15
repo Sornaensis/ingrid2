@@ -62,11 +62,11 @@ if minb(nodes) > minb(mindeg)+1 and maxb(nodes) > minb(mindeg)+1 then
         },
         {
             "text": "
-            if undefined girth then 
+if undefined girth then 
 { 
     thickness == 1 
 } 
-else 
+else if exists girth then
 { 
     thickness >= minb(edges)*(1-2/minb(girth))/(maxb(nodes) - 2),
     nodes >= minb(edges)/maxb(thickness)-(2.0*minb(edges)/(minb(girth)*maxb(thickness)))+2.0,
