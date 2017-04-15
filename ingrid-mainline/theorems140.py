@@ -3787,7 +3787,7 @@ class Theorem118(Theorem):
         return
 class Theorem119(Theorem):
     def __init__(self):
-        super(Theorem119, self).__init__(119, "if chromaticNum >= maxClique then \n{\n    mindeg <= (3.0*maxb(maxClique)-(4.0))*nodes/(3.0*maxb(maxClique)-(1.0))\n};\n", "")
+        super(Theorem119, self).__init__(119, "if chromaticNum > maxClique then \n{\n    mindeg <= (3.0*maxb(maxClique)-(4.0))*nodes/(3.0*maxb(maxClique)-(1.0))\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["chromaticNum","maxClique","mindeg","nodes"]
     def run(self):
@@ -3798,7 +3798,7 @@ class Theorem119(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("chromaticNum") != 'undt' and maxb("maxClique") != 'undt' and minb("chromaticNum") >= maxb("maxClique")):
+        if (minb("chromaticNum") != 'undt' and maxb("maxClique") != 'undt' and minb("chromaticNum") > maxb("maxClique")):
             if maxb("maxClique") != 'undt' and maxb("nodes") != 'undt':
                 try:
                     set("mindeg",  (3.0*maxb("maxClique")-(4.0))*maxb("nodes")/(3.0*maxb("maxClique")-(1.0)), ind='Max')
