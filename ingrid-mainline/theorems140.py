@@ -5604,10 +5604,10 @@ class Theorem179(Theorem):
                     pass
             if maxb("nodes") != 'undt' and minb("edges") != 'undt':
                 _k = maxb("nodes")-(2.0*minb("edges"))
-            if (minb("nodeInd") != 'undt' and _k in vars() and minb("nodeInd") > _k):
+            if (minb("nodeInd") != 'undt' and '_k' in vars() and minb("nodeInd") > _k):
                 if minb("nodeInd") != 'undt':
                     _k = minb("nodeInd")
-            elif (maxb("nodeInd") != 'undt' and _k in vars() and maxb("nodeInd") < _k):
+            elif (maxb("nodeInd") != 'undt' and '_k' in vars() and maxb("nodeInd") < _k):
                 if maxb("nodeInd") != 'undt':
                     _k = maxb("nodeInd")
             if maxb("nodes") != 'undt' and maxb("edges") != 'undt':
@@ -5616,6 +5616,7 @@ class Theorem179(Theorem):
                 except:
                     pass
         return
+
 class Theorem180(Theorem):
     def __init__(self):
         super(Theorem180, self).__init__(180, "if regular and nodes > 5.0 then \n{\n    if maxdeg >= nodes/2.0 and maxdeg <= nodes-(2.0) and ((odd nodes and even maxdeg) or (odd maxdeg and even nodes)) then \n    {\n        chromaticNum <= minimum(maxdeg, 3.0*nodes/5.0)\n    }\n    else if maxdeg >= nodes/2.0 and maxdeg <= nodes-(2.0) then \n    {\n        chromaticNum <= minimum(maxdeg, (2.0*(nodes-(maxdeg))-(3.0))*nodes/(3.0*(nodes-(maxdeg))-(4.0)))\n    }\n};\n", "")
