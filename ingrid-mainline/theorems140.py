@@ -6352,7 +6352,7 @@ class Theorem205(Theorem):
         return
 class Theorem206(Theorem):
     def __init__(self):
-        super(Theorem206, self).__init__(206, "nodeCover <= (nodes*maxdeg+1.0)/(maxdeg+1.0)-(1.0/(mindeg+1.0));\n", "")
+        super(Theorem206, self).__init__(206, "nosolve nodeCover <= (nodes*maxdeg+1.0)/(maxdeg+1.0)-(1.0/(mindeg+1.0));\n", "")
     def involves(self, str_invar):
         return str_invar in ["nodeCover","nodes","maxdeg","mindeg"]
     def run(self):
@@ -6366,21 +6366,6 @@ class Theorem206(Theorem):
         if maxb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("mindeg") != 'undt':
             try:
                 set("nodeCover",  (maxb("nodes")*maxb("maxdeg")+1.0)/(maxb("maxdeg")+1.0)-(1.0/(maxb("mindeg")+1.0)), ind='Max')
-            except:
-                pass
-        if minb("maxdeg") != 'undt' and minb("mindeg") != 'undt' and minb("nodeCover") != 'undt':
-            try:
-                set("nodes",  (maxb("maxdeg")*minb("mindeg")*minb("nodeCover")+maxb("maxdeg")*minb("nodeCover")+maxb("maxdeg")+minb("mindeg")*minb("nodeCover")-(minb("mindeg"))+minb("nodeCover"))/(maxb("maxdeg")*(minb("mindeg")+1.0)), ind='Min')
-            except:
-                pass
-        if minb("mindeg") != 'undt' and minb("nodeCover") != 'undt' and minb("nodes") != 'undt':
-            try:
-                set("maxdeg",  (-(minb("mindeg")*maxb("nodeCover"))+minb("mindeg")-(maxb("nodeCover")))/(minb("mindeg")*maxb("nodeCover")-(minb("mindeg")*minb("nodes"))+maxb("nodeCover")-(minb("nodes"))+1.0), ind='Min')
-            except:
-                pass
-        if minb("maxdeg") != 'undt' and minb("nodeCover") != 'undt' and minb("nodes") != 'undt':
-            try:
-                set("mindeg",  (-(minb("maxdeg")*maxb("nodeCover"))+minb("maxdeg")*minb("nodes")-(minb("maxdeg"))-(maxb("nodeCover")))/(minb("maxdeg")*maxb("nodeCover")-(minb("maxdeg")*minb("nodes"))+maxb("nodeCover")-(1.0)), ind='Min')
             except:
                 pass
         return
