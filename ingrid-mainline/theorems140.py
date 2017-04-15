@@ -6149,7 +6149,7 @@ class Theorem198(Theorem):
         return
 class Theorem199(Theorem):
     def __init__(self):
-        super(Theorem199, self).__init__(199, "bandwidth <= nodes-(1.0)-((nodes-(nodeCover))/2.0);\n", "")
+        super(Theorem199, self).__init__(199, "bandwidth <= maxb(nodes)-(1.0)-((maxb(nodes)-(maxb(nodeCover)))/2.0);\nnodes >= 2.0*minb(bandwidth)-(maxb(nodeCover))+1.0;\nnodeCover >= 2.0*minb(bandwidth)-(maxb(nodes))+1.0;\n", "")
     def involves(self, str_invar):
         return str_invar in ["bandwidth","nodes","nodeCover"]
     def run(self):
@@ -6167,12 +6167,12 @@ class Theorem199(Theorem):
                 pass
         if minb("bandwidth") != 'undt' and minb("nodeCover") != 'undt':
             try:
-                set("nodes",  2.0*minb("bandwidth")-(maxb("nodeCover"))+2.0, ind='Min')
+                set("nodes",  2.0*minb("bandwidth")-(maxb("nodeCover"))+1.0, ind='Min')
             except:
                 pass
         if minb("bandwidth") != 'undt' and minb("nodes") != 'undt':
             try:
-                set("nodeCover",  2.0*minb("bandwidth")-(maxb("nodes"))+2.0, ind='Min')
+                set("nodeCover",  2.0*minb("bandwidth")-(maxb("nodes"))+1.0, ind='Min')
             except:
                 pass
         return
