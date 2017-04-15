@@ -6472,9 +6472,9 @@ class Theorem209(Theorem):
         return
 class Theorem210(Theorem):
     def __init__(self):
-        super(Theorem210, self).__init__(210, "nodes >= (-(maxb(maxClique))+maxb(maxdeg)*(minb(nodeCover)+2.0)-(maxb(mindeg))+minb(nodeCover)+1.0)/maxb(maxdeg);\nmaxdeg >= (maxb(maxClique)+minb(mindeg)-(minb(nodeCover))-(1.0))/(minb(nodeCover)-(minb(nodes))+2.0);\nnodeCover <= ((maxb(nodes)-(2.0))*maxb(maxdeg)+maxb(maxClique)+maxb(mindeg)-(1.0))/(maxb(maxdeg)+1.0);\nmaxClique >= maxb(maxdeg)*minb(nodeCover)-(maxb(maxdeg)*maxb(nodes))+2.0*maxb(maxdeg)-(maxb(mindeg))+minb(nodeCover)+1.0;\nmindeg >= -(maxb(maxClique))+maxb(maxdeg)*minb(nodeCover)-(maxb(maxdeg)*maxb(nodes))+2.0*maxb(maxdeg)+minb(nodeCover)+1.0;\n", "")
+        super(Theorem210, self).__init__(210, "nosolve nodeCover <= (nodes-(2.0))*(maxdeg+maxClique+mindeg-(1.0))/(maxdeg+1.0);\n", "")
     def involves(self, str_invar):
-        return str_invar in ["nodes","maxClique","maxdeg","nodeCover","mindeg"]
+        return str_invar in ["nodeCover","nodes","maxdeg","maxClique","mindeg"]
     def run(self):
         get = self.get
         set = self.set
@@ -6483,29 +6483,9 @@ class Theorem210(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if minb("maxClique") != 'undt' and minb("maxdeg") != 'undt' and minb("nodeCover") != 'undt' and minb("mindeg") != 'undt':
-            try:
-                set("nodes",  (-(maxb("maxClique"))+maxb("maxdeg")*(minb("nodeCover")+2.0)-(maxb("mindeg"))+minb("nodeCover")+1.0)/maxb("maxdeg"), ind='Min')
-            except:
-                pass
-        if minb("maxClique") != 'undt' and minb("mindeg") != 'undt' and minb("nodeCover") != 'undt' and minb("nodes") != 'undt':
-            try:
-                set("maxdeg",  (maxb("maxClique")+minb("mindeg")-(minb("nodeCover"))-(1.0))/(minb("nodeCover")-(minb("nodes"))+2.0), ind='Min')
-            except:
-                pass
         if maxb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxClique") != 'undt' and maxb("mindeg") != 'undt':
             try:
-                set("nodeCover",  ((maxb("nodes")-(2.0))*maxb("maxdeg")+maxb("maxClique")+maxb("mindeg")-(1.0))/(maxb("maxdeg")+1.0), ind='Max')
-            except:
-                pass
-        if minb("maxdeg") != 'undt' and minb("nodeCover") != 'undt' and minb("nodes") != 'undt' and minb("mindeg") != 'undt':
-            try:
-                set("maxClique",  maxb("maxdeg")*minb("nodeCover")-(maxb("maxdeg")*maxb("nodes"))+2.0*maxb("maxdeg")-(maxb("mindeg"))+minb("nodeCover")+1.0, ind='Min')
-            except:
-                pass
-        if minb("maxClique") != 'undt' and minb("maxdeg") != 'undt' and minb("nodeCover") != 'undt' and minb("nodes") != 'undt':
-            try:
-                set("mindeg",  -(maxb("maxClique"))+maxb("maxdeg")*minb("nodeCover")-(maxb("maxdeg")*maxb("nodes"))+2.0*maxb("maxdeg")+minb("nodeCover")+1.0, ind='Min')
+                set("nodeCover",  (maxb("nodes")-(2.0))*(maxb("maxdeg")+maxb("maxClique")+maxb("mindeg")-(1.0))/(maxb("maxdeg")+1.0), ind='Max')
             except:
                 pass
         return
