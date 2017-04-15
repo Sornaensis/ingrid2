@@ -136,7 +136,7 @@ if girth >= 5 then
             "disp": ""
         },
         {
-            "text": "if nodeConnec >= 3 then { circumference >= min(nodes, 3*mindeg - nodeConnec) };",
+            "text": "if nodeConnec >= 3 then { circumference >= minimum(nodes, 3*mindeg - nodeConnec) };",
             "name": "Theorem",
             "idnum": 359,
             "disp": ""
