@@ -12437,3 +12437,400 @@ class Theorem440(Theorem):
             except:
                 pass
         return
+class Theorem441(Theorem):
+    def __init__(self):
+        super(Theorem441, self).__init__(441, "if maxdeg >= 6.0 and maxClique <= maxdeg-(1.0) then \n{\n    nodeCover <= (nodes*(maxdeg-(1.0))-(1.0))/maxdeg\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["maxdeg","maxClique","nodeCover","nodes"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (minb("maxdeg") != 'undt' and minb("maxdeg") >= 6.0) and (maxb("maxClique") != 'undt' and minb("maxdeg") != 'undt' and maxb("maxClique") <= minb("maxdeg")-(1.0)):
+            if maxb("nodes") != 'undt' and maxb("maxdeg") != 'undt':
+                try:
+                    set("nodeCover",  (maxb("nodes")*(maxb("maxdeg")-(1.0))-(1.0))/maxb("maxdeg"), ind='Max')
+                except:
+                    pass
+            if minb("maxdeg") != 'undt' and minb("nodeCover") != 'undt':
+                try:
+                    set("nodes",  (minb("maxdeg")*minb("nodeCover")+1.0)/(minb("maxdeg")-(1.0)), ind='Min')
+                except:
+                    pass
+            if minb("nodes") != 'undt' and minb("nodeCover") != 'undt':
+                try:
+                    set("maxdeg",  -((maxb("nodes")+1.0)/(minb("nodeCover")-(maxb("nodes")))), ind='Min')
+                except:
+                    pass
+        return
+class Theorem442(Theorem):
+    def __init__(self):
+        super(Theorem442, self).__init__(442, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem443(Theorem):
+    def __init__(self):
+        super(Theorem443, self).__init__(443, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem444(Theorem):
+    def __init__(self):
+        super(Theorem444, self).__init__(444, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem445(Theorem):
+    def __init__(self):
+        super(Theorem445, self).__init__(445, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem446(Theorem):
+    def __init__(self):
+        super(Theorem446, self).__init__(446, "if maxClique <= 2.0 and maxdeg <= 3.0 then \n{\n    edges >= 14.0*nodeCover-(15.0*nodes/2.0)\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["maxClique","maxdeg","edges","nodeCover","nodes"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (maxb("maxClique") != 'undt' and maxb("maxClique") <= 2.0) and (maxb("maxdeg") != 'undt' and maxb("maxdeg") <= 3.0):
+            if minb("nodeCover") != 'undt' and minb("nodes") != 'undt':
+                try:
+                    set("edges",  14.0*minb("nodeCover")-(15.0*maxb("nodes")/2.0), ind='Min')
+                except:
+                    pass
+            if maxb("edges") != 'undt' and maxb("nodes") != 'undt':
+                try:
+                    set("nodeCover",  maxb("edges")/14.0+15.0*maxb("nodes")/28.0, ind='Max')
+                except:
+                    pass
+            if minb("edges") != 'undt' and minb("nodeCover") != 'undt':
+                try:
+                    set("nodes",  -(2.0*maxb("edges")/15.0)+28.0*minb("nodeCover")/15.0, ind='Min')
+                except:
+                    pass
+        return
+class Theorem447(Theorem):
+    def __init__(self):
+        super(Theorem447, self).__init__(447, "if maxClique <= 2.0 and maxdeg <= 2.0 then \n{\n    edges >= 15.0*nodeCover-(8.0*nodes)\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["maxClique","maxdeg","edges","nodeCover","nodes"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (maxb("maxClique") != 'undt' and maxb("maxClique") <= 2.0) and (maxb("maxdeg") != 'undt' and maxb("maxdeg") <= 2.0):
+            if minb("nodeCover") != 'undt' and minb("nodes") != 'undt':
+                try:
+                    set("edges",  15.0*minb("nodeCover")-(8.0*maxb("nodes")), ind='Min')
+                except:
+                    pass
+            if maxb("edges") != 'undt' and maxb("nodes") != 'undt':
+                try:
+                    set("nodeCover",  maxb("edges")/15.0+8.0*maxb("nodes")/15.0, ind='Max')
+                except:
+                    pass
+            if minb("edges") != 'undt' and minb("nodeCover") != 'undt':
+                try:
+                    set("nodes",  -(maxb("edges")/8.0)+15.0*minb("nodeCover")/8.0, ind='Min')
+                except:
+                    pass
+        return
+class Theorem448(Theorem):
+    def __init__(self):
+        super(Theorem448, self).__init__(448, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem449(Theorem):
+    def __init__(self):
+        super(Theorem449, self).__init__(449, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem450(Theorem):
+    def __init__(self):
+        super(Theorem450, self).__init__(450, "if nodeInd < nodeCliqueCover and nodeCliqueCover == nodes-(mindeg)-(1.0) and mindeg <= nodes-(10.0) then \n{\n    nodes <= 2.0*mindeg+2.0\n}\nelse if nodeInd < nodeCliqueCover and nodeCliqueCover == nodes-(mindeg)-(1.0) and mindeg >= nodes-(10.0) then \n{\n    nodes <= 2.0*mindeg+3.0\n};\n", "Original Code is WRONG!")
+    def involves(self, str_invar):
+        return str_invar in ["nodeInd","nodeCliqueCover","nodes","mindeg"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (maxb("nodeInd") != 'undt' and minb("nodeCliqueCover") != 'undt' and maxb("nodeInd") < minb("nodeCliqueCover")) and ((minb("nodeCliqueCover") != 'undt' and maxb("nodes") != 'undt' and maxb("mindeg") != 'undt' and minb("nodeCliqueCover") >= maxb("nodes")-(minb("mindeg"))-(1.0)) and (maxb("nodeCliqueCover") != 'undt' and minb("nodes") != 'undt' and minb("mindeg") != 'undt' and maxb("nodeCliqueCover") <= minb("nodes")-(maxb("mindeg"))-(1.0))) and (maxb("mindeg") != 'undt' and minb("nodes") != 'undt' and maxb("mindeg") <= minb("nodes")-(10.0)):
+            if maxb("mindeg") != 'undt':
+                try:
+                    set("nodes",  2.0*maxb("mindeg")+2.0, ind='Max')
+                except:
+                    pass
+            if minb("nodes") != 'undt':
+                try:
+                    set("mindeg",  minb("nodes")/2.0-(1.0), ind='Min')
+                except:
+                    pass
+        elif (maxb("nodeInd") != 'undt' and minb("nodeCliqueCover") != 'undt' and maxb("nodeInd") < minb("nodeCliqueCover")) and ((minb("nodeCliqueCover") != 'undt' and maxb("nodes") != 'undt' and maxb("mindeg") != 'undt' and minb("nodeCliqueCover") >= maxb("nodes")-(minb("mindeg"))-(1.0)) and (maxb("nodeCliqueCover") != 'undt' and minb("nodes") != 'undt' and minb("mindeg") != 'undt' and maxb("nodeCliqueCover") <= minb("nodes")-(maxb("mindeg"))-(1.0))) and (minb("mindeg") != 'undt' and maxb("nodes") != 'undt' and minb("mindeg") >= maxb("nodes")-(10.0)):
+            if maxb("mindeg") != 'undt':
+                try:
+                    set("nodes",  2.0*maxb("mindeg")+3.0, ind='Max')
+                except:
+                    pass
+            if minb("nodes") != 'undt':
+                try:
+                    set("mindeg",  minb("nodes")/2.0-(3.0/2.0), ind='Min')
+                except:
+                    pass
+        return
+class Theorem451(Theorem):
+    def __init__(self):
+        super(Theorem451, self).__init__(451, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem452(Theorem):
+    def __init__(self):
+        super(Theorem452, self).__init__(452, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem453(Theorem):
+    def __init__(self):
+        super(Theorem453, self).__init__(453, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem454(Theorem):
+    def __init__(self):
+        super(Theorem454, self).__init__(454, "if nodeInd <= 2.0 and mindeg >= nodes-(4.0) then \n{\n    edges <= nodes*(nodes-(14.0))/2.0+14.0*maxClique\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["nodeInd","mindeg","nodes","edges","maxClique"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (maxb("nodeInd") != 'undt' and maxb("nodeInd") <= 2.0) and (minb("mindeg") != 'undt' and maxb("nodes") != 'undt' and minb("mindeg") >= maxb("nodes")-(4.0)):
+            if maxb("nodes") != 'undt' and maxb("maxClique") != 'undt':
+                try:
+                    set("edges",  maxb("nodes")*(maxb("nodes")-(14.0))/2.0+14.0*maxb("maxClique"), ind='Max')
+                except:
+                    pass
+            if minb("edges") != 'undt' and minb("maxClique") != 'undt':
+                try:
+                    set("nodes",  sqrt(2.0*minb("edges")-(28.0*maxb("maxClique"))+49.0)+7.0, ind='Min')
+                except:
+                    pass
+            if minb("edges") != 'undt' and minb("nodes") != 'undt':
+                try:
+                    set("maxClique",  minb("edges")/14.0-(maxb("nodes")**2.0/28.0)+maxb("nodes")/2.0, ind='Min')
+                except:
+                    pass
+        return
+class Theorem455(Theorem):
+    def __init__(self):
+        super(Theorem455, self).__init__(455, "if nodeInd <= 2.0 and mindeg >= nodes-(3.0) then \n{\n    edges <= nodes*(nodes-(15.0))/2.0+15.0*maxClique\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["nodeInd","mindeg","nodes","edges","maxClique"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (maxb("nodeInd") != 'undt' and maxb("nodeInd") <= 2.0) and (minb("mindeg") != 'undt' and maxb("nodes") != 'undt' and minb("mindeg") >= maxb("nodes")-(3.0)):
+            if maxb("nodes") != 'undt' and maxb("maxClique") != 'undt':
+                try:
+                    set("edges",  maxb("nodes")*(maxb("nodes")-(15.0))/2.0+15.0*maxb("maxClique"), ind='Max')
+                except:
+                    pass
+            if minb("edges") != 'undt' and minb("maxClique") != 'undt':
+                try:
+                    set("nodes",  sqrt(8.0*minb("edges")-(120.0*maxb("maxClique"))+225.0)/2.0+15.0/2.0, ind='Min')
+                except:
+                    pass
+            if minb("edges") != 'undt' and minb("nodes") != 'undt':
+                try:
+                    set("maxClique",  minb("edges")/15.0-(maxb("nodes")**2.0/30.0)+maxb("nodes")/2.0, ind='Min')
+                except:
+                    pass
+        return
+class Theorem456(Theorem):
+    def __init__(self):
+        super(Theorem456, self).__init__(456, "if maxClique == 2.0 then \n{\n    chromaticNum <= 1.0+3.0*(nodeCover+12.0)/16.0\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["maxClique","chromaticNum","nodeCover"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if ((minb("maxClique") != 'undt' and minb("maxClique") >= 2.0) and (maxb("maxClique") != 'undt' and maxb("maxClique") <= 2.0)):
+            if maxb("nodeCover") != 'undt':
+                try:
+                    set("chromaticNum",  1.0+3.0*(maxb("nodeCover")+12.0)/16.0, ind='Max')
+                except:
+                    pass
+            if minb("chromaticNum") != 'undt':
+                try:
+                    set("nodeCover",  16.0*minb("chromaticNum")/3.0-(52.0/3.0), ind='Min')
+                except:
+                    pass
+        return
+class Theorem457(Theorem):
+    def __init__(self):
+        super(Theorem457, self).__init__(457, "if maxClique == 2.0 then \n{\n    chromaticNum <= (3.0*nodes-(3.0*nodeInd)+52.0)/16.0\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["maxClique","chromaticNum","nodes","nodeInd"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if ((minb("maxClique") != 'undt' and minb("maxClique") >= 2.0) and (maxb("maxClique") != 'undt' and maxb("maxClique") <= 2.0)):
+            if maxb("nodes") != 'undt' and maxb("nodeInd") != 'undt':
+                try:
+                    set("chromaticNum",  (3.0*maxb("nodes")-(3.0*minb("nodeInd"))+52.0)/16.0, ind='Max')
+                except:
+                    pass
+            if minb("chromaticNum") != 'undt' and minb("nodeInd") != 'undt':
+                try:
+                    set("nodes",  16.0*minb("chromaticNum")/3.0+minb("nodeInd")-(52.0/3.0), ind='Min')
+                except:
+                    pass
+            if maxb("chromaticNum") != 'undt' and maxb("nodes") != 'undt':
+                try:
+                    set("nodeInd",  -(16.0*minb("chromaticNum")/3.0)+maxb("nodes")+52.0/3.0, ind='Max')
+                except:
+                    pass
+        return
+class Theorem458(Theorem):
+    def __init__(self):
+        super(Theorem458, self).__init__(458, "if nodeInd == 2.0 then \n{\n    nodeCliqueCover <= (3.0*nodes-(3.0*maxClique)+52.0)/16.0\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["nodeInd","nodeCliqueCover","nodes","maxClique"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if ((minb("nodeInd") != 'undt' and minb("nodeInd") >= 2.0) and (maxb("nodeInd") != 'undt' and maxb("nodeInd") <= 2.0)):
+            if maxb("nodes") != 'undt' and maxb("maxClique") != 'undt':
+                try:
+                    set("nodeCliqueCover",  (3.0*maxb("nodes")-(3.0*minb("maxClique"))+52.0)/16.0, ind='Max')
+                except:
+                    pass
+            if minb("maxClique") != 'undt' and minb("nodeCliqueCover") != 'undt':
+                try:
+                    set("nodes",  minb("maxClique")+16.0*minb("nodeCliqueCover")/3.0-(52.0/3.0), ind='Min')
+                except:
+                    pass
+            if maxb("nodeCliqueCover") != 'undt' and maxb("nodes") != 'undt':
+                try:
+                    set("maxClique",  -(16.0*minb("nodeCliqueCover")/3.0)+maxb("nodes")+52.0/3.0, ind='Max')
+                except:
+                    pass
+        return
