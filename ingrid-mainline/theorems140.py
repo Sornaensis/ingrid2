@@ -5918,9 +5918,9 @@ class Theorem191(Theorem):
         return
 class Theorem192(Theorem):
     def __init__(self):
-        super(Theorem192, self).__init__(192, "if maxClique == 2.0 then \n{\n    nodeInd >= mindeg*(diameter+4.0)/4.0\n};\n", "")
+        super(Theorem192, self).__init__(192, "if maxClique == 2.0 and exists diameter then \n{\n    nodeInd >= mindeg*(diameter+4.0)/4.0\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["maxClique","nodeInd","mindeg","diameter"]
+        return str_invar in ["maxClique","diameter","nodeInd","mindeg"]
     def run(self):
         get = self.get
         set = self.set
@@ -5929,7 +5929,7 @@ class Theorem192(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if ((minb("maxClique") != 'undt' and minb("maxClique") >= 2.0) and (maxb("maxClique") != 'undt' and maxb("maxClique") <= 2.0)):
+        if ((minb("maxClique") != 'undt' and minb("maxClique") >= 2.0) and (maxb("maxClique") != 'undt' and maxb("maxClique") <= 2.0)) and maxb("diameter") != 'undt':
             if minb("mindeg") != 'undt' and minb("diameter") != 'undt':
                 try:
                     set("nodeInd",  minb("mindeg")*(minb("diameter")+4.0)/4.0, ind='Min')
