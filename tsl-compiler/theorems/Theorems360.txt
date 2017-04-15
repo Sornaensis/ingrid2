@@ -86,20 +86,19 @@ if girth >= 5 then
             "disp": ""
         },
         {
-            "text": "_t is floor((minb(girth))/2);
+            "text": "_t is floor((minb(girth))/2.0);
 _k is floor(minb(edges)/maxb(nodes));
-if _k <= 1 then 
+if _k <= 1.0 then 
 {
-    _r is _t - 1
+    _r is _t-(1.0)
 }
-else
+else  
 {
-    _r is (k**(t-1) - 1)/(k-1)
+    _r is (k**(t-(1.0))-(1.0))/(k-(1.0))
 };
-
-if girth >= 5 then
+if minb(girth) >= 5.0 then 
 {
-    nosolve edges <= nodes*(0.5 + sqrt((nodes - _k - 2)/_r + 0.25))/2  
+    edges <= maxb(nodes)*(0.5+sqrt((maxb(nodes)-(_k)-(2.0))/_r+0.25))/2.0
 };",
             "name": "Theorem",
             "idnum": 353,
