@@ -2684,9 +2684,9 @@ class Theorem78(Theorem):
         return
 class Theorem79(Theorem):
     def __init__(self):
-        super(Theorem79, self).__init__(79, "if not forest then \n{\n    nodeInd >= minb(girth)/2.0,\n    radius >= minb(girth)/2.0,\n    girth <= minimum(maxb(radius)*2.0+1.0, 2.0*maxb(nodeInd)+1.0),\n    edgeInd >= minb(circumference)/2.0,\n    circumference <= 2.0*maxb(edgeInd)\n};\n", "")
+        super(Theorem79, self).__init__(79, "if not forest or defined girth then \n{\n    nodeInd >= minb(girth)/2.0,\n    radius >= minb(girth)/2.0,\n    edgeInd >= circumference/2.0-(0.5)\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["forest","nodeInd","girth","radius","edgeInd","circumference"]
+        return str_invar in ["forest","girth","nodeInd","radius","edgeInd","circumference"]
     def run(self):
         get = self.get
         set = self.set
@@ -2695,7 +2695,7 @@ class Theorem79(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("forest") == False:
+        if get("forest") == False or minb("girth") != 'undt':
             if minb("girth") != 'undt':
                 try:
                     set("nodeInd",  minb("girth")/2.0, ind='Min')
@@ -2706,19 +2706,14 @@ class Theorem79(Theorem):
                     set("radius",  minb("girth")/2.0, ind='Min')
                 except:
                     pass
-            if maxb("radius") != 'undt' and maxb("nodeInd") != 'undt':
-                try:
-                    set("girth",  minimum(maxb("radius")*2.0+1.0, 2.0*maxb("nodeInd")+1.0), ind='Max')
-                except:
-                    pass
             if minb("circumference") != 'undt':
                 try:
-                    set("edgeInd",  minb("circumference")/2.0, ind='Min')
+                    set("edgeInd",  minb("circumference")/2.0-(0.5), ind='Min')
                 except:
                     pass
             if maxb("edgeInd") != 'undt':
                 try:
-                    set("circumference",  2.0*maxb("edgeInd"), ind='Max')
+                    set("circumference",  2.0*maxb("edgeInd")+1.0, ind='Max')
                 except:
                     pass
         return
