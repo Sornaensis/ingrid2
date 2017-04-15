@@ -5390,9 +5390,9 @@ class Theorem173(Theorem):
         return
 class Theorem174(Theorem):
     def __init__(self):
-        super(Theorem174, self).__init__(174, "_maxdeg is maxb(maxdeg);\nnodeInd >= (nodes+2.0*_maxdeg+1.0-(maxClique)-(mindeg))/(_maxdeg+1.0);\nmaxdeg >= (-(maxb(maxClique))-(maxb(mindeg))-(maxb(nodeInd))+minb(nodes)+1.0)/(maxb(nodeInd)-(2.0));\n", "")
+        super(Theorem174, self).__init__(174, "_maxdeg is maxb(maxdeg);\nif not complete then \n{\n    nodeInd >= (minb(nodes)+2.0*_maxdeg+1.0-(maxb(maxClique))-(maxb(mindeg)))/(_maxdeg+1.0)\n};\nif maxb(nodeInd) > 2.0 then \n{\n    maxdeg >= (-(maxb(maxClique))-(maxb(mindeg))-(maxb(nodeInd))+minb(nodes)+1.0)/(maxb(nodeInd)-(2.0))\n};\nnodes <= _maxdeg*maxb(nodeInd)-(2.0*_maxdeg)+maxb(maxClique)+maxb(mindeg)+maxb(nodeInd)-(1.0);\nmaxClique >= -(_maxdeg*maxb(nodeInd))+2.0*_maxdeg-(maxb(mindeg))-(maxb(nodeInd))+minb(nodes)+1.0;\nmindeg >= -(_maxdeg*maxb(nodeInd))+2.0*_maxdeg-(maxb(maxClique))-(maxb(nodeInd))+minb(nodes)+1.0;\n", "")
     def involves(self, str_invar):
-        return str_invar in ["maxdeg","nodeInd","nodes","maxClique","mindeg"]
+        return str_invar in ["maxdeg","complete","nodeInd","nodes","maxClique","mindeg"]
     def run(self):
         get = self.get
         set = self.set
@@ -5402,12 +5402,22 @@ class Theorem174(Theorem):
         oddInvar = self.oddInvar
         congruent = self.congruent
         if maxb("maxdeg") != 'undt':
-            _maxdeg = maxb("maxdeg")
-        if minb("nodes") != 'undt' and minb("maxClique") != 'undt' and minb("mindeg") != 'undt':
             try:
-                set("nodeInd",  (minb("nodes")+2.0*_maxdeg+1.0-(maxb("maxClique"))-(maxb("mindeg")))/(_maxdeg+1.0), ind='Min')
+                _maxdeg = maxb("maxdeg")
             except:
                 pass
+        if get("complete") == False:
+            if minb("nodes") != 'undt' and minb("maxClique") != 'undt' and minb("mindeg") != 'undt':
+                try:
+                    set("nodeInd",  (minb("nodes")+2.0*_maxdeg+1.0-(maxb("maxClique"))-(maxb("mindeg")))/(_maxdeg+1.0), ind='Min')
+                except:
+                    pass
+        if (maxb("nodeInd") != 'undt' and maxb("nodeInd") > 2.0):
+            if minb("maxClique") != 'undt' and minb("mindeg") != 'undt' and minb("nodeInd") != 'undt' and minb("nodes") != 'undt':
+                try:
+                    set("maxdeg",  (-(maxb("maxClique"))-(maxb("mindeg"))-(maxb("nodeInd"))+minb("nodes")+1.0)/(maxb("nodeInd")-(2.0)), ind='Min')
+                except:
+                    pass
         if maxb("nodeInd") != 'undt' and maxb("maxClique") != 'undt' and maxb("mindeg") != 'undt':
             try:
                 set("nodes",  _maxdeg*maxb("nodeInd")-(2.0*_maxdeg)+maxb("maxClique")+maxb("mindeg")+maxb("nodeInd")-(1.0), ind='Max')
@@ -5421,11 +5431,6 @@ class Theorem174(Theorem):
         if minb("nodeInd") != 'undt' and minb("maxClique") != 'undt' and minb("nodes") != 'undt':
             try:
                 set("mindeg",  -(_maxdeg*maxb("nodeInd"))+2.0*_maxdeg-(maxb("maxClique"))-(maxb("nodeInd"))+minb("nodes")+1.0, ind='Min')
-            except:
-                pass
-        if minb("maxClique") != 'undt' and minb("mindeg") != 'undt' and minb("nodeInd") != 'undt' and minb("nodes") != 'undt':
-            try:
-                set("maxdeg",  (-(maxb("maxClique"))-(maxb("mindeg"))-(maxb("nodeInd"))+minb("nodes")+1.0)/(maxb("nodeInd")-(2.0)), ind='Min')
             except:
                 pass
         return
