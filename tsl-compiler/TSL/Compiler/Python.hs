@@ -69,7 +69,11 @@ generatePython' (RelExpr a b) = " " ++ a ++ " " ++ b
 generatePython' (Cond a b)                   = a ++ fromMaybe [] b
 generatePython' (InvarExpr a Nothing) = a
 generatePython' (InvarExpr a (Just relexpr)) =
-           "try:\n    set(" ++ a ++  ", " ++ expr ++ ", ind=\'" ++ rel' ++ "\')\nexcept:\n    pass"
+           "try:\n    " ++
+           case rel' of
+             (_:_) -> "set(" ++ a ++  ", " ++ expr ++ ", ind=\'" ++ rel' ++ "\')\n"
+             _     -> a ++ relexpr 
+           ++ "except:\n    pass"
            where
            rel = takeWhile (/= ' ') . dropWhile (==' ') $ relexpr
            expr = drop (length rel + 1) relexpr
@@ -221,11 +225,11 @@ realizeAnalysis2' v
                                                             (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
                       L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr
         in if null invs 
-            then  (Fx $ Cond (Fx $ Local l) (Just . Fx $ ExprF " =" expr))
+            then  (Fx $ InvarExpr (Fx $ Local l) (Just . Fx $ ExprF " =" expr))
             else  
               if length invs == 1 
-                then Fx $ If (head invs) (Fx $ Cond (Fx $ Local l) (Just . Fx $ ExprF " =" expr)) Nothing 
-                else Fx $ If (foldr1 (\x y -> Fx $ And x y) invs) (Fx $ Cond (Fx $ Local l) (Just . Fx $ ExprF " =" expr)) Nothing
+                then Fx $ If (head invs) (Fx $ InvarExpr (Fx $ Local l) (Just . Fx $ ExprF " =" expr)) Nothing 
+                else Fx $ If (foldr1 (\x y -> Fx $ And x y) invs) (Fx $ InvarExpr (Fx $ Local l) (Just . Fx $ ExprF " =" expr)) Nothing
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
             invars = getInvolves expr
