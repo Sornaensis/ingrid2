@@ -221,10 +221,10 @@ realizeAnalysis2' v
                                                             (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
                       L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr
         in if null invs 
-            then  Fx $ ExprF (l ++ " =") expr
+            then  (Fx $ Cond (Fx $ Local l) (Just . Fx $ ExprF " =" expr))
             else  
               if length invs == 1 
-                then Fx $ If (head invs) (Fx $ ExprF (l ++ " =") expr) Nothing 
+                then Fx $ If (head invs) (Fx $ Cond (Fx $ Local l) (Just . Fx $ ExprF " =" expr)) Nothing 
                 else Fx $ If (foldr1 (\x y -> Fx $ And x y) invs) (Fx $ Cond (Fx $ Local l) (Just . Fx $ ExprF " =" expr)) Nothing
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
