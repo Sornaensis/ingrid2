@@ -61,7 +61,7 @@
             "disp": ""
         },
         {
-            "text": "if girth >= max((nodes+1)/2, 5) and edges >= nodes + 3 then { if girth <= 7 then { girth <= 6 } else { girth <= 8 }, nodes == 2*girth - 1, nodeConnec == 2, edgeConnec == 2, mindeg == 2, edges == nodes + 3, not planar };",
+            "text": "if girth >= maximum((nodes+1)/2, 5) and edges >= nodes + 3 then { if girth <= 7 then { girth <= 6 } else { girth <= 8 }, nodes == 2*girth - 1, nodeConnec == 2, edgeConnec == 2, mindeg == 2, edges == nodes + 3, not planar };",
             "name": "Theorem",
             "idnum": 351,
             "disp": ""
