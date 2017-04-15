@@ -1569,7 +1569,7 @@ class Theorem48(Theorem):
         return
 class Theorem49(Theorem):
     def __init__(self):
-        super(Theorem49, self).__init__(49, "if cycle then \n{\n    planar,\n    not forest,\n    crossing == 0.0,\n    nodes >= 3.0,\n    edges >= 3.0,\n    arboricity == 2.0,\n    nodeCover == (nodes+1.0)/2.0,\n    edgeCover == (nodes+1.0)/2.0,\n    nodeInd == nodes/2.0,\n    edgeInd == nodes/2.0,\n    radius == edgeInd,\n    girth == circumference,\n    circumference == nodes,\n    edgeChromatic == chromaticNum,\n    nodes >= 2.0*nodeCover-(1.0),\n    nodes <= 2.0*nodeCover,\n    nodes >= 2.0*edgeInd,\n    nodes <= 2.0*edgeInd+1.0,\n    nodeConnec == 2.0,\n    regular,\n    bandwidth == 2.0,\n    if nodes > 3.0 then \n    {\n        maxClique == 2.0\n    }\n    else  \n    {\n        maxClique == 3.0\n    },\n    if even nodes then \n    {\n        chromaticNum == 2.0\n    }\n    else  \n    {\n        chromaticNum == 3.0\n    },\n    if chromaticNum == 2.0 then \n    {\n        even nodes\n    }\n    else  \n    {\n        odd nodes\n    },\n    if maxClique == 2.0 then \n    {\n        nodes >= 4.0\n    }\n    else  \n    {\n        nodes == 3.0\n    },\n    if nodes == 3.0 then \n    {\n        nodeCliqueCover == 1.0\n    }\n    else  \n    {\n        nodeCliqueCover == nodeCover\n    }\n};\n", "")
+        super(Theorem49, self).__init__(49, "if cycle then \n{\n    planar,\n    not forest,\n    crossing == 0.0,\n    nodes >= 3.0,\n    edges >= 3.0,\n    arboricity == 2.0,\n    nodeCover == floor((nodes+1.0)/2.0),\n    edgeCover == floor((nodes+1.0)/2.0),\n    nodeInd == floor(nodes/2.0),\n    edgeInd == floor(nodes/2.0),\n    radius == edgeInd,\n    girth == circumference,\n    circumference == nodes,\n    edgeChromatic == chromaticNum,\n    nodes >= 2.0*nodeCover-(1.0),\n    nodes <= 2.0*nodeCover,\n    nodes >= 2.0*edgeInd,\n    nodes <= 2.0*edgeInd+1.0,\n    nodeConnec == 2.0,\n    regular,\n    bandwidth == 2.0,\n    if nodes > 3.0 then \n    {\n        maxClique == 2.0\n    }\n    else  \n    {\n        maxClique == 3.0\n    },\n    if even nodes then \n    {\n        chromaticNum == 2.0\n    }\n    else  \n    {\n        chromaticNum == 3.0\n    },\n    if chromaticNum == 2.0 then \n    {\n        even nodes\n    }\n    else  \n    {\n        odd nodes\n    },\n    if maxClique == 2.0 then \n    {\n        nodes >= 4.0\n    }\n    else  \n    {\n        nodes == 3.0\n    },\n    if nodes == 3.0 then \n    {\n        nodeCliqueCover == 1.0\n    }\n    else  \n    {\n        nodeCliqueCover == nodeCover\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["cycle","planar","forest","crossing","nodes","edges","arboricity","nodeCover","edgeCover","nodeInd","edgeInd","radius","girth","circumference","edgeChromatic","chromaticNum","nodeConnec","regular","bandwidth","maxClique","nodeCliqueCover"]
     def run(self):
@@ -1609,82 +1609,42 @@ class Theorem49(Theorem):
                 pass
             if minb("nodes") != 'undt':
                 try:
-                    set("nodeCover",  (minb("nodes")+1.0)/2.0, ind='Min')
-                except:
-                    pass
-            if maxb("nodeCover") != 'undt':
-                try:
-                    set("nodes",  2.0*maxb("nodeCover")-(1.0), ind='Max')
+                    set("nodeCover",  floor((minb("nodes")+1.0)/2.0), ind='Min')
                 except:
                     pass
             if maxb("nodes") != 'undt':
                 try:
-                    set("nodeCover",  (maxb("nodes")+1.0)/2.0, ind='Max')
-                except:
-                    pass
-            if minb("nodeCover") != 'undt':
-                try:
-                    set("nodes",  2.0*minb("nodeCover")-(1.0), ind='Min')
+                    set("nodeCover",  floor((maxb("nodes")+1.0)/2.0), ind='Max')
                 except:
                     pass
             if minb("nodes") != 'undt':
                 try:
-                    set("edgeCover",  (minb("nodes")+1.0)/2.0, ind='Min')
-                except:
-                    pass
-            if maxb("edgeCover") != 'undt':
-                try:
-                    set("nodes",  2.0*maxb("edgeCover")-(1.0), ind='Max')
+                    set("edgeCover",  floor((minb("nodes")+1.0)/2.0), ind='Min')
                 except:
                     pass
             if maxb("nodes") != 'undt':
                 try:
-                    set("edgeCover",  (maxb("nodes")+1.0)/2.0, ind='Max')
-                except:
-                    pass
-            if minb("edgeCover") != 'undt':
-                try:
-                    set("nodes",  2.0*minb("edgeCover")-(1.0), ind='Min')
+                    set("edgeCover",  floor((maxb("nodes")+1.0)/2.0), ind='Max')
                 except:
                     pass
             if minb("nodes") != 'undt':
                 try:
-                    set("nodeInd",  minb("nodes")/2.0, ind='Min')
-                except:
-                    pass
-            if maxb("nodeInd") != 'undt':
-                try:
-                    set("nodes",  2.0*maxb("nodeInd"), ind='Max')
+                    set("nodeInd",  floor(minb("nodes")/2.0), ind='Min')
                 except:
                     pass
             if maxb("nodes") != 'undt':
                 try:
-                    set("nodeInd",  maxb("nodes")/2.0, ind='Max')
-                except:
-                    pass
-            if minb("nodeInd") != 'undt':
-                try:
-                    set("nodes",  2.0*minb("nodeInd"), ind='Min')
+                    set("nodeInd",  floor(maxb("nodes")/2.0), ind='Max')
                 except:
                     pass
             if minb("nodes") != 'undt':
                 try:
-                    set("edgeInd",  minb("nodes")/2.0, ind='Min')
-                except:
-                    pass
-            if maxb("edgeInd") != 'undt':
-                try:
-                    set("nodes",  2.0*maxb("edgeInd"), ind='Max')
+                    set("edgeInd",  floor(minb("nodes")/2.0), ind='Min')
                 except:
                     pass
             if maxb("nodes") != 'undt':
                 try:
-                    set("edgeInd",  maxb("nodes")/2.0, ind='Max')
-                except:
-                    pass
-            if minb("edgeInd") != 'undt':
-                try:
-                    set("nodes",  2.0*minb("edgeInd"), ind='Min')
+                    set("edgeInd",  floor(maxb("nodes")/2.0), ind='Max')
                 except:
                     pass
             if minb("edgeInd") != 'undt':
