@@ -71,9 +71,9 @@ generatePython' (InvarExpr a Nothing) = a
 generatePython' (InvarExpr a (Just relexpr)) =
            "try:\n    " ++
            case rel' of
-             (_:_) -> "set(" ++ a ++  ", " ++ expr ++ ", ind=\'" ++ rel' ++ "\')\n"
+             (_:_) -> "set(" ++ a ++  ", " ++ expr ++ ", ind=\'" ++ rel' ++ "\')"
              _     -> a ++ relexpr 
-           ++ "except:\n    pass"
+           ++ "\nexcept:\n    pass"
            where
            rel = takeWhile (/= ' ') . dropWhile (==' ') $ relexpr
            expr = drop (length rel + 1) relexpr
