@@ -344,7 +344,12 @@ class IngridObj:
                 if not theorem.involves(str_inv):
                     continue
                 self.current_theorem = theorem
-                theorem.run()
+                try:
+                    theorem.run()
+                except:
+                    self.error_inv = 'Runtime Error'
+                    self.error_msg = 'Something blew up in theorem ' + str(theorem.id)
+                    
                 if self.error_inv is not None:
                     return
                     
