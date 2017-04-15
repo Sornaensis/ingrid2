@@ -80,6 +80,7 @@ generatePython' (InvarExpr a (Just relexpr)) =
            rel' = case rel of
                     ">=" -> "Min"
                     "<=" -> "Max"
+                    _    -> ""
 generatePython' (If a b c)            =
     case a of
         "not Local True" ->
