@@ -66,10 +66,7 @@
             "disp": ""
         },
         {
-            "text": "nodeCover <= maxb(nodes)*(1.0-(2.0/(maxb(maxdeg)+maxb(maxClique)+1.0)));
-nodes >= minb(nodeCover)*(maxb(maxClique)+minb(maxdeg)+1.0)/(maxb(maxClique)+minb(maxdeg)-(1.0));
-maxdeg >= (-(minb(maxClique)*minb(nodeCover))+minb(maxClique)*maxb(nodes)-(minb(nodeCover))-(maxb(nodes)))/(minb(nodeCover)-(maxb(nodes)));
-maxClique >= (-(maxb(maxdeg)*minb(nodeCover))+maxb(maxdeg)*minb(nodes)-(minb(nodeCover))-(minb(nodes)))/(minb(nodeCover)-(minb(nodes)));
+            "text": "nosolve nodeCover <= nodes*(1.0-(2.0/(maxdeg+maxClique+1.0)));
 ",
             "name": "Theorem",
             "idnum": 209,
