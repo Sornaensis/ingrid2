@@ -225,7 +225,7 @@ realizeAnalysis2' v
             else  
               if length invs == 1 
                 then Fx $ If (head invs) (Fx $ ExprF (l ++ " =") expr) Nothing 
-                else Fx $ If (foldr1 (\x y -> Fx $ And x y) invs) (Fx $ InvarExpr (Fx $ Local l) (Just . Fx $ ExprF " =" expr)) Nothing
+                else Fx $ If (foldr1 (\x y -> Fx $ And x y) invs) (Fx $ Cond (Fx $ Local l) (Just . Fx $ ExprF " =" expr)) Nothing
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
             invars = getInvolves expr
