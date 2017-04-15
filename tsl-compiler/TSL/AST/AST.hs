@@ -36,6 +36,8 @@ arityOfFns = [
     ,   ("minimum",   (2, 2))
     ,   ("congruent", (3, 3))
     ,   ("pi",        (0, 0))
+    ,   ("even",      (1, 1))
+    ,   ("odd",       (1, 1))
     ,   ("setmin",    (1, 1))
     ,   ("setmax",    (1, 1))
     ,   ("useMinFor", (1, 1))
