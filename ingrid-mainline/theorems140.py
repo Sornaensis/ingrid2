@@ -10345,3 +10345,489 @@ class Theorem360(Theorem):
                 except:
                     pass
         return
+class Theorem361(Theorem):
+    def __init__(self):
+        super(Theorem361, self).__init__(361, "let t = ((girth-(1.0))/2.0);\nif g >= 4.0 and mindeg == 2.0 and even t then \n{\n    nodeInd >= maxdeg*((t+1.0)/2.0)+1.0\n}\nelse if g >= 4.0 and mindeg == 2.0 and odd t then \n{\n    nodeInd >= maxdeg*((t+1.0)/2.0)\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["g","mindeg","girth","nodeInd","maxdeg"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (minb("g") != 'undt' and minb("g") >= 4.0) and ((minb("mindeg") != 'undt' and minb("mindeg") >= 2.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 2.0)) and evenInvar((("girth"-(1.0))/2.0)):
+            if minb("maxdeg") != 'undt' and minb("girth") != 'undt':
+                try:
+                    set("nodeInd",  minb("maxdeg")*((((minb("girth")-(1.0))/2.0)+1.0)/2.0)+1.0, ind='Min')
+                except:
+                    pass
+            if maxb("nodeInd") != 'undt' and maxb("girth") != 'undt':
+                try:
+                    set("maxdeg",  4.0*(maxb("nodeInd")-(1.0))/(minb("girth")+1.0), ind='Max')
+                except:
+                    pass
+            if maxb("maxdeg") != 'undt' and maxb("nodeInd") != 'undt':
+                try:
+                    set("girth",  (-(minb("maxdeg"))+4.0*maxb("nodeInd")-(4.0))/minb("maxdeg"), ind='Max')
+                except:
+                    pass
+        elif (minb("g") != 'undt' and minb("g") >= 4.0) and ((minb("mindeg") != 'undt' and minb("mindeg") >= 2.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 2.0)) and oddInvar((("girth"-(1.0))/2.0)):
+            if minb("maxdeg") != 'undt' and minb("girth") != 'undt':
+                try:
+                    set("nodeInd",  minb("maxdeg")*((((minb("girth")-(1.0))/2.0)+1.0)/2.0), ind='Min')
+                except:
+                    pass
+            if maxb("nodeInd") != 'undt' and maxb("girth") != 'undt':
+                try:
+                    set("maxdeg",  4.0*maxb("nodeInd")/(minb("girth")+1.0), ind='Max')
+                except:
+                    pass
+            if maxb("maxdeg") != 'undt' and maxb("nodeInd") != 'undt':
+                try:
+                    set("girth",  (-(minb("maxdeg"))+4.0*maxb("nodeInd"))/minb("maxdeg"), ind='Max')
+                except:
+                    pass
+        return
+class Theorem362(Theorem):
+    def __init__(self):
+        super(Theorem362, self).__init__(362, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem363(Theorem):
+    def __init__(self):
+        super(Theorem363, self).__init__(363, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem364(Theorem):
+    def __init__(self):
+        super(Theorem364, self).__init__(364, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem365(Theorem):
+    def __init__(self):
+        super(Theorem365, self).__init__(365, "if bipartite then \n{\n    if odd nodes then \n    {\n        crossing <= (nodes/4.0)**2.0*((nodes-(2.0))/4.0)**2.0\n    }\n    else  \n    {\n        crossing <= ((nodes+1.0)/4.0)*((nodes-(1.0))/4.0)**2.0*(nodes-(3.0))/4.0\n    }\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["bipartite","nodes","crossing"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if get("bipartite") == True:
+            if oddInvar("nodes"):
+                if maxb("nodes") != 'undt':
+                    try:
+                        set("crossing",  (maxb("nodes")/4.0)**2.0*((maxb("nodes")-(2.0))/4.0)**2.0, ind='Max')
+                    except:
+                        pass
+                if minb("crossing") != 'undt':
+                    try:
+                        set("nodes",  sqrt(16.0*sqrt(minb("crossing"))+1.0)+1.0, ind='Min')
+                    except:
+                        pass
+            elif True:
+                if maxb("nodes") != 'undt':
+                    try:
+                        set("crossing",  ((maxb("nodes")+1.0)/4.0)*((maxb("nodes")-(1.0))/4.0)**2.0*(maxb("nodes")-(3.0))/4.0, ind='Max')
+                    except:
+                        pass
+                if minb("crossing") != 'undt':
+                    try:
+                        set("nodes",  sqrt(2.0)*sqrt(sqrt(64.0*minb("crossing")+1.0)+1.0)+1.0, ind='Min')
+                    except:
+                        pass
+        return
+class Theorem366(Theorem):
+    def __init__(self):
+        super(Theorem366, self).__init__(366, "if connected then \n{\n    nosolve spectralRadius >= 2.0*cos(3.14159265358979/(nodes+1.0)):useMinFor(nodes)\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["connected","spectralRadius","nodes"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if get("connected") == True:
+            if minb("nodes") != 'undt':
+                try:
+                    set("spectralRadius",  2.0*cos(3.14159265358979/(minb("nodes")+1.0)), ind='Min')
+                except:
+                    pass
+        return
+class Theorem367(Theorem):
+    def __init__(self):
+        super(Theorem367, self).__init__(367, "if regular and mindeg >= 7.0 and odd mindeg and (mindeg > 9.0 or mindeg < 9.0) and not bipartite and girth == 4.0 then \n{\n    nodes >= 2.0*(5.0*mindeg/4.0)+4.0\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["regular","mindeg","bipartite","girth","nodes"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if get("regular") == True and (minb("mindeg") != 'undt' and minb("mindeg") >= 7.0) and oddInvar("mindeg") and ((minb("mindeg") != 'undt' and minb("mindeg") > 9.0) or (maxb("mindeg") != 'undt' and maxb("mindeg") < 9.0)) and get("bipartite") == False and ((minb("girth") != 'undt' and minb("girth") >= 4.0) and (maxb("girth") != 'undt' and maxb("girth") <= 4.0)):
+            if minb("mindeg") != 'undt':
+                try:
+                    set("nodes",  2.0*(5.0*minb("mindeg")/4.0)+4.0, ind='Min')
+                except:
+                    pass
+            if maxb("nodes") != 'undt':
+                try:
+                    set("mindeg",  2.0*maxb("nodes")/5.0-(8.0/5.0), ind='Max')
+                except:
+                    pass
+        return
+class Theorem368(Theorem):
+    def __init__(self):
+        super(Theorem368, self).__init__(368, "if bipartite then \n{\n    thickness <= nodes/8.0+2.0\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["bipartite","thickness","nodes"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if get("bipartite") == True:
+            if maxb("nodes") != 'undt':
+                try:
+                    set("thickness",  maxb("nodes")/8.0+2.0, ind='Max')
+                except:
+                    pass
+            if minb("thickness") != 'undt':
+                try:
+                    set("nodes",  8.0*minb("thickness")-(16.0), ind='Min')
+                except:
+                    pass
+        return
+class Theorem369(Theorem):
+    def __init__(self):
+        super(Theorem369, self).__init__(369, "if maxClique <= 2.0 then \n{\n    thickness <= genus+1.0\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["maxClique","thickness","genus"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (maxb("maxClique") != 'undt' and maxb("maxClique") <= 2.0):
+            if maxb("genus") != 'undt':
+                try:
+                    set("thickness",  maxb("genus")+1.0, ind='Max')
+                except:
+                    pass
+            if minb("thickness") != 'undt':
+                try:
+                    set("genus",  minb("thickness")-(1.0), ind='Min')
+                except:
+                    pass
+        return
+class Theorem370(Theorem):
+    def __init__(self):
+        super(Theorem370, self).__init__(370, "if genus <= 1.0 then \n{\n    thickness == genus+1.0\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["genus","thickness"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (maxb("genus") != 'undt' and maxb("genus") <= 1.0):
+            if minb("genus") != 'undt':
+                try:
+                    set("thickness",  minb("genus")+1.0, ind='Min')
+                except:
+                    pass
+            if maxb("thickness") != 'undt':
+                try:
+                    set("genus",  maxb("thickness")-(1.0), ind='Max')
+                except:
+                    pass
+            if maxb("genus") != 'undt':
+                try:
+                    set("thickness",  maxb("genus")+1.0, ind='Max')
+                except:
+                    pass
+            if minb("thickness") != 'undt':
+                try:
+                    set("genus",  minb("thickness")-(1.0), ind='Min')
+                except:
+                    pass
+        return
+class Theorem371(Theorem):
+    def __init__(self):
+        super(Theorem371, self).__init__(371, "arboricity <= edgeArboricity;\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["arboricity","edgeArboricity"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if maxb("edgeArboricity") != 'undt':
+            try:
+                set("arboricity",  maxb("edgeArboricity"), ind='Max')
+            except:
+                pass
+        if minb("arboricity") != 'undt':
+            try:
+                set("edgeArboricity",  minb("arboricity"), ind='Min')
+            except:
+                pass
+        return
+class Theorem372(Theorem):
+    def __init__(self):
+        super(Theorem372, self).__init__(372, "thickness <= edgeArboricity;\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["thickness","edgeArboricity"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if maxb("edgeArboricity") != 'undt':
+            try:
+                set("thickness",  maxb("edgeArboricity"), ind='Max')
+            except:
+                pass
+        if minb("thickness") != 'undt':
+            try:
+                set("edgeArboricity",  minb("thickness"), ind='Min')
+            except:
+                pass
+        return
+class Theorem373(Theorem):
+    def __init__(self):
+        super(Theorem373, self).__init__(373, "if genus >= 1.0 then \n{\n    edgeArboricity <= 2.0+sqrt(3.0*genus)\n};\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["genus","edgeArboricity"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if (minb("genus") != 'undt' and minb("genus") >= 1.0):
+            if maxb("genus") != 'undt':
+                try:
+                    set("edgeArboricity",  2.0+sqrt(3.0*maxb("genus")), ind='Max')
+                except:
+                    pass
+            if minb("edgeArboricity") != 'undt':
+                try:
+                    set("genus",  1.5625e26*(minb("edgeArboricity")-(2.0))**2.0/4.6875000000000146e26, ind='Min')
+                except:
+                    pass
+        return
+class Theorem374(Theorem):
+    def __init__(self):
+        super(Theorem374, self).__init__(374, "thickness <= 5.0+sqrt(2.0*genus-(2.0));\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["thickness","genus"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if maxb("genus") != 'undt':
+            try:
+                set("thickness",  5.0+sqrt(2.0*maxb("genus")-(2.0)), ind='Max')
+            except:
+                pass
+        if minb("thickness") != 'undt':
+            try:
+                set("genus",  (minb("thickness")-(5.0))**2.0/2.0+1.0, ind='Min')
+            except:
+                pass
+        return
+class Theorem375(Theorem):
+    def __init__(self):
+        super(Theorem375, self).__init__(375, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem376(Theorem):
+    def __init__(self):
+        super(Theorem376, self).__init__(376, "\n", "")
+    def involves(self, str_invar):
+        return str_invar in []
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        return
+class Theorem377(Theorem):
+    def __init__(self):
+        super(Theorem377, self).__init__(377, "edgeArboricity <= (maxdeg+2.0)/2.0;\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["edgeArboricity","maxdeg"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if maxb("maxdeg") != 'undt':
+            try:
+                set("edgeArboricity",  (maxb("maxdeg")+2.0)/2.0, ind='Max')
+            except:
+                pass
+        if minb("edgeArboricity") != 'undt':
+            try:
+                set("maxdeg",  2.0*minb("edgeArboricity")-(2.0), ind='Min')
+            except:
+                pass
+        return
+class Theorem378(Theorem):
+    def __init__(self):
+        super(Theorem378, self).__init__(378, "edgeArboricity >= (mindeg+1.0)/2.0;\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["edgeArboricity","mindeg"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if minb("mindeg") != 'undt':
+            try:
+                set("edgeArboricity",  (minb("mindeg")+1.0)/2.0, ind='Min')
+            except:
+                pass
+        if maxb("edgeArboricity") != 'undt':
+            try:
+                set("mindeg",  2.0*maxb("edgeArboricity")-(1.0), ind='Max')
+            except:
+                pass
+        return
+class Theorem379(Theorem):
+    def __init__(self):
+        super(Theorem379, self).__init__(379, "edgeArboricity >= edges/(nodes-(numOfComponents));\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["edgeArboricity","edges","nodes","numOfComponents"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if minb("edges") != 'undt' and minb("nodes") != 'undt' and minb("numOfComponents") != 'undt':
+            try:
+                set("edgeArboricity",  minb("edges")/(maxb("nodes")-(minb("numOfComponents"))), ind='Min')
+            except:
+                pass
+        if maxb("edgeArboricity") != 'undt' and maxb("nodes") != 'undt' and maxb("numOfComponents") != 'undt':
+            try:
+                set("edges",  maxb("edgeArboricity")*(maxb("nodes")-(minb("numOfComponents"))), ind='Max')
+            except:
+                pass
+        if minb("numOfComponents") != 'undt' and minb("edges") != 'undt' and minb("edgeArboricity") != 'undt':
+            try:
+                set("nodes",  minb("numOfComponents")+minb("edges")/maxb("edgeArboricity"), ind='Min')
+            except:
+                pass
+        if maxb("nodes") != 'undt' and maxb("edges") != 'undt' and maxb("edgeArboricity") != 'undt':
+            try:
+                set("numOfComponents",  maxb("nodes")-(minb("edges")/maxb("edgeArboricity")), ind='Max')
+            except:
+                pass
+        return
+class Theorem380(Theorem):
+    def __init__(self):
+        super(Theorem380, self).__init__(380, "edgeArboricity <= 3.0*thickness;\n", "")
+    def involves(self, str_invar):
+        return str_invar in ["edgeArboricity","thickness"]
+    def run(self):
+        get = self.get
+        set = self.set
+        maxb = self.maxb
+        minb = self.minb
+        evenInvar = self.evenInvar
+        oddInvar = self.oddInvar
+        congruent = self.congruent
+        if maxb("thickness") != 'undt':
+            try:
+                set("edgeArboricity",  3.0*maxb("thickness"), ind='Max')
+            except:
+                pass
+        if minb("edgeArboricity") != 'undt':
+            try:
+                set("thickness",  minb("edgeArboricity")/3.0, ind='Min')
+            except:
+                pass
+        return
