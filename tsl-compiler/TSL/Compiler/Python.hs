@@ -69,13 +69,18 @@ generatePython' (RelExpr a b) = " " ++ a ++ " " ++ b
 generatePython' (Cond a b)                   = a ++ fromMaybe [] b
 generatePython' (InvarExpr a Nothing) = a
 generatePython' (InvarExpr a (Just relexpr)) =
-           "try:\n    set(" ++ a ++  ", " ++ expr ++ ", ind=\'" ++ rel' ++ "\')\nexcept:\n    pass"
+           "try:\n    " ++
+           case rel' of
+             (_:_) -> "set(" ++ a ++  ", " ++ expr ++ ", ind=\'" ++ rel' ++ "\')"
+             _     -> a ++ relexpr 
+           ++ "\nexcept:\n    pass"
            where
            rel = takeWhile (/= ' ') . dropWhile (==' ') $ relexpr
            expr = drop (length rel + 1) relexpr
            rel' = case rel of
                     ">=" -> "Min"
                     "<=" -> "Max"
+                    _    -> ""
 generatePython' (If a b c)            =
     case a of
         "not Local True" ->
@@ -164,7 +169,7 @@ realizeAnalysis2' v
                                             (Just . Fx $ 
                                                 RelExpr (Fx $ Relation RelNeq) 
                                                         (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a):inv_replce)
-                         ++ map (\l -> Fx $ ExprF (generatePython l ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
+                         ++ map (\l -> Fx $ ExprF ("\'" ++ generatePython l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
         in  if null inv_check 
               then Fx $ Cond a (Just . Fx $ RelExpr rel expr)
               else 
@@ -196,7 +201,7 @@ realizeAnalysis2' v
                                             (Just . Fx $ 
                                                 RelExpr (Fx $ Relation RelNeq) 
                                                         (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a'):inv_replce)
-                         ++ map (\l -> Fx $ ExprF (generatePython l ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
+                         ++ map (\l -> Fx $ ExprF ("\'" ++ generatePython l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
             a' = case bound of
                     Max -> Fx $ Function "minb" [a]
                     Min -> Fx $ Function "maxb" [a] 
@@ -221,11 +226,11 @@ realizeAnalysis2' v
                                                             (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
                       L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr
         in if null invs 
-            then  Fx $ ExprF (l ++ " =") expr
+            then  (Fx $ InvarExpr (Fx $ Local l) (Just . Fx $ ExprF " =" expr))
             else  
               if length invs == 1 
-                then Fx $ If (head invs) (Fx $ ExprF (l ++ " =") expr) Nothing 
-                else Fx $ If (foldr1 (\x y -> Fx $ And x y) invs) (Fx $ ExprF (l ++ " =") expr) Nothing
+                then Fx $ If (head invs) (Fx $ InvarExpr (Fx $ Local l) (Just . Fx $ ExprF " =" expr)) Nothing 
+                else Fx $ If (foldr1 (\x y -> Fx $ And x y) invs) (Fx $ InvarExpr (Fx $ Local l) (Just . Fx $ ExprF " =" expr)) Nothing
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
             invars = getInvolves expr
@@ -376,7 +381,7 @@ generateSymPyIneq e@(Fx (InvarExpr i (Just relexp))) =
                    bound                                             = getBound rel
                    invar_analyses                                    = map (alterAnalysis ann) . map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) $ invars
                    invar_doanalysis                                  = concatMap (alterAnalysis2 ann) $ invars
-                   invars                                            = filter ((not . noAnalysis) . flip invarAnalysis orig) $ getInvolves orig
+                   invars                                            = filter ((not . noAnalysis) . flip invarAnalysis orig) $ getInvolves exp
               in fmap (map (adjustInequality invar_analyses) . ((replaceAllInvar invar_doanalysis . Fx $ InvarExpr i (Just (Fx $ RelExpr r orig))):) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
                      invars >>= \inv -> return $
                    do Py.initialize
@@ -407,7 +412,7 @@ generateSymPyIneq e@(Fx (InvarExpr i (Just relexp))) =
                    relation                                          = theoremToSrc rel
                    bound                                             = getBound rel
                    invar_analyses                                    = map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) invars
-                   invars                                            = filter ((not . noAnalysis) . flip invarAnalysis orig) $ getInvolves orig
+                   invars                                            = filter ((not . noAnalysis) . flip invarAnalysis orig) $ getInvolves exp
               in fmap (map (adjustInequality invar_analyses) . (e:) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
                      invars >>= \inv -> return $
                    do Py.initialize

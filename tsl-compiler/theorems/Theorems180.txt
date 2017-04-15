@@ -97,8 +97,19 @@ diameter >= (maxb(edges)+1.0)/(maxb(edges)-(minb(nodes))+2.0) };",
         {
             "text": "
 _maxdeg is maxb(maxdeg);
-nodeInd >= (nodes + 2*_maxdeg + 1 - maxClique - mindeg)/(_maxdeg + 1);
-maxdeg >= (-(maxb(maxClique))-(maxb(mindeg))-(maxb(nodeInd))+minb(nodes)+1.0)/(maxb(nodeInd)-(2.0));",
+if not complete then
+{
+    nodeInd >= (minb(nodes)+2.0*_maxdeg+1.0-(maxb(maxClique))-(maxb(mindeg)))/(_maxdeg+1.0)
+};
+if maxb(nodeInd) > 2 then
+{
+    maxdeg >= (-(maxb(maxClique))-(maxb(mindeg))-(maxb(nodeInd))+minb(nodes)+1.0)/(maxb(nodeInd)-(2.0))    
+};
+nodes <= _maxdeg*maxb(nodeInd)-(2.0*_maxdeg)+maxb(maxClique)+maxb(mindeg)+maxb(nodeInd)-(1.0);
+maxClique >= -(_maxdeg*maxb(nodeInd))+2.0*_maxdeg-(maxb(mindeg))-(maxb(nodeInd))+minb(nodes)+1.0;
+mindeg >= -(_maxdeg*maxb(nodeInd))+2.0*_maxdeg-(maxb(maxClique))-(maxb(nodeInd))+minb(nodes)+1.0;
+
+",
             "name": "Theorem",
             "idnum": 174,
             "disp": ""
@@ -153,7 +164,6 @@ if minb(domination) >= 2.0 then
             "disp": ""
         },
         {
-            "text": "
             "text": "
 if regular and nodes > 5 then 
 {

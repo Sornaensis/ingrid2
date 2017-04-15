@@ -8,19 +8,19 @@
             "disp": ""
         },
         {
-            "text": "let t = (girth - 2)/2; if girth >= 4 and mindeg >= 3 and odd t  then {nodeInd >= maxdeg*((mindeg-1)**(t+1)-1)/(mindeg*(mindeg-2))} else if girth >= 4 and mindeg >= 3 and even t  then {nodeInd >= maxdeg*(mindeg-1)*((mindeg-1)**t-1)/(mindeg*(mindeg-2)) + 1};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 362,
             "disp": ""
         },
         {
-            "text": "if diameter == 2 and nodeConnec >= 3 then { edges >= (nodes-1)*(nodeConnec+1)/(2 - nodeConnec**2 + 2*nodeConnec) };",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 363,
             "disp": ""
         },
         {
-            "text": "if diameter == 2 and nodeConnec >= 3 and nodes >= 3*nodeConnec**2 + 6 then { edges >= (nodes - 1)*(nodeConnec + 1)/2 };",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 364,
             "disp": ""
@@ -86,13 +86,13 @@
             "disp": ""
         },
         {
-            "text": "if connected and regular then { edgeArboricity <= 4 + (6*genus+2)/(nodes - 1) };",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 375,
             "disp": ""
         },
         {
-            "text": "genus <= (thickness - 1)*(nodes - 1);",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 376,
             "disp": ""

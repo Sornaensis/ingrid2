@@ -26,7 +26,7 @@
             "disp": ""
         },
         {
-            "text": "radius <= diam;",
+            "text": "radius <= diameter;",
             "name": "Theorem",
             "idnum": 225,
             "disp": ""

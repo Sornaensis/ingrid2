@@ -320,7 +320,7 @@ class IngridObj:
         # saves the original invariants just in case of error
         self.original_json = copy.deepcopy(inv_dict)
         invars = copy.deepcopy(inv_dict['Invariants'])
-        for key in list(invars.keys()):
+        for key in sorted(list(invars.keys())):
             self.invariants[key] = Invariant(name=invars[key]['Name'], stype=invars[key]['Type'], trace=[], val=invars[key]['Value'])
             success = True
             if invars[key]['Changed'] == 'True':
@@ -344,7 +344,12 @@ class IngridObj:
                 if not theorem.involves(str_inv):
                     continue
                 self.current_theorem = theorem
-                theorem.run()
+                try:
+                    theorem.run()
+                except:
+                    self.error_inv = 'Runtime Error'
+                    self.error_msg = 'Something blew up in theorem ' + str(theorem.id)
+                    
                 if self.error_inv is not None:
                     return
                     

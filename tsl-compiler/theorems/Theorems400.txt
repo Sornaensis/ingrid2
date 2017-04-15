@@ -14,7 +14,7 @@
             "disp": ""
         },
         {
-            "text": "if not forest then { nodes >= maxdeg + numOfComponents - 2 + ((circumference*(girth-3)+2)/(girth/2)) };",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 383,
             "disp": ""
@@ -38,13 +38,13 @@
             "disp": ""
         },
         {
-            "text": "if mindeg >= 2 and girth >= 5 then { domination <= (nodes - girth/3 - (girth - 4)*(mindeg - 2)*(mindeg - 3)/2 - 2*(mindeg - 2)+1)/2 };",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 387,
             "disp": ""
         },
         {
-            "text": "if mindeg >= 2 and girth >= 9 then { domination <= (nodes-girth/3-(girth-4)*(mindeg-2)*(mindeg-3)/2+1)/2 };",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 388,
             "disp": ""

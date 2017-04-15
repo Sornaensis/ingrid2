@@ -25,7 +25,15 @@
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 then { arboricity <= 2 + genus**(1/2) };",
+            "text": "
+if maxClique == 2 then 
+{ 
+    arboricity <= 2 + maxb(genus)**(1/2),
+    if minb(arboricity) > 3 then 
+    {
+        arboricity <= 2 + maxb(genus)**(1/2)
+    }
+};",
             "name": "Theorem",
             "idnum": 84,
             "disp": ""
