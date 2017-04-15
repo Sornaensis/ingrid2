@@ -6389,7 +6389,7 @@ class Theorem208(Theorem):
         return
 class Theorem209(Theorem):
     def __init__(self):
-        super(Theorem209, self).__init__(209, "nodeCover <= maxb(nodes)*(1.0-(2.0/(maxb(maxdeg)+maxb(maxClique)+1.0)));\nnodes >= minb(nodeCover)*(maxb(maxClique)+minb(maxdeg)+1.0)/(maxb(maxClique)+minb(maxdeg)-(1.0));\nmaxdeg >= (-(minb(maxClique)*minb(nodeCover))+minb(maxClique)*maxb(nodes)-(minb(nodeCover))-(maxb(nodes)))/(minb(nodeCover)-(maxb(nodes)));\nmaxClique >= (-(maxb(maxdeg)*minb(nodeCover))+maxb(maxdeg)*minb(nodes)-(minb(nodeCover))-(minb(nodes)))/(minb(nodeCover)-(minb(nodes)));\n", "")
+        super(Theorem209, self).__init__(209, "nosolve nodeCover <= nodes*(1.0-(2.0/(maxdeg+maxClique+1.0)));\n", "")
     def involves(self, str_invar):
         return str_invar in ["nodeCover","nodes","maxdeg","maxClique"]
     def run(self):
@@ -6403,21 +6403,6 @@ class Theorem209(Theorem):
         if maxb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxClique") != 'undt':
             try:
                 set("nodeCover",  maxb("nodes")*(1.0-(2.0/(maxb("maxdeg")+maxb("maxClique")+1.0))), ind='Max')
-            except:
-                pass
-        if minb("nodeCover") != 'undt' and minb("maxClique") != 'undt' and minb("maxdeg") != 'undt':
-            try:
-                set("nodes",  minb("nodeCover")*(maxb("maxClique")+minb("maxdeg")+1.0)/(maxb("maxClique")+minb("maxdeg")-(1.0)), ind='Min')
-            except:
-                pass
-        if minb("maxClique") != 'undt' and minb("nodeCover") != 'undt' and minb("nodes") != 'undt':
-            try:
-                set("maxdeg",  (-(minb("maxClique")*minb("nodeCover"))+minb("maxClique")*maxb("nodes")-(minb("nodeCover"))-(maxb("nodes")))/(minb("nodeCover")-(maxb("nodes"))), ind='Min')
-            except:
-                pass
-        if minb("maxdeg") != 'undt' and minb("nodeCover") != 'undt' and minb("nodes") != 'undt':
-            try:
-                set("maxClique",  (-(maxb("maxdeg")*minb("nodeCover"))+maxb("maxdeg")*minb("nodes")-(minb("nodeCover"))-(minb("nodes")))/(minb("nodeCover")-(minb("nodes"))), ind='Min')
             except:
                 pass
         return
