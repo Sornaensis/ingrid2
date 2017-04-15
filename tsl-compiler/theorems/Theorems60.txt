@@ -102,7 +102,7 @@
                 { 
                     nodes >= 4 
                 } 
-                else if minb(maxClique) == 3
+                else if minb(maxClique) == 3 then
                 { 
                     nodes == 3 
                 }, 
