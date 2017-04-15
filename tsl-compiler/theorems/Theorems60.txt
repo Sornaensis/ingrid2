@@ -51,6 +51,7 @@
         },
         {
             "text": "
+
             if cycle then 
             { 
                 planar, 
@@ -59,10 +60,10 @@
                 nodes >= 3, 
                 edges >= 3, 
                 arboricity == 2, 
-                nodeCover == (nodes + 1)/2, 
-                edgeCover == (nodes + 1)/2, 
-                nodeInd == nodes/2, 
-                edgeInd == nodes/2, 
+                nodeCover == floor((nodes + 1)/2), 
+                edgeCover == floor((nodes + 1)/2), 
+                nodeInd == floor(nodes/2), 
+                edgeInd == floor(nodes/2), 
                 radius == edgeInd, 
                 girth == circumference, 
                 circumference == nodes, 
