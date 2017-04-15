@@ -43,7 +43,7 @@
             "disp": ""
         },
         {
-            "text": "if forest then { planar, chromaticNum == 2, mindeg == 2 };",
+            "text": "if forest then { planar, chromaticNum == 2, mindeg == 1 };",
             "name": "Theorem",
             "idnum": 48,
             "disp": ""
