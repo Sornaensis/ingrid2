@@ -67,19 +67,18 @@
             "disp": ""
         },
         {
-            "text": "_t is floor((minb(girth)-1)/2);
-if minb(mindeg) <= 2 then 
+            "text": "_t is floor((minb(girth)-(1.0))/2.0);
+if minb(mindeg) <= 2.0 then 
 {
-    _s is (_t - 1)
+    _s is (_t-(1.0))
 }
-else 
+else  
 {
-    _s is ((minb(mindeg)-1)**(_t-1) -1)/(minb(mindeg)-2)
+    _s is ((minb(mindeg)-(1.0))**(_t-(1.0))-(1.0))/(minb(mindeg)-(2.0))
 };
-
-if girth >= 5 then 
+if minb(girth) >= 5.0 then 
 {
-    nosolve edges <= nodes*(0.5+sqrt((nodes-minb(mindeg)-1)/_s+0.25))/2
+    edges <= maxb(nodes)*(0.5+sqrt((maxb(nodes)-(minb(mindeg))-(1.0))/_s+0.25))/2.0
 };",
             "name": "Theorem",
             "idnum": 352,
