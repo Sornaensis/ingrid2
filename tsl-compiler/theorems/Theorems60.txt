@@ -109,7 +109,7 @@
                 { 
                     nodeCliqueCover == 1 
                 } 
-                else 
+                else if nodes > 3 then 
                 { 
                     nodeCliqueCover == nodeCover 
                 }
