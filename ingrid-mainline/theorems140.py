@@ -3738,7 +3738,7 @@ class Theorem116(Theorem):
         return
 class Theorem117(Theorem):
     def __init__(self):
-        super(Theorem117, self).__init__(117, "if not complete then \n{\n    nodeConnec >= 2.0*mindeg-(nodes)+2.0\n};\n", "")
+        super(Theorem117, self).__init__(117, "if not complete then \n{\n    nodeConnec >= 2.0*mindeg-(nodes)+2.0\n};\nif nodeConnec < 2.0*mindeg-(nodes)+2.0 then \n{\n    complete\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["complete","nodeConnec","mindeg","nodes"]
     def run(self):
@@ -3765,6 +3765,8 @@ class Theorem117(Theorem):
                     set("nodes",  2.0*minb("mindeg")-(maxb("nodeConnec"))+2.0, ind='Min')
                 except:
                     pass
+        if (maxb("nodeConnec") != 'undt' and minb("mindeg") != 'undt' and minb("nodes") != 'undt' and maxb("nodeConnec") < 2.0*minb("mindeg")-(maxb("nodes"))+2.0):
+            set("complete", True)
         return
 class Theorem118(Theorem):
     def __init__(self):
