@@ -11990,7 +11990,7 @@ class Theorem389(Theorem):
 
 class Theorem390(Theorem):
     def __init__(self):
-        super(Theorem390, self).__init__(390, "if (nodes > 5.0 or nodes < 5.0) or (edges > 5.0 or edges < 5.0) or not cycle then \n{\n    if maxClique > nodeInd then \n    {\n        maxClique >= (1.0/2.0)*log(2.0*nodes*sqrt(3.14159265359879), 2.0)\n    }\n    else  \n    {\n        nodeInd >= (1.0/2.0)*log(2.0*nodes*sqrt(3.14159265359879), 2.0)\n    }\n};\n", "")
+        super(Theorem390, self).__init__(390, "if (nodes > 5.0 or nodes < 5.0) or (edges > 5.0 or edges < 5.0) or not cycle then \n{\n    _rhb is 2.0*sqrt(pi()),\n    _rz is 0.5*log(_rhb*minb(nodes), 2.0),\n    if maxClique < _rz then \n    {\n        nodeInd >= _rz\n    }\n    else if maxb(nodeInd) < _rz then \n    {\n        maxClique >= _rz\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["nodes","edges","cycle","maxClique","nodeInd"]
     def run(self):
@@ -12002,26 +12002,25 @@ class Theorem390(Theorem):
         oddInvar = self.oddInvar
         congruent = self.congruent
         if ((minb("nodes") != 'undt' and minb("nodes") > 5.0) or (maxb("nodes") != 'undt' and maxb("nodes") < 5.0)) or ((minb("edges") != 'undt' and minb("edges") > 5.0) or (maxb("edges") != 'undt' and maxb("edges") < 5.0)) or get("cycle") == False:
-            if (maxb("nodeInd") != 'undt' and minb("maxClique") != 'undt' and minb("maxClique") > maxb("nodeInd")):
-                if minb("nodes") != 'undt':
+            try:
+                _rhb = 2.0*sqrt(pi())
+            except:
+                pass
+            if minb("nodes") != 'undt':
+                try:
+                    _rz = 0.5*log(_rhb*minb("nodes"), 2.0)
+                except:
+                    pass
+            if (maxb("maxClique") != 'undt' and '_rz' in vars() and maxb("maxClique") < _rz):
+                if '_rz' in vars():
                     try:
-                        set("maxClique",  (1.0/2.0)*log(2.0*minb("nodes")*sqrt(3.14159265359879), 2.0), ind='Min')
+                        set("nodeInd",  _rz, ind='Min')
                     except:
                         pass
-                if maxb("maxClique") != 'undt':
+            elif (maxb("nodeInd") != 'undt' and '_rz' in vars() and maxb("nodeInd") < _rz):
+                if '_rz' in vars():
                     try:
-                        set("nodes",  0.282094791773474*exp(1.38629436111989*maxb("maxClique")), ind='Max')
-                    except:
-                        pass
-            elif True:
-                if minb("nodes") != 'undt':
-                    try:
-                        set("nodeInd",  (1.0/2.0)*log(2.0*minb("nodes")*sqrt(3.14159265359879), 2.0), ind='Min')
-                    except:
-                        pass
-                if maxb("nodeInd") != 'undt':
-                    try:
-                        set("nodes",  0.282094791773474*exp(1.38629436111989*maxb("nodeInd")), ind='Max')
+                        set("maxClique",  _rz, ind='Min')
                     except:
                         pass
         return
