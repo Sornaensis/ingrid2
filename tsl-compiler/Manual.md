@@ -1,3 +1,4 @@
+==============================
 Theorem Specification Language for Ingrid 2
 ==============================
 
@@ -6,6 +7,7 @@ Theorem Specification Language for Ingrid 2
 * High degree of automatic boundary analysis
 
 
+==============
 Basic Concepts
 ==============
 
@@ -114,6 +116,7 @@ edges <= 2.0*maxb(nodes)-(minb(spectralRadius)**2.0);
 
 After all terms have been re-written and had analysis applied to them.
 
+=========
 Structure
 =========
 
@@ -167,6 +170,7 @@ else
 * An entire `if else-if else` block is considered one large statement that only has a semicolon or comma at the end.
 * Let statements may not reside within if statements.
 
+==================
 Built In Functions
 ==================
 
@@ -191,9 +195,11 @@ Built In Functions
 * Note: `invar` in the functions above indicates that the function must take an invariant as a parameter rather than an expression, while brackets [] indicate an optional argument
 * Note: * indicates that the function may only be used as a statement, not within an expression, and not within a condition
 
+============================
 Special Statements
 ============================
 
+------------
 Even and Odd
 ------------
 
@@ -211,6 +217,7 @@ odd invar;
 Meaning:
 * Asserts that `invar` must have an odd value
 
+-----
 Isset
 -----
 
@@ -220,6 +227,7 @@ if isset invar then { ... };
 
 Meaning: Checks whether `maxb(invar) == minb(invar)`
 
+-----------------------
 Existence or Definition
 -----------------------
 
@@ -244,6 +252,7 @@ if exists invar then { ... };
 Meaning:
 * Checks whether `invar` has a maximum bound less than infinity
 
+-----------------
 Boolean Assertion
 -----------------
 
@@ -261,6 +270,7 @@ not invar;
 Meaning:
 * Asserts that `invar` has the value false, if `invar` is a boolean invariant. Otherwise error.
 
+----------------
 Equation Solving
 ----------------
 
