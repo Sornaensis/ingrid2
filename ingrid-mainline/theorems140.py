@@ -13103,9 +13103,9 @@ class Theorem426(Theorem):
 
 class Theorem427(Theorem):
     def __init__(self):
-        super(Theorem427, self).__init__(427, "let x = (mindeg*((mindeg+3.0)/2.0)-(1.0));\nif regular and mindeg >= 3.0 and edgeConnec >= mindeg-(2.0) and even nodes then \n{\n    edgeCover <= (nodes+2.0*((nodes+1.0)/(2.0*x)))/2.0\n}\nelse if regular and mindeg >= 3.0 and edgeConnec >= mindeg-(2.0) and odd nodes then \n{\n    edgeCover <= (nodes+maximum(2.0*((nodes+1.0+x)/(2.0*x))-(1.0), 1.0))/2.0\n};\n", "")
+        super(Theorem427, self).__init__(427, "null;", "")
     def involves(self, str_invar):
-        return str_invar in ["regular","mindeg","edgeConnec","nodes","edgeCover"]
+        return str_invar in []
     def run(self):
         get = self.get
         set = self.set
@@ -13114,33 +13114,6 @@ class Theorem427(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("regular") == True and (minb("mindeg") != 'undt' and minb("mindeg") >= 3.0) and (maxb("mindeg") != 'undt' and minb("edgeConnec") != 'undt' and minb("edgeConnec") >= maxb("mindeg")-(2.0)) and evenInvar("nodes"):
-            if maxb("nodes") != 'undt' and minb("mindeg") != 'undt':
-                try:
-                    set("edgeCover",  (maxb("nodes")+2.0*((maxb("nodes")+1.0)/(2.0*(minb("mindeg")*((minb("mindeg")+3.0)/2.0)-(1.0)))))/2.0, ind='Max')
-                except:
-                    pass
-            if minb("edgeCover") != 'undt' and minb("mindeg") != 'undt':
-                try:
-                    set("nodes",  2.0*(minb("edgeCover")*minb("mindeg")**2.0+3.0*minb("edgeCover")*minb("mindeg")-(2.0*minb("edgeCover"))-(1.0))/(minb("mindeg")*(minb("mindeg")+3.0)), ind='Min')
-                except:
-                    pass
-            if maxb("edgeCover") != 'undt' and minb("nodes") != 'undt':
-                try:
-                    set("mindeg",  (-(6.0*maxb("edgeCover"))+3.0*minb("nodes")+sqrt((2.0*maxb("edgeCover")-(minb("nodes")))*(34.0*maxb("edgeCover")-(9.0*minb("nodes"))+8.0)))/(2.0*(2.0*maxb("edgeCover")-(minb("nodes")))), ind='Max')
-                except:
-                    pass
-        elif get("regular") == True and (minb("mindeg") != 'undt' and minb("mindeg") >= 3.0) and (maxb("mindeg") != 'undt' and minb("edgeConnec") != 'undt' and minb("edgeConnec") >= maxb("mindeg")-(2.0)) and oddInvar("nodes"):
-            if maxb("nodes") != 'undt' and minb("mindeg") != 'undt':
-                try:
-                    set("edgeCover",  (maxb("nodes")+maximum(2.0*((maxb("nodes")+1.0+(minb("mindeg")*((minb("mindeg")+3.0)/2.0)-(1.0)))/(2.0*(minb("mindeg")*((minb("mindeg")+3.0)/2.0)-(1.0))))-(1.0), 1.0))/2.0, ind='Max')
-                except:
-                    pass
-            if maxb("nodes") != 'undt' and minb("mindeg") != 'undt' and minb("edgeCover") != 'undt':
-                try:
-                    set("nodes",  -(maximum(2.0*((maxb("nodes")+1.0+(minb("mindeg")*((minb("mindeg")+3.0)/2.0)-(1.0)))/(2.0*(minb("mindeg")*((minb("mindeg")+3.0)/2.0)-(1.0))))-(1.0), 1.0))+2.0*minb("edgeCover"), ind='Min')
-                except:
-                    pass
         return
 
 class Theorem428(Theorem):
