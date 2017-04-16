@@ -108,9 +108,17 @@ if connected and nodes >= 2*mindeg + 2 then
             "disp": ""
         },
         {
-            "text": "if maxb(diameter) <= 4.0 then 
+            "text": "
+if maxb(diameter) <= 4.0 then 
 {
-    _z is ((maxb(nodes)-(2.0))*(maxb(nodes)-(3.0))-(2.0*(maxb(nodes)-(2.0))*(minb(diameter)-(4.0))*minb(nodeConnec))-(4.0*minb(nodeConnec)*(minb(nodeConnec)+1.0))+minb(nodeConnec)**2.0*(minb(diameter)-(2.0))*(minb(diameter)-(3.0)))/2.0,
+    
+    _z is maxb(nodes),
+    _zz is minb(diam),
+    _k is minb(nconn),
+    _zzz is ((_z-2)*(_z-3)-2*(_z-2)*(_zz-4)*_k-4*_k*(_k-1)+_k*_k*(_zz-2)*(_zz-3)) / 2,
+    _k is maxb(nconn),
+    _zzzz is ((_z-2)*(_z-3)-2*(_z-2)*(_zz-4)*_k-4*_k*(_k-1)+_k*_k*(_zz-2)*(_zz-3)) / 2,
+    _z is maximum(_zzz, _zzzz),
     if _z < minb(edges) then
     {
         diameter >= 5
@@ -119,7 +127,6 @@ if connected and nodes >= 2*mindeg + 2 then
         edges <= z
     }
 };
-
 ",
             "name": "Theorem",
             "idnum": 414,
