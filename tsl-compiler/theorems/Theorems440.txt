@@ -27,9 +27,16 @@ chromaticNum >= (-(minb(maxdeg))+minb(nodeCover)-(maxb(nodes)))/(minb(nodeCover)
             "disp": ""
         },
         {
-            "text": "if connected and (not cycle or (cycle and isset nodes and even nodes)) and (edges >= nodes or maxdeg > 2 or (isset nodes and odd nodes)) then 
+            "text": "
+            if connected 
+   and maxClique = 2 
+   and not cycle
+   and (edges >= nodes 
+          or maxdeg > 2.0 
+          or (isset nodes and odd nodes)) then 
 {
-    nodeCover <= (nodes * (maxdeg**2 + maxdeg - 1))/(maxdeg*(maxdeg+1)) - nodes**2/(nodes+2*edges) : useMaxFor(nodes) : useMaxFor(maxdeg)
+    nodeCover <= (maxb(nodes)*(maxb(maxdeg)**2.0+maxb(maxdeg)-(1.0)))/(maxb(maxdeg)*(maxb(maxdeg)+1.0))-(maxb(nodes)**2.0/(maxb(nodes)+2.0*maxb(edges))),
+    edges >= -(maxb(nodes)*(maxb(maxdeg)**2.0*minb(nodeCover)+maxb(maxdeg)*minb(nodeCover)+maxb(nodes))/(2.0*maxb(maxdeg)**2.0*minb(nodeCover)-(2.0*maxb(maxdeg)**2.0*maxb(nodes))+2.0*maxb(maxdeg)*minb(nodeCover)-(2.0*maxb(maxdeg)*maxb(nodes))+2.0*maxb(nodes)))
 };",
             "name": "Theorem",
             "idnum": 424,
