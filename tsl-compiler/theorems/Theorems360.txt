@@ -49,8 +49,16 @@
          _z1 is minb(edges)*_z/(minb(girth)*minb(mindeg)),
          genus >= _z1/2+minb(numOfComponents)
     },
-    girth <= 2.0*minb(edges)*minb(mindeg)/(minb(edges)*minb(mindeg)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(mindeg))+2.0*minb(mindeg)*minb(numOfComponents)),
-    mindeg <= 2.0*minb(edges)*minb(girth)/(minb(edges)*minb(girth)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(girth))+2.0*minb(girth)*minb(numOfComponents)),
+    _t is (minb(mindeg) - 2) *minb(edges)-minb(mindeg)*(2*(maxb(genus)-minb(numOfComponents))),
+    if _t > 0 then  
+    {
+        girth <= 2.0*minb(edges)*minb(mindeg)/(minb(edges)*minb(mindeg)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(mindeg))+2.0*minb(mindeg)*minb(numOfComponents))
+    }, 
+    _t is minb(edges)*(1-2/(minb(girth))-2*(maxb(genus)-minb(numOfComponents))),
+    if _t > 0 then
+    {
+        mindeg <= 2.0*minb(edges)*minb(girth)/(minb(edges)*minb(girth)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(girth))+2.0*minb(girth)*minb(numOfComponents))
+    },
     numOfComponents <= -(minb(edges)/2.0)+minb(edges)/minb(mindeg)+minb(edges)/minb(girth)+maxb(genus) 
     
 };",
