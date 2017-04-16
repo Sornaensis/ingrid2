@@ -261,6 +261,25 @@ not invar;
 Meaning:
 * Asserts that `invar` has the value false, if `invar` is a boolean invariant. Otherwise error.
 
+Boolean Expressions
+-------------------
+
+Arbitrary boolean expressions cannot be inserted into conditions, they must be preceded by special directives:
+
+```haskell
+if istrue congruent(nodes, 3, 4) then { ... };
+if istrue <expr> then { ... };
+```
+
+```haskell
+if isfalse <expr> then { ... };
+```
+
+Meaning: `istrue` followed by an expression that resolves to a boolean value checks whether the expression is true,
+`isfalse` checks whether it is false.
+
+* Note: if the expression does not resolve to a boolean value the theorem will be skipped at runtime but this may not produce a compile time error!
+
 Equation Solving
 ----------------
 
