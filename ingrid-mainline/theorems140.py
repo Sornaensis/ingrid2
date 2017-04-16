@@ -1407,7 +1407,7 @@ class Theorem42(Theorem):
 
 class Theorem43(Theorem):
     def __init__(self):
-        super(Theorem43, self).__init__(43, "if (forest and connected) or tree then \n{\n    tree,\n    forest,\n    connected\n};\n", "")
+        super(Theorem43, self).__init__(43, "if (forest and connected) or tree then \n{\n    tree,\n    forest,\n    connected\n};\nif not forest or not connected then \n{\n    not tree\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["forest","connected","tree"]
     def run(self):
@@ -1422,6 +1422,8 @@ class Theorem43(Theorem):
             set("tree", True)
             set("forest", True)
             set("connected", True)
+        if get("forest") == False or get("connected") == False:
+            set("tree", False)
         return
 
 class Theorem44(Theorem):
