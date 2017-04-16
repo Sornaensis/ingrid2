@@ -13701,7 +13701,7 @@ class Theorem442(Theorem):
 
 class Theorem443(Theorem):
     def __init__(self):
-        super(Theorem443, self).__init__(443, "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-((maxb(nodes)-(maxb(nodeCover))-(minb(numOfComponents))+1.0)/2.0);\nnodes >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodeCover))+minb(numOfComponents)+1.0;\nmindeg <= (-(2.0*minb(bandwidth))+maxb(nodeCover)+maxb(nodes)-(minb(numOfComponents))-(1.0))/(2.0*(minb(numOfComponents)-(1.0)));\nnumOfComponents <= (-(2.0*minb(bandwidth))+2.0*minb(mindeg)+maxb(nodeCover)+maxb(nodes)-(1.0))/(2.0*minb(mindeg)+1.0);\nnodeCover >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodes))+minb(numOfComponents)+1.0;\n", "")
+        super(Theorem443, self).__init__(443, "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-((maxb(nodes)-(maxb(nodeCover))-(minb(numOfComponents))+1.0)/2.0);\nnodes >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodeCover))+minb(numOfComponents)+1.0;\nif numOfComponents > 1.0 then \n{\n    mindeg <= (-(2.0*minb(bandwidth))+maxb(nodeCover)+maxb(nodes)-(minb(numOfComponents))-(1.0))/(2.0*(minb(numOfComponents)-(1.0)))\n};\nnumOfComponents <= (-(2.0*minb(bandwidth))+2.0*minb(mindeg)+maxb(nodeCover)+maxb(nodes)-(1.0))/(2.0*minb(mindeg)+1.0);\nnodeCover >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodes))+minb(numOfComponents)+1.0;\n", "")
     def involves(self, str_invar):
         return str_invar in ["bandwidth","nodes","mindeg","numOfComponents","nodeCover"]
     def run(self):
@@ -13722,11 +13722,12 @@ class Theorem443(Theorem):
                 set("nodes",  2.0*minb("bandwidth")+2.0*minb("mindeg")*minb("numOfComponents")-(2.0*minb("mindeg"))-(maxb("nodeCover"))+minb("numOfComponents")+1.0, ind='Min')
             except:
                 pass
-        if minb("bandwidth") != 'undt' and maxb("nodeCover") != 'undt' and maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt':
-            try:
-                set("mindeg",  (-(2.0*minb("bandwidth"))+maxb("nodeCover")+maxb("nodes")-(minb("numOfComponents"))-(1.0))/(2.0*(minb("numOfComponents")-(1.0))), ind='Max')
-            except:
-                pass
+        if (minb("numOfComponents") != 'undt' and minb("numOfComponents") > 1.0):
+            if minb("bandwidth") != 'undt' and maxb("nodeCover") != 'undt' and maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt':
+                try:
+                    set("mindeg",  (-(2.0*minb("bandwidth"))+maxb("nodeCover")+maxb("nodes")-(minb("numOfComponents"))-(1.0))/(2.0*(minb("numOfComponents")-(1.0))), ind='Max')
+                except:
+                    pass
         if minb("bandwidth") != 'undt' and minb("mindeg") != 'undt' and maxb("nodeCover") != 'undt' and maxb("nodes") != 'undt':
             try:
                 set("numOfComponents",  (-(2.0*minb("bandwidth"))+2.0*minb("mindeg")+maxb("nodeCover")+maxb("nodes")-(1.0))/(2.0*minb("mindeg")+1.0), ind='Max')
@@ -13738,7 +13739,7 @@ class Theorem443(Theorem):
             except:
                 pass
         return
-
+    
 class Theorem444(Theorem):
     def __init__(self):
         super(Theorem444, self).__init__(444, "\n", "")
