@@ -8,13 +8,27 @@
             "disp": ""
         },
         {
-            "text": "if planer and edgeConnec < mindeg and (nodes >= 5 or mindeg >= 2) then { if mindeg == edgeConnec + 1 and mindeg == 1 then { edges <= 3*nodes - 11 } else { edges <= 3*nodes - 12 + nodeConnec } };",
+            "text": "if planar and edgeConnec < mindeg and (nodes >= 5 or mindeg >= 2) then { if mindeg == edgeConnec + 1 and mindeg == 1 then { edges <= 3*nodes - 11 } else { edges <= 3*nodes - 12 + nodeConnec } };",
             "name": "Theorem",
             "idnum": 382,
             "disp": ""
         },
         {
-            "text": "if not forest then { nodes >= maxdeg + numOfComponents - 2 + ((circumference*(girth-3)+2)/(girth/2)) };",
+            "text": "if not forest then 
+{ 
+    nodes >= minb(maxdeg)+minb(numOfComponents)-(2.0)+(minb(circumference)*(minb(girth)-(3.0))+2.0)/(minb(girth)-(2.0)),
+    maxdeg <= (-(minb(circumference)*minb(girth))+3.0*minb(circumference)+minb(girth)*maxb(nodes)-(minb(girth)*minb(numOfComponents))+2.0*minb(girth)-(2.0*maxb(nodes))+2.0*minb(numOfComponents)-(6.0))/(minb(girth)-(2.0)),
+    numOfComponents <= (-(minb(circumference)*minb(girth))+3.0*minb(circumference)-(minb(girth)*minb(maxdeg))+minb(girth)*maxb(nodes)+2.0*minb(girth)+2.0*minb(maxdeg)-(2.0*maxb(nodes))-(6.0))/(minb(girth)-(2.0)),
+    if minb(girth) >= 4 then
+    {
+        circumference <= (-(minb(girth)*minb(maxdeg))+minb(girth)*maxb(nodes)-(minb(girth)*minb(numOfComponents))+2.0*minb(girth)+2.0*minb(maxdeg)-(2.0*maxb(nodes))+2.0*minb(numOfComponents)-(6.0))/(minb(girth)-(3.0))
+    },
+    _z is minb(circumference)-2-maxb(nodes)+minb(maxdeg)+minb(numOfComponents),
+    if _z > 0 then
+    {
+        girth <= (3.0*minb(circumference)+2.0*minb(maxdeg)-(2.0*maxb(nodes))+2.0*minb(numOfComponents)-(6.0))/(minb(circumference)+minb(maxdeg)-(maxb(nodes))+minb(numOfComponents)-(2.0))
+    }
+};",
             "name": "Theorem",
             "idnum": 383,
             "disp": ""
@@ -32,19 +46,31 @@
             "disp": ""
         },
         {
-            "text": "if mindeg >= 2 then { domination >= (girth+2)/3*numOfComponents };",
+            "text": "if mindeg >= 2.0 then 
+{
+    domination >= girth/3.0*numOfComponents
+};",
             "name": "Theorem",
             "idnum": 386,
             "disp": ""
         },
         {
-            "text": "if mindeg >= 2 and girth >= 5 then { domination <= (nodes - girth/3 - (girth - 4)*(mindeg - 2)*(mindeg - 3)/2 - 2*(mindeg - 2)+1)/2 };",
+            "text": "if mindeg >= 2 and girth >= 5 then 
+{ 
+    domination <= (nodes - girth/3 - (girth - 4)*(minb(mindeg) - 2)*(minb(mindeg) - 3)/2 - 2*(minb(mindeg) - 2)+1)/2 
+};",
             "name": "Theorem",
             "idnum": 387,
             "disp": ""
         },
         {
-            "text": "if mindeg >= 2 and girth >= 9 then { domination <= (nodes-girth/3-(girth-4)*(mindeg-2)*(mindeg-3)/2+1)/2 };",
+            "text": "if mindeg >= 2 and girth >= 9 then 
+{ 
+    domination <= (maxb(nodes)-(minb(girth)/3.0)-((minb(girth)-(4.0))*(minb(mindeg)-(2.0))*(minb(mindeg)-(3.0))/2.0)+1.0)/2.0,
+    nodes >= 2.0*minb(domination)+minb(girth)*minb(mindeg)**2.0/2.0-(5.0*minb(girth)*minb(mindeg)/2.0)+10.0*minb(girth)/3.0-(2.0*minb(mindeg)**2.0)+10.0*minb(mindeg)-(13.0),
+    girth <= 6.0*(-(2.0*minb(domination))+2.0*minb(mindeg)**2.0-(10.0*minb(mindeg))+maxb(nodes)+13.0)/(3.0*minb(mindeg)**2.0-(15.0*minb(mindeg))+20.0),
+    mindeg <= (5.0*minb(girth)/2.0+sqrt(-(144.0*minb(domination)*minb(girth))+576.0*minb(domination)-(15.0*minb(girth)**2.0)+72.0*minb(girth)*maxb(nodes)+96.0*minb(girth)-(288.0*maxb(nodes))-(144.0))/6.0-(10.0))/(minb(girth)-(4.0))
+};",
             "name": "Theorem",
             "idnum": 388,
             "disp": ""
@@ -56,7 +82,20 @@
             "disp": ""
         },
         {
-            "text": "if (nodes > 5 or nodes < 5) or (edges > 5 or edges < 5) or not cycle then { if maxClique > nodeInd then { maxClique >= (1/2)*log(2*nodes*sqrt(3.14159265359879),2) } else { nodeInd >= (1/2)*log(2*nodes*sqrt(3.14159265359879),2) } };",
+            "text": "
+            if (nodes > 5.0 or nodes < 5.0) or (edges > 5.0 or edges < 5.0) or not cycle then 
+{
+    _rhb is 2*sqrt(pi()),
+    _rz is 0.5*log(_rhb*minb(nodes),2),
+    if maxClique < _rz then
+    {
+        nodeInd >= _rz
+    }
+    else if maxb(nodeInd) < _rz then
+    {
+        maxClique >= _rz
+    }
+};",
             "name": "Theorem",
             "idnum": 390,
             "disp": ""
@@ -110,7 +149,7 @@
             "disp": ""
         },
         {
-            "text": "if nodeConnec > 0 then {nodeConnec >= (nodes *(maxdeg - 2))/((maxdeg-1)**diam + maxdeg - 3)};",
+            "text": "if nodeConnec > 0 then {nodeConnec >= (nodes *(maxdeg - 2))/((maxdeg-1)**diameter + maxdeg - 3)};",
             "name": "Theorem",
             "idnum": 399,
             "disp": ""

@@ -1,6 +1,7 @@
 module TSL.Compiler.Analysis (
                     InvarBoundSwitch(..),
-                    invarAnalysis
+                    invarAnalysis,
+                    noAnalysis
                     ) where
 
 import qualified Data.List            as L
@@ -24,6 +25,10 @@ data InvarBoundSwitch = Coeff Double | InvAn Bool Double Double | Complex | NotF
 isCoeff :: InvarBoundSwitch -> Bool
 isCoeff (Coeff _) = True
 isCoeff _         = False
+
+noAnalysis :: InvarBoundSwitch -> Bool
+noAnalysis (InvAn _ _ _) = False
+noAnalysis _             = True
 
 chooseBound :: InvarBoundSwitch -> InvarBoundSwitch -> InvarBoundSwitch
 chooseBound (InvAn af ac ad) (InvAn bf bc bd) 

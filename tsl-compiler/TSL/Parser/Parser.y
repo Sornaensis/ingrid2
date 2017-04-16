@@ -62,7 +62,7 @@ import TSL.AST.AST
 
 Theorem : Invarexpr ';' Theorem                 { $1 : $3 }
          | Ifstmt ';' Theorem                   { $1 : $3 }
-         | let Invar '==' Expr ';' Theorem      { (Fx $ Let $2 $4) : $6 }
+         | let Invar '==' Expr ';' Theorem      { (Fx $ Let $2 (Fx $ Paren $4)) : $6 }
          | null ';' Theorem                     { [Fx Empty] }
          | {- empty -}                          { [] }
 
@@ -145,7 +145,9 @@ Invar : global  { Fx $ Invar $1 }
 
 Localvar : local { Fx $ Local $1 }
 
-Func : global '(' Arglist ')'  { Fx $ Function $1 $3 }
+Func : odd '(' Arglist ')'     { Fx $ Function "odd" $3 } 
+     | even '(' Arglist ')'    { Fx $ Function "even" $3 }
+     | global '(' Arglist ')'  { Fx $ Function $1 $3 }
 
 Arglist : Arglist1 { reverse $1 }
 

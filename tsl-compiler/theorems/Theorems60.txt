@@ -1,4 +1,3 @@
-
 {
     "theorems":[
 {
@@ -44,25 +43,26 @@
             "disp": ""
         },
         {
-            "text": "if forest then { planar, chromaticNum == 2, mindeg == 2 };",
+            "text": "if forest then { planar, chromaticNum == 2, mindeg == 1 };",
             "name": "Theorem",
             "idnum": 48,
             "disp": ""
         },
         {
             "text": "
-            if cycle then 
+  if cycle then 
             { 
                 planar, 
-                not forest, 
+                not forest,
+                not tree,
                 crossing == 0, 
                 nodes >= 3, 
                 edges >= 3, 
                 arboricity == 2, 
-                nodeCover == (nodes + 1)/2, 
-                edgeCover == (nodes + 1)/2, 
-                nodeInd == nodes/2, 
-                edgeInd == nodes/2, 
+                nodeCover == floor((nodes + 1)/2), 
+                edgeCover == floor((nodes + 1)/2), 
+                nodeInd == floor(nodes/2), 
+                edgeInd == floor(nodes/2), 
                 radius == edgeInd, 
                 girth == circumference, 
                 circumference == nodes, 
@@ -78,7 +78,7 @@
                 { 
                     maxClique == 2 
                 } 
-                else 
+                else if maxb(nodes) < 4 then
                 { 
                     maxClique == 3 
                 },
@@ -86,23 +86,23 @@
                 { 
                     chromaticNum == 2 
                 } 
-                else 
+                else if odd nodes then
                 { 
                     chromaticNum == 3 
                 }, 
-                if chromaticNum == 2 then 
+                if maxb(chromaticNum) == 2 then 
                 { 
                     even nodes 
                 } 
-                else 
+                else if minb(chromaticNum) == 3 then
                 { 
                     odd nodes 
                 }, 
-                if maxClique == 2 then 
+                if maxb(maxClique) == 2 then 
                 { 
                     nodes >= 4 
                 } 
-                else 
+                else if minb(maxClique) == 3 then
                 { 
                     nodes == 3 
                 }, 
@@ -110,7 +110,7 @@
                 { 
                     nodeCliqueCover == 1 
                 } 
-                else 
+                else if nodes > 3 then 
                 { 
                     nodeCliqueCover == nodeCover 
                 }
@@ -138,11 +138,16 @@
             "disp": ""
         },
         {
-            "text": "if defined girth then
+            "text": "if exists girth then 
 {
     _P is maxb(nodes),
-    arboricity <= chromaticNum - chromaticNum/(1 + _P/((girth - 1)/2)*chromaticNum),
-    nodes >= minb(arboricity)*(-(minb(girth))+1.0)/(2.0*maxb(chromaticNum)*(minb(arboricity)-(maxb(chromaticNum))))
+    arboricity <= maxb(chromaticNum)-(maxb(chromaticNum)/(1.0+_P/((minb(girth)-(1.0))/2.0)*maxb(chromaticNum))),
+    if minb(arboricity) > 2 then
+    {
+        chromaticNum >= (_P*minb(arboricity)+sqrt(_P*minb(arboricity)*(_P*minb(arboricity)+2.0*minb(girth)-(2.0))))/(2.0*_P),
+        girth <= -(2.0*_P*maxb(chromaticNum))+2.0*_P*maxb(chromaticNum)**2.0/minb(arboricity)+1.0,
+        nodes >= minb(arboricity)*(-(minb(girth))+1.0)/(2.0*maxb(chromaticNum)*(minb(arboricity)-(maxb(chromaticNum))))
+    }
 };",
             "name": "Theorem",
             "idnum": 53,
@@ -194,7 +199,7 @@ nodes >= minb(spectralRadius)*(3.0*maxb(maxClique)+1.0)/(3.0*maxb(maxClique)-(2.
             "disp": ""
         },
         {
-            "text": "if defined girth and (minb(nodeConnec) > 0.0 or minb(mindeg) > 1.0) then 
+            "text": "if exists girth and (minb(nodeConnec) > 0.0 or minb(mindeg) > 1.0) then 
 {
     genus >= (1.0/2.0)*minb(edges)*(1.0-(2.0/minb(girth)))-(maxb(nodes)/2.0)+minb(numOfComponents),
     edges <= minb(girth)*(2.0*maxb(genus)+maxb(nodes)-(2.0*minb(numOfComponents)))/(minb(girth)-(2.0)),

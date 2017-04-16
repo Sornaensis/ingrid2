@@ -91,7 +91,10 @@
             "disp": ""
         },
         {
-            "text": "chromaticNum <= maxdeg - 1 + (maxdeg+1)/maximum(4, maxb(maxClique) + 1);",
+            "text": "_k is maximum(4.0, maxb(maxClique)+1.0);
+_z is (maxb(maxdeg)+1)/_k;
+chromaticNum <= maxb(maxdeg)+1-_z;
+maxdeg >= (_k*minb(chromaticNum)-(1.0))/(_k-(1.0))-(1.0);",
             "name": "Theorem",
             "idnum": 131,
             "disp": ""
@@ -123,7 +126,14 @@
             "disp": ""
         },
         {
-            "text": "if radius == 2 and diam == 2 and nodes == 4 then {edges >= 4} else if radius == 2 and diam == 2 and nodes >= 5 then {edges >= 2*nodes - 5};",
+            "text": "if radius == 2 and diameter == 2 and nodes == 4 then 
+{
+    edges >= 4
+    
+} else if radius == 2 and diameter == 2 and nodes >= 5 then 
+{
+    edges >= 2*nodes - 5
+};",
             "name": "Theorem",
             "idnum": 134,
             "disp": ""

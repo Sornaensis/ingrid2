@@ -110,20 +110,18 @@
             "disp": ""
         },
         {
-            "text": "if not forest then 
+            "text": "if not forest or exists girth then 
 {
     nodeInd >= minb(girth)/2.0,
     radius >= minb(girth)/2.0,
-    girth <= minimum(maxb(radius)*2.0+1.0, 2.0*maxb(nodeInd)+1.0),
-    edgeInd >= minb(circumference)/2.0,
-    circumference <= 2.0*maxb(edgeInd)
+    edgeInd >= circumference/2.0-0.5
 };",
             "name": "Theorem",
             "idnum": 79,
             "disp": ""
         },
         {
-            "text": "if (defined girth and girth >= 4) or (undefined girth and nodes > 2) then { not complete };",
+            "text": "if (exists girth and girth >= 4) or (undefined girth and nodes > 2) then { not complete };",
             "name": "Theorem",
             "idnum": 80,
             "disp": ""

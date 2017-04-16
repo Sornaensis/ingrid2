@@ -69,13 +69,18 @@ generatePython' (RelExpr a b) = " " ++ a ++ " " ++ b
 generatePython' (Cond a b)                   = a ++ fromMaybe [] b
 generatePython' (InvarExpr a Nothing) = a
 generatePython' (InvarExpr a (Just relexpr)) =
-           "try:\n    set(" ++ a ++  ", " ++ expr ++ ", ind=\'" ++ rel' ++ "\')\nexcept:\n    pass"
+           "try:\n    " ++
+           case rel' of
+             (_:_) -> "set(" ++ a ++  ", " ++ expr ++ ", ind=\'" ++ rel' ++ "\')"
+             _     -> a ++ relexpr 
+           ++ "\nexcept:\n    pass"
            where
            rel = takeWhile (/= ' ') . dropWhile (==' ') $ relexpr
            expr = drop (length rel + 1) relexpr
            rel' = case rel of
                     ">=" -> "Min"
                     "<=" -> "Max"
+                    _    -> ""
 generatePython' (If a b c)            =
     case a of
         "not Local True" ->
@@ -139,7 +144,8 @@ realizeAnalysis2' v
                 Cond (Fx $ Function "get" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "False" (Fx Empty))) 
             "even" ->  Fx $ Function "evenInvar" [e]
             "odd" -> Fx $ Function "oddInvar" [e]
-            "istrue" -> Fx $ InvarExpr e Nothing
+            "istrue"  -> cata realizeAnalysis2' . Fx $ Cond (Fx Empty) (Just e)
+            "isfalse" -> cata realizeAnalysis2' . Fx $ Cond (Fx Empty) (Just . Fx $ Function "not" [e])
             "isset" -> Fx $ 
                 And (Fx $ Cond (Fx $ Function "maxb" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))))
                  (Fx $ Cond (Fx $ Function "minb" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ Function "maxb" [e])))
@@ -160,26 +166,46 @@ realizeAnalysis2' v
             invars = getInvolves expr
             inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
             inv_replce = map (swapBound bound) inv_mappings
-            inv_check  = map (\(_,f) -> Fx $ Cond f 
-                                            (Just . Fx $ 
-                                                RelExpr (Fx $ Relation RelNeq) 
-                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a):inv_replce)
-                         ++ map (\l -> Fx $ ExprF (generatePython l ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
+            inv_check  = (map (\f -> Fx $ Cond f    
+                                       (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
+                                                            (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
+                         L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr ++ [a])
+                         -- ++ (map (\(_,f) -> Fx $ Cond f 
+                         --                    (Just . Fx $ 
+                         --                        RelExpr (Fx $ Relation RelNeq) 
+                         --                                (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a):inv_replce))
+                         ++ map (\l -> Fx $ ExprF ("\'" ++ generatePython l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
         in  if null inv_check 
               then Fx $ Cond a (Just . Fx $ RelExpr rel expr)
               else 
                 if length inv_check == 1
                     then Fx. Paren . Fx $ And (head inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
                     else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
+   | (Cond a@(Fx Empty) (Just expr)) <- v =
+        let ivs = (map (\f -> Fx $ Cond f    
+                                       (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
+                                                            (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
+                      L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr)
+                         ++ map (\(Fx (Local l)) -> Fx $ ExprF ("\'" ++ l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
+        in  if null ivs 
+              then Fx $ Cond a (Just expr)
+              else 
+                if length ivs == 1
+                    then Fx . Paren . Fx $ And (head ivs) (Fx $ Cond a (Just expr))
+                    else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) ivs) (Fx $ Cond a (Just expr))
    | (Cond a@(Fx (Local _)) (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = flipBound $ getBound rel
             invars = getInvolves expr
             inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
             inv_replce = map (swapBound bound) inv_mappings
-            inv_check  = map (\(_,f) -> Fx $ Cond f 
-                                            (Just . Fx $ 
-                                                RelExpr (Fx $ Relation RelNeq) 
-                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce)
+            inv_check  = (map (\f -> Fx $ Cond f    
+                                       (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
+                                                            (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
+                         L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr)
+                         -- ++ (map (\(_,f) -> Fx $ Cond f 
+                         --                    (Just . Fx $ 
+                         --                        RelExpr (Fx $ Relation RelNeq) 
+                         --                                (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce))
                          ++ map (\(Fx (Local l)) -> Fx $ ExprF ("\'" ++ l ++ "\'" ++ " in vars()") (Fx Empty)) ((a:) $ Fx . Local <$> getLocals expr)
         in  if null inv_check 
               then Fx $ Cond a (Just . Fx $ RelExpr rel expr)
@@ -192,11 +218,15 @@ realizeAnalysis2' v
             invars = getInvolves expr
             inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
             inv_replce = map (swapBound bound) inv_mappings
-            inv_check  = map (\(_,f) -> Fx $ Cond f 
-                                            (Just . Fx $ 
-                                                RelExpr (Fx $ Relation RelNeq) 
-                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a'):inv_replce)
-                         ++ map (\l -> Fx $ ExprF (generatePython l ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
+            inv_check  = (map (\f -> Fx $ Cond f    
+                                       (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
+                                                            (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
+                         L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr)
+                         -- ++ (map (\(_,f) -> Fx $ Cond f 
+                         --                    (Just . Fx $ 
+                         --                        RelExpr (Fx $ Relation RelNeq) 
+                         --                                (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a'):inv_replce))
+                         ++ map (\l -> Fx $ ExprF ("\'" ++ generatePython l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
             a' = case bound of
                     Max -> Fx $ Function "minb" [a]
                     Min -> Fx $ Function "maxb" [a] 
@@ -220,21 +250,27 @@ realizeAnalysis2' v
                                        (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
                                                             (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
                       L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr
+                         ++ map (\(Fx (Local l)) -> Fx $ ExprF ("\'" ++ l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
         in if null invs 
-            then  Fx $ ExprF (l ++ " =") expr
+            then  (Fx $ InvarExpr (Fx $ Local l) (Just . Fx $ ExprF " =" expr))
             else  
               if length invs == 1 
-                then Fx $ If (head invs) (Fx $ ExprF (l ++ " =") expr) Nothing 
-                else Fx $ If (foldr1 (\x y -> Fx $ And x y) invs) (Fx $ ExprF (l ++ " =") expr) Nothing
+                then Fx $ If (head invs) (Fx $ InvarExpr (Fx $ Local l) (Just . Fx $ ExprF " =" expr)) Nothing 
+                else Fx $ If (foldr1 (\x y -> Fx $ And x y) invs) (Fx $ InvarExpr (Fx $ Local l) (Just . Fx $ ExprF " =" expr)) Nothing
    | (InvarExpr a (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = getBound rel
             invars = getInvolves expr
             inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
             inv_replce = map (swapBound bound) inv_mappings
-            inv_check  = map (\(_,f) -> Fx $ Cond f 
-                                            (Just . Fx $ 
-                                                RelExpr (Fx $ Relation RelNeq) 
-                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce) 
+            inv_check  = (map (\f -> Fx $ Cond f    
+                                       (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
+                                                            (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
+                         L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr)
+                         ++ map (\(Fx (Local l)) -> Fx $ ExprF ("\'" ++ l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
+                      -- ++  map (\(_,f) -> Fx $ Cond f 
+                      --                       (Just . Fx $ 
+                      --                           RelExpr (Fx $ Relation RelNeq) 
+                      --                                   (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce) 
         in if null inv_check
              then Fx $ InvarExpr a (Just . Fx $ RelExpr rel expr)
              else 
@@ -376,7 +412,7 @@ generateSymPyIneq e@(Fx (InvarExpr i (Just relexp))) =
                    bound                                             = getBound rel
                    invar_analyses                                    = map (alterAnalysis ann) . map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) $ invars
                    invar_doanalysis                                  = concatMap (alterAnalysis2 ann) $ invars
-                   invars                                            = getInvolves orig
+                   invars                                            = filter ((not . noAnalysis) . flip invarAnalysis orig) $ getInvolves exp
               in fmap (map (adjustInequality invar_analyses) . ((replaceAllInvar invar_doanalysis . Fx $ InvarExpr i (Just (Fx $ RelExpr r orig))):) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
                      invars >>= \inv -> return $
                    do Py.initialize
@@ -407,7 +443,7 @@ generateSymPyIneq e@(Fx (InvarExpr i (Just relexp))) =
                    relation                                          = theoremToSrc rel
                    bound                                             = getBound rel
                    invar_analyses                                    = map (\i -> (i, getIneq . flipBound . swapBound bound . invarAnalysis i $ exp)) invars
-                   invars                                            = getInvolves orig
+                   invars                                            = filter ((not . noAnalysis) . flip invarAnalysis orig) $ getInvolves exp
               in fmap (map (adjustInequality invar_analyses) . (e:) . map (replaceAllInvar func_remap) . theoremParser . lexer . concat) . sequence $
                      invars >>= \inv -> return $
                    do Py.initialize

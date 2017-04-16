@@ -8,13 +8,18 @@
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 then {nodeCover <= nodes *(1 - ((2*edges)/nodes * log(2*edges/nodes) - (2*edges/nodes) +1)/(2*edges/nodes -1)**2)};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 442,
             "disp": ""
         },
         {
-            "text": "bandwidth <= nodes - (mindeg + 1)*(numOfComponents -1) - 1 - (nodes - nodeCover - numOfComponents + 1)/2;",
+            "text": "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-((maxb(nodes)-(maxb(nodeCover))-(minb(numOfComponents))+1.0)/2.0);
+nodes >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodeCover))+minb(numOfComponents)+1.0;
+mindeg <= (-(2.0*minb(bandwidth))+maxb(nodeCover)+maxb(nodes)-(minb(numOfComponents))-(1.0))/(2.0*(minb(numOfComponents)-(1.0)));
+numOfComponents <= (-(2.0*minb(bandwidth))+2.0*minb(mindeg)+maxb(nodeCover)+maxb(nodes)-(1.0))/(2.0*minb(mindeg)+1.0);
+nodeCover >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodes))+minb(numOfComponents)+1.0;
+",
             "name": "Theorem",
             "idnum": 443,
             "disp": ""
@@ -26,7 +31,8 @@
             "disp": ""
         },
         {
-            "text": "let m = (nodes - chromaticNum)/(nodes - nodeCover - 1); edges >= m*(nodes - chromaticNum) + chromaticNum*(chromaticNum - 1)/2 - (nodes - nodeCover - 1)*m*(m+1)/2;",
+            "text": "let m = (nodes - chromaticNum)/(nodes - nodeCover - 1); 
+nosolve edges >= m*(nodes - chromaticNum) + chromaticNum*(chromaticNum - 1)/2 - (nodes - nodeCover - 1)*m*(m+1)/2 : useMinFor(chromaticNum) : useMinFor(nodeCover);",
             "name": "Theorem",
             "idnum": 445,
             "disp": ""
@@ -44,13 +50,17 @@
             "disp": ""
         },
         {
-            "text": "edges <= ((nodes - nodeCliqueCover)*(nodeCliqueCover + maxdeg - 1) + mindeg)/2;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 448,
             "disp": ""
         },
         {
-            "text": "if nodeInd == 2 and mindeg >= nodes - 5 then {edges <= nodes*(nodes-13)/2 + 13*maxClique};",
+            "text": "if (minb(nodeInd) >= 2.0 and maxb(nodeInd) <= 2.0) and minb(mindeg) >= maxb(nodes)-(5.0) then 
+{
+    edges <= maxb(nodes)*(maxb(nodes)-(13.0))/2.0+13.0*maxb(maxClique),
+    maxClique >= minb(edges)/13.0-(maxb(nodes)**2.0/26.0)+maxb(nodes)/2.0
+};",
             "name": "Theorem",
             "idnum": 449,
             "disp": ""
@@ -61,11 +71,16 @@
             "idnum": 450,
             "disp": "Original Code is WRONG!"
         },
-        {
-            "text": "if mindeg <= minimum(nodes-7, nodes - nodeInd - 2) then {mindeg <= ((nodes - 1)*(maxClique - 1) - 2)/maxClique};",
+{
+            "text": "if mindeg <= minimum(nodes-7, nodes - nodeInd - 2) then 
+{
+    mindeg <= ((maxb(nodes)-(1.0))*(maxb(maxClique)-(1.0))-(2.0))/maxb(maxClique),
+    nodes >= (maxb(maxClique)*minb(mindeg)+maxb(maxClique)+1.0)/(maxb(maxClique)-(1.0)),
+    maxClique >= -((maxb(nodes)+1.0)/(minb(mindeg)-(maxb(nodes))+1.0))
+};",
             "name": "Theorem",
             "idnum": 451,
-            "disp": ""
+            "disp": "Incorrect bounds"
         },
         {
             "text": "null;",
@@ -74,7 +89,10 @@
             "disp": ""
         },
         {
-            "text": "edges <= nodes*(nodes - 1)/2 - ((nodes-nodeConnec)/(maxClique-1))*(nodes-nodeConnec) - nodeConnec*(nodeConnec - 1)/2 + (maxClique - 1)*((nodes-nodeConnec)/(maxClique-1))*(((nodes-nodeConnec)/(maxClique-1))+1)/2;",
+            "text": "if isset nodeCliqueCover and isset maxClique then
+{
+    nosolve edges <= nodes*(nodes - 1)/2 - ((nodes-nodeCliqueCover)/(maxClique-1))*(nodes-nodeCliqueCover) - nodeCliqueCover*(nodeCliqueCover - 1)/2 + (maxClique - 1)*((nodes-nodeCliqueCover)/(maxClique-1))*(((nodes-nodeCliqueCover)/(maxClique-1))+1)/2 : useMaxFor(nodes)
+};",
             "name": "Theorem",
             "idnum": 453,
             "disp": ""

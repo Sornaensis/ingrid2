@@ -19,7 +19,15 @@
             "disp": ""
         },
         {
-            "text": "let x = mindeg*((mindeg+3)/2)-1; if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and even nodes  then {edgeInd >= (nodes - 2*((nodes + 1)/(2*x)))/2} else if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and odd nodes  then {edgeInd >= (nodes-maximum(2*((nodes + 1 + x)/(2*x)), 1))/2};",
+            "text": "_x is minb(mindeg)*((minb(mindeg)+3)/2)-1; 
+if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and even nodes  then 
+{
+    edgeInd >= (nodes - 2*((nodes + 1)/(2*_x)))/2 : useMinFor(nodes)
+} 
+else if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and odd nodes  then 
+{
+    nosolve edgeInd >= (nodes-maximum(2*((nodes + 1 + _x)/(2*_x)), 1))/2 : useMinFor(nodes)
+};",
             "name": "Theorem",
             "idnum": 304,
             "disp": ""
@@ -109,7 +117,7 @@
             "disp": ""
         },
         {
-            "text": "let m = 2*e-floor(2*e/maxdeg)*maxdeg; if spectralRadius >= (2*edges*(2*maxdeg-1) - 2*m*(maxdeg-m))**(1/4) then { girth <= 4 };",
+            "text": "let m = 2*edges-floor(2*edges/maxdeg)*maxdeg; if spectralRadius >= (2*edges*(2*maxdeg-1) - 2*m*(maxdeg-m))**(1/4) then { girth <= 4 };",
             "name": "Theorem",
             "idnum": 319,
             "disp": ""

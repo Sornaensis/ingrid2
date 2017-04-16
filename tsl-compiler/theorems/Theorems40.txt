@@ -53,15 +53,16 @@ maxdeg >= -(minb(edgeCover)/(minb(edgeCover)-(maxb(nodes))));
         {
             "text": "
             if exists diameter then 
-            {
-                if diameter <= 3 then { 
-                    maxdeg <= nodes - diameter + 1 
-                } 
-                else 
-                { 
-                    maxdeg <= nodes - nodeConnec*(diameter - 4)-3 
-                }
-            };",
+{
+    if minb(diameter) <= 3 then { 
+        maxdeg <= nodes - diameter + 1 
+    } 
+    else 
+    { 
+        _nodeConnec is maximum(1, minb(nodeConnec)), 
+        maxdeg <= nodes - _nodeConnec*(diameter - 4)-3
+    }
+};",
             "name": "Theorem",
             "idnum": 28,
             "disp": ""
