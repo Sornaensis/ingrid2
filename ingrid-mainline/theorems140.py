@@ -13228,7 +13228,7 @@ class Theorem430(Theorem):
 
 class Theorem431(Theorem):
     def __init__(self):
-        super(Theorem431, self).__init__(431, "if girth >= 6.0 then \n{\n    nodeCover <= maxb(nodes)*maxb(maxdeg)**2.0/(maxb(maxdeg)**2.0+2.0*maxb(maxdeg)-(1.0)),\n    nodes >= minb(nodeCover)+2.0*minb(nodeCover)/maxb(maxdeg)-(minb(nodeCover)/maxb(maxdeg)**2.0),\n    maxdeg <= -((minb(nodeCover)+sqrt(minb(nodeCover)*(2.0*minb(nodeCover)-(maxb(nodes)))))/(minb(nodeCover)-(maxb(nodes))))\n};\n", "")
+        super(Theorem431, self).__init__(431, "if girth >= 6.0 then \n{\n    nodeCover <= maxb(nodes)*maxb(maxdeg)**2.0/(maxb(maxdeg)**2.0+2.0*maxb(maxdeg)-(1.0)),\n    nodes >= minb(nodeCover)+2.0*minb(nodeCover)/maxb(maxdeg)-(minb(nodeCover)/maxb(maxdeg)**2.0),\n    if maxb(nodes) <= 2.0*minb(nodeCover) then \n    {\n        maxdeg >= -((minb(nodeCover)+sqrt(minb(nodeCover)*(2.0*minb(nodeCover)-(maxb(nodes)))))/(minb(nodeCover)-(maxb(nodes))))\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["girth","nodeCover","nodes","maxdeg"]
     def run(self):
@@ -13250,11 +13250,12 @@ class Theorem431(Theorem):
                     set("nodes",  minb("nodeCover")+2.0*minb("nodeCover")/maxb("maxdeg")-(minb("nodeCover")/maxb("maxdeg")**2.0), ind='Min')
                 except:
                     pass
-            if minb("nodeCover") != 'undt' and maxb("nodes") != 'undt':
-                try:
-                    set("maxdeg",  -((minb("nodeCover")+sqrt(minb("nodeCover")*(2.0*minb("nodeCover")-(maxb("nodes")))))/(minb("nodeCover")-(maxb("nodes")))), ind='Max')
-                except:
-                    pass
+            if (minb("nodeCover") != 'undt' and maxb("nodes") != 'undt' and maxb("nodes") <= 2.0*minb("nodeCover")):
+                if minb("nodeCover") != 'undt' and maxb("nodes") != 'undt':
+                    try:
+                        set("maxdeg",  -((minb("nodeCover")+sqrt(minb("nodeCover")*(2.0*minb("nodeCover")-(maxb("nodes")))))/(minb("nodeCover")-(maxb("nodes")))), ind='Min')
+                    except:
+                        pass
         return
 
 class Theorem432(Theorem):
