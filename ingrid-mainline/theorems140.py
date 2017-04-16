@@ -12674,9 +12674,9 @@ class Theorem412(Theorem):
 
 class Theorem413(Theorem):
     def __init__(self):
-        super(Theorem413, self).__init__(413, "_m is (minb(nodes)-(minb(chromaticNum)))/(maxb(nodeInd)-(1.0));\nedges >= _m*(minb(nodes)-(minb(chromaticNum)))+minb(chromaticNum)*(minb(chromaticNum)-(1.0))/2.0-((minb(nodeInd)-(1.0))*_m*(_m+1.0)/2.0);\n", "")
+        super(Theorem413, self).__init__(413, "null;", "")
     def involves(self, str_invar):
-        return str_invar in ["nodes","chromaticNum","nodeInd","edges"]
+        return str_invar in []
     def run(self):
         get = self.get
         set = self.set
@@ -12685,16 +12685,6 @@ class Theorem413(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if minb("nodes") != 'undt' and minb("chromaticNum") != 'undt' and maxb("nodeInd") != 'undt':
-            try:
-                _m = (minb("nodes")-(minb("chromaticNum")))/(maxb("nodeInd")-(1.0))
-            except:
-                pass
-        if minb("nodes") != 'undt' and minb("chromaticNum") != 'undt' and minb("nodeInd") != 'undt' and '_m' in vars():
-            try:
-                set("edges",  _m*(minb("nodes")-(minb("chromaticNum")))+minb("chromaticNum")*(minb("chromaticNum")-(1.0))/2.0-((minb("nodeInd")-(1.0))*_m*(_m+1.0)/2.0), ind='Min')
-            except:
-                pass
         return
 
 class Theorem414(Theorem):
