@@ -8083,9 +8083,9 @@ class Theorem252(Theorem):
 
 class Theorem253(Theorem):
     def __init__(self):
-        super(Theorem253, self).__init__(253, "if nodeConnec >= 1.0 then \n{\n    maxdeg <= (nodes-(1.0))/((girth-(4.0))/4.0*(nodeConnec-(1.0))+1.0)\n};\n", "")
+        super(Theorem253, self).__init__(253, "_temp is floor((minb(girth)-(3.0))/2.0);\nif nodeConnec >= 1.0 and _temp > 0.0 then \n{\n    maxdeg <= (maxb(nodes)-(1.0))/((minb(girth)-(4.0))/4.0*(minb(nodeConnec)-(1.0))+1.0),\n    nodes >= minb(girth)*minb(maxdeg)*minb(nodeConnec)/4.0-(minb(girth)*minb(maxdeg)/4.0)-(minb(maxdeg)*minb(nodeConnec))+2.0*minb(maxdeg)+1.0,\n    nodeConnec <= (minb(girth)*minb(maxdeg)-(8.0*minb(maxdeg))+4.0*maxb(nodes)-(4.0))/(minb(maxdeg)*(minb(girth)-(4.0)))\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["nodeConnec","maxdeg","nodes","girth"]
+        return str_invar in ["girth","nodeConnec","maxdeg","nodes"]
     def run(self):
         get = self.get
         set = self.set
@@ -8094,7 +8094,12 @@ class Theorem253(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("nodeConnec") != 'undt' and minb("nodeConnec") >= 1.0):
+        if minb("girth") != 'undt':
+            try:
+                _temp = floor((minb("girth")-(3.0))/2.0)
+            except:
+                pass
+        if (minb("nodeConnec") != 'undt' and minb("nodeConnec") >= 1.0) and ('_temp' in vars() and _temp > 0.0):
             if maxb("nodes") != 'undt' and minb("girth") != 'undt' and minb("nodeConnec") != 'undt':
                 try:
                     set("maxdeg",  (maxb("nodes")-(1.0))/((minb("girth")-(4.0))/4.0*(minb("nodeConnec")-(1.0))+1.0), ind='Max')
@@ -8105,14 +8110,9 @@ class Theorem253(Theorem):
                     set("nodes",  minb("girth")*minb("maxdeg")*minb("nodeConnec")/4.0-(minb("girth")*minb("maxdeg")/4.0)-(minb("maxdeg")*minb("nodeConnec"))+2.0*minb("maxdeg")+1.0, ind='Min')
                 except:
                     pass
-            if minb("maxdeg") != 'undt' and maxb("nodeConnec") != 'undt' and maxb("nodes") != 'undt':
+            if minb("girth") != 'undt' and minb("maxdeg") != 'undt' and maxb("nodes") != 'undt':
                 try:
-                    set("girth",  4.0*(minb("maxdeg")*maxb("nodeConnec")-(2.0*minb("maxdeg"))+maxb("nodes")-(1.0))/(minb("maxdeg")*(maxb("nodeConnec")-(1.0))), ind='Max')
-                except:
-                    pass
-            if maxb("girth") != 'undt' and minb("maxdeg") != 'undt' and maxb("nodes") != 'undt':
-                try:
-                    set("nodeConnec",  (maxb("girth")*minb("maxdeg")-(8.0*minb("maxdeg"))+4.0*maxb("nodes")-(4.0))/(minb("maxdeg")*(maxb("girth")-(4.0))), ind='Max')
+                    set("nodeConnec",  (minb("girth")*minb("maxdeg")-(8.0*minb("maxdeg"))+4.0*maxb("nodes")-(4.0))/(minb("maxdeg")*(minb("girth")-(4.0))), ind='Max')
                 except:
                     pass
         return
