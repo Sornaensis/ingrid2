@@ -144,8 +144,8 @@ realizeAnalysis2' v
                 Cond (Fx $ Function "get" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "False" (Fx Empty))) 
             "even" ->  Fx $ Function "evenInvar" [e]
             "odd" -> Fx $ Function "oddInvar" [e]
-            "istrue"  -> cata realizeAnalysis' . Fx $ Cond e Nothing
-            "isfalse" -> cata realizeAnalysis' . Fx $ Cond (Fx $ Function "not" [e])  Nothing
+            "istrue"  -> cata realizeAnalysis' . Fx $ Cond (Fx Empty) (Just e)
+            "isfalse" -> cata realizeAnalysis' . Fx $ Cond (Fx Empty) (Just . Fx $ Function "not" [e])
             "isset" -> Fx $ 
                 And (Fx $ Cond (Fx $ Function "maxb" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))))
                  (Fx $ Cond (Fx $ Function "minb" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ Function "maxb" [e])))
@@ -171,6 +171,22 @@ realizeAnalysis2' v
                                                 RelExpr (Fx $ Relation RelNeq) 
                                                         (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a):inv_replce)
                          ++ map (\l -> Fx $ ExprF ("\'" ++ generatePython l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
+        in  if null inv_check 
+              then Fx $ Cond a (Just . Fx $ RelExpr rel expr)
+              else 
+                if length inv_check == 1
+                    then Fx. Paren . Fx $ And (head inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
+                    else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
+   | (Cond a@(Fx Empty) (Just (Fx (RelExpr rel expr)))) <- v =
+        let bound = flipBound $ getBound rel
+            invars = getInvolves expr
+            inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
+            inv_replce = map (swapBound bound) inv_mappings
+            inv_check  = map (\(_,f) -> Fx $ Cond f 
+                                            (Just . Fx $ 
+                                                RelExpr (Fx $ Relation RelNeq) 
+                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce)
+                         ++ map (\(Fx (Local l)) -> Fx $ ExprF ("\'" ++ l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
         in  if null inv_check 
               then Fx $ Cond a (Just . Fx $ RelExpr rel expr)
               else 
