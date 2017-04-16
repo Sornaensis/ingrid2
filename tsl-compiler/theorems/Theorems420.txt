@@ -102,7 +102,8 @@ if connected and nodes >= 2*mindeg + 2 then
             "disp": ""
         },
         {
-            "text": "nosolve edges >= (nodes - chromaticNum)**2/(nodeInd-1) + chromaticNum *(chromaticNum - 1)/2 - (nodeInd-1)*((nodes-chromaticNum)/(nodeInd-1)) * ((nodes-chromaticNum)/(nodeInd-1))/2 : useMinFor(chromaticNum);",
+            "text": "_m is (minb(nodes)-minb(chromaticNum)) / (maxb(nodeInd)-1);
+edges >= _m * (minb(nodes)-minb(chromaticNum))+minb(chromaticNum)*(minb(chromaticNum)-1)/2-(minb(nodeInd)-1)*_m*(_m+1)/2;",
             "name": "Theorem",
             "idnum": 413,
             "disp": ""
