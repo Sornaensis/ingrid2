@@ -138,11 +138,16 @@
             "disp": ""
         },
         {
-            "text": "if exists girth then
+            "text": "if exists girth then 
 {
     _P is maxb(nodes),
-    arboricity <= chromaticNum - chromaticNum/(1 + _P/((girth - 1)/2)*chromaticNum),
-    nodes >= minb(arboricity)*(-(minb(girth))+1.0)/(2.0*maxb(chromaticNum)*(minb(arboricity)-(maxb(chromaticNum))))
+    arboricity <= maxb(chromaticNum)-(maxb(chromaticNum)/(1.0+_P/((minb(girth)-(1.0))/2.0)*maxb(chromaticNum))),
+    if minb(arboricity) > 2 then
+    {
+        chromaticNum >= (_P*minb(arboricity)+sqrt(_P*minb(arboricity)*(_P*minb(arboricity)+2.0*minb(girth)-(2.0))))/(2.0*_P),
+        girth <= -(2.0*_P*maxb(chromaticNum))+2.0*_P*maxb(chromaticNum)**2.0/minb(arboricity)+1.0,
+        nodes >= minb(arboricity)*(-(minb(girth))+1.0)/(2.0*maxb(chromaticNum)*(minb(arboricity)-(maxb(chromaticNum))))
+    }
 };",
             "name": "Theorem",
             "idnum": 53,
