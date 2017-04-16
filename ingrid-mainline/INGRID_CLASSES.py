@@ -115,6 +115,9 @@ class Invariant:
         elif val == 'undt' or val > self.value['Min']:
             trace_msg = 'The minimum of ' + self.name + ' from ' + str(self.value['Min']) + ' to ' + str(val)
             self.value['Min'] = val
+            if val == 'undt':
+                trace_msg = 'The maximum of ' + self.name + ' from ' + str(self.value['Max']) + ' to ' + str(val)
+                self.value['Max'] = val
         else:
             return True, False
 
