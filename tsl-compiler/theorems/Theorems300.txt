@@ -1,4 +1,3 @@
-
 {
     "theorems":[
 {
@@ -34,7 +33,7 @@
         },
         {
             "text": "
-if isset chromaticNum
+if isset chromaticNum then
 {
     edges >= (minb(maxdeg)+(minb(chromaticNum)-(1.0))**2.0+(minb(nodes)-(minb(chromaticNum)))*minb(mindeg))/2.0,
     maxdeg <= maxb(chromaticNum)*maxb(mindeg)+2.0*maxb(edges)-(maxb(mindeg)*minb(nodes))-((maxb(chromaticNum)-(1.0))**2.0),
