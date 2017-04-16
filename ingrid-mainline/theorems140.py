@@ -1405,11 +1405,11 @@ class Theorem42(Theorem):
                 pass
         return
 
-class Theorem403(Theorem):
+class Theorem43(Theorem):
     def __init__(self):
-        super(Theorem403, self).__init__(403, "if chromaticNum > 2.0 then \n{\n    not bipartite\n};\n", "")
+        super(Theorem43, self).__init__(43, "if (forest and connected) or tree then \n{\n    tree,\n    forest,\n    connected\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["chromaticNum","bipartite"]
+        return str_invar in ["forest","connected","tree"]
     def run(self):
         get = self.get
         set = self.set
@@ -1418,8 +1418,10 @@ class Theorem403(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("chromaticNum") != 'undt' and minb("chromaticNum") > 2.0):
-            set("bipartite", False)
+        if (get("forest") == True and get("connected") == True) or get("tree") == True:
+            set("tree", True)
+            set("forest", True)
+            set("connected", True)
         return
 
 class Theorem44(Theorem):
@@ -12401,9 +12403,9 @@ class Theorem402(Theorem):
 
 class Theorem403(Theorem):
     def __init__(self):
-        super(Theorem403, self).__init__(403, "\n", "")
+        super(Theorem403, self).__init__(403, "if chromaticNum > 2.0 then \n{\n    not bipartite\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in []
+        return str_invar in ["chromaticNum","bipartite"]
     def run(self):
         get = self.get
         set = self.set
@@ -12412,6 +12414,8 @@ class Theorem403(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
+        if (minb("chromaticNum") != 'undt' and minb("chromaticNum") > 2.0):
+            set("bipartite", False)
         return
 
 class Theorem404(Theorem):
@@ -14068,4 +14072,3 @@ class Theorem458(Theorem):
                 except:
                     pass
         return
-
