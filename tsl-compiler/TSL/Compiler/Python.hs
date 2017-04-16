@@ -261,7 +261,11 @@ realizeAnalysis2' v
             invars = getInvolves expr
             inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
             inv_replce = map (swapBound bound) inv_mappings
-            inv_check  = map (\(_,f) -> Fx $ Cond f 
+            inv_check  = (map (\f -> Fx $ Cond f    
+                                       (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
+                                                            (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
+                         L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr)
+                      ++  map (\(_,f) -> Fx $ Cond f 
                                             (Just . Fx $ 
                                                 RelExpr (Fx $ Relation RelNeq) 
                                                         (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce) 
