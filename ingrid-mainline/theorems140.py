@@ -10037,9 +10037,9 @@ class Theorem324(Theorem):
 
 class Theorem325(Theorem):
     def __init__(self):
-        super(Theorem325, self).__init__(325, "if regular and even girth and girth >= 6.0 and connected and nodes <= (mindeg*(mindeg-(3.0))+2.0*(mindeg-(1.0))**(girth/2.0))/(mindeg-(2.0)) then \n{\n    bipartite,\n    diameter == girth/2.0+1.0\n};\n", "")
+        super(Theorem325, self).__init__(325, "if regular and even girth and girth >= 6.0 and connected and mindeg >= 3.0 and nodes <= (mindeg*(mindeg-(3.0))+2.0*(mindeg-(1.0))**(girth/2.0))/(mindeg-(2.0)) then \n{\n    bipartite,\n    diameter == girth/2.0+1.0\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["regular","girth","connected","nodes","mindeg","bipartite","diameter"]
+        return str_invar in ["regular","girth","connected","mindeg","nodes","bipartite","diameter"]
     def run(self):
         get = self.get
         set = self.set
@@ -10048,7 +10048,7 @@ class Theorem325(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("regular") == True and evenInvar("girth") and (minb("girth") != 'undt' and minb("girth") >= 6.0) and get("connected") == True and (minb("mindeg") != 'undt' and minb("girth") != 'undt' and maxb("nodes") != 'undt' and maxb("nodes") <= (minb("mindeg")*(minb("mindeg")-(3.0))+2.0*(minb("mindeg")-(1.0))**(minb("girth")/2.0))/(minb("mindeg")-(2.0))):
+        if get("regular") == True and evenInvar("girth") and (minb("girth") != 'undt' and minb("girth") >= 6.0) and get("connected") == True and (minb("mindeg") != 'undt' and minb("mindeg") >= 3.0) and (minb("mindeg") != 'undt' and minb("girth") != 'undt' and maxb("nodes") != 'undt' and maxb("nodes") <= (minb("mindeg")*(minb("mindeg")-(3.0))+2.0*(minb("mindeg")-(1.0))**(minb("girth")/2.0))/(minb("mindeg")-(2.0))):
             set("bipartite", True)
             if minb("girth") != 'undt':
                 try:
