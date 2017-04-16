@@ -10616,7 +10616,7 @@ class Theorem345(Theorem):
 
 class Theorem346(Theorem):
     def __init__(self):
-        super(Theorem346, self).__init__(346, "if not forest and (maxb(nodeConnec) > 0.0 or maxb(mindeg) > 1.0) then \n{\n    _z is (minb(girth)-(2.0))*(minb(mindeg)-(1.0))-(4.0),\n    if _z > 0.0 then \n    {\n        _z1 is minb(edges)*_z/(minb(girth)*minb(mindeg)),\n        genus >= _z1/2.0+minb(numOfComponents)\n    },\n    edges <= 2.0*minb(girth)*minb(mindeg)*(-(maxb(genus))+minb(numOfComponents))/(-(minb(girth)*minb(mindeg))+2.0*minb(girth)+2.0*minb(mindeg)),\n    girth <= 2.0*minb(edges)*minb(mindeg)/(minb(edges)*minb(mindeg)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(mindeg))+2.0*minb(mindeg)*minb(numOfComponents)),\n    mindeg <= 2.0*minb(edges)*minb(girth)/(minb(edges)*minb(girth)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(girth))+2.0*minb(girth)*minb(numOfComponents)),\n    numOfComponents <= -(minb(edges)/2.0)+minb(edges)/minb(mindeg)+minb(edges)/minb(girth)+maxb(genus)\n};\n", "")
+        super(Theorem346, self).__init__(346, "if not forest and (minb(nodeConnec) > 0.0 or minb(mindeg) > 1.0) then \n{\n    _z is (minb(girth)-(2.0))*(minb(mindeg)-(1.0))-(4.0),\n    if _z > 0.0 then \n    {\n        _z1 is minb(edges)*_z/(minb(girth)*minb(mindeg)),\n        genus >= _z1/2.0+minb(numOfComponents)\n    },\n    girth <= 2.0*minb(edges)*minb(mindeg)/(minb(edges)*minb(mindeg)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(mindeg))+2.0*minb(mindeg)*minb(numOfComponents)),\n    mindeg <= 2.0*minb(edges)*minb(girth)/(minb(edges)*minb(girth)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(girth))+2.0*minb(girth)*minb(numOfComponents)),\n    numOfComponents <= -(minb(edges)/2.0)+minb(edges)/minb(mindeg)+minb(edges)/minb(girth)+maxb(genus)\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["forest","nodeConnec","mindeg","girth","edges","genus","numOfComponents"]
     def run(self):
@@ -10627,7 +10627,7 @@ class Theorem346(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("forest") == False and ((maxb("nodeConnec") != 'undt' and maxb("nodeConnec") > 0.0) or (maxb("mindeg") != 'undt' and maxb("mindeg") > 1.0)):
+        if get("forest") == False and ((minb("nodeConnec") != 'undt' and minb("nodeConnec") > 0.0) or (minb("mindeg") != 'undt' and minb("mindeg") > 1.0)):
             if minb("girth") != 'undt' and minb("mindeg") != 'undt':
                 try:
                     _z = (minb("girth")-(2.0))*(minb("mindeg")-(1.0))-(4.0)
@@ -10644,11 +10644,6 @@ class Theorem346(Theorem):
                         set("genus",  _z1/2.0+minb("numOfComponents"), ind='Min')
                     except:
                         pass
-            if minb("girth") != 'undt' and minb("mindeg") != 'undt' and maxb("genus") != 'undt' and minb("numOfComponents") != 'undt':
-                try:
-                    set("edges",  2.0*minb("girth")*minb("mindeg")*(-(maxb("genus"))+minb("numOfComponents"))/(-(minb("girth")*minb("mindeg"))+2.0*minb("girth")+2.0*minb("mindeg")), ind='Max')
-                except:
-                    pass
             if minb("edges") != 'undt' and minb("mindeg") != 'undt' and maxb("genus") != 'undt' and minb("numOfComponents") != 'undt':
                 try:
                     set("girth",  2.0*minb("edges")*minb("mindeg")/(minb("edges")*minb("mindeg")-(2.0*minb("edges"))-(2.0*maxb("genus")*minb("mindeg"))+2.0*minb("mindeg")*minb("numOfComponents")), ind='Max')
