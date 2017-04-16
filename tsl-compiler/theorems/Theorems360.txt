@@ -41,7 +41,7 @@
             "disp": ""
         },
         {
-            "text": "if not forest and (nodeConnec > 0 or mindeg > 1) then 
+            "text": "if not forest and (maxb(nodeConnec) > 0 or maxb(mindeg) > 1) then 
 { 
     genus >= (minb(edges)*(1.0-(2.0/minb(girth))-(2.0/minb(mindeg)))+2.0*minb(numOfComponents))/2.0,
     edges <= 2.0*minb(girth)*minb(mindeg)*(-(maxb(genus))+minb(numOfComponents))/(-(minb(girth)*minb(mindeg))+2.0*minb(girth)+2.0*minb(mindeg)),
