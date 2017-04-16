@@ -148,7 +148,7 @@ if minb(domination) >= 2.0 then
 {
     edges <= (1.0/2.0)*(maxb(nodes)-(minb(nodeInd)))*(maxb(nodes)+minb(nodeInd)-(2.0*minb(domination))+2.0),
     nodes >= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*minb(nodeInd))-(2.0*minb(domination))+2.0*minb(edges)+minb(nodeInd)**2.0+2.0*minb(nodeInd)+1.0)-(1.0),
-    nodeInd <= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*minb(nodes))-(2.0*minb(domination))-(2.0*minb(edges))+minb(nodes)**2.0+2.0*minb(nodes)+1.0)-(1.0),
+    nodeInd <= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*maxb(nodes))-(2.0*minb(domination))-(2.0*minb(edges))+maxb(nodes)**2.0+2.0*maxb(nodes)+1.0)-(1.0),
     _k is maxb(nodes)-2*minb(edges),
     if minb(nodeInd) > _k then
     {
