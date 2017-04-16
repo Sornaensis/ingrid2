@@ -10646,7 +10646,7 @@ class Theorem347(Theorem):
 
 class Theorem348(Theorem):
     def __init__(self):
-        super(Theorem348, self).__init__(348, "if not forest and edges >= nodes+1.0-(numOfComponents) then \n{\n    nodes >= 3.0*girth/2.0+2.0*numOfComponents-(3.0)\n};\n", "")
+        super(Theorem348, self).__init__(348, "if not forest and edges >= nodes+2.0-(numOfComponents) then \n{\n    nodes >= 3.0*girth/2.0+2.0*numOfComponents-(3.0)\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["forest","edges","nodes","numOfComponents","girth"]
     def run(self):
@@ -10657,7 +10657,7 @@ class Theorem348(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("forest") == False and (maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt' and minb("edges") != 'undt' and minb("edges") >= maxb("nodes")+1.0-(minb("numOfComponents"))):
+        if get("forest") == False and (maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt' and minb("edges") != 'undt' and minb("edges") >= maxb("nodes")+2.0-(minb("numOfComponents"))):
             if minb("girth") != 'undt' and minb("numOfComponents") != 'undt':
                 try:
                     set("nodes",  3.0*minb("girth")/2.0+2.0*minb("numOfComponents")-(3.0), ind='Min')
