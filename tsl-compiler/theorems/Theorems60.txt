@@ -13,7 +13,13 @@
             "disp": ""
         },
         {
-            "text": "if (forest and connected) or tree then { tree, forest, connected };",
+            "text": "
+      if (forest and connected) or tree then 
+      { tree, forest, connected };
+      if not forest or not connected then 
+      {  
+          not tree
+      };",
             "name": "Theorem",
             "idnum": 43,
             "disp": ""
