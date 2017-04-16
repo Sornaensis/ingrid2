@@ -1,5 +1,5 @@
 from INGRID_CLASSES import Theorem
-from math import floor,ceil,log,sqrt,exp,sin,cos,ln
+from math import floor,ceil,log,sqrt,exp,sin,cos
 import sys
 
 def odd(x):
