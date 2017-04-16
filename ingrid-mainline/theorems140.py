@@ -11563,7 +11563,7 @@ class Theorem374(Theorem):
 
 class Theorem375(Theorem):
     def __init__(self):
-        super(Theorem375, self).__init__(375, "if connected and regular then \n{\n    edgeArboricity <= 4.0+(6.0*maxb(genus)+2.0)/(minb(nodes)-(1.0)),\n    genus >= minb(edgeArboricity)*minb(nodes)/6.0-(minb(edgeArboricity)/6.0)-(2.0*minb(nodes)/3.0)+1.0/3.0,\n    nodes <= (minb(edgeArboricity)+6.0*maxb(genus)-(2.0))/(minb(edgeArboricity)-(4.0))\n};\n", "")
+        super(Theorem375, self).__init__(375, "if connected and regular then \n{\n    edgeArboricity <= 4.0+(6.0*maxb(genus)+2.0)/(minb(nodes)-(1.0)),\n    genus >= minb(edgeArboricity)*minb(nodes)/6.0-(minb(edgeArboricity)/6.0)-(2.0*minb(nodes)/3.0)+1.0/3.0,\n    if minb(edgeArboricity) > 4.0 then \n    {\n        nodes <= (minb(edgeArboricity)+6.0*maxb(genus)-(2.0))/(minb(edgeArboricity)-(4.0))\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["connected","regular","edgeArboricity","genus","nodes"]
     def run(self):
@@ -11585,11 +11585,12 @@ class Theorem375(Theorem):
                     set("genus",  minb("edgeArboricity")*minb("nodes")/6.0-(minb("edgeArboricity")/6.0)-(2.0*minb("nodes")/3.0)+1.0/3.0, ind='Min')
                 except:
                     pass
-            if minb("edgeArboricity") != 'undt' and maxb("genus") != 'undt':
-                try:
-                    set("nodes",  (minb("edgeArboricity")+6.0*maxb("genus")-(2.0))/(minb("edgeArboricity")-(4.0)), ind='Max')
-                except:
-                    pass
+            if (minb("edgeArboricity") != 'undt' and minb("edgeArboricity") > 4.0):
+                if minb("edgeArboricity") != 'undt' and maxb("genus") != 'undt':
+                    try:
+                        set("nodes",  (minb("edgeArboricity")+6.0*maxb("genus")-(2.0))/(minb("edgeArboricity")-(4.0)), ind='Max')
+                    except:
+                        pass
         return
 
 class Theorem376(Theorem):
