@@ -5901,7 +5901,7 @@ class Theorem178(Theorem):
 
 class Theorem179(Theorem):
     def __init__(self):
-        super(Theorem179, self).__init__(179, "if minb(domination) >= 2.0 then \n{\n    edges <= (1.0/2.0)*(maxb(nodes)-(minb(nodeInd)))*(maxb(nodes)+minb(nodeInd)-(2.0*minb(domination))+2.0),\n    nodes >= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*minb(nodeInd))-(2.0*minb(domination))+2.0*minb(edges)+minb(nodeInd)**2.0+2.0*minb(nodeInd)+1.0)-(1.0),\n    nodeInd <= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*minb(nodes))-(2.0*minb(domination))-(2.0*minb(edges))+minb(nodes)**2.0+2.0*minb(nodes)+1.0)-(1.0),\n    _k is maxb(nodes)-(2.0*minb(edges)),\n    if minb(nodeInd) > _k then \n    {\n        _k is minb(nodeInd)\n    }\n    else if maxb(nodeInd) < _k then \n    {\n        _k is maxb(nodeInd)\n    },\n    domination <= ((maxb(nodes)+_k+2.0)*(maxb(nodes)-(_k))-(2.0*minb(edges)))/(2.0*(maxb(nodes)-(_k)))\n};\n", "")
+        super(Theorem179, self).__init__(179, "if minb(domination) >= 2.0 then \n{\n    edges <= (1.0/2.0)*(maxb(nodes)-(minb(nodeInd)))*(maxb(nodes)+minb(nodeInd)-(2.0*minb(domination))+2.0),\n    nodes >= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*minb(nodeInd))-(2.0*minb(domination))+2.0*minb(edges)+minb(nodeInd)**2.0+2.0*minb(nodeInd)+1.0)-(1.0),\n    nodeInd <= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*maxb(nodes))-(2.0*minb(domination))-(2.0*minb(edges))+maxb(nodes)**2.0+2.0*maxb(nodes)+1.0)-(1.0),\n    _k is maxb(nodes)-(2.0*minb(edges)),\n    if minb(nodeInd) > _k then \n    {\n        _k is minb(nodeInd)\n    }\n    else if maxb(nodeInd) < _k then \n    {\n        _k is maxb(nodeInd)\n    },\n    domination <= ((maxb(nodes)+_k+2.0)*(maxb(nodes)-(_k))-(2.0*minb(edges)))/(2.0*(maxb(nodes)-(_k)))\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["domination","edges","nodes","nodeInd"]
     def run(self):
@@ -5923,9 +5923,9 @@ class Theorem179(Theorem):
                     set("nodes",  minb("domination")+sqrt(minb("domination")**2.0-(2.0*minb("domination")*minb("nodeInd"))-(2.0*minb("domination"))+2.0*minb("edges")+minb("nodeInd")**2.0+2.0*minb("nodeInd")+1.0)-(1.0), ind='Min')
                 except:
                     pass
-            if minb("domination") != 'undt' and minb("nodes") != 'undt' and minb("edges") != 'undt':
+            if minb("domination") != 'undt' and maxb("nodes") != 'undt' and minb("edges") != 'undt':
                 try:
-                    set("nodeInd",  minb("domination")+sqrt(minb("domination")**2.0-(2.0*minb("domination")*minb("nodes"))-(2.0*minb("domination"))-(2.0*minb("edges"))+minb("nodes")**2.0+2.0*minb("nodes")+1.0)-(1.0), ind='Max')
+                    set("nodeInd",  minb("domination")+sqrt(minb("domination")**2.0-(2.0*minb("domination")*maxb("nodes"))-(2.0*minb("domination"))-(2.0*minb("edges"))+maxb("nodes")**2.0+2.0*maxb("nodes")+1.0)-(1.0), ind='Max')
                 except:
                     pass
             if maxb("nodes") != 'undt' and minb("edges") != 'undt':
