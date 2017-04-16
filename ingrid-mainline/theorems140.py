@@ -11868,7 +11868,7 @@ class Theorem385(Theorem):
 
 class Theorem386(Theorem):
     def __init__(self):
-        super(Theorem386, self).__init__(386, "if mindeg >= 2.0 then \n{\n    domination >= (girth+2.0)/3.0*numOfComponents\n};\n", "")
+        super(Theorem386, self).__init__(386, "if mindeg >= 2.0 then \n{\n    domination >= girth/3.0*numOfComponents\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["mindeg","domination","girth","numOfComponents"]
     def run(self):
@@ -11882,17 +11882,17 @@ class Theorem386(Theorem):
         if (minb("mindeg") != 'undt' and minb("mindeg") >= 2.0):
             if minb("girth") != 'undt' and minb("numOfComponents") != 'undt':
                 try:
-                    set("domination",  (minb("girth")+2.0)/3.0*minb("numOfComponents"), ind='Min')
+                    set("domination",  minb("girth")/3.0*minb("numOfComponents"), ind='Min')
                 except:
                     pass
             if maxb("domination") != 'undt' and minb("numOfComponents") != 'undt':
                 try:
-                    set("girth",  3.0*maxb("domination")/minb("numOfComponents")-(2.0), ind='Max')
+                    set("girth",  3.0*maxb("domination")/minb("numOfComponents"), ind='Max')
                 except:
                     pass
             if maxb("domination") != 'undt' and minb("girth") != 'undt':
                 try:
-                    set("numOfComponents",  3.0*maxb("domination")/(minb("girth")+2.0), ind='Max')
+                    set("numOfComponents",  3.0*maxb("domination")/minb("girth"), ind='Max')
                 except:
                     pass
         return
