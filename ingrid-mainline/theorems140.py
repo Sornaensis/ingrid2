@@ -12703,9 +12703,9 @@ class Theorem413(Theorem):
 
 class Theorem414(Theorem):
     def __init__(self):
-        super(Theorem414, self).__init__(414, "if diameter <= 4.0 then \n{\n    nosolve edges <= ((nodes-(2.0))*(nodes-(3.0))-(2.0*(nodes-(2.0))*(diameter-(4.0))*nodeConnec)-(4.0*nodeConnec*(nodeConnec+1.0))+nodeConnec**2.0*(diameter-(2.0))*(diameter-(3.0)))/2.0:useMinFor(diameter):useMinFor(nodeConnec),\n    nosolve edges <= ((nodes-(2.0))*(nodes-(3.0))-(2.0*(nodes-(2.0))*(diameter-(4.0))*nodeConnec)-(4.0*nodeConnec*(nodeConnec+1.0))+nodeConnec**2.0*(diameter-(2.0))*(diameter-(3.0)))/2.0:useMinFor(diameter):useMaxFor(nodeConnec)\n};\n", "")
+        super(Theorem414, self).__init__(414, "if maxb(diameter) <= 4.0 then \n{\n    _z is ((maxb(nodes)-(2.0))*(maxb(nodes)-(3.0))-(2.0*(maxb(nodes)-(2.0))*(minb(diameter)-(4.0))*minb(nodeConnec))-(4.0*minb(nodeConnec)*(minb(nodeConnec)+1.0))+minb(nodeConnec)**2.0*(minb(diameter)-(2.0))*(minb(diameter)-(3.0)))/2.0,\n    if _z < minb(edges) then \n    {\n        diameter >= 5.0\n    }\n    else  \n    {\n        edges <= z\n    }\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["diameter","edges","nodes","nodeConnec"]
+        return str_invar in ["diameter","nodes","nodeConnec","edges","z"]
     def run(self):
         get = self.get
         set = self.set
@@ -12717,14 +12717,25 @@ class Theorem414(Theorem):
         if (maxb("diameter") != 'undt' and maxb("diameter") <= 4.0):
             if maxb("nodes") != 'undt' and minb("diameter") != 'undt' and minb("nodeConnec") != 'undt':
                 try:
-                    set("edges",  ((maxb("nodes")-(2.0))*(maxb("nodes")-(3.0))-(2.0*(maxb("nodes")-(2.0))*(minb("diameter")-(4.0))*minb("nodeConnec"))-(4.0*minb("nodeConnec")*(minb("nodeConnec")+1.0))+minb("nodeConnec")**2.0*(minb("diameter")-(2.0))*(minb("diameter")-(3.0)))/2.0, ind='Max')
+                    _z = ((maxb("nodes")-(2.0))*(maxb("nodes")-(3.0))-(2.0*(maxb("nodes")-(2.0))*(minb("diameter")-(4.0))*minb("nodeConnec"))-(4.0*minb("nodeConnec")*(minb("nodeConnec")+1.0))+minb("nodeConnec")**2.0*(minb("diameter")-(2.0))*(minb("diameter")-(3.0)))/2.0
                 except:
                     pass
-            if maxb("nodes") != 'undt' and minb("diameter") != 'undt' and maxb("nodeConnec") != 'undt':
+            if (minb("edges") != 'undt' and '_z' in vars() and _z < minb("edges")):
                 try:
-                    set("edges",  ((maxb("nodes")-(2.0))*(maxb("nodes")-(3.0))-(2.0*(maxb("nodes")-(2.0))*(minb("diameter")-(4.0))*maxb("nodeConnec"))-(4.0*maxb("nodeConnec")*(maxb("nodeConnec")+1.0))+maxb("nodeConnec")**2.0*(minb("diameter")-(2.0))*(minb("diameter")-(3.0)))/2.0, ind='Max')
+                    set("diameter",  5.0, ind='Min')
                 except:
                     pass
+            elif True:
+                if maxb("z") != 'undt':
+                    try:
+                        set("edges",  maxb("z"), ind='Max')
+                    except:
+                        pass
+                if minb("edges") != 'undt':
+                    try:
+                        set("z",  minb("edges"), ind='Min')
+                    except:
+                        pass
         return
 
 class Theorem415(Theorem):
