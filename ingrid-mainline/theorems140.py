@@ -13787,9 +13787,9 @@ class Theorem447(Theorem):
 
 class Theorem448(Theorem):
     def __init__(self):
-        super(Theorem448, self).__init__(448, "edges <= ((maxb(nodes)-(maxb(nodeCliqueCover)))*(maxb(nodeCliqueCover)+maxb(maxdeg)-(1.0))+maxb(mindeg))/2.0;\nmindeg >= 2.0*minb(edges)+maxb(maxdeg)*maxb(nodeCliqueCover)-(maxb(maxdeg)*maxb(nodes))+maxb(nodeCliqueCover)**2.0-(maxb(nodeCliqueCover)*maxb(nodes))-(maxb(nodeCliqueCover))+maxb(nodes);\nif isset nodeCliqueCover then \n{\n    nodes >= (2.0*minb(edges)+maxb(maxdeg)*minb(nodeCliqueCover)-(maxb(mindeg))+maxb(nodeCliqueCover)**2.0-(maxb(nodeCliqueCover)))/(maxb(maxdeg)+maxb(nodeCliqueCover)-(1.0)),\n    maxdeg >= (-(2.0*minb(edges))+maxb(mindeg)-(maxb(nodeCliqueCover)**2.0)+maxb(nodeCliqueCover)*maxb(nodes)+maxb(nodeCliqueCover)-(maxb(nodes)))/(maxb(nodeCliqueCover)-(maxb(nodes)))\n};\n", "")
+        super(Theorem448, self).__init__(448, "_z1 is (maxb(nodes)-(maxb(nodeCliqueCover)))*(maxb(nodeCliqueCover)+maxb(maxdeg)-(1.0));\n_z2 is (maxb(nodes)-(minb(nodeCliqueCover)))*(minb(nodeCliqueCover)+maxb(maxdeg)-(1.0));\nif _z1 >= _z2 then \n{\n    edges <= ((maxb(nodes)-(maxb(nodeCliqueCover)))*(maxb(nodeCliqueCover)+maxb(maxdeg)-(1.0))+maxb(mindeg))/2.0,\n    mindeg >= 2.0*minb(edges)+maxb(maxdeg)*maxb(nodeCliqueCover)-(maxb(maxdeg)*maxb(nodes))+maxb(nodeCliqueCover)**2.0-(maxb(nodeCliqueCover)*maxb(nodes))-(maxb(nodeCliqueCover))+maxb(nodes)\n}\nelse  \n{\n    edges <= ((maxb(nodes)-(minb(nodeCliqueCover)))*(minb(nodeCliqueCover)+maxb(maxdeg)-(1.0))+maxb(mindeg))/2.0,\n    mindeg >= 2.0*minb(edges)+maxb(maxdeg)*minb(nodeCliqueCover)-(maxb(maxdeg)*maxb(nodes))+minb(nodeCliqueCover)**2.0-(minb(nodeCliqueCover)*maxb(nodes))-(minb(nodeCliqueCover))+maxb(nodes)\n};\nif isset nodeCliqueCover then \n{\n    nodes >= (2.0*minb(edges)+maxb(maxdeg)*minb(nodeCliqueCover)-(maxb(mindeg))+maxb(nodeCliqueCover)**2.0-(maxb(nodeCliqueCover)))/(maxb(maxdeg)+maxb(nodeCliqueCover)-(1.0)),\n    maxdeg >= (-(2.0*minb(edges))+maxb(mindeg)-(maxb(nodeCliqueCover)**2.0)+maxb(nodeCliqueCover)*maxb(nodes)+maxb(nodeCliqueCover)-(maxb(nodes)))/(maxb(nodeCliqueCover)-(maxb(nodes)))\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["edges","nodes","nodeCliqueCover","maxdeg","mindeg"]
+        return str_invar in ["nodes","nodeCliqueCover","maxdeg","edges","mindeg"]
     def run(self):
         get = self.get
         set = self.set
@@ -13798,16 +13798,38 @@ class Theorem448(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if maxb("nodes") != 'undt' and maxb("nodeCliqueCover") != 'undt' and maxb("maxdeg") != 'undt' and maxb("mindeg") != 'undt':
+        if maxb("nodes") != 'undt' and maxb("nodeCliqueCover") != 'undt' and maxb("maxdeg") != 'undt':
             try:
-                set("edges",  ((maxb("nodes")-(maxb("nodeCliqueCover")))*(maxb("nodeCliqueCover")+maxb("maxdeg")-(1.0))+maxb("mindeg"))/2.0, ind='Max')
+                _z1 = (maxb("nodes")-(maxb("nodeCliqueCover")))*(maxb("nodeCliqueCover")+maxb("maxdeg")-(1.0))
             except:
                 pass
-        if minb("edges") != 'undt' and maxb("maxdeg") != 'undt' and maxb("nodeCliqueCover") != 'undt' and maxb("nodes") != 'undt':
+        if maxb("nodes") != 'undt' and minb("nodeCliqueCover") != 'undt' and maxb("maxdeg") != 'undt':
             try:
-                set("mindeg",  2.0*minb("edges")+maxb("maxdeg")*maxb("nodeCliqueCover")-(maxb("maxdeg")*maxb("nodes"))+maxb("nodeCliqueCover")**2.0-(maxb("nodeCliqueCover")*maxb("nodes"))-(maxb("nodeCliqueCover"))+maxb("nodes"), ind='Min')
+                _z2 = (maxb("nodes")-(minb("nodeCliqueCover")))*(minb("nodeCliqueCover")+maxb("maxdeg")-(1.0))
             except:
                 pass
+        if ('_z1' in vars() and '_z2' in vars() and _z1 >= _z2):
+            if maxb("nodes") != 'undt' and maxb("nodeCliqueCover") != 'undt' and maxb("maxdeg") != 'undt' and maxb("mindeg") != 'undt':
+                try:
+                    set("edges",  ((maxb("nodes")-(maxb("nodeCliqueCover")))*(maxb("nodeCliqueCover")+maxb("maxdeg")-(1.0))+maxb("mindeg"))/2.0, ind='Max')
+                except:
+                    pass
+            if minb("edges") != 'undt' and maxb("maxdeg") != 'undt' and maxb("nodeCliqueCover") != 'undt' and maxb("nodes") != 'undt':
+                try:
+                    set("mindeg",  2.0*minb("edges")+maxb("maxdeg")*maxb("nodeCliqueCover")-(maxb("maxdeg")*maxb("nodes"))+maxb("nodeCliqueCover")**2.0-(maxb("nodeCliqueCover")*maxb("nodes"))-(maxb("nodeCliqueCover"))+maxb("nodes"), ind='Min')
+                except:
+                    pass
+        elif True:
+            if maxb("nodes") != 'undt' and minb("nodeCliqueCover") != 'undt' and maxb("maxdeg") != 'undt' and maxb("mindeg") != 'undt':
+                try:
+                    set("edges",  ((maxb("nodes")-(minb("nodeCliqueCover")))*(minb("nodeCliqueCover")+maxb("maxdeg")-(1.0))+maxb("mindeg"))/2.0, ind='Max')
+                except:
+                    pass
+            if minb("edges") != 'undt' and maxb("maxdeg") != 'undt' and minb("nodeCliqueCover") != 'undt' and maxb("nodes") != 'undt':
+                try:
+                    set("mindeg",  2.0*minb("edges")+maxb("maxdeg")*minb("nodeCliqueCover")-(maxb("maxdeg")*maxb("nodes"))+minb("nodeCliqueCover")**2.0-(minb("nodeCliqueCover")*maxb("nodes"))-(minb("nodeCliqueCover"))+maxb("nodes"), ind='Min')
+                except:
+                    pass
         if maxb("nodeCliqueCover") != 'undt' and minb("nodeCliqueCover") == maxb("nodeCliqueCover"):
             if minb("edges") != 'undt' and maxb("maxdeg") != 'undt' and minb("nodeCliqueCover") != 'undt' and maxb("mindeg") != 'undt' and maxb("nodeCliqueCover") != 'undt':
                 try:
