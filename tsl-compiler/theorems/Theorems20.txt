@@ -47,14 +47,18 @@ edges <= maxb(nodes)**2.0*(maxb(maxClique)-(1.0))/(2.0*maxb(maxClique));"
     {
         nodes >= 1.0+mindeg+diameter*nodeConnec+(diameter/3.0)*(mindeg-(3.0*nodeConnec)+1.0)
     },
-    _z is maxb(nodes)-2*minb(mindeg)-2,
-    if _z >= 0 then
+    
+    if minb(nodeConnec) > 0 then
     {
-        diameter <= _z/minb(nodeConnec)+3
-    }
-    else
-    {
-        diameter <= 2
+        _z is maxb(nodes)-2*minb(mindeg)-2,
+        if _z >= 0 then
+        {
+            diameter <= _z/minb(nodeConnec)+3
+        }
+        else
+        {
+            diameter <= 2
+        }
     },
     if minb(diameter) < 3.0 then 
     {
