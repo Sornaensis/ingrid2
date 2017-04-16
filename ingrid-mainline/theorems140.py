@@ -11153,9 +11153,9 @@ class Theorem360(Theorem):
 
 class Theorem361(Theorem):
     def __init__(self):
-        super(Theorem361, self).__init__(361, "let t = ((girth-(1.0))/2.0);\nif g >= 4.0 and mindeg == 2.0 and even t then \n{\n    nodeInd >= maxdeg*((t+1.0)/2.0)+1.0\n}\nelse if g >= 4.0 and mindeg == 2.0 and odd t then \n{\n    nodeInd >= maxdeg*((t+1.0)/2.0)\n};\n", "")
+        super(Theorem361, self).__init__(361, "let t = ((minb(girth)-(1.0))/2.0);\nif girth >= 4.0 and mindeg == 2.0 and istrue even(t) then \n{\n    nodeInd >= maxdeg*((t+1.0)/2.0)+1.0\n}\nelse if girth >= 4.0 and mindeg == 2.0 and istrue odd(t) then \n{\n    nodeInd >= maxdeg*((t+1.0)/2.0)\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["g","mindeg","girth","nodeInd","maxdeg"]
+        return str_invar in ["girth","mindeg","nodeInd","maxdeg"]
     def run(self):
         get = self.get
         set = self.set
@@ -11164,7 +11164,7 @@ class Theorem361(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("g") != 'undt' and minb("g") >= 4.0) and ((minb("mindeg") != 'undt' and minb("mindeg") >= 2.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 2.0)) and evenInvar((("girth"-(1.0))/2.0)):
+        if (minb("girth") != 'undt' and minb("girth") >= 4.0) and ((minb("mindeg") != 'undt' and minb("mindeg") >= 2.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 2.0)) and (minb("girth") != 'undt' and even(((minb("girth")-(1.0))/2.0))):
             if minb("maxdeg") != 'undt' and minb("girth") != 'undt':
                 try:
                     set("nodeInd",  minb("maxdeg")*((((minb("girth")-(1.0))/2.0)+1.0)/2.0)+1.0, ind='Min')
@@ -11175,12 +11175,7 @@ class Theorem361(Theorem):
                     set("maxdeg",  4.0*(maxb("nodeInd")-(1.0))/(minb("girth")+1.0), ind='Max')
                 except:
                     pass
-            if minb("maxdeg") != 'undt' and maxb("nodeInd") != 'undt':
-                try:
-                    set("girth",  (-(minb("maxdeg"))+4.0*maxb("nodeInd")-(4.0))/minb("maxdeg"), ind='Max')
-                except:
-                    pass
-        elif (minb("g") != 'undt' and minb("g") >= 4.0) and ((minb("mindeg") != 'undt' and minb("mindeg") >= 2.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 2.0)) and oddInvar((("girth"-(1.0))/2.0)):
+        elif (minb("girth") != 'undt' and minb("girth") >= 4.0) and ((minb("mindeg") != 'undt' and minb("mindeg") >= 2.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 2.0)) and (minb("girth") != 'undt' and odd(((minb("girth")-(1.0))/2.0))):
             if minb("maxdeg") != 'undt' and minb("girth") != 'undt':
                 try:
                     set("nodeInd",  minb("maxdeg")*((((minb("girth")-(1.0))/2.0)+1.0)/2.0), ind='Min')
@@ -11189,11 +11184,6 @@ class Theorem361(Theorem):
             if maxb("nodeInd") != 'undt' and minb("girth") != 'undt':
                 try:
                     set("maxdeg",  4.0*maxb("nodeInd")/(minb("girth")+1.0), ind='Max')
-                except:
-                    pass
-            if minb("maxdeg") != 'undt' and maxb("nodeInd") != 'undt':
-                try:
-                    set("girth",  (-(minb("maxdeg"))+4.0*maxb("nodeInd"))/minb("maxdeg"), ind='Max')
                 except:
                     pass
         return
