@@ -27,8 +27,8 @@ These inequalities do not contain any `free invariants`, or invariants that are 
 For boolean invariants, there are only two functions for either asserting or de-asserting:
 
 ```
-complete
-not planar
+complete;
+not planar;
 ```
 
 The first statement asserts that `complete` must be true, the second that `planar` must be false.
@@ -149,7 +149,7 @@ else
 };
 ```
 
-
+* All statements must end with a semi colon unless within an if statement
 * Statements are asserted in the order they are specified, from top to bottom.
 * If statement bodies contain lists of statements which are comma-separated, and can contain nested if-statements.
 * An entire `if else-if else` block is considered one large statement that only has a semicolon or comma at the end.
