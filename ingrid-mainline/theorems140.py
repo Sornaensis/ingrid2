@@ -2955,7 +2955,7 @@ class Theorem80(Theorem):
 
 class Theorem81(Theorem):
     def __init__(self):
-        super(Theorem81, self).__init__(81, "if regular then \n{\n    nodeInd <= maxb(nodes)/2.0+(minb(maxClique)**2.0+3.0*minb(maxClique)-(2.0))/(2.0*maxb(mindeg)),\n    nodes >= (-(minb(maxClique)**2.0)-(3.0*minb(maxClique))+2.0*minb(mindeg)*minb(nodeInd)+2.0)/maxb(mindeg),\n    maxClique <= sqrt(8.0*maxb(mindeg)*minb(nodeInd)-(4.0*maxb(mindeg)*maxb(nodes))+17.0)/2.0-(3.0/2.0),\n    mindeg >= (minb(maxClique)**2.0+3.0*minb(maxClique)-(2.0))/(2.0*minb(nodeInd)-(maxb(nodes)))\n};\n", "")
+        super(Theorem81, self).__init__(81, "if regular then \n{\n    nodeInd <= maxb(nodes)/2.0+(minb(maxClique)**2.0+3.0*minb(maxClique)-(2.0))/(2.0*maxb(mindeg)),\n    nodes >= (-(minb(maxClique)**2.0)-(3.0*minb(maxClique))+2.0*maxb(mindeg)*minb(nodeInd)+2.0)/maxb(mindeg),\n    maxClique <= sqrt(8.0*maxb(mindeg)*minb(nodeInd)-(4.0*maxb(mindeg)*maxb(nodes))+17.0)/2.0-(3.0/2.0),\n    mindeg >= (minb(maxClique)**2.0+3.0*minb(maxClique)-(2.0))/(2.0*minb(nodeInd)-(maxb(nodes)))\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["regular","nodeInd","nodes","maxClique","mindeg"]
     def run(self):
@@ -2972,9 +2972,9 @@ class Theorem81(Theorem):
                     set("nodeInd",  maxb("nodes")/2.0+(minb("maxClique")**2.0+3.0*minb("maxClique")-(2.0))/(2.0*maxb("mindeg")), ind='Max')
                 except:
                     pass
-            if minb("maxClique") != 'undt' and minb("mindeg") != 'undt' and minb("nodeInd") != 'undt' and maxb("mindeg") != 'undt':
+            if minb("maxClique") != 'undt' and maxb("mindeg") != 'undt' and minb("nodeInd") != 'undt':
                 try:
-                    set("nodes",  (-(minb("maxClique")**2.0)-(3.0*minb("maxClique"))+2.0*minb("mindeg")*minb("nodeInd")+2.0)/maxb("mindeg"), ind='Min')
+                    set("nodes",  (-(minb("maxClique")**2.0)-(3.0*minb("maxClique"))+2.0*maxb("mindeg")*minb("nodeInd")+2.0)/maxb("mindeg"), ind='Min')
                 except:
                     pass
             if maxb("mindeg") != 'undt' and minb("nodeInd") != 'undt' and maxb("nodes") != 'undt':
