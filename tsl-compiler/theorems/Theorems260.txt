@@ -175,8 +175,8 @@ if minb(diameter) >= 3.0 then
             "disp": ""
         },
         {
-            "text": "let c = edges - nodes + numOfComponents; 
-nosolve genus <= c/2-c/(4*log(c)/log(2));",
+            "text": "_c is maxb(edges)-minb(nodes)+maxb(numOfComponents);
+genus <= _c/2.0-(_c/(4.0*log(_c)/log(2.0)));",
             "name": "Theorem",
             "idnum": 260,
             "disp": ""
