@@ -1,5 +1,5 @@
 Theorem Specification Language for Ingrid 2
-------------------------------
+==============================
 
 * Users can input their own theorems into Ingrid 2 using this purpose built language
 * Capable of expressing almost all necessary components of a theorem
@@ -7,7 +7,7 @@ Theorem Specification Language for Ingrid 2
 
 
 Basic Concepts
---------------
+==============
 
 At their heart, most theorems, or class constraints, are expressed as inequalities such as the following.
 
@@ -105,7 +105,7 @@ edges <= 2.0*maxb(nodes)-(minb(spectralRadius)**2.0);
 After all terms have been re-written and had analysis applied to them.
 
 Structure
----------
+=========
 
 Each theorem 'program' is a sequence of assertions under conjunction.
 
@@ -158,7 +158,7 @@ else
 * Let statements may not reside within if statements.
 
 Built In Functions
-------------------
+==================
 
 `minimum(x,y)`
 `maximum(x,y)`
@@ -182,7 +182,7 @@ Built In Functions
 * Note: * indicates that the function may only be used as a statement, not within an expression, and not within a condition
 
 Special Statements
-----------------------------
+============================
 
 Even and Odd
 ------------
