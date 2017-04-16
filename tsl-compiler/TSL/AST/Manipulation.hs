@@ -182,7 +182,7 @@ instance Show (Fix Theorem) where
 extractLetStatements :: [Fix Theorem] -> [(String, Fix Theorem)]
 extractLetStatements = foldr (\x ys ->
                                 case x of
-                                    (Fx (Let (Fx (Invar s)) e)) -> (s,Fx $ Paren e):ys
+                                    (Fx (Let (Fx (Invar s)) e)) -> (s,e):ys
                                     _                           -> ys) []
 
 getInvarFunctions :: Fix Theorem -> [Fix Theorem]

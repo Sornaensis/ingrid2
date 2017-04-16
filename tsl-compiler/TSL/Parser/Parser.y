@@ -62,7 +62,7 @@ import TSL.AST.AST
 
 Theorem : Invarexpr ';' Theorem                 { $1 : $3 }
          | Ifstmt ';' Theorem                   { $1 : $3 }
-         | let Invar '==' Expr ';' Theorem      { (Fx $ Let $2 $4) : $6 }
+         | let Invar '==' Expr ';' Theorem      { (Fx $ Let $2 (Fx $ Paren $4)) : $6 }
          | null ';' Theorem                     { [Fx Empty] }
          | {- empty -}                          { [] }
 
