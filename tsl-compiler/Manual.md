@@ -53,7 +53,7 @@ Finally, the language also allows for both imperative, mutable variables, and im
 
 Mutable variables must begin with an underscore (_) and have special syntax for assigning values:
 
-`\_mut is <expr>`
+`_mut is <expr>`
 
 ```
 if nodeConnec >= 2 then
