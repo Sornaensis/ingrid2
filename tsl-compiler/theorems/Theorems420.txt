@@ -13,7 +13,7 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if chromaticNum > 2 then { not bipartite };",
             "name": "Theorem",
             "idnum": 403,
             "disp": ""
