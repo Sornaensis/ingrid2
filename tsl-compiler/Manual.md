@@ -201,6 +201,15 @@ odd invar;
 Meaning:
 * Asserts that `invar` must have an odd value
 
+Isset
+-----
+
+```haskell
+if isset invar then { ... };
+```
+
+Meaning: Checks whether `maxb(invar) == minb(invar)`
+
 Existence or Definition
 -----------------------
 
