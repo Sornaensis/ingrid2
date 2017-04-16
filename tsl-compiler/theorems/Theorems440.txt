@@ -103,7 +103,7 @@ chromaticNum >= (-(minb(maxdeg))+minb(nodeCover)-(maxb(nodes)))/(minb(nodeCover)
             "disp": ""
         },
         {
-            "text": "if regular and nodes < 2*nodeCover then {edgeChromatic == maxdeg + 1};",
+            "text": "if regular and nodes < 2*edgeCover then {edgeChromatic == maxdeg + 1};",
             "name": "Theorem",
             "idnum": 433,
             "disp": ""
