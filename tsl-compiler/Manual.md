@@ -171,11 +171,11 @@ Built In Functions
 `sin(x)`
 `congruent(invar,x,y)`
 `pi()`
-`setmin(invar, x)`
-`setmax(invar, x)`
+`setmin(invar, x)*`
+`setmax(invar, x)*`
 
 * Note: `invar` in the functions above indicates that the function must take an invariant as a parameter rather than an expression, while brackets [] indicate an optional argument
-
+* Note: * indicates that the function may only be used as a statement, not within an expression, and not within a condition
 
 Special Statements
 ----------------------------
