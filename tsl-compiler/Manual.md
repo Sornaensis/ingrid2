@@ -11,15 +11,13 @@ Basic Concepts
 
 At their heart, most theorems, or class constraints, are expressed as inequalities such as the following.
 
-```
-javascript
+```haskell
 edgeChromatic <= 2*bandwidth;
 ```
 
 For inequalities, the TSL compiler automatically applies boundary analysis and term rewriting, resulting in the following expression.
 
-```
-javascript
+```haskell
 edgeChromatic <= 2.0*maxb(bandwidth);
 bandwidth >= minb(edgeChromatic)/2.0;
 ```
@@ -28,8 +26,7 @@ These inequalities do not contain any `free invariants`, or invariants that are 
 
 For boolean invariants, there are only two functions for either asserting or de-asserting:
 
-```
-javascript
+```haskell
 complete;
 not planar;
 ```
@@ -38,8 +35,7 @@ The first statement asserts that `complete` must be true, the second that `plana
 
 Conditional expressions are also permitted.
 
-```
-javascript
+```haskell
 if diameter <= 2 then
 {
     edgeConnec = mindeg
@@ -50,8 +46,7 @@ The symbols `=` and `==` are treated identically by the compiler for convenience
 
 The above program turns into the following expression after analysis.
 
-```
-javascript
+```haskell
 if maxb(diameter) <= 2.0 then 
 {
     edgeConnec >= minb(mindeg),
@@ -69,8 +64,7 @@ Mutable variables must begin with an underscore (_) and have special syntax for 
 
 `_mut is <expr>`
 
-```
-javascript
+```haskell
 if nodeConnec >= 2 then
 {
     _minpd is minimum(nodes, 2*mindeg);
@@ -89,8 +83,7 @@ Symbolic variables are assigned with the `let` statement, and are symbolically r
 
 So the theorem
 
-```
-javascript
+```haskell
 let r = 2*nodes-edges;
 numOfComponents <= r;
 spectralRadius <= sqrt(r);
@@ -98,8 +91,7 @@ spectralRadius <= sqrt(r);
 
 Becomes
 
-```
-javascript
+```haskell
 numofComponents <= 2.0*maxb(nodes)-(minb(edges));
 nodes >= minb(edges)/2.0+minb(numofComponents)/2.0;
 edges <= 2.0*maxb(nodes)-(minb(numofComponents));
@@ -117,8 +109,7 @@ Each theorem 'program' is a sequence of assertions under conjunction.
 
 The basic syntax is as follows:
 
-```
-javascript
+```haskell
 <statement>;
 <statement>;
 ...
@@ -189,80 +180,70 @@ Built In Functions
 Special Statements
 ----------------------------
 
-```
-javascript
+```haskell
 even invar;
 ```
 
 Meaning: 
 * Assert that `invar` must have an even value
 
-```
-javascript
+```haskell
 odd invar;
 ```
 
 Meaning:
 * Asserts that `invar` must have an odd value
 
-```
-javascript
+```haskell
 undefined invar;
 ```
 
 Meaning:
 * Asserts that the invariant has both undetermined maximum and minimum boundaries
 
-```
-javascript
+```haskell
 if defined invar then { ... };
 ```
 
 Meaning:
 * Checks whether `invar` has a minimum bound less than infinity
 
-```
-javascript
+```haskell
 if exists invar then { ... };
 ```
 
 Meaning:
 * Checks whether `invar` has a maximum bound less than infinity
 
-```
-javascript
+```haskell
 invar;
 ```
 
 Meaning:
 * Asserts that `invar` has the value true, if `invar` is a boolean invariant. Otherwise error.
 
-```
-javascript
+```haskell
 not invar;
 ```
 
 Meaning:
 * Asserts that `invar` has the value false, if `invar` is a boolean invariant. Otherwise error.
 
-```
-javascript
+```haskell
 nosolve invar <= <expr>;
 ```
 
 Meaning:
 * Does not solve `invar <= <expr>` for each term, but does apply analysis to free invariants.
 
-```
-javascript
+```haskell
 invar <= <expr> : useMinFor(invar2);
 ```
 
 Meaning:
 * When solving the expression for `invar2`, treat it as though the analysis concluded to use its minimum boundary
 
-```
-javascript
+```haskell
 invar >= <expr> : useMaxFor(invar2);
 ```
 
