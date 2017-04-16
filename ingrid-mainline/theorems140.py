@@ -10616,7 +10616,7 @@ class Theorem345(Theorem):
 
 class Theorem346(Theorem):
     def __init__(self):
-        super(Theorem346, self).__init__(346, "if not forest and (minb(nodeConnec) > 0.0 or minb(mindeg) > 1.0) then \n{\n    _z is (minb(girth)-(2.0))*(minb(mindeg)-(1.0))-(4.0),\n    if _z > 0.0 then \n    {\n        _z1 is minb(edges)*_z/(minb(girth)*minb(mindeg)),\n        genus >= _z1/2.0+minb(numOfComponents)\n    },\n    girth <= 2.0*minb(edges)*minb(mindeg)/(minb(edges)*minb(mindeg)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(mindeg))+2.0*minb(mindeg)*minb(numOfComponents)),\n    mindeg <= 2.0*minb(edges)*minb(girth)/(minb(edges)*minb(girth)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(girth))+2.0*minb(girth)*minb(numOfComponents)),\n    numOfComponents <= -(minb(edges)/2.0)+minb(edges)/minb(mindeg)+minb(edges)/minb(girth)+maxb(genus)\n};\n", "")
+        super(Theorem346, self).__init__(346, "if not forest and (minb(nodeConnec) > 0.0 or minb(mindeg) > 1.0) then \n{\n    _z is (minb(girth)-(2.0))*(minb(mindeg)-(1.0))-(4.0),\n    if _z > 0.0 then \n    {\n        _z1 is minb(edges)*_z/(minb(girth)*minb(mindeg)),\n        genus >= _z1/2.0+minb(numOfComponents)\n    },\n    _t is (minb(mindeg)-(2.0))*minb(edges)-(minb(mindeg)*(2.0*(maxb(genus)-(minb(numOfComponents))))),\n    if _t > 0.0 then \n    {\n        girth <= 2.0*minb(edges)*minb(mindeg)/(minb(edges)*minb(mindeg)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(mindeg))+2.0*minb(mindeg)*minb(numOfComponents))\n    },\n    _t is minb(edges)*(1.0-(2.0/(minb(girth)))-(2.0*(maxb(genus)-(minb(numOfComponents))))),\n    if _t > 0.0 then \n    {\n        mindeg <= 2.0*minb(edges)*minb(girth)/(minb(edges)*minb(girth)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(girth))+2.0*minb(girth)*minb(numOfComponents))\n    },\n    numOfComponents <= -(minb(edges)/2.0)+minb(edges)/minb(mindeg)+minb(edges)/minb(girth)+maxb(genus)\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["forest","nodeConnec","mindeg","girth","edges","genus","numOfComponents"]
     def run(self):
@@ -10644,16 +10644,28 @@ class Theorem346(Theorem):
                         set("genus",  _z1/2.0+minb("numOfComponents"), ind='Min')
                     except:
                         pass
-            if minb("edges") != 'undt' and minb("mindeg") != 'undt' and maxb("genus") != 'undt' and minb("numOfComponents") != 'undt':
+            if minb("mindeg") != 'undt' and minb("edges") != 'undt' and maxb("genus") != 'undt' and minb("numOfComponents") != 'undt':
                 try:
-                    set("girth",  2.0*minb("edges")*minb("mindeg")/(minb("edges")*minb("mindeg")-(2.0*minb("edges"))-(2.0*maxb("genus")*minb("mindeg"))+2.0*minb("mindeg")*minb("numOfComponents")), ind='Max')
+                    _t = (minb("mindeg")-(2.0))*minb("edges")-(minb("mindeg")*(2.0*(maxb("genus")-(minb("numOfComponents")))))
                 except:
                     pass
+            if ('_t' in vars() and _t > 0.0):
+                if minb("edges") != 'undt' and minb("mindeg") != 'undt' and maxb("genus") != 'undt' and minb("numOfComponents") != 'undt':
+                    try:
+                        set("girth",  2.0*minb("edges")*minb("mindeg")/(minb("edges")*minb("mindeg")-(2.0*minb("edges"))-(2.0*maxb("genus")*minb("mindeg"))+2.0*minb("mindeg")*minb("numOfComponents")), ind='Max')
+                    except:
+                        pass
             if minb("edges") != 'undt' and minb("girth") != 'undt' and maxb("genus") != 'undt' and minb("numOfComponents") != 'undt':
                 try:
-                    set("mindeg",  2.0*minb("edges")*minb("girth")/(minb("edges")*minb("girth")-(2.0*minb("edges"))-(2.0*maxb("genus")*minb("girth"))+2.0*minb("girth")*minb("numOfComponents")), ind='Max')
+                    _t = minb("edges")*(1.0-(2.0/(minb("girth")))-(2.0*(maxb("genus")-(minb("numOfComponents")))))
                 except:
                     pass
+            if ('_t' in vars() and _t > 0.0):
+                if minb("edges") != 'undt' and minb("girth") != 'undt' and maxb("genus") != 'undt' and minb("numOfComponents") != 'undt':
+                    try:
+                        set("mindeg",  2.0*minb("edges")*minb("girth")/(minb("edges")*minb("girth")-(2.0*minb("edges"))-(2.0*maxb("genus")*minb("girth"))+2.0*minb("girth")*minb("numOfComponents")), ind='Max')
+                    except:
+                        pass
             if minb("edges") != 'undt' and minb("mindeg") != 'undt' and minb("girth") != 'undt' and maxb("genus") != 'undt':
                 try:
                     set("numOfComponents",  -(minb("edges")/2.0)+minb("edges")/minb("mindeg")+minb("edges")/minb("girth")+maxb("genus"), ind='Max')
