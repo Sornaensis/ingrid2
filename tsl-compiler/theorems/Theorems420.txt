@@ -8,12 +8,7 @@
             "disp": ""
         },
         {
-            "text": "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-floor((minb(nodeInd)-minb(numOfComponents)+1.0)/2.0);
-nodes >= minb(bandwidth)+(minb(mindeg)+1)*(minb(numOfComponents)-1)+floor((minb(nodeInd)-minb(numOfComponents)+1)/2);
-mindeg <= floor((maxb(nodes)-minb(bandwidth)-1-(minb(nodeInd)-minb(numOfComponents)+1)/2)/(minb(numOfComponents)-1))-1;
-numOfComponents <= floor((2*(maxb(nodes)-minb(bandwidth))-minb(nodeInd)-1)/(2*minb(mindeg)+1))+1;
-nodeInd <= 2*(maxb(nodes)-minb(bandwidth))-(minb(numOfComponents)-1)*(2*minb(mindeg)+1)-1;
-",
+            "text": "bandwidth <= nodes - (mindeg + 1)*(numOfComponents -1) - 1 - (nodeInd - numOfComponents + 1)/2;",
             "name": "Theorem",
             "idnum": 402,
             "disp": ""
@@ -37,20 +32,24 @@ nodeInd <= 2*(maxb(nodes)-minb(bandwidth))-(minb(numOfComponents)-1)*(2*minb(min
             "disp": ""
         },
         {
-            "text": "if edges > (nodes - 1)**2/4 and edges <= (nodes-1)*(nodes-2)/2 then 
-{
-    mindeg <= maxb(edgeConnec)-(1.0)+(maxb(nodes)-(sqrt(4.0*minb(edges)+2.0*maxb(nodes)-(maxb(nodes)**2.0))))/2.0,
-    edgeConnec >= minb(mindeg)-(maxb(nodes)/2.0)+sqrt(4.0*minb(edges)-(maxb(nodes)**2.0)+2.0*maxb(nodes))/2.0+1.0
-};",
+            "text": "if edges > (nodes - 1)**2/4 and edges <= (nodes-1)*(nodes-2)/2 then {mindeg <= edgeConnec - 1 + (nodes - sqrt(4*edges + 2*nodes - nodes**2))/2};",
             "name": "Theorem",
             "idnum": 406,
             "disp": ""
         },
         {
             "text": "domination <= (nodes - minb(maxdeg) - 1)*(nodes - minb(mindeg) - 2)/(nodes - 1) + 2;
-nosolve maxdeg <= (domination*nodes-(domination)+mindeg*nodes-(mindeg)-(nodes**2.0)+nodes)/(mindeg-(nodes)+2.0) : useMinFor(domination) : useMaxFor(nodes) : useMinFor(mindeg);
-nosolve mindeg <= (domination*nodes-(domination)+maxdeg*nodes-(2.0*maxdeg)-(nodes**2.0)+nodes)/(maxdeg-(nodes)+1.0) : useMinFor(domination) : useMaxFor(nodes) : useMinFor(maxdeg);
-
+if isset nodes then
+{ 
+    if maxb(nodes) > minb(mindeg)+2 then
+    {
+        nosolve maxdeg <= (domination*nodes-(domination)+mindeg*nodes-(mindeg)-(nodes**2.0)+nodes)/(mindeg-(nodes)+2.0) : useMinFor(domination) : useMaxFor(nodes) : useMinFor(mindeg)
+    },
+    if maxb(nodes) > minb(maxdeg) + 1 then
+    {
+        nosolve mindeg <= (domination*nodes-(domination)+maxdeg*nodes-(2.0*maxdeg)-(nodes**2.0)+nodes)/(maxdeg-(nodes)+1.0) : useMinFor(domination) : useMaxFor(nodes) : useMinFor(maxdeg)
+    }
+};
 ",
             "name": "Theorem",
             "idnum": 407,
@@ -140,23 +139,13 @@ if connected and nodes >= 2*mindeg + 2 then
             "disp": ""
         },
         {
-            "text": "if maxClique <= 2 and nodeCover <= 3*nodes/5 then 
-{
-    nodeCover <= (3.0*maxb(nodes)-(sqrt(5.0*minb(edges)-(maxb(nodes)**2.0))))/5.0,
-    nodes >= 3.0*minb(nodeCover)/2.0+sqrt(2.0*minb(edges)-(minb(nodeCover)**2.0))/2.0,
-    edges <= maxb(nodes)**2.0/5.0+(5.0*minb(nodeCover)-(3.0*maxb(nodes)))**2.0/5.0
-};",
+            "text": "if maxClique <= 2 and nodeCover <= 3*nodes/5 then {nodeCover <= (3*nodes - sqrt(5*edges - nodes**2))/5};",
             "name": "Theorem",
             "idnum": 419,
             "disp": ""
         },
         {
-            "text": "if maxClique <= 2 and nodeInd <= 2*nodes/5 then 
-{
-    nodeInd >= (2.0*maxb(nodes)+sqrt(5.0*minb(edges)-(maxb(nodes)**2.0)))/5.0,
-    nodes >= 2.0*maxb(nodeInd)+sqrt(minb(edges)-(maxb(nodeInd)**2.0)),
-    edges <= maxb(nodes)**2.0/5.0+(5.0*maxb(nodeInd)-(2.0*maxb(nodes)))**2.0/5.0
-};",
+            "text": "if maxClique <= 2 and nodeInd <= 2*nodes/5 then {nodeInd >= (2*nodes + sqrt(5*edges - nodes**2))/5};",
             "name": "Theorem",
             "idnum": 420,
             "disp": ""
