@@ -1,18 +1,6 @@
 {
     "theorems":[
 
-        {
-            "text": "if regular then { nodeInd <= nodes/2 + (maxClique**2 + 3*maxClique - 2)/(2*mindeg) };",
-            "name": "Theorem",
-            "idnum": 81,
-            "disp": ""
-        },
-        {
-            "text": "let u = floor((nodes - mindeg - 3)/(mindeg+1)**2); let k = floor((floor((nodes - u*(mindeg+1)**2)/(mindeg+2)-1))/2); if mindeg <= maxdeg - 2 and nodes < maxdeg + mindeg then {edgeInd >= minimum(floor(nodes/2), mindeg)} else if mindeg <= maxdeg - 2 and nodes >= maxdeg + mindeg then {edgeInd >= ceil(nodes*mindeg/(mindeg+maxdeg))} else if (mindeg == maxdeg and even mindeg) or (mindeg == maxdeg - 1 and odd mindeg) then {edgeInd >= ceil(nodes*maxdeg/(2*(maxdeg+1)))} else if mindeg == maxdeg - 1 then {edgeInd >= ceil((nodes*mindeg+1)/(2*(mindeg+1)))} else if (mindeg == maxdeg and odd mindeg) and nodes == mindeg + 1 then {edgeInd >= nodes/2} else if (mindeg == maxdeg and odd mindeg) and nodes > mindeg + 1 then {edgeInd >= (nodes-u*(mindeg-1))/2-k};",
-            "name": "Theorem",
-            "idnum": 86,
-            "disp": ""
-        },
 {
             "text": "if maxClique == 2 then {nodeCover <= nodes *(1 - ((2*edges)/nodes * log(2*edges/nodes) - (2*edges/nodes) +1)/(2*edges/nodes -1)**2)};",
             "name": "Theorem",
