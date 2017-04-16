@@ -82,11 +82,7 @@ if edges >= maximum(maximum(_z1, _z2), (floor((nodes+2)/2)*(floor((nodes+2)/2)-1
             "disp": ""
         },
         {
-            "text": "edges <= maxb(nodes)*(maxb(nodes)-(1.0))/2.0-((minb(mindeg)-(maxb(nodeConnec))+1.0)*(maxb(nodes)-(minb(mindeg))-(1.0)));
-nodes >= maxb(mindeg)-(maxb(nodeConnec))+sqrt(8.0*minb(edges)-(4.0*maxb(mindeg)**2.0)-(4.0*maxb(mindeg))+4.0*maxb(nodeConnec)**2.0-(4.0*maxb(nodeConnec))+1.0)/2.0+3.0/2.0;
-mindeg <= maxb(nodeConnec)/2.0+maxb(nodes)/2.0+sqrt(4.0*minb(edges)+maxb(nodeConnec)**2.0-(2.0*maxb(nodeConnec)*maxb(nodes))-(maxb(nodes)**2.0)+2.0*maxb(nodes))/2.0-(1.0);
-nodeConnec >= (-(minb(edges))+minb(mindeg)**2.0-(minb(mindeg)*minb(nodes))+2.0*minb(mindeg)+minb(nodes)**2.0/2.0-(3.0*minb(nodes)/2.0)+1.0)/(minb(mindeg)-(minb(nodes))+1.0);
-",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 331,
             "disp": ""
