@@ -170,10 +170,10 @@ realizeAnalysis2' v
                                        (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
                                                             (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
                          L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr)
-                         ++ (map (\(_,f) -> Fx $ Cond f 
-                                            (Just . Fx $ 
-                                                RelExpr (Fx $ Relation RelNeq) 
-                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a):inv_replce))
+                         -- ++ (map (\(_,f) -> Fx $ Cond f 
+                         --                    (Just . Fx $ 
+                         --                        RelExpr (Fx $ Relation RelNeq) 
+                         --                                (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a):inv_replce))
                          ++ map (\l -> Fx $ ExprF ("\'" ++ generatePython l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
         in  if null inv_check 
               then Fx $ Cond a (Just . Fx $ RelExpr rel expr)
@@ -202,10 +202,10 @@ realizeAnalysis2' v
                                        (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
                                                             (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
                          L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr)
-                         ++ (map (\(_,f) -> Fx $ Cond f 
-                                            (Just . Fx $ 
-                                                RelExpr (Fx $ Relation RelNeq) 
-                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce))
+                         -- ++ (map (\(_,f) -> Fx $ Cond f 
+                         --                    (Just . Fx $ 
+                         --                        RelExpr (Fx $ Relation RelNeq) 
+                         --                                (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce))
                          ++ map (\(Fx (Local l)) -> Fx $ ExprF ("\'" ++ l ++ "\'" ++ " in vars()") (Fx Empty)) ((a:) $ Fx . Local <$> getLocals expr)
         in  if null inv_check 
               then Fx $ Cond a (Just . Fx $ RelExpr rel expr)
@@ -222,10 +222,10 @@ realizeAnalysis2' v
                                        (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
                                                             (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
                          L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr)
-                         ++ (map (\(_,f) -> Fx $ Cond f 
-                                            (Just . Fx $ 
-                                                RelExpr (Fx $ Relation RelNeq) 
-                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a'):inv_replce))
+                         -- ++ (map (\(_,f) -> Fx $ Cond f 
+                         --                    (Just . Fx $ 
+                         --                        RelExpr (Fx $ Relation RelNeq) 
+                         --                                (Fx $ ExprF "\'undt\'" (Fx Empty)))) (("",a'):inv_replce))
                          ++ map (\l -> Fx $ ExprF ("\'" ++ generatePython l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
             a' = case bound of
                     Max -> Fx $ Function "minb" [a]
