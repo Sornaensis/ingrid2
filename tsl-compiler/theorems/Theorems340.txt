@@ -145,8 +145,13 @@ if edges >= maximum(maximum(_z1, _z2), (floor((nodes+2)/2)*(floor((nodes+2)/2)-1
             "text": "if girth >= 5 then 
 {
     nosolve domination <= (2*nodes - (mindeg - 1)*(4*edges/nodes - mindeg - 2))/4,
-    mindeg <= (4.0*minb(edges)-(maxb(nodes))+sqrt(16.0*maxb(domination)*maxb(nodes)**2.0+16.0*minb(edges)**2.0-(24.0*minb(edges)*maxb(nodes))-(8.0*maxb(nodes)**3.0)+9.0*maxb(nodes)**2.0))/(2.0*maxb(nodes)),
-    edges <= maxb(nodes)*(-(4.0*minb(domination))+maxb(mindeg)**2.0+maxb(mindeg)+2.0*maxb(nodes)-(2.0))/(4.0*(maxb(mindeg)-(1.0)))
+    _z is maxb(nodes),
+    _rz is 4*minb(edges)/_z-3,
+    _rhb is _rz**2-8*_z+16*minb(domination),
+    if _rhb > 1 then 
+    {
+        mindeg <= 1+floor(_rz-sqrt(_rhb)/2)
+    }
 };",
             "name": "Theorem",
             "idnum": 337,
