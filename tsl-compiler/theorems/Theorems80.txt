@@ -89,7 +89,7 @@ if complete then
             "disp": ""
         },
         {
-            "text": "bandwidth <= nodes - nodeInd/2 - 1;",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 74,
             "disp": ""
