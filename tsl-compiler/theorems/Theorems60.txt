@@ -194,7 +194,7 @@ nodes >= minb(spectralRadius)*(3.0*maxb(maxClique)+1.0)/(3.0*maxb(maxClique)-(2.
             "disp": ""
         },
         {
-            "text": "if defined girth and (minb(nodeConnec) > 0.0 or minb(mindeg) > 1.0) then 
+            "text": "if exists girth and (minb(nodeConnec) > 0.0 or minb(mindeg) > 1.0) then 
 {
     genus >= (1.0/2.0)*minb(edges)*(1.0-(2.0/minb(girth)))-(maxb(nodes)/2.0)+minb(numOfComponents),
     edges <= minb(girth)*(2.0*maxb(genus)+maxb(nodes)-(2.0*minb(numOfComponents)))/(minb(girth)-(2.0)),
