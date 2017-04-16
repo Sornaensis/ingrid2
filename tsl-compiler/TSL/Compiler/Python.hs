@@ -188,11 +188,11 @@ realizeAnalysis2' v
                                                         (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce)
                          ++ map (\(Fx (Local l)) -> Fx $ ExprF ("\'" ++ l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
         in  if null inv_check 
-              then Fx $ Cond a (Just . Fx $ RelExpr rel expr)
+              then Fx $ Cond a (Just expr)
               else 
                 if length inv_check == 1
-                    then Fx. Paren . Fx $ And (head inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
-                    else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
+                    then Fx. Paren . Fx $ And (head inv_check) (Fx $ Cond a (Just expr))
+                    else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a (Just expr))
    | (Cond a@(Fx (Local _)) (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = flipBound $ getBound rel
             invars = getInvolves expr
