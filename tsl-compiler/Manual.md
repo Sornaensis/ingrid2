@@ -24,6 +24,15 @@ bandwidth >= minb(edgeChromatic)/2.0;
 
 These inequalities do not contain any `free invariants`, or invariants that are not surrounded by either the `minb()` or maxb()` functions, so they are considered final.
 
+For boolean invariants, there are only two functions for either asserting or de-asserting:
+
+```
+complete
+not planar
+```
+
+The first statement asserts that `complete` must be true, the second that `planar` must be false.
+
 Conditional expressions are also permitted.
 
 ```
@@ -145,3 +154,98 @@ else
 * If statement bodies contain lists of statements which are comma-separated, and can contain nested if-statements.
 * An entire `if else-if else` block is considered one large statement that only has a semicolon or comma at the end.
 * Let statements may not reside within if statements.
+
+Built In Functions
+------------------
+
+`minimum(x,y)`
+`maximum(x,y)`
+`even(x)`
+`odd(x)`
+`not(x)`
+`ceiling(x)`
+`floor(x)`
+`log(x,[y])`
+`ln(x)`
+`cos(x)`
+`sin(x)`
+`congruent(invar,x,y)`
+`pi()`
+`setmin(invar, x)`
+`setmax(invar, x)`
+
+* Note: `invar` in the functions above indicates that the function must take an invariant as a parameter rather than an expression, while brackets [] indicate an optional argument
+
+
+Special Statements
+----------------------------
+
+```
+even invar;
+```
+
+Meaning: 
+* Assert that `invar` must have an even value
+
+```
+odd invar;
+```
+
+Meaning:
+* Asserts that `invar` must have an odd value
+
+```
+undefined invar;
+```
+
+Meaning:
+* Asserts that the invariant has both undetermined maximum and minimum boundaries
+
+```
+if defined invar then { ... };
+```
+
+Meaning:
+* Checks whether `invar` has a minimum bound less than infinity
+
+```
+if exists invar then { ... };
+```
+
+Meaning:
+* Checks whether `invar` has a maximum bound less than infinity
+
+```
+invar;
+```
+
+Meaning:
+* Asserts that `invar` has the value true, if `invar` is a boolean invariant. Otherwise error.
+
+```
+not invar;
+```
+
+Meaning:
+* Asserts that `invar` has the value false, if `invar` is a boolean invariant. Otherwise error.
+
+```
+nosolve invar <= <expr>;
+```
+
+Meaning:
+* Does not solve `invar <= <expr>` for each term, but does apply analysis to free invariants.
+
+```
+invar <= <expr> : useMinFor(invar2);
+```
+
+Meaning:
+* When solving the expression for `invar2`, treat it as though the analysis concluded to use its minimum boundary
+
+```
+invar >= <expr> : useMaxFor(invar2);
+```
+
+Meaning:
+* When solving the expression for `invar2`, treat it as though the analysis concluded to use its maximum boundary.
