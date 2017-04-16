@@ -177,7 +177,7 @@ realizeAnalysis2' v
                 if length inv_check == 1
                     then Fx. Paren . Fx $ And (head inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
                     else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
-   | (Cond a@(Fx Empty) (Just (Fx (RelExpr rel expr)))) <- v =
+   | (Cond a@(Fx Empty) (Just expr)) <- v =
         let bound = flipBound $ getBound rel
             invars = getInvolves expr
             inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
