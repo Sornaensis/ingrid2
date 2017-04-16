@@ -12693,9 +12693,9 @@ class Theorem413(Theorem):
 
 class Theorem414(Theorem):
     def __init__(self):
-        super(Theorem414, self).__init__(414, "if maxb(diameter) <= 4.0 then \n{\n    _z is maxb(nodes),\n    _zz is minb(diam),\n    _k is minb(nconn),\n    _zzz is ((_z-(2.0))*(_z-(3.0))-(2.0*(_z-(2.0))*(_zz-(4.0))*_k)-(4.0*_k*(_k-(1.0)))+_k*_k*(_zz-(2.0))*(_zz-(3.0)))/2.0,\n    _k is maxb(nconn),\n    _zzzz is ((_z-(2.0))*(_z-(3.0))-(2.0*(_z-(2.0))*(_zz-(4.0))*_k)-(4.0*_k*(_k-(1.0)))+_k*_k*(_zz-(2.0))*(_zz-(3.0)))/2.0,\n    _z is maximum(_zzz, _zzzz),\n    if _z < minb(edges) then \n    {\n        diameter >= 5.0\n    }\n    else  \n    {\n        edges <= z\n    }\n};\n", "")
+        super(Theorem414, self).__init__(414, "if maxb(diameter) <= 4.0 then \n{\n    _z is maxb(nodes),\n    _zz is minb(diam),\n    _k is minb(nconn),\n    _zzz is ((_z-(2.0))*(_z-(3.0))-(2.0*(_z-(2.0))*(_zz-(4.0))*_k)-(4.0*_k*(_k-(1.0)))+_k*_k*(_zz-(2.0))*(_zz-(3.0)))/2.0,\n    _k is maxb(nconn),\n    _zzzz is ((_z-(2.0))*(_z-(3.0))-(2.0*(_z-(2.0))*(_zz-(4.0))*_k)-(4.0*_k*(_k-(1.0)))+_k*_k*(_zz-(2.0))*(_zz-(3.0)))/2.0,\n    _z is maximum(_zzz, _zzzz),\n    if _z < minb(edges) then \n    {\n        diameter >= 5.0\n    }\n    else  \n    {\n        edges <= _z\n    }\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["diameter","nodes","diam","nconn","edges","z"]
+        return str_invar in ["diameter","nodes","diam","nconn","edges"]
     def run(self):
         get = self.get
         set = self.set
@@ -12743,14 +12743,9 @@ class Theorem414(Theorem):
                 except:
                     pass
             elif True:
-                if maxb("z") != 'undt':
+                if '_z' in vars():
                     try:
-                        set("edges",  maxb("z"), ind='Max')
-                    except:
-                        pass
-                if minb("edges") != 'undt':
-                    try:
-                        set("z",  minb("edges"), ind='Min')
+                        set("edges",  _z, ind='Max')
                     except:
                         pass
         return
