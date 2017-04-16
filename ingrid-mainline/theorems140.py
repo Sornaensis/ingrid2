@@ -13280,9 +13280,9 @@ class Theorem432(Theorem):
 
 class Theorem433(Theorem):
     def __init__(self):
-        super(Theorem433, self).__init__(433, "if regular and nodes < 2.0*nodeCover then \n{\n    edgeChromatic == maxdeg+1.0\n};\n", "")
+        super(Theorem433, self).__init__(433, "if regular and nodes < 2.0*edgeCover then \n{\n    edgeChromatic == maxdeg+1.0\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["regular","nodes","nodeCover","edgeChromatic","maxdeg"]
+        return str_invar in ["regular","nodes","edgeCover","edgeChromatic","maxdeg"]
     def run(self):
         get = self.get
         set = self.set
@@ -13291,7 +13291,7 @@ class Theorem433(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("regular") == True and (minb("nodeCover") != 'undt' and maxb("nodes") != 'undt' and maxb("nodes") < 2.0*minb("nodeCover")):
+        if get("regular") == True and (minb("edgeCover") != 'undt' and maxb("nodes") != 'undt' and maxb("nodes") < 2.0*minb("edgeCover")):
             if minb("maxdeg") != 'undt':
                 try:
                     set("edgeChromatic",  minb("maxdeg")+1.0, ind='Min')
