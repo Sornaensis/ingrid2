@@ -10121,7 +10121,7 @@ class Theorem327(Theorem):
 
 class Theorem328(Theorem):
     def __init__(self):
-        super(Theorem328, self).__init__(328, "nodeConnec <= 3.0*thickness-(1.0);\n", "")
+        super(Theorem328, self).__init__(328, "nodeConnec <= 6.0*thickness-(1.0);\n", "")
     def involves(self, str_invar):
         return str_invar in ["nodeConnec","thickness"]
     def run(self):
@@ -10134,12 +10134,12 @@ class Theorem328(Theorem):
         congruent = self.congruent
         if maxb("thickness") != 'undt':
             try:
-                set("nodeConnec",  3.0*maxb("thickness")-(1.0), ind='Max')
+                set("nodeConnec",  6.0*maxb("thickness")-(1.0), ind='Max')
             except:
                 pass
         if minb("nodeConnec") != 'undt':
             try:
-                set("thickness",  minb("nodeConnec")/3.0+1.0/3.0, ind='Min')
+                set("thickness",  minb("nodeConnec")/6.0+1.0/6.0, ind='Min')
             except:
                 pass
         return
