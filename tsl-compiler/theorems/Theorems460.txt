@@ -50,8 +50,8 @@ nosolve edges >= m*(nodes - chromaticNum) + chromaticNum*(chromaticNum - 1)/2 - 
             "disp": ""
         },
         {
-            "text": "_z1 is (maxb(nodes) - maxb(nodesCliqueCover))*(maxb(nodeCliqueCover) + maxb(maxdeg) - 1);
-_z2 is (maxb(nodes) - minb(nodesCliqueCover))*(minb(nodeCliqueCover) + maxb(maxdeg) - 1);
+            "text": "_z1 is (maxb(nodes) - maxb(nodeCliqueCover))*(maxb(nodeCliqueCover) + maxb(maxdeg) - 1);
+_z2 is (maxb(nodes) - minb(nodeCliqueCover))*(minb(nodeCliqueCover) + maxb(maxdeg) - 1);
 
 if _z1 >= _z2 then
 {
