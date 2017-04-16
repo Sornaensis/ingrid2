@@ -4628,7 +4628,7 @@ class Theorem136(Theorem):
 
 class Theorem137(Theorem):
     def __init__(self):
-        super(Theorem137, self).__init__(137, "edges <= nodes*(nodes-(1.0))/2.0;\nedges >= (nodes+1.0)/2.0;\n", "")
+        super(Theorem137, self).__init__(137, "edges <= nodes*(nodes-(1.0))/2.0;\nedges >= ceiling(nodes/2.0);\n", "")
     def involves(self, str_invar):
         return str_invar in ["edges","nodes"]
     def run(self):
@@ -4651,12 +4651,7 @@ class Theorem137(Theorem):
                 pass
         if minb("nodes") != 'undt':
             try:
-                set("edges",  (minb("nodes")+1.0)/2.0, ind='Min')
-            except:
-                pass
-        if maxb("edges") != 'undt':
-            try:
-                set("nodes",  2.0*maxb("edges")-(1.0), ind='Max')
+                set("edges",  ceiling(minb("nodes")/2.0), ind='Min')
             except:
                 pass
         return
