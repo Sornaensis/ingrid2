@@ -50,8 +50,20 @@ nosolve edges >= m*(nodes - chromaticNum) + chromaticNum*(chromaticNum - 1)/2 - 
             "disp": ""
         },
         {
-            "text": "edges <= ((maxb(nodes)-(maxb(nodeCliqueCover)))*(maxb(nodeCliqueCover)+maxb(maxdeg)-(1.0))+maxb(mindeg))/2.0;
-mindeg >= 2.0*minb(edges)+maxb(maxdeg)*maxb(nodeCliqueCover)-(maxb(maxdeg)*maxb(nodes))+maxb(nodeCliqueCover)**2.0-(maxb(nodeCliqueCover)*maxb(nodes))-(maxb(nodeCliqueCover))+maxb(nodes);
+            "text": "_z1 is (maxb(nodes) - maxb(nodesCliqueCover))*(maxb(nodeCliqueCover) + maxb(maxdeg) - 1);
+_z2 is (maxb(nodes) - minb(nodesCliqueCover))*(minb(nodeCliqueCover) + maxb(maxdeg) - 1);
+
+if _z1 >= _z2 then
+{
+    edges <= ((maxb(nodes)-(maxb(nodeCliqueCover)))*(maxb(nodeCliqueCover)+maxb(maxdeg)-(1.0))+maxb(mindeg))/2.0,
+    mindeg >= 2.0*minb(edges)+maxb(maxdeg)*maxb(nodeCliqueCover)-(maxb(maxdeg)*maxb(nodes))+maxb(nodeCliqueCover)**2.0-(maxb(nodeCliqueCover)*maxb(nodes))-(maxb(nodeCliqueCover))+maxb(nodes)
+}
+else
+{
+    edges <= ((maxb(nodes)-(minb(nodeCliqueCover)))*(minb(nodeCliqueCover)+maxb(maxdeg)-(1.0))+maxb(mindeg))/2.0,
+    mindeg >= 2.0*minb(edges)+maxb(maxdeg)*minb(nodeCliqueCover)-(maxb(maxdeg)*maxb(nodes))+minb(nodeCliqueCover)**2.0-(minb(nodeCliqueCover)*maxb(nodes))-(minb(nodeCliqueCover))+maxb(nodes)
+};
+
 
 if isset nodeCliqueCover then
 {
