@@ -110,7 +110,7 @@
             "disp": ""
         },
         {
-            "text": "if not forest or defined girth then 
+            "text": "if not forest or exists girth then 
 {
     nodeInd >= minb(girth)/2.0,
     radius >= minb(girth)/2.0,
