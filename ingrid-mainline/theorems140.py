@@ -2902,7 +2902,7 @@ class Theorem78(Theorem):
 
 class Theorem79(Theorem):
     def __init__(self):
-        super(Theorem79, self).__init__(79, "if not forest or defined girth then \n{\n    nodeInd >= minb(girth)/2.0,\n    radius >= minb(girth)/2.0,\n    edgeInd >= circumference/2.0-(0.5)\n};\n", "")
+        super(Theorem79, self).__init__(79, "if not forest or exists girth then \n{\n    nodeInd >= minb(girth)/2.0,\n    radius >= minb(girth)/2.0,\n    edgeInd >= circumference/2.0-(0.5)\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["forest","girth","nodeInd","radius","edgeInd","circumference"]
     def run(self):
@@ -2913,7 +2913,7 @@ class Theorem79(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("forest") == False or minb("girth") != 'undt':
+        if get("forest") == False or maxb("girth") != 'undt':
             if minb("girth") != 'undt':
                 try:
                     set("nodeInd",  minb("girth")/2.0, ind='Min')
@@ -2935,10 +2935,9 @@ class Theorem79(Theorem):
                 except:
                     pass
         return
-
 class Theorem80(Theorem):
     def __init__(self):
-        super(Theorem80, self).__init__(80, "if (defined girth and girth >= 4.0) or (undefined girth and nodes > 2.0) then \n{\n    not complete\n};\n", "")
+        super(Theorem80, self).__init__(80, "if (exists girth and girth >= 4.0) or (undefined girth and nodes > 2.0) then \n{\n    not complete\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["girth","nodes","complete"]
     def run(self):
@@ -2949,7 +2948,7 @@ class Theorem80(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("girth") != 'undt' and (minb("girth") != 'undt' and minb("girth") >= 4.0)) or (minb("girth") == 'undt' and (minb("nodes") != 'undt' and minb("nodes") > 2.0)):
+        if (maxb("girth") != 'undt' and (minb("girth") != 'undt' and minb("girth") >= 4.0)) or (minb("girth") == 'undt' and (minb("nodes") != 'undt' and minb("nodes") > 2.0)):
             set("complete", False)
         return
 
