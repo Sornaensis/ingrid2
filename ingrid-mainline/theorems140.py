@@ -12388,7 +12388,7 @@ class Theorem401(Theorem):
 
 class Theorem402(Theorem):
     def __init__(self):
-        super(Theorem402, self).__init__(402, "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-((minb(nodeInd)-(minb(numOfComponents))+1.0)/2.0);\nnodes >= minb(bandwidth)+minb(mindeg)*minb(numOfComponents)-(minb(mindeg))+minb(nodeInd)/2.0+minb(numOfComponents)/2.0+1.0/2.0;\nmindeg <= (-(2.0*minb(bandwidth))-(minb(nodeInd))+2.0*maxb(nodes)-(minb(numOfComponents))-(1.0))/(2.0*(minb(numOfComponents)-(1.0)));\nnumOfComponents <= (-(2.0*minb(bandwidth))+2.0*minb(mindeg)-(minb(nodeInd))+2.0*maxb(nodes)-(1.0))/(2.0*minb(mindeg)+1.0);\nnodeInd <= -(2.0*minb(bandwidth))-(2.0*minb(mindeg)*minb(numOfComponents))+2.0*minb(mindeg)+2.0*maxb(nodes)-(minb(numOfComponents))-(1.0);\n", "")
+        super(Theorem402, self).__init__(402, "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-(floor((minb(nodeInd)-(minb(numOfComponents))+1.0)/2.0));\nnodes >= minb(bandwidth)+(minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0))+floor((minb(nodeInd)-(minb(numOfComponents))+1.0)/2.0);\nmindeg <= floor((maxb(nodes)-(minb(bandwidth))-(1.0)-((minb(nodeInd)-(minb(numOfComponents))+1.0)/2.0))/(minb(numOfComponents)-(1.0)))-(1.0);\nnumOfComponents <= floor((2.0*(maxb(nodes)-(minb(bandwidth)))-(minb(nodeInd))-(1.0))/(2.0*minb(mindeg)+1.0))+1.0;\nnodeInd <= 2.0*(maxb(nodes)-(minb(bandwidth)))-((minb(numOfComponents)-(1.0))*(2.0*minb(mindeg)+1.0))-(1.0);\n", "")
     def involves(self, str_invar):
         return str_invar in ["bandwidth","nodes","mindeg","numOfComponents","nodeInd"]
     def run(self):
@@ -12401,27 +12401,27 @@ class Theorem402(Theorem):
         congruent = self.congruent
         if maxb("nodes") != 'undt' and minb("mindeg") != 'undt' and minb("numOfComponents") != 'undt' and minb("nodeInd") != 'undt':
             try:
-                set("bandwidth",  maxb("nodes")-((minb("mindeg")+1.0)*(minb("numOfComponents")-(1.0)))-(1.0)-((minb("nodeInd")-(minb("numOfComponents"))+1.0)/2.0), ind='Max')
+                set("bandwidth",  maxb("nodes")-((minb("mindeg")+1.0)*(minb("numOfComponents")-(1.0)))-(1.0)-(floor((minb("nodeInd")-(minb("numOfComponents"))+1.0)/2.0)), ind='Max')
             except:
                 pass
         if minb("bandwidth") != 'undt' and minb("mindeg") != 'undt' and minb("numOfComponents") != 'undt' and minb("nodeInd") != 'undt':
             try:
-                set("nodes",  minb("bandwidth")+minb("mindeg")*minb("numOfComponents")-(minb("mindeg"))+minb("nodeInd")/2.0+minb("numOfComponents")/2.0+1.0/2.0, ind='Min')
+                set("nodes",  minb("bandwidth")+(minb("mindeg")+1.0)*(minb("numOfComponents")-(1.0))+floor((minb("nodeInd")-(minb("numOfComponents"))+1.0)/2.0), ind='Min')
             except:
                 pass
-        if minb("bandwidth") != 'undt' and minb("nodeInd") != 'undt' and maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt':
+        if maxb("nodes") != 'undt' and minb("bandwidth") != 'undt' and minb("nodeInd") != 'undt' and minb("numOfComponents") != 'undt':
             try:
-                set("mindeg",  (-(2.0*minb("bandwidth"))-(minb("nodeInd"))+2.0*maxb("nodes")-(minb("numOfComponents"))-(1.0))/(2.0*(minb("numOfComponents")-(1.0))), ind='Max')
+                set("mindeg",  floor((maxb("nodes")-(minb("bandwidth"))-(1.0)-((minb("nodeInd")-(minb("numOfComponents"))+1.0)/2.0))/(minb("numOfComponents")-(1.0)))-(1.0), ind='Max')
             except:
                 pass
-        if minb("bandwidth") != 'undt' and minb("mindeg") != 'undt' and minb("nodeInd") != 'undt' and maxb("nodes") != 'undt':
+        if maxb("nodes") != 'undt' and minb("bandwidth") != 'undt' and minb("nodeInd") != 'undt' and minb("mindeg") != 'undt':
             try:
-                set("numOfComponents",  (-(2.0*minb("bandwidth"))+2.0*minb("mindeg")-(minb("nodeInd"))+2.0*maxb("nodes")-(1.0))/(2.0*minb("mindeg")+1.0), ind='Max')
+                set("numOfComponents",  floor((2.0*(maxb("nodes")-(minb("bandwidth")))-(minb("nodeInd"))-(1.0))/(2.0*minb("mindeg")+1.0))+1.0, ind='Max')
             except:
                 pass
-        if minb("bandwidth") != 'undt' and minb("mindeg") != 'undt' and minb("numOfComponents") != 'undt' and maxb("nodes") != 'undt':
+        if maxb("nodes") != 'undt' and minb("bandwidth") != 'undt' and minb("numOfComponents") != 'undt' and minb("mindeg") != 'undt':
             try:
-                set("nodeInd",  -(2.0*minb("bandwidth"))-(2.0*minb("mindeg")*minb("numOfComponents"))+2.0*minb("mindeg")+2.0*maxb("nodes")-(minb("numOfComponents"))-(1.0), ind='Max')
+                set("nodeInd",  2.0*(maxb("nodes")-(minb("bandwidth")))-((minb("numOfComponents")-(1.0))*(2.0*minb("mindeg")+1.0))-(1.0), ind='Max')
             except:
                 pass
         return
