@@ -13395,7 +13395,7 @@ class Theorem435(Theorem):
 
 class Theorem436(Theorem):
     def __init__(self):
-        super(Theorem436, self).__init__(436, "_t is floor((minb(girth)-(2.0))/2.0);\nif girth >= 4.0 and mindeg == 2.0 and istrue odd(_t) then \n{\n    nodeCover <= nodes-(maxdeg*((_t+2.0)/2.0))-(1.0)\n}\nelse if girth >= 4.0 and mindeg == 2.0 and istrue even(_t) then \n{\n    nodeCover <= nodes-(maxdeg*((_t+2.0)/2.0))\n};\n", "")
+        super(Theorem436, self).__init__(436, "_t is floor((minb(girth)-(2.0))/2.0);\nif girth >= 4.0 and mindeg == 2.0 and istrue even(_t) then \n{\n    nodeCover <= nodes-(maxdeg*((_t+2.0)/2.0))-(1.0)\n}\nelse if girth >= 4.0 and mindeg == 2.0 and istrue odd(_t) then \n{\n    nodeCover <= nodes-(maxdeg*((_t+2.0)/2.0))\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["girth","mindeg","nodeCover","nodes","maxdeg"]
     def run(self):
@@ -13411,7 +13411,7 @@ class Theorem436(Theorem):
                 _t = floor((minb("girth")-(2.0))/2.0)
             except:
                 pass
-        if (minb("girth") != 'undt' and minb("girth") >= 4.0) and ((minb("mindeg") != 'undt' and minb("mindeg") >= 2.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 2.0)) and ('_t' in vars() and odd(_t)):
+        if (minb("girth") != 'undt' and minb("girth") >= 4.0) and ((minb("mindeg") != 'undt' and minb("mindeg") >= 2.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 2.0)) and ('_t' in vars() and even(_t)):
             if maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and '_t' in vars():
                 try:
                     set("nodeCover",  maxb("nodes")-(minb("maxdeg")*((_t+2.0)/2.0))-(1.0), ind='Max')
@@ -13427,7 +13427,7 @@ class Theorem436(Theorem):
                     set("maxdeg",  2.0*(-(minb("nodeCover"))+maxb("nodes")-(1.0))/(_t+2.0), ind='Max')
                 except:
                     pass
-        elif (minb("girth") != 'undt' and minb("girth") >= 4.0) and ((minb("mindeg") != 'undt' and minb("mindeg") >= 2.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 2.0)) and ('_t' in vars() and even(_t)):
+        elif (minb("girth") != 'undt' and minb("girth") >= 4.0) and ((minb("mindeg") != 'undt' and minb("mindeg") >= 2.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 2.0)) and ('_t' in vars() and odd(_t)):
             if maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and '_t' in vars():
                 try:
                     set("nodeCover",  maxb("nodes")-(minb("maxdeg")*((_t+2.0)/2.0)), ind='Max')
