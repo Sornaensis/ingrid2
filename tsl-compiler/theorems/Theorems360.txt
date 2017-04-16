@@ -53,7 +53,11 @@
             "disp": ""
         },
         {
-            "text": "if not forest and edges >= nodes + 1 - numOfComponents then { nodes >= 3*girth/2 + 2*numOfComponents - 3 };",
+            "text": "
+            if not forest and edges >= nodes+2.0-(numOfComponents) then 
+{
+    nodes >= 3.0*girth/2.0+2.0*numOfComponents-(3.0)
+};",
             "name": "Theorem",
             "idnum": 348,
             "disp": ""
