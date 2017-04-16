@@ -2048,7 +2048,7 @@ class Theorem52(Theorem):
 
 class Theorem53(Theorem):
     def __init__(self):
-        super(Theorem53, self).__init__(53, "if exists girth then \n{\n    _P is maxb(nodes),\n    arboricity <= chromaticNum-(chromaticNum/(1.0+_P/((girth-(1.0))/2.0)*chromaticNum)),\n    nodes >= minb(arboricity)*(-(minb(girth))+1.0)/(2.0*maxb(chromaticNum)*(minb(arboricity)-(maxb(chromaticNum))))\n};\n", "")
+        super(Theorem53, self).__init__(53, "if exists girth then \n{\n    _P is maxb(nodes),\n    arboricity <= maxb(chromaticNum)-(maxb(chromaticNum)/(1.0+_P/((minb(girth)-(1.0))/2.0)*maxb(chromaticNum))),\n    if minb(arboricity) > 2.0 then \n    {\n        chromaticNum >= (_P*minb(arboricity)+sqrt(_P*minb(arboricity)*(_P*minb(arboricity)+2.0*minb(girth)-(2.0))))/(2.0*_P),\n        girth <= -(2.0*_P*maxb(chromaticNum))+2.0*_P*maxb(chromaticNum)**2.0/minb(arboricity)+1.0,\n        nodes >= minb(arboricity)*(-(minb(girth))+1.0)/(2.0*maxb(chromaticNum)*(minb(arboricity)-(maxb(chromaticNum))))\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["girth","nodes","arboricity","chromaticNum"]
     def run(self):
@@ -2070,21 +2070,22 @@ class Theorem53(Theorem):
                     set("arboricity",  maxb("chromaticNum")-(maxb("chromaticNum")/(1.0+_P/((minb("girth")-(1.0))/2.0)*maxb("chromaticNum"))), ind='Max')
                 except:
                     pass
-            if minb("arboricity") != 'undt' and minb("girth") != 'undt' and '_P' in vars():
-                try:
-                    set("chromaticNum",  (_P*minb("arboricity")+sqrt(_P*minb("arboricity")*(_P*minb("arboricity")+2.0*minb("girth")-(2.0))))/(2.0*_P), ind='Min')
-                except:
-                    pass
-            if maxb("chromaticNum") != 'undt' and minb("arboricity") != 'undt' and '_P' in vars():
-                try:
-                    set("girth",  -(2.0*_P*maxb("chromaticNum"))+2.0*_P*maxb("chromaticNum")**2.0/minb("arboricity")+1.0, ind='Max')
-                except:
-                    pass
-            if minb("arboricity") != 'undt' and minb("girth") != 'undt' and maxb("chromaticNum") != 'undt':
-                try:
-                    set("nodes",  minb("arboricity")*(-(minb("girth"))+1.0)/(2.0*maxb("chromaticNum")*(minb("arboricity")-(maxb("chromaticNum")))), ind='Min')
-                except:
-                    pass
+            if (minb("arboricity") != 'undt' and minb("arboricity") > 2.0):
+                if minb("arboricity") != 'undt' and minb("girth") != 'undt' and '_P' in vars():
+                    try:
+                        set("chromaticNum",  (_P*minb("arboricity")+sqrt(_P*minb("arboricity")*(_P*minb("arboricity")+2.0*minb("girth")-(2.0))))/(2.0*_P), ind='Min')
+                    except:
+                        pass
+                if maxb("chromaticNum") != 'undt' and minb("arboricity") != 'undt' and '_P' in vars():
+                    try:
+                        set("girth",  -(2.0*_P*maxb("chromaticNum"))+2.0*_P*maxb("chromaticNum")**2.0/minb("arboricity")+1.0, ind='Max')
+                    except:
+                        pass
+                if minb("arboricity") != 'undt' and minb("girth") != 'undt' and maxb("chromaticNum") != 'undt':
+                    try:
+                        set("nodes",  minb("arboricity")*(-(minb("girth"))+1.0)/(2.0*maxb("chromaticNum")*(minb("arboricity")-(maxb("chromaticNum")))), ind='Min')
+                    except:
+                        pass
         return
 
 class Theorem54(Theorem):
