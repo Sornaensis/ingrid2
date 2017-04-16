@@ -1,4 +1,3 @@
-
 {
     "theorems":[
 {
@@ -111,7 +110,10 @@ else if girth >= 4 and mindeg >= 3 and istrue even(_t) then
 {
     edgeArboricity <= 4.0+(6.0*maxb(genus)+2.0)/(minb(nodes)-(1.0)),
     genus >= minb(edgeArboricity)*minb(nodes)/6.0-(minb(edgeArboricity)/6.0)-(2.0*minb(nodes)/3.0)+1.0/3.0,
-    nodes <= (minb(edgeArboricity)+6.0*maxb(genus)-(2.0))/(minb(edgeArboricity)-(4.0))
+    if minb(edgeArboricity) > 4 then
+    {
+        nodes <= (minb(edgeArboricity)+6.0*maxb(genus)-(2.0))/(minb(edgeArboricity)-(4.0))
+    }
 };",
             "name": "Theorem",
             "idnum": 375,
