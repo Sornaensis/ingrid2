@@ -12526,7 +12526,7 @@ class Theorem406(Theorem):
 
 class Theorem407(Theorem):
     def __init__(self):
-        super(Theorem407, self).__init__(407, "domination <= (nodes-(minb(maxdeg))-(1.0))*(nodes-(minb(mindeg))-(2.0))/(nodes-(1.0))+2.0;\nnosolve maxdeg <= (domination*nodes-(domination)+mindeg*nodes-(mindeg)-(nodes**2.0)+nodes)/(mindeg-(nodes)+2.0):useMinFor(domination):useMaxFor(nodes):useMinFor(mindeg);\nnosolve mindeg <= (domination*nodes-(domination)+maxdeg*nodes-(2.0*maxdeg)-(nodes**2.0)+nodes)/(maxdeg-(nodes)+1.0):useMinFor(domination):useMaxFor(nodes):useMinFor(maxdeg);\n", "")
+        super(Theorem407, self).__init__(407, "domination <= (nodes-(minb(maxdeg))-(1.0))*(nodes-(minb(mindeg))-(2.0))/(nodes-(1.0))+2.0;\nif isset nodes then \n{\n    if maxb(nodes) > minb(mindeg)+2.0 then \n    {\n        nosolve maxdeg <= (domination*nodes-(domination)+mindeg*nodes-(mindeg)-(nodes**2.0)+nodes)/(mindeg-(nodes)+2.0):useMinFor(domination):useMaxFor(nodes):useMinFor(mindeg)\n    },\n    if maxb(nodes) > minb(maxdeg)+1.0 then \n    {\n        nosolve mindeg <= (domination*nodes-(domination)+maxdeg*nodes-(2.0*maxdeg)-(nodes**2.0)+nodes)/(maxdeg-(nodes)+1.0):useMinFor(domination):useMaxFor(nodes):useMinFor(maxdeg)\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["domination","nodes","maxdeg","mindeg"]
     def run(self):
@@ -12547,16 +12547,19 @@ class Theorem407(Theorem):
                 set("nodes",  minb("maxdeg")/2.0+minb("mindeg")/2.0+minb("domination")/2.0+sqrt(minb("maxdeg")**2.0-(2.0*minb("maxdeg")*minb("mindeg"))+2.0*minb("maxdeg")*minb("domination")-(6.0*minb("maxdeg"))+minb("mindeg")**2.0+2.0*minb("mindeg")*minb("domination")-(2.0*minb("mindeg"))+minb("domination")**2.0-(2.0*minb("domination"))+1.0)/2.0+1.0/2.0, ind='Min')
             except:
                 pass
-        if minb("domination") != 'undt' and maxb("nodes") != 'undt' and minb("mindeg") != 'undt':
-            try:
-                set("maxdeg",  (minb("domination")*maxb("nodes")-(minb("domination"))+minb("mindeg")*maxb("nodes")-(minb("mindeg"))-(maxb("nodes")**2.0)+maxb("nodes"))/(minb("mindeg")-(maxb("nodes"))+2.0), ind='Max')
-            except:
-                pass
-        if minb("domination") != 'undt' and maxb("nodes") != 'undt' and minb("maxdeg") != 'undt':
-            try:
-                set("mindeg",  (minb("domination")*maxb("nodes")-(minb("domination"))+minb("maxdeg")*maxb("nodes")-(2.0*minb("maxdeg"))-(maxb("nodes")**2.0)+maxb("nodes"))/(minb("maxdeg")-(maxb("nodes"))+1.0), ind='Max')
-            except:
-                pass
+        if maxb("nodes") != 'undt' and minb("nodes") == maxb("nodes"):
+            if (minb("mindeg") != 'undt' and maxb("nodes") != 'undt' and maxb("nodes") > minb("mindeg")+2.0):
+                if minb("domination") != 'undt' and maxb("nodes") != 'undt' and minb("mindeg") != 'undt':
+                    try:
+                        set("maxdeg",  (minb("domination")*maxb("nodes")-(minb("domination"))+minb("mindeg")*maxb("nodes")-(minb("mindeg"))-(maxb("nodes")**2.0)+maxb("nodes"))/(minb("mindeg")-(maxb("nodes"))+2.0), ind='Max')
+                    except:
+                        pass
+            if (minb("maxdeg") != 'undt' and maxb("nodes") != 'undt' and maxb("nodes") > minb("maxdeg")+1.0):
+                if minb("domination") != 'undt' and maxb("nodes") != 'undt' and minb("maxdeg") != 'undt':
+                    try:
+                        set("mindeg",  (minb("domination")*maxb("nodes")-(minb("domination"))+minb("maxdeg")*maxb("nodes")-(2.0*minb("maxdeg"))-(maxb("nodes")**2.0)+maxb("nodes"))/(minb("maxdeg")-(maxb("nodes"))+1.0), ind='Max')
+                    except:
+                        pass
         return
 
 class Theorem408(Theorem):
