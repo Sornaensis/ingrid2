@@ -121,7 +121,7 @@
             "disp": ""
         },
         {
-            "text": "if (defined girth and girth >= 4) or (undefined girth and nodes > 2) then { not complete };",
+            "text": "if (exists girth and girth >= 4) or (undefined girth and nodes > 2) then { not complete };",
             "name": "Theorem",
             "idnum": 80,
             "disp": ""
