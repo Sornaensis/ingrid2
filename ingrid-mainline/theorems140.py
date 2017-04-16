@@ -10347,7 +10347,7 @@ class Theorem336(Theorem):
 
 class Theorem337(Theorem):
     def __init__(self):
-        super(Theorem337, self).__init__(337, "if girth >= 5.0 then \n{\n    nosolve domination <= (2.0*nodes-((mindeg-(1.0))*(4.0*edges/nodes-(mindeg)-(2.0))))/4.0,\n    mindeg <= (4.0*minb(edges)-(maxb(nodes))+sqrt(16.0*maxb(domination)*maxb(nodes)**2.0+16.0*minb(edges)**2.0-(24.0*minb(edges)*maxb(nodes))-(8.0*maxb(nodes)**3.0)+9.0*maxb(nodes)**2.0))/(2.0*maxb(nodes)),\n    edges <= maxb(nodes)*(-(4.0*minb(domination))+maxb(mindeg)**2.0+maxb(mindeg)+2.0*maxb(nodes)-(2.0))/(4.0*(maxb(mindeg)-(1.0)))\n};\n", "")
+        super(Theorem337, self).__init__(337, "if girth >= 5.0 then \n{\n    nosolve domination <= (2.0*nodes-((mindeg-(1.0))*(4.0*edges/nodes-(mindeg)-(2.0))))/4.0,\n    _z is maxb(nodes),\n    _rz is 4.0*minb(edges)/_z-(3.0),\n    _rhb is _rz**2.0-(8.0*_z)+16.0*minb(domination),\n    if _rhb > 1.0 then \n    {\n        mindeg <= 1.0+floor(_rz-(sqrt(_rhb)/2.0))\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["girth","domination","nodes","mindeg","edges"]
     def run(self):
@@ -10364,16 +10364,27 @@ class Theorem337(Theorem):
                     set("domination",  (2.0*maxb("nodes")-((minb("mindeg")-(1.0))*(4.0*minb("edges")/maxb("nodes")-(minb("mindeg"))-(2.0))))/4.0, ind='Max')
                 except:
                     pass
-            if minb("edges") != 'undt' and maxb("nodes") != 'undt' and maxb("domination") != 'undt':
+            if maxb("nodes") != 'undt':
                 try:
-                    set("mindeg",  (4.0*minb("edges")-(maxb("nodes"))+sqrt(16.0*maxb("domination")*maxb("nodes")**2.0+16.0*minb("edges")**2.0-(24.0*minb("edges")*maxb("nodes"))-(8.0*maxb("nodes")**3.0)+9.0*maxb("nodes")**2.0))/(2.0*maxb("nodes")), ind='Max')
+                    _z = maxb("nodes")
                 except:
                     pass
-            if maxb("nodes") != 'undt' and minb("domination") != 'undt' and maxb("mindeg") != 'undt':
+            if minb("edges") != 'undt':
                 try:
-                    set("edges",  maxb("nodes")*(-(4.0*minb("domination"))+maxb("mindeg")**2.0+maxb("mindeg")+2.0*maxb("nodes")-(2.0))/(4.0*(maxb("mindeg")-(1.0))), ind='Max')
+                    _rz = 4.0*minb("edges")/_z-(3.0)
                 except:
                     pass
+            if minb("domination") != 'undt':
+                try:
+                    _rhb = _rz**2.0-(8.0*_z)+16.0*minb("domination")
+                except:
+                    pass
+            if ('_rhb' in vars() and _rhb > 1.0):
+                if '_rz' in vars() and '_rhb' in vars():
+                    try:
+                        set("mindeg",  1.0+floor(_rz-(sqrt(_rhb)/2.0)), ind='Max')
+                    except:
+                        pass
         return
 
 class Theorem338(Theorem):
