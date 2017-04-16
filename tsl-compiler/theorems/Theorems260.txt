@@ -99,7 +99,14 @@ bandwidth >= -(minb(nodeCover)/(minb(nodeCover)-(maxb(nodes))));
             "disp": ""
         },
         {
-            "text": "if nodeConnec >= 1 then { maxdeg <= (nodes - 1)/((girth-4)/4 *(nodeConnec-1)+1) };",
+            "text": "_temp is floor((minb(girth)-3)/2);
+
+if nodeConnec >= 1 and _temp > 0 then 
+{ 
+    maxdeg <= (maxb(nodes)-(1.0))/((minb(girth)-(4.0))/4.0*(minb(nodeConnec)-(1.0))+1.0),
+    nodes >= minb(girth)*minb(maxdeg)*minb(nodeConnec)/4.0-(minb(girth)*minb(maxdeg)/4.0)-(minb(maxdeg)*minb(nodeConnec))+2.0*minb(maxdeg)+1.0,
+    nodeConnec <= (minb(girth)*minb(maxdeg)-(8.0*minb(maxdeg))+4.0*maxb(nodes)-(4.0))/(minb(maxdeg)*(minb(girth)-(4.0)))
+};",
             "name": "Theorem",
             "idnum": 253,
             "disp": ""
