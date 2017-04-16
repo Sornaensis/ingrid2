@@ -24,7 +24,9 @@ bandwidth >= minb(edgeChromatic)/2.0;
 
 These inequalities do not contain any `free invariants`, or invariants that are not surrounded by either the `minb()` or `maxb()` functions, so they are considered final.
 
-For boolean invariants, there are only two functions for either asserting or de-asserting:
+We use `minb()` and `maxb()` to get the minimum and maximum bounds of a numerical invariant, respectively. 
+
+For boolean invariants, there are only two methods for either asserting or de-asserting, or checking whether they are true or false:
 
 ```haskell
 complete;
@@ -173,6 +175,8 @@ Built In Functions
 `pi()`
 `setmin(invar, x)*`
 `setmax(invar, x)*`
+`minb(invar)`
+`maxb(invar)`
 
 * Note: `invar` in the functions above indicates that the function must take an invariant as a parameter rather than an expression, while brackets [] indicate an optional argument
 * Note: * indicates that the function may only be used as a statement, not within an expression, and not within a condition
