@@ -19,7 +19,15 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "_x is minb(mindeg)*((minb(mindeg)+3)/2)-1; 
+if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and even nodes  then 
+{
+    edgeInd >= (nodes - 2*((nodes + 1)/(2*_x)))/2 : useMinFor(nodes)
+} 
+else if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and odd nodes  then 
+{
+    nosolve edgeInd >= (nodes-maximum(2*((nodes + 1 + _x)/(2*_x)), 1))/2 : useMinFor(nodes)
+};",
             "name": "Theorem",
             "idnum": 304,
             "disp": ""

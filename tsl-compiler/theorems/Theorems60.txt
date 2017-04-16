@@ -53,7 +53,8 @@
   if cycle then 
             { 
                 planar, 
-                not forest, 
+                not forest,
+                not tree,
                 crossing == 0, 
                 nodes >= 3, 
                 edges >= 3, 
