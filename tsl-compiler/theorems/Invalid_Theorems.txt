@@ -1,6 +1,31 @@
 {
     "theorems":[
 {
+            "text": "_z1 is (maxb(nodes) - maxb(nodeCliqueCover))*(maxb(nodeCliqueCover) + maxb(maxdeg) - 1);
+_z2 is (maxb(nodes) - minb(nodeCliqueCover))*(minb(nodeCliqueCover) + maxb(maxdeg) - 1);
+
+if _z1 >= _z2 then
+{
+    edges <= ((maxb(nodes)-(maxb(nodeCliqueCover)))*(maxb(nodeCliqueCover)+maxb(maxdeg)-(1.0))+maxb(mindeg))/2.0,
+    mindeg >= 2.0*minb(edges)+maxb(maxdeg)*maxb(nodeCliqueCover)-(maxb(maxdeg)*maxb(nodes))+maxb(nodeCliqueCover)**2.0-(maxb(nodeCliqueCover)*maxb(nodes))-(maxb(nodeCliqueCover))+maxb(nodes)
+}
+else
+{
+    edges <= ((maxb(nodes)-(minb(nodeCliqueCover)))*(minb(nodeCliqueCover)+maxb(maxdeg)-(1.0))+maxb(mindeg))/2.0,
+    mindeg >= 2.0*minb(edges)+maxb(maxdeg)*minb(nodeCliqueCover)-(maxb(maxdeg)*maxb(nodes))+minb(nodeCliqueCover)**2.0-(minb(nodeCliqueCover)*maxb(nodes))-(minb(nodeCliqueCover))+maxb(nodes)
+};
+
+
+if isset nodeCliqueCover then
+{
+    nodes >= (2.0*minb(edges)+maxb(maxdeg)*minb(nodeCliqueCover)-(maxb(mindeg))+maxb(nodeCliqueCover)**2.0-(maxb(nodeCliqueCover)))/(maxb(maxdeg)+maxb(nodeCliqueCover)-(1.0)),
+    maxdeg >= (-(2.0*minb(edges))+maxb(mindeg)-(maxb(nodeCliqueCover)**2.0)+maxb(nodeCliqueCover)*maxb(nodes)+maxb(nodeCliqueCover)-(maxb(nodes)))/(maxb(nodeCliqueCover)-(maxb(nodes)))
+};",
+            "name": "Theorem",
+            "idnum": 448,
+            "disp": ""
+        },
+{
             "text": "edges <= maxb(nodes)*(maxb(nodes)-(1.0))/2.0-((minb(mindeg)-(maxb(nodeConnec))+1.0)*(maxb(nodes)-(minb(mindeg))-(1.0)));
 nodes >= maxb(mindeg)-(maxb(nodeConnec))+sqrt(8.0*minb(edges)-(4.0*maxb(mindeg)**2.0)-(4.0*maxb(mindeg))+4.0*maxb(nodeConnec)**2.0-(4.0*maxb(nodeConnec))+1.0)/2.0+3.0/2.0;
 mindeg <= maxb(nodeConnec)/2.0+maxb(nodes)/2.0+sqrt(4.0*minb(edges)+maxb(nodeConnec)**2.0-(2.0*maxb(nodeConnec)*maxb(nodes))-(maxb(nodes)**2.0)+2.0*maxb(nodes))/2.0-(1.0);
