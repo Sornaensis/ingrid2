@@ -250,6 +250,7 @@ realizeAnalysis2' v
                                        (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
                                                             (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
                       L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr
+                         ++ map (\(Fx (Local l)) -> Fx $ ExprF ("\'" ++ l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
         in if null invs 
             then  (Fx $ InvarExpr (Fx $ Local l) (Just . Fx $ ExprF " =" expr))
             else  
@@ -265,10 +266,11 @@ realizeAnalysis2' v
                                        (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
                                                             (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
                          L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr)
-                      ++  map (\(_,f) -> Fx $ Cond f 
-                                            (Just . Fx $ 
-                                                RelExpr (Fx $ Relation RelNeq) 
-                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce) 
+                         ++ map (\(Fx (Local l)) -> Fx $ ExprF ("\'" ++ l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
+                      -- ++  map (\(_,f) -> Fx $ Cond f 
+                      --                       (Just . Fx $ 
+                      --                           RelExpr (Fx $ Relation RelNeq) 
+                      --                                   (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce) 
         in if null inv_check
              then Fx $ InvarExpr a (Just . Fx $ RelExpr rel expr)
              else 
