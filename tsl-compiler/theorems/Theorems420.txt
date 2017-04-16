@@ -113,10 +113,10 @@ if maxb(diameter) <= 4.0 then
 {
     
     _z is maxb(nodes),
-    _zz is minb(diam),
-    _k is minb(nconn),
+    _zz is minb(diameter),
+    _k is minb(nodeConnec),
     _zzz is ((_z-2)*(_z-3)-2*(_z-2)*(_zz-4)*_k-4*_k*(_k-1)+_k*_k*(_zz-2)*(_zz-3)) / 2,
-    _k is maxb(nconn),
+    _k is maxb(nodeConnec),
     _zzzz is ((_z-2)*(_z-3)-2*(_z-2)*(_zz-4)*_k-4*_k*(_k-1)+_k*_k*(_zz-2)*(_zz-3)) / 2,
     _z is maximum(_zzz, _zzzz),
     if _z < minb(edges) then
