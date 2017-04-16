@@ -169,7 +169,7 @@ realizeAnalysis2' v
             inv_check  = (map (\f -> Fx $ Cond f    
                                        (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
                                                             (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
-                         L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr)
+                         L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr ++ [a])
                          -- ++ (map (\(_,f) -> Fx $ Cond f 
                          --                    (Just . Fx $ 
                          --                        RelExpr (Fx $ Relation RelNeq) 
