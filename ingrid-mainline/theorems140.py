@@ -9772,9 +9772,9 @@ class Theorem316(Theorem):
 
 class Theorem317(Theorem):
     def __init__(self):
-        super(Theorem317, self).__init__(317, "if maxdeg == nodes-(1.0) and even nodes and edges <= 2.0*floor((nodes-(1.0))/2.0)**2.0 then \n{\n    edgeChromatic == maxdeg\n}\nelse if maxdeg == nodes-(1.0) and odd nodes and edges <= 2.0*floor((nodes-(1.0))/2.0)**2.0+mindeg then \n{\n    edgeChromatic == maxdeg\n};\n", "")
+        super(Theorem317, self).__init__(317, "if odd nodes then \n{\n    _k is 0.0\n}\nelse if even nodes then \n{\n    _k is minb(mindeg)\n};\nif maxdeg == nodes-(1.0) and edges <= 2.0*floor((nodes-(1.0))/2.0)**2.0+_k then \n{\n    edgeChromatic == maxdeg\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["maxdeg","nodes","edges","edgeChromatic","mindeg"]
+        return str_invar in ["nodes","mindeg","maxdeg","edges","edgeChromatic"]
     def run(self):
         get = self.get
         set = self.set
@@ -9783,28 +9783,18 @@ class Theorem317(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if ((maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("maxdeg") >= maxb("nodes")-(1.0)) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") <= minb("nodes")-(1.0))) and evenInvar("nodes") and (minb("nodes") != 'undt' and maxb("edges") != 'undt' and maxb("edges") <= 2.0*floor((minb("nodes")-(1.0))/2.0)**2.0):
-            if minb("maxdeg") != 'undt':
+        if oddInvar("nodes"):
+            try:
+                _k = 0.0
+            except:
+                pass
+        elif evenInvar("nodes"):
+            if minb("mindeg") != 'undt':
                 try:
-                    set("edgeChromatic",  minb("maxdeg"), ind='Min')
+                    _k = minb("mindeg")
                 except:
                     pass
-            if maxb("edgeChromatic") != 'undt':
-                try:
-                    set("maxdeg",  maxb("edgeChromatic"), ind='Max')
-                except:
-                    pass
-            if maxb("maxdeg") != 'undt':
-                try:
-                    set("edgeChromatic",  maxb("maxdeg"), ind='Max')
-                except:
-                    pass
-            if minb("edgeChromatic") != 'undt':
-                try:
-                    set("maxdeg",  minb("edgeChromatic"), ind='Min')
-                except:
-                    pass
-        elif ((maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("maxdeg") >= maxb("nodes")-(1.0)) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") <= minb("nodes")-(1.0))) and oddInvar("nodes") and (minb("nodes") != 'undt' and minb("mindeg") != 'undt' and maxb("edges") != 'undt' and maxb("edges") <= 2.0*floor((minb("nodes")-(1.0))/2.0)**2.0+minb("mindeg")):
+        if ((maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("maxdeg") >= maxb("nodes")-(1.0)) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") <= minb("nodes")-(1.0))) and (minb("nodes") != 'undt' and maxb("edges") != 'undt' and '_k' in vars() and maxb("edges") <= 2.0*floor((minb("nodes")-(1.0))/2.0)**2.0+_k):
             if minb("maxdeg") != 'undt':
                 try:
                     set("edgeChromatic",  minb("maxdeg"), ind='Min')
