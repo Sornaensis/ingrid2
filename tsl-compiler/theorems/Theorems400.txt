@@ -46,7 +46,10 @@
             "disp": ""
         },
         {
-            "text": "if mindeg >= 2 then { domination >= (girth+2)/3*numOfComponents };",
+            "text": "if mindeg >= 2.0 then 
+{
+    domination >= girth/3.0*numOfComponents
+};",
             "name": "Theorem",
             "idnum": 386,
             "disp": ""
