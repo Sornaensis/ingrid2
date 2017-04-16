@@ -72,7 +72,20 @@
             "disp": ""
         },
         {
-            "text": "if (nodes > 5 or nodes < 5) or (edges > 5 or edges < 5) or not cycle then { if maxClique > nodeInd then { maxClique >= (1/2)*log(2*nodes*sqrt(3.14159265359879),2) } else { nodeInd >= (1/2)*log(2*nodes*sqrt(3.14159265359879),2) } };",
+            "text": "
+            if (nodes > 5.0 or nodes < 5.0) or (edges > 5.0 or edges < 5.0) or not cycle then 
+{
+    _rhb is 2*sqrt(pi()),
+    _rz is 0.5*log(_rhb*minb(nodes),2),
+    if maxClique < _rz then
+    {
+        nodeInd >= _rz
+    }
+    else if maxb(nodeInd) < _rz then
+    {
+        maxClique >= _rz
+    }
+};",
             "name": "Theorem",
             "idnum": 390,
             "disp": ""
