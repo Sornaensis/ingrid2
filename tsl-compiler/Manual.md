@@ -15,6 +15,16 @@ At their heart, most theorems, or class constraints, are expressed as inequaliti
 edgeChromatic <= 2*bandwidth;
 ```
 
+For statements, only the following relational expressions are allowed:
+
+```haskell
+invar <= <expr>;
+invar >= <expr>;
+invar == <expr>;
+```
+
+For conditions (if statements), we allow `<` and `>` as well as `!=`.
+
 For inequalities, the TSL compiler automatically applies boundary analysis and term rewriting, resulting in the following expression.
 
 ```haskell
