@@ -9858,9 +9858,9 @@ class Theorem318(Theorem):
 
 class Theorem319(Theorem):
     def __init__(self):
-        super(Theorem319, self).__init__(319, "let m = 2.0*e-(floor(2.0*e/maxdeg)*maxdeg);\nif spectralRadius >= (2.0*edges*(2.0*maxdeg-(1.0))-(2.0*m*(maxdeg-(m))))**(1.0/4.0) then \n{\n    girth <= 4.0\n};\n", "")
+        super(Theorem319, self).__init__(319, "let m = 2.0*edges-(floor(2.0*edges/maxdeg)*maxdeg);\nif spectralRadius >= (2.0*edges*(2.0*maxdeg-(1.0))-(2.0*m*(maxdeg-(m))))**(1.0/4.0) then \n{\n    girth <= 4.0\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["spectralRadius","edges","maxdeg","e","girth"]
+        return str_invar in ["spectralRadius","edges","maxdeg","girth"]
     def run(self):
         get = self.get
         set = self.set
@@ -9869,7 +9869,7 @@ class Theorem319(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (maxb("edges") != 'undt' and maxb("maxdeg") != 'undt' and minb("e") != 'undt' and minb("spectralRadius") != 'undt' and minb("spectralRadius") >= (2.0*maxb("edges")*(2.0*maxb("maxdeg")-(1.0))-(2.0*2.0*minb("e")-(floor(2.0*minb("e")/maxb("maxdeg"))*maxb("maxdeg"))*(maxb("maxdeg")-(2.0*minb("e")-(floor(2.0*minb("e")/maxb("maxdeg"))*maxb("maxdeg"))))))**(1.0/4.0)):
+        if (minb("edges") != 'undt' and maxb("maxdeg") != 'undt' and minb("spectralRadius") != 'undt' and minb("spectralRadius") >= (2.0*minb("edges")*(2.0*maxb("maxdeg")-(1.0))-(2.0*2.0*minb("edges")-(floor(2.0*minb("edges")/maxb("maxdeg"))*maxb("maxdeg"))*(maxb("maxdeg")-(2.0*minb("edges")-(floor(2.0*minb("edges")/maxb("maxdeg"))*maxb("maxdeg"))))))**(1.0/4.0)):
             try:
                 set("girth",  4.0, ind='Max')
             except:
@@ -11539,7 +11539,7 @@ class Theorem373(Theorem):
 
 class Theorem374(Theorem):
     def __init__(self):
-        super(Theorem374, self).__init__(374, "thickness <= 5.0+sqrt(2.0*genus-(2.0));\n", "")
+        super(Theorem374, self).__init__(374, "thickness <= 5.0+sqrt(2.0*maxb(genus)-(2.0));\nif minb(thickness) >= 5.0 then \n{\n    genus >= (minb(thickness)-(5.0))**2.0/2.0+1.0\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["thickness","genus"]
     def run(self):
@@ -11555,11 +11555,12 @@ class Theorem374(Theorem):
                 set("thickness",  5.0+sqrt(2.0*maxb("genus")-(2.0)), ind='Max')
             except:
                 pass
-        if minb("thickness") != 'undt':
-            try:
-                set("genus",  (minb("thickness")-(5.0))**2.0/2.0+1.0, ind='Min')
-            except:
-                pass
+        if (minb("thickness") != 'undt' and minb("thickness") >= 5.0):
+            if minb("thickness") != 'undt':
+                try:
+                    set("genus",  (minb("thickness")-(5.0))**2.0/2.0+1.0, ind='Min')
+                except:
+                    pass
         return
 
 class Theorem375(Theorem):
