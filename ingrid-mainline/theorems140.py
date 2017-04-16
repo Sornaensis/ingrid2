@@ -13017,9 +13017,9 @@ class Theorem423(Theorem):
 
 class Theorem424(Theorem):
     def __init__(self):
-        super(Theorem424, self).__init__(424, "if connected and (not cycle or (cycle and isset nodes and even nodes)) and (edges >= nodes or maxdeg > 2.0 or (isset nodes and odd nodes)) then \n{\n    nodeCover <= (nodes*(maxdeg**2.0+maxdeg-(1.0)))/(maxdeg*(maxdeg+1.0))-(nodes**2.0/(nodes+2.0*edges)):useMaxFor(nodes):useMaxFor(maxdeg)\n};\n", "")
+        super(Theorem424, self).__init__(424, "if connected and maxClique == 2.0 and not cycle and (edges >= nodes or maxdeg > 2.0 or (isset nodes and odd nodes)) then \n{\n    nodeCover <= (maxb(nodes)*(maxb(maxdeg)**2.0+maxb(maxdeg)-(1.0)))/(maxb(maxdeg)*(maxb(maxdeg)+1.0))-(maxb(nodes)**2.0/(maxb(nodes)+2.0*maxb(edges))),\n    edges >= -(maxb(nodes)*(maxb(maxdeg)**2.0*minb(nodeCover)+maxb(maxdeg)*minb(nodeCover)+maxb(nodes))/(2.0*maxb(maxdeg)**2.0*minb(nodeCover)-(2.0*maxb(maxdeg)**2.0*maxb(nodes))+2.0*maxb(maxdeg)*minb(nodeCover)-(2.0*maxb(maxdeg)*maxb(nodes))+2.0*maxb(nodes)))\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["connected","cycle","nodes","edges","maxdeg","nodeCover"]
+        return str_invar in ["connected","maxClique","cycle","edges","nodes","maxdeg","nodeCover"]
     def run(self):
         get = self.get
         set = self.set
@@ -13028,20 +13028,10 @@ class Theorem424(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("connected") == True and (get("cycle") == False or (get("cycle") == True and maxb("nodes") != 'undt' and minb("nodes") == maxb("nodes") and evenInvar("nodes"))) and ((maxb("nodes") != 'undt' and minb("edges") != 'undt' and minb("edges") >= maxb("nodes")) or (minb("maxdeg") != 'undt' and minb("maxdeg") > 2.0) or (maxb("nodes") != 'undt' and minb("nodes") == maxb("nodes") and oddInvar("nodes"))):
+        if get("connected") == True and ((minb("maxClique") != 'undt' and minb("maxClique") >= 2.0) and (maxb("maxClique") != 'undt' and maxb("maxClique") <= 2.0)) and get("cycle") == False and ((maxb("nodes") != 'undt' and minb("edges") != 'undt' and minb("edges") >= maxb("nodes")) or (minb("maxdeg") != 'undt' and minb("maxdeg") > 2.0) or (maxb("nodes") != 'undt' and minb("nodes") == maxb("nodes") and oddInvar("nodes"))):
             if maxb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("edges") != 'undt':
                 try:
                     set("nodeCover",  (maxb("nodes")*(maxb("maxdeg")**2.0+maxb("maxdeg")-(1.0)))/(maxb("maxdeg")*(maxb("maxdeg")+1.0))-(maxb("nodes")**2.0/(maxb("nodes")+2.0*maxb("edges"))), ind='Max')
-                except:
-                    pass
-            if maxb("edges") != 'undt' and maxb("maxdeg") != 'undt' and minb("nodeCover") != 'undt':
-                try:
-                    set("nodes",  maxb("edges")*maxb("maxdeg")**2.0+maxb("edges")*maxb("maxdeg")-(maxb("edges"))-(maxb("maxdeg")**2.0*minb("nodeCover")/2.0)-(maxb("maxdeg")*minb("nodeCover")/2.0)+sqrt(4.0*maxb("edges")**2.0*maxb("maxdeg")**4.0+8.0*maxb("edges")**2.0*maxb("maxdeg")**3.0-(4.0*maxb("edges")**2.0*maxb("maxdeg")**2.0)-(8.0*maxb("edges")**2.0*maxb("maxdeg"))+4.0*maxb("edges")**2.0-(4.0*maxb("edges")*maxb("maxdeg")**4.0*minb("nodeCover"))-(8.0*maxb("edges")*maxb("maxdeg")**3.0*minb("nodeCover"))-(8.0*maxb("edges")*maxb("maxdeg")**2.0*minb("nodeCover"))-(4.0*maxb("edges")*maxb("maxdeg")*minb("nodeCover"))+maxb("maxdeg")**4.0*minb("nodeCover")**2.0+2.0*maxb("maxdeg")**3.0*minb("nodeCover")**2.0+maxb("maxdeg")**2.0*minb("nodeCover")**2.0)/2.0, ind='Min')
-                except:
-                    pass
-            if maxb("edges") != 'undt' and minb("nodeCover") != 'undt' and maxb("nodes") != 'undt':
-                try:
-                    set("maxdeg",  (-(maxb("edges")*minb("nodeCover"))+maxb("edges")*maxb("nodes")-(minb("nodeCover")*maxb("nodes")/2.0)+sqrt((2.0*maxb("edges")*minb("nodeCover")-(2.0*maxb("edges")*maxb("nodes"))+minb("nodeCover")*maxb("nodes"))*(2.0*maxb("edges")*minb("nodeCover")-(10.0*maxb("edges")*maxb("nodes"))+minb("nodeCover")*maxb("nodes")-(4.0*maxb("nodes")**2.0)))/2.0)/(2.0*maxb("edges")*minb("nodeCover")-(2.0*maxb("edges")*maxb("nodes"))+minb("nodeCover")*maxb("nodes")), ind='Min')
                 except:
                     pass
             if maxb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and minb("nodeCover") != 'undt':
