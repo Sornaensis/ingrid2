@@ -152,7 +152,7 @@ maxdeg >= (_k*minb(chromaticNum)-(1.0))/(_k-(1.0))-(1.0);",
         },
         {
             "text": "edges <= nodes*(nodes-1)/2;
-                     edges >= (nodes+1)/2;",
+                     edges >= ceiling(nodes/2);",
             "name": "Theorem", 
             "idnum": 137,
             "disp": ""
