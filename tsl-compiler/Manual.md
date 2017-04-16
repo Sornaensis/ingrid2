@@ -184,6 +184,9 @@ Built In Functions
 Special Statements
 ----------------------------
 
+Even and Odd
+------------
+
 ```haskell
 even invar;
 ```
@@ -197,6 +200,9 @@ odd invar;
 
 Meaning:
 * Asserts that `invar` must have an odd value
+
+Existence or Definition
+-----------------------
 
 ```haskell
 undefined invar;
@@ -219,6 +225,9 @@ if exists invar then { ... };
 Meaning:
 * Checks whether `invar` has a maximum bound less than infinity
 
+Boolean Assertion
+-----------------
+
 ```haskell
 invar;
 ```
@@ -232,6 +241,9 @@ not invar;
 
 Meaning:
 * Asserts that `invar` has the value false, if `invar` is a boolean invariant. Otherwise error.
+
+Equation Solving
+----------------
 
 ```haskell
 nosolve invar <= <expr>;
