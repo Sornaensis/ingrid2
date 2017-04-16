@@ -11761,9 +11761,9 @@ class Theorem381(Theorem):
 
 class Theorem382(Theorem):
     def __init__(self):
-        super(Theorem382, self).__init__(382, "if planer and edgeConnec < mindeg and (nodes >= 5.0 or mindeg >= 2.0) then \n{\n    if mindeg == edgeConnec+1.0 and mindeg == 1.0 then \n    {\n        edges <= 3.0*nodes-(11.0)\n    }\n    else  \n    {\n        edges <= 3.0*nodes-(12.0)+nodeConnec\n    }\n};\n", "")
+        super(Theorem382, self).__init__(382, "if planar and edgeConnec < mindeg and (nodes >= 5.0 or mindeg >= 2.0) then \n{\n    if mindeg == edgeConnec+1.0 and mindeg == 1.0 then \n    {\n        edges <= 3.0*nodes-(11.0)\n    }\n    else  \n    {\n        edges <= 3.0*nodes-(12.0)+nodeConnec\n    }\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["planer","edgeConnec","mindeg","nodes","edges","nodeConnec"]
+        return str_invar in ["planar","edgeConnec","mindeg","nodes","edges","nodeConnec"]
     def run(self):
         get = self.get
         set = self.set
@@ -11772,7 +11772,7 @@ class Theorem382(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("planer") == True and (minb("mindeg") != 'undt' and maxb("edgeConnec") != 'undt' and maxb("edgeConnec") < minb("mindeg")) and ((minb("nodes") != 'undt' and minb("nodes") >= 5.0) or (minb("mindeg") != 'undt' and minb("mindeg") >= 2.0)):
+        if get("planar") == True and (minb("mindeg") != 'undt' and maxb("edgeConnec") != 'undt' and maxb("edgeConnec") < minb("mindeg")) and ((minb("nodes") != 'undt' and minb("nodes") >= 5.0) or (minb("mindeg") != 'undt' and minb("mindeg") >= 2.0)):
             if ((maxb("edgeConnec") != 'undt' and minb("mindeg") != 'undt' and minb("mindeg") >= maxb("edgeConnec")+1.0) and (minb("edgeConnec") != 'undt' and maxb("mindeg") != 'undt' and maxb("mindeg") <= minb("edgeConnec")+1.0)) and ((minb("mindeg") != 'undt' and minb("mindeg") >= 1.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 1.0)):
                 if maxb("nodes") != 'undt':
                     try:
