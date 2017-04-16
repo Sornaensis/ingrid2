@@ -11755,7 +11755,7 @@ class Theorem382(Theorem):
 
 class Theorem383(Theorem):
     def __init__(self):
-        super(Theorem383, self).__init__(383, "if not forest then \n{\n    nodes >= minb(maxdeg)+minb(numOfComponents)-(2.0)+((minb(circumference)*(minb(girth)-(3.0))+2.0)/(minb(girth)/2.0)),\n    maxdeg <= (6.0*minb(circumference)+minb(girth)*(-(2.0*minb(circumference))+maxb(nodes)-(minb(numOfComponents))+2.0)-(4.0))/minb(girth),\n    numOfComponents <= (6.0*minb(circumference)+minb(girth)*(-(2.0*minb(circumference))-(minb(maxdeg))+maxb(nodes)+2.0)-(4.0))/minb(girth),\n    circumference <= (-(minb(girth)*minb(maxdeg))+minb(girth)*maxb(nodes)-(minb(girth)*minb(numOfComponents))+2.0*minb(girth)-(4.0))/(2.0*(minb(girth)-(3.0))),\n    girth <= 2.0*(3.0*minb(circumference)-(2.0))/(2.0*minb(circumference)+minb(maxdeg)-(maxb(nodes))+minb(numOfComponents)-(2.0))\n};\n", "")
+        super(Theorem383, self).__init__(383, "if not forest then \n{\n    nodes >= minb(maxdeg)+minb(numOfComponents)-(2.0)+(minb(circumference)*(minb(girth)-(3.0))+2.0)/(minb(girth)-(2.0)),\n    maxdeg <= (-(minb(circumference)*minb(girth))+3.0*minb(circumference)+minb(girth)*maxb(nodes)-(minb(girth)*minb(numOfComponents))+2.0*minb(girth)-(2.0*maxb(nodes))+2.0*minb(numOfComponents)-(6.0))/(minb(girth)-(2.0)),\n    numOfComponents <= (-(minb(circumference)*minb(girth))+3.0*minb(circumference)-(minb(girth)*minb(maxdeg))+minb(girth)*maxb(nodes)+2.0*minb(girth)+2.0*minb(maxdeg)-(2.0*maxb(nodes))-(6.0))/(minb(girth)-(2.0)),\n    if minb(girth) >= 4.0 then \n    {\n        circumference <= (-(minb(girth)*minb(maxdeg))+minb(girth)*maxb(nodes)-(minb(girth)*minb(numOfComponents))+2.0*minb(girth)+2.0*minb(maxdeg)-(2.0*maxb(nodes))+2.0*minb(numOfComponents)-(6.0))/(minb(girth)-(3.0))\n    },\n    _z is minb(circumference)-(2.0)-(maxb(nodes))+minb(maxdeg)+minb(numOfComponents),\n    if _z > 0.0 then \n    {\n        girth <= (3.0*minb(circumference)+2.0*minb(maxdeg)-(2.0*maxb(nodes))+2.0*minb(numOfComponents)-(6.0))/(minb(circumference)+minb(maxdeg)-(maxb(nodes))+minb(numOfComponents)-(2.0))\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["forest","nodes","maxdeg","numOfComponents","circumference","girth"]
     def run(self):
@@ -11769,29 +11769,36 @@ class Theorem383(Theorem):
         if get("forest") == False:
             if minb("maxdeg") != 'undt' and minb("numOfComponents") != 'undt' and minb("circumference") != 'undt' and minb("girth") != 'undt':
                 try:
-                    set("nodes",  minb("maxdeg")+minb("numOfComponents")-(2.0)+((minb("circumference")*(minb("girth")-(3.0))+2.0)/(minb("girth")/2.0)), ind='Min')
+                    set("nodes",  minb("maxdeg")+minb("numOfComponents")-(2.0)+(minb("circumference")*(minb("girth")-(3.0))+2.0)/(minb("girth")-(2.0)), ind='Min')
                 except:
                     pass
             if minb("circumference") != 'undt' and minb("girth") != 'undt' and maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt':
                 try:
-                    set("maxdeg",  (6.0*minb("circumference")+minb("girth")*(-(2.0*minb("circumference"))+maxb("nodes")-(minb("numOfComponents"))+2.0)-(4.0))/minb("girth"), ind='Max')
+                    set("maxdeg",  (-(minb("circumference")*minb("girth"))+3.0*minb("circumference")+minb("girth")*maxb("nodes")-(minb("girth")*minb("numOfComponents"))+2.0*minb("girth")-(2.0*maxb("nodes"))+2.0*minb("numOfComponents")-(6.0))/(minb("girth")-(2.0)), ind='Max')
                 except:
                     pass
             if minb("circumference") != 'undt' and minb("girth") != 'undt' and minb("maxdeg") != 'undt' and maxb("nodes") != 'undt':
                 try:
-                    set("numOfComponents",  (6.0*minb("circumference")+minb("girth")*(-(2.0*minb("circumference"))-(minb("maxdeg"))+maxb("nodes")+2.0)-(4.0))/minb("girth"), ind='Max')
+                    set("numOfComponents",  (-(minb("circumference")*minb("girth"))+3.0*minb("circumference")-(minb("girth")*minb("maxdeg"))+minb("girth")*maxb("nodes")+2.0*minb("girth")+2.0*minb("maxdeg")-(2.0*maxb("nodes"))-(6.0))/(minb("girth")-(2.0)), ind='Max')
                 except:
                     pass
-            if minb("girth") != 'undt' and minb("maxdeg") != 'undt' and maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt':
+            if (minb("girth") != 'undt' and minb("girth") >= 4.0):
+                if minb("girth") != 'undt' and minb("maxdeg") != 'undt' and maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt':
+                    try:
+                        set("circumference",  (-(minb("girth")*minb("maxdeg"))+minb("girth")*maxb("nodes")-(minb("girth")*minb("numOfComponents"))+2.0*minb("girth")+2.0*minb("maxdeg")-(2.0*maxb("nodes"))+2.0*minb("numOfComponents")-(6.0))/(minb("girth")-(3.0)), ind='Max')
+                    except:
+                        pass
+            if minb("circumference") != 'undt' and maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("numOfComponents") != 'undt':
                 try:
-                    set("circumference",  (-(minb("girth")*minb("maxdeg"))+minb("girth")*maxb("nodes")-(minb("girth")*minb("numOfComponents"))+2.0*minb("girth")-(4.0))/(2.0*(minb("girth")-(3.0))), ind='Max')
+                    _z = minb("circumference")-(2.0)-(maxb("nodes"))+minb("maxdeg")+minb("numOfComponents")
                 except:
                     pass
-            if minb("circumference") != 'undt' and minb("maxdeg") != 'undt' and maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt':
-                try:
-                    set("girth",  2.0*(3.0*minb("circumference")-(2.0))/(2.0*minb("circumference")+minb("maxdeg")-(maxb("nodes"))+minb("numOfComponents")-(2.0)), ind='Max')
-                except:
-                    pass
+            if ('_z' in vars() and _z > 0.0):
+                if minb("circumference") != 'undt' and minb("maxdeg") != 'undt' and maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt':
+                    try:
+                        set("girth",  (3.0*minb("circumference")+2.0*minb("maxdeg")-(2.0*maxb("nodes"))+2.0*minb("numOfComponents")-(6.0))/(minb("circumference")+minb("maxdeg")-(maxb("nodes"))+minb("numOfComponents")-(2.0)), ind='Max')
+                    except:
+                        pass
         return
 
 class Theorem384(Theorem):
