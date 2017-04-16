@@ -1,6 +1,15 @@
 {
     "theorems":[
-
+{
+            "text": "edges <= maxb(nodes)*(maxb(nodes)-(1.0))/2.0-((minb(mindeg)-(maxb(nodeConnec))+1.0)*(maxb(nodes)-(minb(mindeg))-(1.0)));
+nodes >= maxb(mindeg)-(maxb(nodeConnec))+sqrt(8.0*minb(edges)-(4.0*maxb(mindeg)**2.0)-(4.0*maxb(mindeg))+4.0*maxb(nodeConnec)**2.0-(4.0*maxb(nodeConnec))+1.0)/2.0+3.0/2.0;
+mindeg <= maxb(nodeConnec)/2.0+maxb(nodes)/2.0+sqrt(4.0*minb(edges)+maxb(nodeConnec)**2.0-(2.0*maxb(nodeConnec)*maxb(nodes))-(maxb(nodes)**2.0)+2.0*maxb(nodes))/2.0-(1.0);
+nodeConnec >= (-(minb(edges))+minb(mindeg)**2.0-(minb(mindeg)*minb(nodes))+2.0*minb(mindeg)+minb(nodes)**2.0/2.0-(3.0*minb(nodes)/2.0)+1.0)/(minb(mindeg)-(minb(nodes))+1.0);
+",
+            "name": "Theorem",
+            "idnum": 331,
+            "disp": "Too many wierd conditions"
+        },
         {
             "text": "let u = floor((nodes - mindeg - 3)/(mindeg+1)**2); let k = floor((floor((nodes - u*(mindeg+1)**2)/(mindeg+2)-1))/2); if mindeg <= maxdeg - 2 and nodes < maxdeg + mindeg then {edgeInd >= minimum(floor(nodes/2), mindeg)} else if mindeg <= maxdeg - 2 and nodes >= maxdeg + mindeg then {edgeInd >= ceil(nodes*mindeg/(mindeg+maxdeg))} else if (mindeg == maxdeg and even mindeg) or (mindeg == maxdeg - 1 and odd mindeg) then {edgeInd >= ceil(nodes*maxdeg/(2*(maxdeg+1)))} else if mindeg == maxdeg - 1 then {edgeInd >= ceil((nodes*mindeg+1)/(2*(mindeg+1)))} else if (mindeg == maxdeg and odd mindeg) and nodes == mindeg + 1 then {edgeInd >= nodes/2} else if (mindeg == maxdeg and odd mindeg) and nodes > mindeg + 1 then {edgeInd >= (nodes-u*(mindeg-1))/2-k};",
             "name": "Theorem",
