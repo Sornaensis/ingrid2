@@ -144,7 +144,8 @@ realizeAnalysis2' v
                 Cond (Fx $ Function "get" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ ExprF "False" (Fx Empty))) 
             "even" ->  Fx $ Function "evenInvar" [e]
             "odd" -> Fx $ Function "oddInvar" [e]
-            "istrue" -> Fx $ InvarExpr e Nothing
+            "istrue"  -> cata realizeAnalysis' . Fx $ Cond e Nothing
+            "isfalse" -> cata realizeAnalysis' . Fx $ Cond (Fx $ Function "not" [e])  Nothing
             "isset" -> Fx $ 
                 And (Fx $ Cond (Fx $ Function "maxb" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelNeq) (Fx $ ExprF "\'undt\'" (Fx Empty))))
                  (Fx $ Cond (Fx $ Function "minb" [e]) (Just . Fx $ RelExpr (Fx $ Relation RelEq) (Fx $ Function "maxb" [e])))
