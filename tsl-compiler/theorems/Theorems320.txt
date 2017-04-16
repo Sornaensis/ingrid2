@@ -105,7 +105,19 @@ else if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and odd nodes  then
             "disp": ""
         },
         {
-            "text": "if maxdeg == nodes - 1 and even nodes  and edges <= 2*floor((nodes-1)/2)**2 then {edgeChromatic == maxdeg} else if maxdeg == nodes - 1 and odd nodes  and edges <= 2*floor((nodes-1)/2)**2 + mindeg then {edgeChromatic == maxdeg};",
+            "text": "if odd nodes then 
+{
+    _k is 0
+}
+else if even nodes then 
+{
+    _k is minb(mindeg)
+};
+
+if maxdeg == nodes - 1 and edges <= 2 * floor((nodes - 1)/2)**2 + _k then 
+{
+    edgeChromatic == maxdeg
+};",
             "name": "Theorem",
             "idnum": 317,
             "disp": ""
