@@ -67,7 +67,7 @@ else
 circumference >= _minpd;
 ```
 
-The value stored in `\_minpd` behaves as you would expect in a C or pascal program.
+The value stored in `_minpd` behaves as you would expect in a C or pascal program.
 
 
 Symbolic variables are assigned with the `let` statement, and are symbolically replaced by their RHS expression before any term re-writing or analysis is done.
