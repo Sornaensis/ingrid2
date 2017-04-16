@@ -8,11 +8,11 @@
             "disp": ""
         },
         {
-            "text": "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-((minb(nodeInd)-(minb(numOfComponents))+1.0)/2.0);
-nodes >= minb(bandwidth)+minb(mindeg)*minb(numOfComponents)-(minb(mindeg))+minb(nodeInd)/2.0+minb(numOfComponents)/2.0+1.0/2.0;
-mindeg <= (-(2.0*minb(bandwidth))-(minb(nodeInd))+2.0*maxb(nodes)-(minb(numOfComponents))-(1.0))/(2.0*(minb(numOfComponents)-(1.0)));
-numOfComponents <= (-(2.0*minb(bandwidth))+2.0*minb(mindeg)-(minb(nodeInd))+2.0*maxb(nodes)-(1.0))/(2.0*minb(mindeg)+1.0);
-nodeInd <= -(2.0*minb(bandwidth))-(2.0*minb(mindeg)*minb(numOfComponents))+2.0*minb(mindeg)+2.0*maxb(nodes)-(minb(numOfComponents))-(1.0);
+            "text": "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-floor((minb(nodeInd)-minb(numOfComponents)+1.0)/2.0);
+nodes >= minb(bandwidth)+(minb(mindeg)+1)*(minb(numOfComponents)-1)+floor((minb(nodeInd)-minb(numOfComponents)+1)/2);
+mindeg <= floor((maxb(nodes)-minb(bandwidth)-1-(minb(nodeInd)-minb(numOfComponents)+1)/2)/(minb(numOfComponents)-1))-1;
+numOfComponents <= floor((2*(maxb(nodes)-minb(bandwidth))-minb(nodeInd)-1)/(2*minb(mindeg)+1))+1;
+nodeInd <= 2*(maxb(nodes)-minb(bandwidth))-(minb(numOfComponents)-1)*(2*minb(mindeg)+1)-1;
 ",
             "name": "Theorem",
             "idnum": 402,
