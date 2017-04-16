@@ -138,7 +138,7 @@
             "disp": ""
         },
         {
-            "text": "if defined girth then
+            "text": "if exists girth then
 {
     _P is maxb(nodes),
     arboricity <= chromaticNum - chromaticNum/(1 + _P/((girth - 1)/2)*chromaticNum),
