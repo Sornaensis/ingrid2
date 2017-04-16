@@ -15,16 +15,6 @@ At their heart, most theorems, or class constraints, are expressed as inequaliti
 edgeChromatic <= 2*bandwidth;
 ```
 
-For statements, only the following relational expressions are allowed:
-
-```haskell
-invar <= <expr>;
-invar >= <expr>;
-invar == <expr>;
-```
-
-For conditions (if statements), we allow `<` and `>` as well as `!=`.
-
 For inequalities, the TSL compiler automatically applies boundary analysis and term rewriting, resulting in the following expression.
 
 ```haskell
@@ -114,7 +104,7 @@ edges <= 2.0*maxb(nodes)-(minb(spectralRadius)**2.0);
 
 After all terms have been re-written and had analysis applied to them.
 
-Structure
+Syntax
 =========
 
 Each theorem 'program' is a sequence of assertions under conjunction.
@@ -166,6 +156,16 @@ else
 * If statement bodies contain lists of statements which are comma-separated, and can contain nested if-statements.
 * An entire `if else-if else` block is considered one large statement that only has a semicolon or comma at the end.
 * Let statements may not reside within if statements.
+
+For statements, only the following relational expressions are allowed:
+
+```haskell
+invar <= <expr>;
+invar >= <expr>;
+invar == <expr>;
+```
+
+For conditions (if statements), we allow `<` and `>` as well as `!=`.
 
 Built In Functions
 ==================
