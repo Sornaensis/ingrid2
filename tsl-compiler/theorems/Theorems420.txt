@@ -124,7 +124,7 @@ if maxb(diameter) <= 4.0 then
         diameter >= 5
     } else 
     {
-        edges <= z
+        edges <= _z
     }
 };
 ",
