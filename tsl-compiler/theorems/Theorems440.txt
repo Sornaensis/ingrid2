@@ -54,7 +54,7 @@ chromaticNum >= (-(minb(maxdeg))+minb(nodeCover)-(maxb(nodes)))/(minb(nodeCover)
             "disp": ""
         },
         {
-            "text": "let x = mindeg*((mindeg + 3)/2)-1; if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and even nodes  then {edgeCover <= (nodes + 2*((nodes + 1)/(2*x)))/2} else if regular and mindeg >= 3 and edgeConnec >= mindeg - 2 and odd nodes  then {edgeCover <= (nodes + maximum(2*((nodes + 1 + x)/(2*x))-1, 1))/2};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 427,
             "disp": ""
