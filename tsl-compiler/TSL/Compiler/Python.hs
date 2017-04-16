@@ -178,21 +178,17 @@ realizeAnalysis2' v
                     then Fx. Paren . Fx $ And (head inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
                     else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a (Just . Fx $ RelExpr rel expr))
    | (Cond a@(Fx Empty) (Just expr)) <- v =
-        let bound = flipBound $ getBound rel
-            invars = getInvolves expr
-            inv_mappings = zip invars (map (`invarAnalysis` expr) invars)
-            inv_replce = map (swapBound bound) inv_mappings
-            inv_check  = map (\(_,f) -> Fx $ Cond f 
-                                            (Just . Fx $ 
-                                                RelExpr (Fx $ Relation RelNeq) 
-                                                        (Fx $ ExprF "\'undt\'" (Fx Empty)))) (inv_replce)
+        let ivs = (map (\f -> Fx $ Cond f    
+                                       (Just . Fx $ RelExpr (Fx $ Relation RelNeq)
+                                                            (Fx $ ExprF "\'undt\'" (Fx Empty)))) .
+                      L.nubBy eqIFns . filter isFunction $ getInvarFunctions expr)
                          ++ map (\(Fx (Local l)) -> Fx $ ExprF ("\'" ++ l ++ "\'" ++ " in vars()") (Fx Empty)) (Fx . Local <$> getLocals expr)
-        in  if null inv_check 
+        in  if null ivs 
               then Fx $ Cond a (Just expr)
               else 
-                if length inv_check == 1
-                    then Fx. Paren . Fx $ And (head inv_check) (Fx $ Cond a (Just expr))
-                    else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) inv_check) (Fx $ Cond a (Just expr))
+                if length ivs == 1
+                    then Fx . Paren . Fx $ And (head ivs) (Fx $ Cond a (Just expr))
+                    else Fx . Paren . Fx $ And (foldr1 (\x y -> Fx $ And x y) ivs) (Fx $ Cond a (Just expr))
    | (Cond a@(Fx (Local _)) (Just (Fx (RelExpr rel expr)))) <- v =
         let bound = flipBound $ getBound rel
             invars = getInvolves expr
