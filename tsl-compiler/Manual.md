@@ -44,7 +44,7 @@ if diameter <= 2 then
 
 The symbols `=` and `==` are treated identically by the compiler for convenience.
 
-The above program turns into the following expression after analysis.
+The above program turns into the following after analysis.
 
 ```haskell
 if maxb(diameter) <= 2.0 then 
