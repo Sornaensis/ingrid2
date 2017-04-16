@@ -8957,9 +8957,9 @@ class Theorem285(Theorem):
 
 class Theorem286(Theorem):
     def __init__(self):
-        super(Theorem286, self).__init__(286, "edges >= (minb(maxdeg)+(minb(chromaticNum)-(1.0))**2.0+(minb(nodes)-(minb(chromaticNum)))*minb(mindeg))/2.0;\nmaxdeg <= maxb(chromaticNum)*maxb(mindeg)+2.0*maxb(edges)-(maxb(mindeg)*minb(nodes))-((maxb(chromaticNum)-(1.0))**2.0);\nnodes <= (maxb(chromaticNum)*minb(mindeg)+2.0*maxb(edges)-(minb(maxdeg))-((maxb(chromaticNum)-(1.0))**2.0))/minb(mindeg);\nmindeg <= (-(2.0*maxb(edges))+minb(maxdeg)+(maxb(chromaticNum)-(1.0))**2.0)/(maxb(chromaticNum)-(maxb(nodes)));\n", "")
+        super(Theorem286, self).__init__(286, "if isset chromaticNum then \n{\n    edges >= (minb(maxdeg)+(minb(chromaticNum)-(1.0))**2.0+(minb(nodes)-(minb(chromaticNum)))*minb(mindeg))/2.0,\n    maxdeg <= maxb(chromaticNum)*maxb(mindeg)+2.0*maxb(edges)-(maxb(mindeg)*minb(nodes))-((maxb(chromaticNum)-(1.0))**2.0),\n    nodes <= (maxb(chromaticNum)*minb(mindeg)+2.0*maxb(edges)-(minb(maxdeg))-((maxb(chromaticNum)-(1.0))**2.0))/minb(mindeg),\n    mindeg <= (-(2.0*maxb(edges))+minb(maxdeg)+(maxb(chromaticNum)-(1.0))**2.0)/(maxb(chromaticNum)-(maxb(nodes)))\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["edges","maxdeg","chromaticNum","nodes","mindeg"]
+        return str_invar in ["chromaticNum","edges","maxdeg","nodes","mindeg"]
     def run(self):
         get = self.get
         set = self.set
@@ -8968,26 +8968,27 @@ class Theorem286(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if minb("maxdeg") != 'undt' and minb("chromaticNum") != 'undt' and minb("nodes") != 'undt' and minb("mindeg") != 'undt':
-            try:
-                set("edges",  (minb("maxdeg")+(minb("chromaticNum")-(1.0))**2.0+(minb("nodes")-(minb("chromaticNum")))*minb("mindeg"))/2.0, ind='Min')
-            except:
-                pass
-        if maxb("chromaticNum") != 'undt' and maxb("mindeg") != 'undt' and maxb("edges") != 'undt' and minb("nodes") != 'undt':
-            try:
-                set("maxdeg",  maxb("chromaticNum")*maxb("mindeg")+2.0*maxb("edges")-(maxb("mindeg")*minb("nodes"))-((maxb("chromaticNum")-(1.0))**2.0), ind='Max')
-            except:
-                pass
-        if maxb("chromaticNum") != 'undt' and minb("mindeg") != 'undt' and maxb("edges") != 'undt' and minb("maxdeg") != 'undt':
-            try:
-                set("nodes",  (maxb("chromaticNum")*minb("mindeg")+2.0*maxb("edges")-(minb("maxdeg"))-((maxb("chromaticNum")-(1.0))**2.0))/minb("mindeg"), ind='Max')
-            except:
-                pass
-        if maxb("edges") != 'undt' and minb("maxdeg") != 'undt' and maxb("chromaticNum") != 'undt' and maxb("nodes") != 'undt':
-            try:
-                set("mindeg",  (-(2.0*maxb("edges"))+minb("maxdeg")+(maxb("chromaticNum")-(1.0))**2.0)/(maxb("chromaticNum")-(maxb("nodes"))), ind='Max')
-            except:
-                pass
+        if maxb("chromaticNum") != 'undt' and minb("chromaticNum") == maxb("chromaticNum"):
+            if minb("maxdeg") != 'undt' and minb("chromaticNum") != 'undt' and minb("nodes") != 'undt' and minb("mindeg") != 'undt':
+                try:
+                    set("edges",  (minb("maxdeg")+(minb("chromaticNum")-(1.0))**2.0+(minb("nodes")-(minb("chromaticNum")))*minb("mindeg"))/2.0, ind='Min')
+                except:
+                    pass
+            if maxb("chromaticNum") != 'undt' and maxb("mindeg") != 'undt' and maxb("edges") != 'undt' and minb("nodes") != 'undt':
+                try:
+                    set("maxdeg",  maxb("chromaticNum")*maxb("mindeg")+2.0*maxb("edges")-(maxb("mindeg")*minb("nodes"))-((maxb("chromaticNum")-(1.0))**2.0), ind='Max')
+                except:
+                    pass
+            if maxb("chromaticNum") != 'undt' and minb("mindeg") != 'undt' and maxb("edges") != 'undt' and minb("maxdeg") != 'undt':
+                try:
+                    set("nodes",  (maxb("chromaticNum")*minb("mindeg")+2.0*maxb("edges")-(minb("maxdeg"))-((maxb("chromaticNum")-(1.0))**2.0))/minb("mindeg"), ind='Max')
+                except:
+                    pass
+            if maxb("edges") != 'undt' and minb("maxdeg") != 'undt' and maxb("chromaticNum") != 'undt' and maxb("nodes") != 'undt':
+                try:
+                    set("mindeg",  (-(2.0*maxb("edges"))+minb("maxdeg")+(maxb("chromaticNum")-(1.0))**2.0)/(maxb("chromaticNum")-(maxb("nodes"))), ind='Max')
+                except:
+                    pass
         return
 
 class Theorem287(Theorem):
