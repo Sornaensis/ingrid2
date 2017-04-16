@@ -11488,7 +11488,7 @@ class Theorem373(Theorem):
 
 class Theorem374(Theorem):
     def __init__(self):
-        super(Theorem374, self).__init__(374, "thickness <= 5.0+sqrt(2.0*genus-(2.0));\n", "")
+        super(Theorem374, self).__init__(374, "thickness <= 5.0+sqrt(2.0*maxb(genus)-(2.0));\nif minb(thickness) >= 5.0 then \n{\n    genus >= (minb(thickness)-(5.0))**2.0/2.0+1.0\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["thickness","genus"]
     def run(self):
@@ -11504,11 +11504,12 @@ class Theorem374(Theorem):
                 set("thickness",  5.0+sqrt(2.0*maxb("genus")-(2.0)), ind='Max')
             except:
                 pass
-        if minb("thickness") != 'undt':
-            try:
-                set("genus",  (minb("thickness")-(5.0))**2.0/2.0+1.0, ind='Min')
-            except:
-                pass
+        if (minb("thickness") != 'undt' and minb("thickness") >= 5.0):
+            if minb("thickness") != 'undt':
+                try:
+                    set("genus",  (minb("thickness")-(5.0))**2.0/2.0+1.0, ind='Min')
+                except:
+                    pass
         return
 
 class Theorem375(Theorem):
