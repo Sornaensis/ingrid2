@@ -2278,7 +2278,7 @@ class Theorem59(Theorem):
 
 class Theorem60(Theorem):
     def __init__(self):
-        super(Theorem60, self).__init__(60, "if defined girth and (minb(nodeConnec) > 0.0 or minb(mindeg) > 1.0) then \n{\n    genus >= (1.0/2.0)*minb(edges)*(1.0-(2.0/minb(girth)))-(maxb(nodes)/2.0)+minb(numOfComponents),\n    edges <= minb(girth)*(2.0*maxb(genus)+maxb(nodes)-(2.0*minb(numOfComponents)))/(minb(girth)-(2.0)),\n    girth <= 2.0*minb(edges)/(minb(edges)-(2.0*maxb(genus))-(maxb(nodes))+2.0*minb(numOfComponents)),\n    nodes >= minb(edges)-(2.0*minb(edges)/minb(girth))-(2.0*maxb(genus))+2.0*minb(numOfComponents),\n    numOfComponents <= -(minb(edges)/2.0)+minb(edges)/minb(girth)+maxb(genus)+maxb(nodes)/2.0\n};\n", "")
+        super(Theorem60, self).__init__(60, "if exists girth and (minb(nodeConnec) > 0.0 or minb(mindeg) > 1.0) then \n{\n    genus >= (1.0/2.0)*minb(edges)*(1.0-(2.0/minb(girth)))-(maxb(nodes)/2.0)+minb(numOfComponents),\n    edges <= minb(girth)*(2.0*maxb(genus)+maxb(nodes)-(2.0*minb(numOfComponents)))/(minb(girth)-(2.0)),\n    girth <= 2.0*minb(edges)/(minb(edges)-(2.0*maxb(genus))-(maxb(nodes))+2.0*minb(numOfComponents)),\n    nodes >= minb(edges)-(2.0*minb(edges)/minb(girth))-(2.0*maxb(genus))+2.0*minb(numOfComponents),\n    numOfComponents <= -(minb(edges)/2.0)+minb(edges)/minb(girth)+maxb(genus)+maxb(nodes)/2.0\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["girth","nodeConnec","mindeg","genus","edges","nodes","numOfComponents"]
     def run(self):
@@ -2289,7 +2289,7 @@ class Theorem60(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if minb("girth") != 'undt' and ((minb("nodeConnec") != 'undt' and minb("nodeConnec") > 0.0) or (minb("mindeg") != 'undt' and minb("mindeg") > 1.0)):
+        if maxb("girth") != 'undt' and ((minb("nodeConnec") != 'undt' and minb("nodeConnec") > 0.0) or (minb("mindeg") != 'undt' and minb("mindeg") > 1.0)):
             if minb("edges") != 'undt' and minb("girth") != 'undt' and maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt':
                 try:
                     set("genus",  (1.0/2.0)*minb("edges")*(1.0-(2.0/minb("girth")))-(maxb("nodes")/2.0)+minb("numOfComponents"), ind='Min')
@@ -2316,7 +2316,7 @@ class Theorem60(Theorem):
                 except:
                     pass
         return
-
+    
 class Theorem61(Theorem):
     def __init__(self):
         super(Theorem61, self).__init__(61, "if genus <= 1.0 then \n{\n    edgeCliqueCover <= nodeCover*nodeInd\n};\n", "")
