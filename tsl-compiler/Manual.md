@@ -22,7 +22,7 @@ edgeChromatic <= 2.0*maxb(bandwidth);
 bandwidth >= minb(edgeChromatic)/2.0;
 ```
 
-These inequalities do not contain any `free invariants`, or invariants that are not surrounded by either the `minb()` or maxb()` functions, so they are considered final.
+These inequalities do not contain any `free invariants`, or invariants that are not surrounded by either the `minb()` or `maxb()` functions, so they are considered final.
 
 For boolean invariants, there are only two functions for either asserting or de-asserting:
 
