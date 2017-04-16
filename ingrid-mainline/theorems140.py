@@ -2481,7 +2481,7 @@ class Theorem67(Theorem):
 
 class Theorem68(Theorem):
     def __init__(self):
-        super(Theorem68, self).__init__(68, "if complete then \n{\n    regular,\n    if even nodes then \n    {\n        edgeChromatic == nodes-(1.0)\n    }\n    else  \n    {\n        edgeChromatic == nodes\n    }\n};\n", "")
+        super(Theorem68, self).__init__(68, "if complete then \n{\n    regular,\n    if even nodes then \n    {\n        edgeChromatic == nodes-(1.0)\n    }\n    else if odd nodes then \n    {\n        edgeChromatic == nodes\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["complete","regular","nodes","edgeChromatic"]
     def run(self):
@@ -2515,7 +2515,7 @@ class Theorem68(Theorem):
                         set("nodes",  minb("edgeChromatic")+1.0, ind='Min')
                     except:
                         pass
-            elif True:
+            elif oddInvar("nodes"):
                 if minb("nodes") != 'undt':
                     try:
                         set("edgeChromatic",  minb("nodes"), ind='Min')
@@ -13103,9 +13103,9 @@ class Theorem426(Theorem):
 
 class Theorem427(Theorem):
     def __init__(self):
-        super(Theorem427, self).__init__(427, "let x = (mindeg*((mindeg+3.0)/2.0)-(1.0));\nif regular and mindeg >= 3.0 and edgeConnec >= mindeg-(2.0) and even nodes then \n{\n    edgeCover <= (nodes+2.0*((nodes+1.0)/(2.0*x)))/2.0\n}\nelse if regular and mindeg >= 3.0 and edgeConnec >= mindeg-(2.0) and odd nodes then \n{\n    edgeCover <= (nodes+maximum(2.0*((nodes+1.0+x)/(2.0*x))-(1.0), 1.0))/2.0\n};\n", "")
+        super(Theorem427, self).__init__(427, "null;", "")
     def involves(self, str_invar):
-        return str_invar in ["regular","mindeg","edgeConnec","nodes","edgeCover"]
+        return str_invar in []
     def run(self):
         get = self.get
         set = self.set
@@ -13114,33 +13114,6 @@ class Theorem427(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("regular") == True and (minb("mindeg") != 'undt' and minb("mindeg") >= 3.0) and (maxb("mindeg") != 'undt' and minb("edgeConnec") != 'undt' and minb("edgeConnec") >= maxb("mindeg")-(2.0)) and evenInvar("nodes"):
-            if maxb("nodes") != 'undt' and minb("mindeg") != 'undt':
-                try:
-                    set("edgeCover",  (maxb("nodes")+2.0*((maxb("nodes")+1.0)/(2.0*(minb("mindeg")*((minb("mindeg")+3.0)/2.0)-(1.0)))))/2.0, ind='Max')
-                except:
-                    pass
-            if minb("edgeCover") != 'undt' and minb("mindeg") != 'undt':
-                try:
-                    set("nodes",  2.0*(minb("edgeCover")*minb("mindeg")**2.0+3.0*minb("edgeCover")*minb("mindeg")-(2.0*minb("edgeCover"))-(1.0))/(minb("mindeg")*(minb("mindeg")+3.0)), ind='Min')
-                except:
-                    pass
-            if maxb("edgeCover") != 'undt' and minb("nodes") != 'undt':
-                try:
-                    set("mindeg",  (-(6.0*maxb("edgeCover"))+3.0*minb("nodes")+sqrt((2.0*maxb("edgeCover")-(minb("nodes")))*(34.0*maxb("edgeCover")-(9.0*minb("nodes"))+8.0)))/(2.0*(2.0*maxb("edgeCover")-(minb("nodes")))), ind='Max')
-                except:
-                    pass
-        elif get("regular") == True and (minb("mindeg") != 'undt' and minb("mindeg") >= 3.0) and (maxb("mindeg") != 'undt' and minb("edgeConnec") != 'undt' and minb("edgeConnec") >= maxb("mindeg")-(2.0)) and oddInvar("nodes"):
-            if maxb("nodes") != 'undt' and minb("mindeg") != 'undt':
-                try:
-                    set("edgeCover",  (maxb("nodes")+maximum(2.0*((maxb("nodes")+1.0+(minb("mindeg")*((minb("mindeg")+3.0)/2.0)-(1.0)))/(2.0*(minb("mindeg")*((minb("mindeg")+3.0)/2.0)-(1.0))))-(1.0), 1.0))/2.0, ind='Max')
-                except:
-                    pass
-            if maxb("nodes") != 'undt' and minb("mindeg") != 'undt' and minb("edgeCover") != 'undt':
-                try:
-                    set("nodes",  -(maximum(2.0*((maxb("nodes")+1.0+(minb("mindeg")*((minb("mindeg")+3.0)/2.0)-(1.0)))/(2.0*(minb("mindeg")*((minb("mindeg")+3.0)/2.0)-(1.0))))-(1.0), 1.0))+2.0*minb("edgeCover"), ind='Min')
-                except:
-                    pass
         return
 
 class Theorem428(Theorem):
@@ -13655,7 +13628,7 @@ class Theorem442(Theorem):
 
 class Theorem443(Theorem):
     def __init__(self):
-        super(Theorem443, self).__init__(443, "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-((maxb(nodes)-(maxb(nodeCover))-(minb(numOfComponents))+1.0)/2.0);\nnodes >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodeCover))+minb(numOfComponents)+1.0;\nmindeg <= (-(2.0*minb(bandwidth))+maxb(nodeCover)+maxb(nodes)-(minb(numOfComponents))-(1.0))/(2.0*(minb(numOfComponents)-(1.0)));\nnumOfComponents <= (-(2.0*minb(bandwidth))+2.0*minb(mindeg)+maxb(nodeCover)+maxb(nodes)-(1.0))/(2.0*minb(mindeg)+1.0);\nnodeCover >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodes))+minb(numOfComponents)+1.0;\n", "")
+        super(Theorem443, self).__init__(443, "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-(floor((maxb(nodes)-(maxb(nodeCover))-(minb(numOfComponents))+1.0)/2.0));\nnodes >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodeCover))+minb(numOfComponents);\n_z is maxb(nodes)-(maxb(nodeCover))-(minb(numOfComponents))+1.0;\nmindeg <= floor((maxb(nodes)-(minb(bandwidth))-(1.0)-(floor(_z/2.0)))/(minb(numOfComponents)-(1.0)))-(1.0);\nnumOfComponents <= floor((-(2.0*minb(bandwidth))+maxb(nodeCover)+maxb(nodes)-(1.0))/(2.0*minb(mindeg)+1.0))+1.0;\nnodeCover >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodes))+minb(numOfComponents);\n", "")
     def involves(self, str_invar):
         return str_invar in ["bandwidth","nodes","mindeg","numOfComponents","nodeCover"]
     def run(self):
@@ -13668,27 +13641,32 @@ class Theorem443(Theorem):
         congruent = self.congruent
         if maxb("nodes") != 'undt' and minb("mindeg") != 'undt' and minb("numOfComponents") != 'undt' and maxb("nodeCover") != 'undt':
             try:
-                set("bandwidth",  maxb("nodes")-((minb("mindeg")+1.0)*(minb("numOfComponents")-(1.0)))-(1.0)-((maxb("nodes")-(maxb("nodeCover"))-(minb("numOfComponents"))+1.0)/2.0), ind='Max')
+                set("bandwidth",  maxb("nodes")-((minb("mindeg")+1.0)*(minb("numOfComponents")-(1.0)))-(1.0)-(floor((maxb("nodes")-(maxb("nodeCover"))-(minb("numOfComponents"))+1.0)/2.0)), ind='Max')
             except:
                 pass
         if minb("bandwidth") != 'undt' and minb("mindeg") != 'undt' and minb("numOfComponents") != 'undt' and maxb("nodeCover") != 'undt':
             try:
-                set("nodes",  2.0*minb("bandwidth")+2.0*minb("mindeg")*minb("numOfComponents")-(2.0*minb("mindeg"))-(maxb("nodeCover"))+minb("numOfComponents")+1.0, ind='Min')
+                set("nodes",  2.0*minb("bandwidth")+2.0*minb("mindeg")*minb("numOfComponents")-(2.0*minb("mindeg"))-(maxb("nodeCover"))+minb("numOfComponents"), ind='Min')
             except:
                 pass
-        if minb("bandwidth") != 'undt' and maxb("nodeCover") != 'undt' and maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt':
+        if maxb("nodes") != 'undt' and maxb("nodeCover") != 'undt' and minb("numOfComponents") != 'undt':
             try:
-                set("mindeg",  (-(2.0*minb("bandwidth"))+maxb("nodeCover")+maxb("nodes")-(minb("numOfComponents"))-(1.0))/(2.0*(minb("numOfComponents")-(1.0))), ind='Max')
+                _z = maxb("nodes")-(maxb("nodeCover"))-(minb("numOfComponents"))+1.0
             except:
                 pass
-        if minb("bandwidth") != 'undt' and minb("mindeg") != 'undt' and maxb("nodeCover") != 'undt' and maxb("nodes") != 'undt':
+        if maxb("nodes") != 'undt' and minb("bandwidth") != 'undt' and minb("numOfComponents") != 'undt' and '_z' in vars():
             try:
-                set("numOfComponents",  (-(2.0*minb("bandwidth"))+2.0*minb("mindeg")+maxb("nodeCover")+maxb("nodes")-(1.0))/(2.0*minb("mindeg")+1.0), ind='Max')
+                set("mindeg",  floor((maxb("nodes")-(minb("bandwidth"))-(1.0)-(floor(_z/2.0)))/(minb("numOfComponents")-(1.0)))-(1.0), ind='Max')
+            except:
+                pass
+        if minb("bandwidth") != 'undt' and maxb("nodeCover") != 'undt' and maxb("nodes") != 'undt' and minb("mindeg") != 'undt':
+            try:
+                set("numOfComponents",  floor((-(2.0*minb("bandwidth"))+maxb("nodeCover")+maxb("nodes")-(1.0))/(2.0*minb("mindeg")+1.0))+1.0, ind='Max')
             except:
                 pass
         if minb("bandwidth") != 'undt' and minb("mindeg") != 'undt' and minb("numOfComponents") != 'undt' and maxb("nodes") != 'undt':
             try:
-                set("nodeCover",  2.0*minb("bandwidth")+2.0*minb("mindeg")*minb("numOfComponents")-(2.0*minb("mindeg"))-(maxb("nodes"))+minb("numOfComponents")+1.0, ind='Min')
+                set("nodeCover",  2.0*minb("bandwidth")+2.0*minb("mindeg")*minb("numOfComponents")-(2.0*minb("mindeg"))-(maxb("nodes"))+minb("numOfComponents"), ind='Min')
             except:
                 pass
         return

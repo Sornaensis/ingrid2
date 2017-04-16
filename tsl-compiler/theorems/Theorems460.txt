@@ -14,11 +14,12 @@
             "disp": ""
         },
         {
-            "text": "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-((maxb(nodes)-(maxb(nodeCover))-(minb(numOfComponents))+1.0)/2.0);
-nodes >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodeCover))+minb(numOfComponents)+1.0;
-mindeg <= (-(2.0*minb(bandwidth))+maxb(nodeCover)+maxb(nodes)-(minb(numOfComponents))-(1.0))/(2.0*(minb(numOfComponents)-(1.0)));
-numOfComponents <= (-(2.0*minb(bandwidth))+2.0*minb(mindeg)+maxb(nodeCover)+maxb(nodes)-(1.0))/(2.0*minb(mindeg)+1.0);
-nodeCover >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodes))+minb(numOfComponents)+1.0;
+            "text": "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-floor((maxb(nodes)-(maxb(nodeCover))-(minb(numOfComponents))+1.0)/2.0);
+nodes >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodeCover))+minb(numOfComponents);
+_z is maxb(nodes)-maxb(nodeCover)-minb(numOfComponents)+1;
+mindeg <= floor((maxb(nodes)-minb(bandwidth)-1-floor(_z/2))/(minb(numOfComponents)-1))-1;
+numOfComponents <= floor((-(2.0*minb(bandwidth))+maxb(nodeCover)+maxb(nodes)-(1.0))/(2.0*minb(mindeg)+1.0))+1;
+nodeCover >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodes))+minb(numOfComponents);
 ",
             "name": "Theorem",
             "idnum": 443,
