@@ -11249,7 +11249,7 @@ class Theorem364(Theorem):
 
 class Theorem365(Theorem):
     def __init__(self):
-        super(Theorem365, self).__init__(365, "if bipartite then \n{\n    if odd nodes then \n    {\n        crossing <= (nodes/4.0)**2.0*((nodes-(2.0))/4.0)**2.0\n    }\n    else  \n    {\n        crossing <= ((nodes+1.0)/4.0)*((nodes-(1.0))/4.0)**2.0*(nodes-(3.0))/4.0\n    }\n};\n", "")
+        super(Theorem365, self).__init__(365, "if bipartite then \n{\n    if odd nodes then \n    {\n        crossing <= (nodes/4.0)**2.0*((nodes-(2.0))/4.0)**2.0\n    }\n    else if even nodes then \n    {\n        crossing <= ((nodes+1.0)/4.0)*((nodes-(1.0))/4.0)**2.0*(nodes-(3.0))/4.0\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["bipartite","nodes","crossing"]
     def run(self):
@@ -11272,7 +11272,7 @@ class Theorem365(Theorem):
                         set("nodes",  sqrt(16.0*sqrt(minb("crossing"))+1.0)+1.0, ind='Min')
                     except:
                         pass
-            elif True:
+            elif evenInvar("nodes"):
                 if maxb("nodes") != 'undt':
                     try:
                         set("crossing",  ((maxb("nodes")+1.0)/4.0)*((maxb("nodes")-(1.0))/4.0)**2.0*(maxb("nodes")-(3.0))/4.0, ind='Max')
@@ -11284,7 +11284,7 @@ class Theorem365(Theorem):
                     except:
                         pass
         return
-
+    
 class Theorem366(Theorem):
     def __init__(self):
         super(Theorem366, self).__init__(366, "if connected then \n{\n    nosolve spectralRadius >= 2.0*cos(3.14159265358979/(nodes+1.0)):useMinFor(nodes)\n};\n", "")
