@@ -8,7 +8,7 @@
             "disp": ""
         },
         {
-            "text": "if planer and edgeConnec < mindeg and (nodes >= 5 or mindeg >= 2) then { if mindeg == edgeConnec + 1 and mindeg == 1 then { edges <= 3*nodes - 11 } else { edges <= 3*nodes - 12 + nodeConnec } };",
+            "text": "if planar and edgeConnec < mindeg and (nodes >= 5 or mindeg >= 2) then { if mindeg == edgeConnec + 1 and mindeg == 1 then { edges <= 3*nodes - 11 } else { edges <= 3*nodes - 12 + nodeConnec } };",
             "name": "Theorem",
             "idnum": 382,
             "disp": ""
