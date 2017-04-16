@@ -58,7 +58,7 @@ else if connected and regular and not complete and mindeg >= 5 then
             "disp": ""
         },
         {
-            "text": "nodeConnec <= 3*thickness - 1;",
+            "text": "nodeConnec <= 6*thickness - 1;",
             "name": "Theorem",
             "idnum": 328,
             "disp": ""
