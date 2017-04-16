@@ -62,17 +62,18 @@ if minb(nodes) > minb(mindeg)+1 and maxb(nodes) > minb(mindeg)+1 then
         },
         {
             "text": "
-            if undefined girth then 
+if undefined girth then 
 { 
     thickness == 1 
 } 
-else 
+else if exists girth then
 { 
     thickness >= minb(edges)*(1-2/minb(girth))/(maxb(nodes) - 2),
     nodes >= minb(edges)/maxb(thickness)-(2.0*minb(edges)/(minb(girth)*maxb(thickness)))+2.0,
     edges <= minb(girth)*maxb(thickness)*(maxb(nodes)-(2.0))/(minb(girth)-(2.0)),
-    _g is 2.0*minb(edges)/(minb(edges)-(maxb(nodes)*maxb(thickness))+2.0*maxb(thickness)),
-    if _g > 2 and _g <= minb(nodes) then 
+    _z is minb(edges)-(maxb(nodes)-2)*maxb(thickness),
+    _g is 2*minb(edges)/_z,
+    if _z > 0 and _g > 2 and _g <= minb(nodes) then 
     {
         girth <= _g
     }
@@ -100,7 +101,11 @@ else
             "disp": ""
         },
         {
-            "text": "if maxClique == 2 then { nodeInd >= mindeg * (diameter+4)/4 };",
+            "text": "
+if maxClique == 2.0 and exists diameter then 
+{
+    nodeInd >= mindeg*(diameter+4.0)/4.0
+};",
             "name": "Theorem",
             "idnum": 192,
             "disp": ""

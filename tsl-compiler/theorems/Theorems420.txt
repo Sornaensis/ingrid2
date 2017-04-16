@@ -8,7 +8,12 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-((minb(nodeInd)-(minb(numOfComponents))+1.0)/2.0);
+nodes >= minb(bandwidth)+minb(mindeg)*minb(numOfComponents)-(minb(mindeg))+minb(nodeInd)/2.0+minb(numOfComponents)/2.0+1.0/2.0;
+mindeg <= (-(2.0*minb(bandwidth))-(minb(nodeInd))+2.0*maxb(nodes)-(minb(numOfComponents))-(1.0))/(2.0*(minb(numOfComponents)-(1.0)));
+numOfComponents <= (-(2.0*minb(bandwidth))+2.0*minb(mindeg)-(minb(nodeInd))+2.0*maxb(nodes)-(1.0))/(2.0*minb(mindeg)+1.0);
+nodeInd <= -(2.0*minb(bandwidth))-(2.0*minb(mindeg)*minb(numOfComponents))+2.0*minb(mindeg)+2.0*maxb(nodes)-(minb(numOfComponents))-(1.0);
+",
             "name": "Theorem",
             "idnum": 402,
             "disp": ""
@@ -32,7 +37,11 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if edges > (nodes - 1)**2/4 and edges <= (nodes-1)*(nodes-2)/2 then 
+{
+    mindeg <= maxb(edgeConnec)-(1.0)+(maxb(nodes)-(sqrt(4.0*minb(edges)+2.0*maxb(nodes)-(maxb(nodes)**2.0))))/2.0,
+    edgeConnec >= minb(mindeg)-(maxb(nodes)/2.0)+sqrt(4.0*minb(edges)-(maxb(nodes)**2.0)+2.0*maxb(nodes))/2.0+1.0
+};",
             "name": "Theorem",
             "idnum": 406,
             "disp": ""
@@ -131,13 +140,23 @@ if connected and nodes >= 2*mindeg + 2 then
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if maxClique <= 2 and nodeCover <= 3*nodes/5 then 
+{
+    nodeCover <= (3.0*maxb(nodes)-(sqrt(5.0*minb(edges)-(maxb(nodes)**2.0))))/5.0,
+    nodes >= 3.0*minb(nodeCover)/2.0+sqrt(2.0*minb(edges)-(minb(nodeCover)**2.0))/2.0,
+    edges <= maxb(nodes)**2.0/5.0+(5.0*minb(nodeCover)-(3.0*maxb(nodes)))**2.0/5.0
+};",
             "name": "Theorem",
             "idnum": 419,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if maxClique <= 2 and nodeInd <= 2*nodes/5 then 
+{
+    nodeInd >= (2.0*maxb(nodes)+sqrt(5.0*minb(edges)-(maxb(nodes)**2.0)))/5.0,
+    nodes >= 2.0*maxb(nodeInd)+sqrt(minb(edges)-(maxb(nodeInd)**2.0)),
+    edges <= maxb(nodes)**2.0/5.0+(5.0*maxb(nodeInd)-(2.0*maxb(nodes)))**2.0/5.0
+};",
             "name": "Theorem",
             "idnum": 420,
             "disp": ""

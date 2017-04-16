@@ -2,7 +2,11 @@
 {
     "theorems":[
 {
-            "text": "null;",
+            "text": "if nodeInd == 2 and maxClique >= 2*nodes/5 then 
+{
+    maxClique >= (2.0*minb(nodes)+sqrt(minb(nodes)*(3.0*minb(nodes)-(5.0))/2.0-(5.0*maxb(edges))))/5.0,
+    edges >= -(5.0*maxb(maxClique)**2.0)+4.0*maxb(maxClique)*minb(nodes)-(minb(nodes)**2.0/2.0)-(minb(nodes)/2.0)
+};",
             "name": "Theorem",
             "idnum": 421,
             "disp": ""
@@ -14,13 +18,19 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "nodeCover <= maxb(nodes)-(minb(maxdeg)/(maxb(chromaticNum)-(1.0)));
+nodes >= (maxb(chromaticNum)*minb(nodeCover)+minb(maxdeg)-(minb(nodeCover)))/(maxb(chromaticNum)-(1.0));
+maxdeg <= -(maxb(chromaticNum)*minb(nodeCover))+maxb(chromaticNum)*maxb(nodes)+minb(nodeCover)-(maxb(nodes));
+chromaticNum >= (-(minb(maxdeg))+minb(nodeCover)-(maxb(nodes)))/(minb(nodeCover)-(maxb(nodes)));",
             "name": "Theorem",
             "idnum": 423,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if connected and (not cycle or (cycle and isset nodes and even nodes)) and (edges >= nodes or maxdeg > 2 or (isset nodes and odd nodes)) then 
+{
+    nodeCover <= (nodes * (maxdeg**2 + maxdeg - 1))/(maxdeg*(maxdeg+1)) - nodes**2/(nodes+2*edges) : useMaxFor(nodes) : useMaxFor(maxdeg)
+};",
             "name": "Theorem",
             "idnum": 424,
             "disp": ""
@@ -56,13 +66,23 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if nodeConnec >= 2 and nodeCover <= nodes - 2 then 
+{
+    circumference >= (2.0*(2.0*maxb(nodes)-(minb(nodeCover))-(2.0))/(maxb(nodes)-(minb(nodeCover)))),
+    nodes >= (maxb(circumference)*minb(nodeCover)-(2.0*minb(nodeCover))-(4.0))/(maxb(circumference)-(4.0)),
+    nodeCover <= (maxb(circumference)*maxb(nodes)-(4.0*maxb(nodes))+4.0)/(maxb(circumference)-(2.0))
+};",
             "name": "Theorem",
             "idnum": 430,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if girth >= 6 then 
+{
+    nodeCover <= maxb(nodes)*maxb(maxdeg)**2.0/(maxb(maxdeg)**2.0+2.0*maxb(maxdeg)-(1.0)),
+    nodes >= minb(nodeCover)+2.0*minb(nodeCover)/maxb(maxdeg)-(minb(nodeCover)/maxb(maxdeg)**2.0),
+    maxdeg <= -((minb(nodeCover)+sqrt(minb(nodeCover)*(2.0*minb(nodeCover)-(maxb(nodes)))))/(minb(nodeCover)-(maxb(nodes))))
+};",
             "name": "Theorem",
             "idnum": 431,
             "disp": ""
@@ -98,7 +118,19 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "let t = ((girth-2)/2); 
+if girth >= 4 and mindeg >= 3 and odd t  then 
+{
+    nodeCover <= maxb(nodes)-(minb(maxdeg)*((minb(mindeg)-(1.0))**(((minb(girth)-(2.0))/2.0)-(1.0))-(1.0))/(minb(mindeg)*(minb(mindeg)-(2.0)))),
+    nodes >= (minb(maxdeg)*(minb(mindeg)-(1.0))**(minb(girth)/2.0-(2.0))-(minb(maxdeg))+minb(mindeg)**2.0*minb(nodeCover)-(2.0*minb(mindeg)*minb(nodeCover)))/(minb(mindeg)*(minb(mindeg)-(2.0))),
+    maxdeg <= minb(mindeg)*(-(minb(mindeg)*minb(nodeCover))+minb(mindeg)*maxb(nodes)+2.0*minb(nodeCover)-(2.0*maxb(nodes)))/((minb(mindeg)-(1.0))**(minb(girth)/2.0-(2.0))-(1.0))
+} 
+else if girth >= 4 and mindeg >= 3 and even t  then 
+{
+    nodeCover <= maxb(nodes)-(minb(maxdeg)*(minb(mindeg)-(1.0))*((minb(mindeg)-(1.0))**((minb(girth)-(2.0))/2.0)-(1.0))/(minb(mindeg)*(minb(mindeg)-(2.0))))-(1.0),
+    nodes >= (-(minb(maxdeg)*minb(mindeg))+minb(maxdeg)*(minb(mindeg)-(1.0))**(minb(girth)/2.0)+minb(maxdeg)+minb(mindeg)**2.0*minb(nodeCover)+minb(mindeg)**2.0-(2.0*minb(mindeg)*minb(nodeCover))-(2.0*minb(mindeg)))/(minb(mindeg)*(minb(mindeg)-(2.0))),
+    maxdeg <= -(minb(mindeg)*(minb(mindeg)*minb(nodeCover)-(minb(mindeg)*maxb(nodes))+minb(mindeg)-(2.0*minb(nodeCover))+2.0*maxb(nodes)-(2.0))/(-(minb(mindeg))+(minb(mindeg)-(1.0))**(minb(girth)/2.0)+1.0))
+};",
             "name": "Theorem",
             "idnum": 437,
             "disp": ""

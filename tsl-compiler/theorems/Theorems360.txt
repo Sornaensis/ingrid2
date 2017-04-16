@@ -13,13 +13,23 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if girth >= 5 then 
+{
+    nosolve edges <= nodes*sqrt(nodes - 1)/2
+};",
             "name": "Theorem",
             "idnum": 343,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if not forest and nodes >= floor((3*girth-3)/2) then 
+{ 
+    edges <= maxb(nodes)*(maxb(nodes)-(1.0))/((3.0*minb(girth)-(5.0))/2.0)-(minb(numOfComponents))+1.0,
+    nodes >= sqrt(6.0*minb(edges)*minb(girth)-(10.0*minb(edges))+6.0*minb(girth)*minb(numOfComponents)-(6.0*minb(girth))-(10.0*minb(numOfComponents))+11.0)/2.0+1.0/2.0,
+    girth <= (5.0*minb(edges)+2.0*maxb(nodes)**2.0-(2.0*maxb(nodes))+5.0*minb(numOfComponents)-(5.0))/(3.0*(minb(edges)+minb(numOfComponents)-(1.0))),
+    numOfComponents <= (-(3.0*minb(edges)*minb(girth))+5.0*minb(edges)+3.0*minb(girth)+2.0*maxb(nodes)**2.0-(2.0*maxb(nodes))-(5.0))/(3.0*minb(girth)-(5.0))
+
+};",
             "name": "Theorem",
             "idnum": 344,
             "disp": ""
@@ -31,7 +41,15 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if not forest and (nodeConnec > 0 or mindeg > 1) then 
+{ 
+    genus >= (minb(edges)*(1.0-(2.0/minb(girth))-(2.0/minb(mindeg)))+2.0*minb(numOfComponents))/2.0,
+    edges <= 2.0*minb(girth)*minb(mindeg)*(-(maxb(genus))+minb(numOfComponents))/(-(minb(girth)*minb(mindeg))+2.0*minb(girth)+2.0*minb(mindeg)),
+    girth <= 2.0*minb(edges)*minb(mindeg)/(minb(edges)*minb(mindeg)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(mindeg))+2.0*minb(mindeg)*minb(numOfComponents)),
+    mindeg <= 2.0*minb(edges)*minb(girth)/(minb(edges)*minb(girth)-(2.0*minb(edges))-(2.0*maxb(genus)*minb(girth))+2.0*minb(girth)*minb(numOfComponents)),
+    numOfComponents <= -(minb(edges)/2.0)+minb(edges)/minb(mindeg)+minb(edges)/minb(girth)+maxb(genus) 
+    
+};",
             "name": "Theorem",
             "idnum": 346,
             "disp": ""
@@ -110,7 +128,22 @@ if minb(girth) >= 5.0 then
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "_t is floor(minb(girth)/2); 
+if mindeg >= 3 then
+{
+    _s is ((minb(mindeg)-1)**_t-1)/(minb(mindeg)-2)
+}
+else if mindeg == 2 then
+{
+    _s is _t
+}
+else
+{
+    _s is 1
+};
+
+nosolve nodes >= 1 + maxdeg*_s - (maxdeg - 1)*(mindeg - 1)**(_t-1)*(1+(-1)**girth)/2 : useMinFor(mindeg) : useMinFor(girth);
+",
             "name": "Theorem",
             "idnum": 355,
             "disp": ""
@@ -122,7 +155,12 @@ if minb(girth) >= 5.0 then
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if regular then 
+{ 
+    edgeInd >= minb(nodes)*minb(maxdeg)/(2.0*(minb(maxdeg)+1.0)),
+    nodes <= 2.0*maxb(edgeInd)*(minb(maxdeg)+1.0)/minb(maxdeg),
+    maxdeg <= -(2.0*maxb(edgeInd)/(2.0*maxb(edgeInd)-(minb(nodes))))
+};",
             "name": "Theorem",
             "idnum": 357,
             "disp": ""
