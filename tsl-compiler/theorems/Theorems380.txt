@@ -100,7 +100,11 @@ else if girth >= 4 and mindeg >= 3 and istrue even(_t) then
             "disp": ""
         },
         {
-            "text": "thickness <= 5 + sqrt(2*genus - 2);",
+            "text": "thickness <= 5.0+sqrt(2.0*maxb(genus)-(2.0));
+if minb(thickness) >= 5 then
+{
+    genus >= (minb(thickness)-(5.0))**2.0/2.0+1.0
+};",
             "name": "Theorem",
             "idnum": 374,
             "disp": ""
