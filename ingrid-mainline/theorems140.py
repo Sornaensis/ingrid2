@@ -2481,7 +2481,7 @@ class Theorem67(Theorem):
 
 class Theorem68(Theorem):
     def __init__(self):
-        super(Theorem68, self).__init__(68, "if complete then \n{\n    regular,\n    if even nodes then \n    {\n        edgeChromatic == nodes-(1.0)\n    }\n    else  \n    {\n        edgeChromatic == nodes\n    }\n};\n", "")
+        super(Theorem68, self).__init__(68, "if complete then \n{\n    regular,\n    if even nodes then \n    {\n        edgeChromatic == nodes-(1.0)\n    }\n    else if odd nodes then \n    {\n        edgeChromatic == nodes\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["complete","regular","nodes","edgeChromatic"]
     def run(self):
@@ -2515,7 +2515,7 @@ class Theorem68(Theorem):
                         set("nodes",  minb("edgeChromatic")+1.0, ind='Min')
                     except:
                         pass
-            elif True:
+            elif oddInvar("nodes"):
                 if minb("nodes") != 'undt':
                     try:
                         set("edgeChromatic",  minb("nodes"), ind='Min')
