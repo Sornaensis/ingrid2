@@ -2048,7 +2048,7 @@ class Theorem52(Theorem):
 
 class Theorem53(Theorem):
     def __init__(self):
-        super(Theorem53, self).__init__(53, "if defined girth then \n{\n    _P is maxb(nodes),\n    arboricity <= chromaticNum-(chromaticNum/(1.0+_P/((girth-(1.0))/2.0)*chromaticNum)),\n    nodes >= minb(arboricity)*(-(minb(girth))+1.0)/(2.0*maxb(chromaticNum)*(minb(arboricity)-(maxb(chromaticNum))))\n};\n", "")
+        super(Theorem53, self).__init__(53, "if exists girth then \n{\n    _P is maxb(nodes),\n    arboricity <= chromaticNum-(chromaticNum/(1.0+_P/((girth-(1.0))/2.0)*chromaticNum)),\n    nodes >= minb(arboricity)*(-(minb(girth))+1.0)/(2.0*maxb(chromaticNum)*(minb(arboricity)-(maxb(chromaticNum))))\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["girth","nodes","arboricity","chromaticNum"]
     def run(self):
@@ -2059,7 +2059,7 @@ class Theorem53(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if minb("girth") != 'undt':
+        if maxb("girth") != 'undt':
             if maxb("nodes") != 'undt':
                 try:
                     _P = maxb("nodes")
