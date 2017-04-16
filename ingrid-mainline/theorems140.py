@@ -190,7 +190,7 @@ class Theorem6(Theorem):
 
 class Theorem7(Theorem):
     def __init__(self):
-        super(Theorem7, self).__init__(7, "if exists diameter then \n{\n    if mindeg > 3.0*nodeConnec-(1.0) then \n    {\n        nodes >= 1.0+mindeg+diameter*nodeConnec+(diameter/3.0)*(mindeg-(3.0*nodeConnec)+1.0)\n    },\n    if minb(diameter) < 3.0 then \n    {\n        nodes >= nodeConnec*(diameter-(3.0))+2.0*mindeg+2.0:useMaxFor(nodeConnec)\n    }\n    else  \n    {\n        nodes >= nodeConnec*(diameter-(3.0))+2.0*mindeg+2.0\n    }\n};\n", "")
+        super(Theorem7, self).__init__(7, "if exists diameter then \n{\n    if mindeg > 3.0*nodeConnec-(1.0) then \n    {\n        nodes >= 1.0+mindeg+diameter*nodeConnec+(diameter/3.0)*(mindeg-(3.0*nodeConnec)+1.0)\n    },\n    _z is maxb(nodes)-(2.0*minb(mindeg))-(2.0),\n    if _z >= 0.0 then \n    {\n        diameter <= _z/minb(nodeConnec)+3.0\n    }\n    else  \n    {\n        diameter <= 2.0\n    },\n    if minb(diameter) < 3.0 then \n    {\n        nodes >= maxb(nodeConnec)*(minb(diameter)-(3.0))+2.0*mindeg+2.0\n    }\n    else  \n    {\n        nodes >= minb(nodeConnec)*(minb(diameter)-(3.0))+2.0*mindeg+2.0\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["diameter","mindeg","nodeConnec","nodes"]
     def run(self):
@@ -218,25 +218,31 @@ class Theorem7(Theorem):
                         set("diameter",  3.0*(-(minb("mindeg"))+maxb("nodes")-(1.0))/(minb("mindeg")+1.0), ind='Max')
                     except:
                         pass
+            if maxb("nodes") != 'undt' and minb("mindeg") != 'undt':
+                try:
+                    _z = maxb("nodes")-(2.0*minb("mindeg"))-(2.0)
+                except:
+                    pass
+            if ('_z' in vars() and _z >= 0.0):
+                if minb("nodeConnec") != 'undt' and '_z' in vars():
+                    try:
+                        set("diameter",  _z/minb("nodeConnec")+3.0, ind='Max')
+                    except:
+                        pass
+            elif True:
+                try:
+                    set("diameter",  2.0, ind='Max')
+                except:
+                    pass
             if (minb("diameter") != 'undt' and minb("diameter") < 3.0):
                 if maxb("nodeConnec") != 'undt' and minb("diameter") != 'undt' and minb("mindeg") != 'undt':
                     try:
                         set("nodes",  maxb("nodeConnec")*(minb("diameter")-(3.0))+2.0*minb("mindeg")+2.0, ind='Min')
                     except:
                         pass
-                if maxb("mindeg") != 'undt' and minb("nodes") != 'undt' and maxb("diameter") != 'undt':
+                if maxb("nodeConnec") != 'undt' and minb("diameter") != 'undt' and maxb("nodes") != 'undt':
                     try:
-                        set("nodeConnec",  (-(2.0*maxb("mindeg"))+minb("nodes")-(2.0))/(maxb("diameter")-(3.0)), ind='Min')
-                    except:
-                        pass
-                if minb("mindeg") != 'undt' and maxb("nodeConnec") != 'undt' and maxb("nodes") != 'undt':
-                    try:
-                        set("diameter",  (-(2.0*minb("mindeg"))+3.0*maxb("nodeConnec")+maxb("nodes")-(2.0))/maxb("nodeConnec"), ind='Max')
-                    except:
-                        pass
-                if minb("diameter") != 'undt' and maxb("nodeConnec") != 'undt' and maxb("nodes") != 'undt':
-                    try:
-                        set("mindeg",  -(minb("diameter")*maxb("nodeConnec")/2.0)+3.0*maxb("nodeConnec")/2.0+maxb("nodes")/2.0-(1.0), ind='Max')
+                        set("mindeg",  -(maxb("nodeConnec")*minb("diameter")/2.0)+3.0*maxb("nodeConnec")/2.0+maxb("nodes")/2.0-(1.0), ind='Max')
                     except:
                         pass
             elif True:
@@ -245,23 +251,13 @@ class Theorem7(Theorem):
                         set("nodes",  minb("nodeConnec")*(minb("diameter")-(3.0))+2.0*minb("mindeg")+2.0, ind='Min')
                     except:
                         pass
-                if minb("mindeg") != 'undt' and maxb("nodes") != 'undt' and minb("diameter") != 'undt':
+                if minb("nodeConnec") != 'undt' and minb("diameter") != 'undt' and maxb("nodes") != 'undt':
                     try:
-                        set("nodeConnec",  (-(2.0*minb("mindeg"))+maxb("nodes")-(2.0))/(minb("diameter")-(3.0)), ind='Max')
-                    except:
-                        pass
-                if minb("mindeg") != 'undt' and maxb("nodeConnec") != 'undt' and maxb("nodes") != 'undt':
-                    try:
-                        set("diameter",  (-(2.0*minb("mindeg"))+3.0*maxb("nodeConnec")+maxb("nodes")-(2.0))/maxb("nodeConnec"), ind='Max')
-                    except:
-                        pass
-                if minb("diameter") != 'undt' and maxb("nodeConnec") != 'undt' and maxb("nodes") != 'undt':
-                    try:
-                        set("mindeg",  -(minb("diameter")*maxb("nodeConnec")/2.0)+3.0*maxb("nodeConnec")/2.0+maxb("nodes")/2.0-(1.0), ind='Max')
+                        set("mindeg",  -(minb("nodeConnec")*minb("diameter")/2.0)+3.0*minb("nodeConnec")/2.0+maxb("nodes")/2.0-(1.0), ind='Max')
                     except:
                         pass
         return
-
+    
 class Theorem8(Theorem):
     def __init__(self):
         super(Theorem8, self).__init__(8, "nodes >= minb(maxdeg)+1.0+(minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0));\nmaxdeg <= -(minb(mindeg)*minb(numOfComponents))+minb(mindeg)+maxb(nodes)-(minb(numOfComponents));\nmindeg <= (-(minb(maxdeg))+maxb(nodes)-(minb(numOfComponents)))/(minb(numOfComponents)-(1.0));\nnumOfComponents <= (-(minb(maxdeg))+minb(mindeg)+maxb(nodes))/(minb(mindeg)+1.0);\n", "")
