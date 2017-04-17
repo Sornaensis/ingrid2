@@ -1081,7 +1081,7 @@ class Theorem33(Theorem):
 
 class Theorem34(Theorem):
     def __init__(self):
-        super(Theorem34, self).__init__(34, "if nodeConnec > 0.0 and not tree then \n{\n    girth <= 2.0*diameter+1.0\n};\n", "")
+        super(Theorem34, self).__init__(34, "if nodeConnec > 0.0 and not tree then \n{\n    girth <= 2.0*diameter+1.0\n}\nelse if minb(girth) > 2.0*maxb(diameter)+1.0 then \n{\n    if not tree then \n    {\n        nodeConnec <= 0.0\n    }\n    else if nodeConnec > 0.0 then \n    {\n        tree\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["nodeConnec","tree","girth","diameter"]
     def run(self):
@@ -1103,6 +1103,14 @@ class Theorem34(Theorem):
                     set("diameter",  minb("girth")/2.0-(1.0/2.0), ind='Min')
                 except:
                     pass
+        elif (maxb("diameter") != 'undt' and minb("girth") != 'undt' and minb("girth") > 2.0*maxb("diameter")+1.0):
+            if get("tree") == False:
+                try:
+                    set("nodeConnec",  0.0, ind='Max')
+                except:
+                    pass
+            elif (minb("nodeConnec") != 'undt' and minb("nodeConnec") > 0.0):
+                set("tree", True)
         return
 
 class Theorem35(Theorem):
@@ -1148,7 +1156,7 @@ class Theorem35(Theorem):
 
 class Theorem36(Theorem):
     def __init__(self):
-        super(Theorem36, self).__init__(36, "if not planar then \n{\n    maxdeg >= 3.0,\n    nodes >= 5.0,\n    edges >= 9.0,\n    edgeInd >= 2.0,\n    nodeCover >= 3.0,\n    edgeCover >= 3.0,\n    bandwidth >= 4.0\n};\n", "")
+        super(Theorem36, self).__init__(36, "if not planar then \n{\n    maxdeg >= 3.0,\n    nodes >= 5.0,\n    edges >= 9.0,\n    edgeInd >= 2.0,\n    nodeCover >= 3.0,\n    edgeCover >= 3.0,\n    bandwidth >= 4.0\n}\nelse if (maxdeg < 3.0) or (nodes < 5.0) or (edges < 9.0) or (edgeInd < 2.0) or (bandwidth < 4.0) or (nodeCover < 3.0) or (edgeCover < 3.0) then \n{\n    planar\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["planar","maxdeg","nodes","edges","edgeInd","nodeCover","edgeCover","bandwidth"]
     def run(self):
@@ -1188,6 +1196,8 @@ class Theorem36(Theorem):
                 set("bandwidth",  4.0, ind='Min')
             except:
                 pass
+        elif ((maxb("maxdeg") != 'undt' and maxb("maxdeg") < 3.0)) or ((maxb("nodes") != 'undt' and maxb("nodes") < 5.0)) or ((maxb("edges") != 'undt' and maxb("edges") < 9.0)) or ((maxb("edgeInd") != 'undt' and maxb("edgeInd") < 2.0)) or ((maxb("bandwidth") != 'undt' and maxb("bandwidth") < 4.0)) or ((maxb("nodeCover") != 'undt' and maxb("nodeCover") < 3.0)) or ((maxb("edgeCover") != 'undt' and maxb("edgeCover") < 3.0)):
+            set("planar", True)
         return
 
 class Theorem37(Theorem):
