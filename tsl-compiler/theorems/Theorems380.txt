@@ -2,7 +2,7 @@
     "theorems":[
 {
             "text": "
-let t = ((((minb(girth)-(1.0))/2.0)));
+let t = ((((minb(girth)-(2.0))/2.0)));
 if girth >= 4.0 and mindeg == 2.0 and istrue even(t) then 
 {
     nodeInd >= maxdeg*floor(t/2.0)+1.0
