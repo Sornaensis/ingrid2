@@ -217,7 +217,7 @@ class Invariant:
                 trace_msg = 'Error: ' + self.name + ' was changed from ' + str(self.value) + ' to ' + str(val)
                 self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
                 self.value = val
-                return False, False
+                return False, True
         else:
             return True, False
 
