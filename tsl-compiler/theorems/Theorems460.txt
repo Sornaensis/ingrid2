@@ -108,7 +108,7 @@ nosolve edges >= m*(nodes - chromaticNum) + chromaticNum*(chromaticNum - 1)/2 - 
             "disp": ""
         },
         {
-            "text": "if nodeInd <= 2 and mindeg >= nodes - 3 then {edges <= nodes*(nodes - 15)/2 + 15*maxClique};",
+            "text": "if nodeInd <= 2 and mindeg >= nodes - 3 and nodes > 15 then {edges <= nodes*(nodes - 15)/2 + 15*maxClique};",
             "name": "Theorem",
             "idnum": 455,
             "disp": ""
