@@ -11358,7 +11358,7 @@ class Theorem368(Theorem):
 
 class Theorem369(Theorem):
     def __init__(self):
-        super(Theorem369, self).__init__(369, "if maxClique <= 2.0 then \n{\n    thickness <= genus+1.0\n};\n", "")
+        super(Theorem369, self).__init__(369, "if maxClique <= 2.0 then \n{\n    thickness <= genus+1.0\n};\nif minb(thickness) > maxb(genus)+1.0 then \n{\n    maxClique >= 3.0\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["maxClique","thickness","genus"]
     def run(self):
@@ -11380,11 +11380,15 @@ class Theorem369(Theorem):
                     set("genus",  minb("thickness")-(1.0), ind='Min')
                 except:
                     pass
+        if (maxb("genus") != 'undt' and minb("thickness") != 'undt' and minb("thickness") > maxb("genus")+1.0):
+            try:
+                set("maxClique",  3.0, ind='Min')
+            except:
+                pass
         return
-
 class Theorem370(Theorem):
     def __init__(self):
-        super(Theorem370, self).__init__(370, "if genus <= 1.0 then \n{\n    thickness == genus+1.0\n};\n", "")
+        super(Theorem370, self).__init__(370, "if genus <= 1.0 then \n{\n    thickness == genus+1.0\n};\nif thickness >= 3.0 then \n{\n    genus >= 2.0\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["genus","thickness"]
     def run(self):
@@ -11416,6 +11420,11 @@ class Theorem370(Theorem):
                     set("genus",  minb("thickness")-(1.0), ind='Min')
                 except:
                     pass
+        if (minb("thickness") != 'undt' and minb("thickness") >= 3.0):
+            try:
+                set("genus",  2.0, ind='Min')
+            except:
+                pass
         return
 
 class Theorem371(Theorem):
