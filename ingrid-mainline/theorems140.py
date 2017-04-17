@@ -5264,7 +5264,7 @@ class Theorem157(Theorem):
 
 class Theorem158(Theorem):
     def __init__(self):
-        super(Theorem158, self).__init__(158, "if connected then \n{\n    if edges <= nodes+3.0 then \n    {\n        genus <= 0.0\n    }\n    else if edges <= nodes+6.0 then \n    {\n        genus <= 1.0\n    }\n    else if edges <= nodes+9.0 then \n    {\n        genus <= 2.0\n    }\n};\n", "")
+        super(Theorem158, self).__init__(158, "if connected then \n{\n    if edges <= nodes+2.0 then \n    {\n        genus <= 0.0\n    }\n    else if edges <= nodes+6.0 then \n    {\n        genus <= 1.0\n    }\n    else if edges <= nodes+9.0 then \n    {\n        genus <= 2.0\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["connected","edges","nodes","genus"]
     def run(self):
@@ -5276,7 +5276,7 @@ class Theorem158(Theorem):
         oddInvar = self.oddInvar
         congruent = self.congruent
         if get("connected") == True:
-            if (minb("nodes") != 'undt' and maxb("edges") != 'undt' and maxb("edges") <= minb("nodes")+3.0):
+            if (minb("nodes") != 'undt' and maxb("edges") != 'undt' and maxb("edges") <= minb("nodes")+2.0):
                 try:
                     set("genus",  0.0, ind='Max')
                 except:
