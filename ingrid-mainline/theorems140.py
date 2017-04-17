@@ -8634,7 +8634,7 @@ class Theorem272(Theorem):
 
 class Theorem273(Theorem):
     def __init__(self):
-        super(Theorem273, self).__init__(273, "if tree then \n{\n    radius <= ((diameter+1.0)/2.0)\n};\n", "")
+        super(Theorem273, self).__init__(273, "if tree then \n{\n    radius <= ((diameter+1.0)/2.0)\n};\nif diameter < radius*2.0-(1.0) then \n{\n    not tree\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["tree","radius","diameter"]
     def run(self):
@@ -8656,6 +8656,8 @@ class Theorem273(Theorem):
                     set("diameter",  2.0*minb("radius")-(1.0), ind='Min')
                 except:
                     pass
+        if (minb("radius") != 'undt' and maxb("diameter") != 'undt' and maxb("diameter") < minb("radius")*2.0-(1.0)):
+            set("tree", False)
         return
 
 class Theorem274(Theorem):
