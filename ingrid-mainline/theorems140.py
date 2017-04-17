@@ -13973,7 +13973,7 @@ class Theorem454(Theorem):
 
 class Theorem455(Theorem):
     def __init__(self):
-        super(Theorem455, self).__init__(455, "if nodeInd <= 2.0 and mindeg >= nodes-(3.0) then \n{\n    edges <= nodes*(nodes-(15.0))/2.0+15.0*maxClique\n};\n", "")
+        super(Theorem455, self).__init__(455, "if nodeInd <= 2.0 and mindeg >= nodes-(3.0) and nodes > 15.0 then \n{\n    edges <= nodes*(nodes-(15.0))/2.0+15.0*maxClique\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["nodeInd","mindeg","nodes","edges","maxClique"]
     def run(self):
@@ -13984,7 +13984,7 @@ class Theorem455(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (maxb("nodeInd") != 'undt' and maxb("nodeInd") <= 2.0) and (maxb("nodes") != 'undt' and minb("mindeg") != 'undt' and minb("mindeg") >= maxb("nodes")-(3.0)):
+        if (maxb("nodeInd") != 'undt' and maxb("nodeInd") <= 2.0) and (maxb("nodes") != 'undt' and minb("mindeg") != 'undt' and minb("mindeg") >= maxb("nodes")-(3.0)) and (minb("nodes") != 'undt' and minb("nodes") > 15.0):
             if maxb("nodes") != 'undt' and maxb("maxClique") != 'undt':
                 try:
                     set("edges",  maxb("nodes")*(maxb("nodes")-(15.0))/2.0+15.0*maxb("maxClique"), ind='Max')
