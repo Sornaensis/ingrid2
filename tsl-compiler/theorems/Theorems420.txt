@@ -55,7 +55,11 @@ if isset nodes then
             "disp": ""
         },
         {
-            "text": "let s = floor((maxdeg+2-sqrt((maxdeg+2)**2-4*nodes))/2); if diameter == 3 and s <= floor((nodes/2)**(1/3)) then {edges >= nodes + s*(s-1)/2 - 1};",
+            "text": "_s is floor((minb(maxdeg)+2-sqrt((minb(maxdeg)+2)**2-4*minb(nodes)))/2); 
+if diameter == 3 and _s <= floor((nodes/2)**(1/3)) then 
+{
+    edges >= nodes + _s*(_s-1)/2 - 1
+};",
             "name": "Theorem",
             "idnum": 408,
             "disp": ""
