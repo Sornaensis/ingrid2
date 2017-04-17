@@ -12150,9 +12150,9 @@ class Theorem394(Theorem):
 
 class Theorem395(Theorem):
     def __init__(self):
-        super(Theorem395, self).__init__(395, "let k = ((1.0+(-(1.0))**girth)/2.0);\nlet t = (floor(girth/2.0));\nif connected and not tree and mindeg == 1.0 then \n{\n    nodes >= ceil((diameter+1.0)/(girth+k))*(1.0+mindeg-(k*(mindeg-(1.0))**t))\n}\nelse if connected and not tree and mindeg == 2.0 then \n{\n    nodes >= ceil((diameter+1.0)/(girth+k))*(1.0+mindeg*t-(k*(mindeg-(1.0))**t))\n}\nelse if connected and not tree and mindeg >= 3.0 then \n{\n    nodes >= ceil((diameter+1.0)/(girth+k))*(1.0+mindeg*(((mindeg-(1.0))**t-(1.0))/(mindeg-(2.0)))-(k*(mindeg-(1.0))**t))\n};\n", "")
+        super(Theorem395, self).__init__(395, "null;", "")
     def involves(self, str_invar):
-        return str_invar in ["connected","tree","mindeg","nodes","diameter","girth"]
+        return str_invar in []
     def run(self):
         get = self.get
         set = self.set
@@ -12161,24 +12161,6 @@ class Theorem395(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("connected") == True and get("tree") == False and ((minb("mindeg") != 'undt' and minb("mindeg") >= 1.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 1.0)):
-            if minb("diameter") != 'undt' and maxb("girth") != 'undt' and minb("mindeg") != 'undt':
-                try:
-                    set("nodes",  ceil((minb("diameter")+1.0)/(maxb("girth")+((1.0+(-(1.0))**maxb("girth"))/2.0)))*(1.0+minb("mindeg")-(((1.0+(-(1.0))**maxb("girth"))/2.0)*(minb("mindeg")-(1.0))**(floor(maxb("girth")/2.0)))), ind='Min')
-                except:
-                    pass
-        elif get("connected") == True and get("tree") == False and ((minb("mindeg") != 'undt' and minb("mindeg") >= 2.0) and (maxb("mindeg") != 'undt' and maxb("mindeg") <= 2.0)):
-            if minb("diameter") != 'undt' and minb("girth") != 'undt' and minb("mindeg") != 'undt':
-                try:
-                    set("nodes",  ceil((minb("diameter")+1.0)/(minb("girth")+((1.0+(-(1.0))**minb("girth"))/2.0)))*(1.0+minb("mindeg")*(floor(minb("girth")/2.0))-(((1.0+(-(1.0))**minb("girth"))/2.0)*(minb("mindeg")-(1.0))**(floor(minb("girth")/2.0)))), ind='Min')
-                except:
-                    pass
-        elif get("connected") == True and get("tree") == False and (minb("mindeg") != 'undt' and minb("mindeg") >= 3.0):
-            if minb("diameter") != 'undt' and maxb("girth") != 'undt' and minb("mindeg") != 'undt':
-                try:
-                    set("nodes",  ceil((minb("diameter")+1.0)/(maxb("girth")+((1.0+(-(1.0))**maxb("girth"))/2.0)))*(1.0+minb("mindeg")*(((minb("mindeg")-(1.0))**(floor(maxb("girth")/2.0))-(1.0))/(minb("mindeg")-(2.0)))-(((1.0+(-(1.0))**maxb("girth"))/2.0)*(minb("mindeg")-(1.0))**(floor(maxb("girth")/2.0)))), ind='Min')
-                except:
-                    pass
         return
 
 class Theorem396(Theorem):
