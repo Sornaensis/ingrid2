@@ -132,7 +132,7 @@ else if girth >= 4.0 and mindeg == 2.0 and istrue odd(_t) then
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if chromaticNum > 2 then { not cycle };",
             "name": "Theorem",
             "idnum": 437,
             "disp": ""
