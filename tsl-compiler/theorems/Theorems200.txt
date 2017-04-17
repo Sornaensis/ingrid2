@@ -103,7 +103,7 @@ else if exists girth then
         {
             "text": "if maxClique == 2.0 and exists diameter then 
 {
-    nodeInd >= minb(mindeg)*(minb(diameter)+4.0)/4.0,
+    nodeInd >= minb(mindeg)*floor((minb(diameter)+4.0)/4.0),
     mindeg <= 4.0*maxb(nodeInd)/(minb(diameter)+1.0),
     diameter <= -(1.0)+4.0*maxb(nodeInd)/minb(mindeg)
 };",
