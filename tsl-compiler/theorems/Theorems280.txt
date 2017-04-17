@@ -107,10 +107,9 @@
             "disp": ""
         },
         {
-            "text": "nodeInd >= minb(maxdeg)/(maxb(chromaticNum)-(1.0));
+            "text": "nodeInd >= floor((minb(maxdeg) - 1)/(maxb(chromaticNum)-1)) + 1;
 maxdeg <= maxb(nodeInd)*(maxb(chromaticNum)-(1.0));
-chromaticNum >= (minb(maxdeg)+maxb(nodeInd))/maxb(nodeInd);
-
+chromaticNum >= floor((minb(maxdeg)-1)/(maxb(nodeInd)))+2;
 ",
             "name": "Theorem",
             "idnum": 275,
