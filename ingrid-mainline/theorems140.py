@@ -12590,7 +12590,7 @@ class Theorem408(Theorem):
 
 class Theorem409(Theorem):
     def __init__(self):
-        super(Theorem409, self).__init__(409, "if nodes >= 4.0 and maxClique == 2.0 and hamiltonian then \n{\n    edges <= floor((nodes-(4.0))/2.0)*floor(nodes/2.0)+2.0\n};\n", "")
+        super(Theorem409, self).__init__(409, "if nodes >= 4.0 and maxClique == 2.0 and hamiltonian then \n{\n    _z is floor(maxb(nodes)/2.0),\n    edges <= _z*_z-(2.0*_z)+maxb(nodes)\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["nodes","maxClique","hamiltonian","edges"]
     def run(self):
@@ -12604,7 +12604,12 @@ class Theorem409(Theorem):
         if (minb("nodes") != 'undt' and minb("nodes") >= 4.0) and ((minb("maxClique") != 'undt' and minb("maxClique") >= 2.0) and (maxb("maxClique") != 'undt' and maxb("maxClique") <= 2.0)) and get("hamiltonian") == True:
             if maxb("nodes") != 'undt':
                 try:
-                    set("edges",  floor((maxb("nodes")-(4.0))/2.0)*floor(maxb("nodes")/2.0)+2.0, ind='Max')
+                    _z = floor(maxb("nodes")/2.0)
+                except:
+                    pass
+            if maxb("nodes") != 'undt' and '_z' in vars():
+                try:
+                    set("edges",  _z*_z-(2.0*_z)+maxb("nodes"), ind='Max')
                 except:
                     pass
         return
