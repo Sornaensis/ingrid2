@@ -131,7 +131,13 @@ if not planar or chromaticNum > 2 or mindeg > 1 then
             "disp": ""
         },
         {
-            "text": "if forest or edges == nodes - numOfComponents or arboricity == 1 or undefined girth or undefined circumference then { forest, edges == nodes - numOfComponents, arboricity == 1, undefined girth, undefined circumference };",
+            "text": "if forest or edges == nodes - numOfComponents or arboricity == 1 or undefined girth or undefined circumference then { forest, edges == nodes - numOfComponents, arboricity == 1, undefined girth, undefined circumference };
+if not forest or edges > nodes - numOfComponents or arboricity > 1 or exists girth or exists circumference then
+{
+    not forest,
+    edges >= nodes - numOfComponents + 1,
+    arboricity >= 2
+};",
             "name": "Theorem",
             "idnum": 50,
             "disp": ""
