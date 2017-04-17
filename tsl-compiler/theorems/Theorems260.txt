@@ -144,19 +144,18 @@ if nodeConnec >= 1 and _temp > 0 then
             "disp": ""
         },
         {
-            "text": "
-if (even diameter and minb(nodeConnec) >= 2.0) then 
+            "text": "if (even diameter and minb(nodeConnec) >= 2.0) then 
 {
     _k is 2.0
 }
-else  
+else if (odd diameter or minb(nodeConnec) == 1) then
 {
     _k is 1.0
 };
-if minb(diameter) >= 3.0 then 
+if minb(diameter) >= 3.0 and minb(nodeConnec) > 0 then 
 {
     edgeInd >= (nodeConnec)*(minb(diameter)-(1.0))/2.0+_k,
-    diameter <= (-(2.0*_k)+2.0*maxb(edgeInd)+minb(nodeConnec))/minb(nodeConnec)
+    diameter <= maximum((-(2.0*_k)+2.0*maxb(edgeInd)+minb(nodeConnec))/minb(nodeConnec), 2)
 };",
             "name": "Theorem",
             "idnum": 257,
