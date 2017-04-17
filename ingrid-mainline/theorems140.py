@@ -1931,7 +1931,7 @@ class Theorem49(Theorem):
 
 class Theorem50(Theorem):
     def __init__(self):
-        super(Theorem50, self).__init__(50, "if forest or edges == nodes-(numOfComponents) or arboricity == 1.0 or undefined girth or undefined circumference then \n{\n    forest,\n    edges == nodes-(numOfComponents),\n    arboricity == 1.0,\n    undefined girth,\n    undefined circumference\n};\n", "")
+        super(Theorem50, self).__init__(50, "if forest or edges == nodes-(numOfComponents) or arboricity == 1.0 or undefined girth or undefined circumference then \n{\n    forest,\n    edges == nodes-(numOfComponents),\n    arboricity == 1.0,\n    undefined girth,\n    undefined circumference\n};\nif not forest or edges > nodes-(numOfComponents) or arboricity > 1.0 or exists girth or exists circumference then \n{\n    not forest,\n    edges >= nodes-(numOfComponents)+1.0,\n    arboricity >= 2.0\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["forest","edges","nodes","numOfComponents","arboricity","girth","circumference"]
     def run(self):
@@ -1984,6 +1984,27 @@ class Theorem50(Theorem):
                 pass
             set("girth", 'undt', ind='Min')
             set("circumference", 'undt', ind='Min')
+        if get("forest") == False or (maxb("nodes") != 'undt' and minb("numOfComponents") != 'undt' and minb("edges") != 'undt' and minb("edges") > maxb("nodes")-(minb("numOfComponents"))) or (minb("arboricity") != 'undt' and minb("arboricity") > 1.0) or maxb("girth") != 'undt' or maxb("circumference") != 'undt':
+            set("forest", False)
+            if minb("nodes") != 'undt' and maxb("numOfComponents") != 'undt':
+                try:
+                    set("edges",  minb("nodes")-(maxb("numOfComponents"))+1.0, ind='Min')
+                except:
+                    pass
+            if maxb("edges") != 'undt' and maxb("numOfComponents") != 'undt':
+                try:
+                    set("nodes",  maxb("edges")+maxb("numOfComponents")-(1.0), ind='Max')
+                except:
+                    pass
+            if maxb("edges") != 'undt' and minb("nodes") != 'undt':
+                try:
+                    set("numOfComponents",  -(maxb("edges"))+minb("nodes")+1.0, ind='Min')
+                except:
+                    pass
+            try:
+                set("arboricity",  2.0, ind='Min')
+            except:
+                pass
         return
 
 class Theorem51(Theorem):
