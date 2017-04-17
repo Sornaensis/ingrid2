@@ -8731,7 +8731,7 @@ class Theorem274(Theorem):
 
 class Theorem275(Theorem):
     def __init__(self):
-        super(Theorem275, self).__init__(275, "nodeInd >= minb(maxdeg)/(maxb(chromaticNum)-(1.0));\nmaxdeg <= maxb(nodeInd)*(maxb(chromaticNum)-(1.0));\nchromaticNum >= (minb(maxdeg)+maxb(nodeInd))/maxb(nodeInd);\n", "")
+        super(Theorem275, self).__init__(275, "nodeInd >= floor((minb(maxdeg)-(1.0))/(maxb(chromaticNum)-(1.0)))+1.0;\nmaxdeg <= maxb(nodeInd)*(maxb(chromaticNum)-(1.0));\nchromaticNum >= floor((minb(maxdeg)-(1.0))/(maxb(nodeInd)))+2.0;\n", "")
     def involves(self, str_invar):
         return str_invar in ["nodeInd","maxdeg","chromaticNum"]
     def run(self):
@@ -8744,7 +8744,7 @@ class Theorem275(Theorem):
         congruent = self.congruent
         if minb("maxdeg") != 'undt' and maxb("chromaticNum") != 'undt':
             try:
-                set("nodeInd",  minb("maxdeg")/(maxb("chromaticNum")-(1.0)), ind='Min')
+                set("nodeInd",  floor((minb("maxdeg")-(1.0))/(maxb("chromaticNum")-(1.0)))+1.0, ind='Min')
             except:
                 pass
         if maxb("nodeInd") != 'undt' and maxb("chromaticNum") != 'undt':
@@ -8754,7 +8754,7 @@ class Theorem275(Theorem):
                 pass
         if minb("maxdeg") != 'undt' and maxb("nodeInd") != 'undt':
             try:
-                set("chromaticNum",  (minb("maxdeg")+maxb("nodeInd"))/maxb("nodeInd"), ind='Min')
+                set("chromaticNum",  floor((minb("maxdeg")-(1.0))/(maxb("nodeInd")))+2.0, ind='Min')
             except:
                 pass
         return
