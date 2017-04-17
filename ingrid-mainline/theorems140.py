@@ -6670,7 +6670,7 @@ class Theorem203(Theorem):
 
 class Theorem204(Theorem):
     def __init__(self):
-        super(Theorem204, self).__init__(204, "if (minb(maxClique) >= 2.0 and maxb(maxClique) <= 2.0) and maxb(nodes) < 2.0*minb(nodeCover) and maxb(nodeCover) <= 3.0*minb(nodes)/5.0 then \n{\n    nodeCover <= (2.0*maxb(nodes)-(sqrt(5.0*minb(edges)-(maxb(nodes)**2.0))))/5.0,\n    nodes >= 2.0*minb(nodeCover)+sqrt(minb(edges)-(minb(nodeCover)**2.0)),\n    edges <= minb(nodes)**2.0/5.0+(5.0*minb(nodeCover)-(2.0*minb(nodes)))**2.0/5.0\n};\n", "")
+        super(Theorem204, self).__init__(204, "if (minb(maxClique) >= 2.0 and maxb(maxClique) <= 2.0) and maxb(nodes) < 2.0*minb(nodeCover) and maxb(nodeCover) <= 3.0*minb(nodes)/5.0 then \n{\n    _z is 5.0*minb(edges)-(maxb(nodes)*maxb(nodes)),\n    if _z > 0.0 then \n    {\n        _z is maximum(floor((3.0*maxb(nodes)-(sqrt(_z)))/5.0), floor((maxb(nodes)+1.0)/2.0)),\n        nodeCover <= _z\n    },\n    if minb(nodeCover) > (maxb(nodes)+1.0)/2.0 then \n    {\n        nodes >= 2.0*minb(nodeCover)+sqrt(minb(edges)-(minb(nodeCover)**2.0)),\n        edges <= minb(nodes)**2.0/5.0+(5.0*minb(nodeCover)-(2.0*minb(nodes)))**2.0/5.0\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["maxClique","nodes","nodeCover","edges"]
     def run(self):
@@ -6682,21 +6682,33 @@ class Theorem204(Theorem):
         oddInvar = self.oddInvar
         congruent = self.congruent
         if ((minb("maxClique") != 'undt' and minb("maxClique") >= 2.0) and (maxb("maxClique") != 'undt' and maxb("maxClique") <= 2.0)) and (minb("nodeCover") != 'undt' and maxb("nodes") != 'undt' and maxb("nodes") < 2.0*minb("nodeCover")) and (minb("nodes") != 'undt' and maxb("nodeCover") != 'undt' and maxb("nodeCover") <= 3.0*minb("nodes")/5.0):
-            if maxb("nodes") != 'undt' and minb("edges") != 'undt':
+            if minb("edges") != 'undt' and maxb("nodes") != 'undt':
                 try:
-                    set("nodeCover",  (2.0*maxb("nodes")-(sqrt(5.0*minb("edges")-(maxb("nodes")**2.0))))/5.0, ind='Max')
+                    _z = 5.0*minb("edges")-(maxb("nodes")*maxb("nodes"))
                 except:
                     pass
-            if minb("nodeCover") != 'undt' and minb("edges") != 'undt':
-                try:
-                    set("nodes",  2.0*minb("nodeCover")+sqrt(minb("edges")-(minb("nodeCover")**2.0)), ind='Min')
-                except:
-                    pass
-            if minb("nodes") != 'undt' and minb("nodeCover") != 'undt':
-                try:
-                    set("edges",  minb("nodes")**2.0/5.0+(5.0*minb("nodeCover")-(2.0*minb("nodes")))**2.0/5.0, ind='Max')
-                except:
-                    pass
+            if ('_z' in vars() and _z > 0.0):
+                if maxb("nodes") != 'undt':
+                    try:
+                        _z = maximum(floor((3.0*maxb("nodes")-(sqrt(_z)))/5.0), floor((maxb("nodes")+1.0)/2.0))
+                    except:
+                        pass
+                if '_z' in vars():
+                    try:
+                        set("nodeCover",  _z, ind='Max')
+                    except:
+                        pass
+            if (maxb("nodes") != 'undt' and minb("nodeCover") != 'undt' and minb("nodeCover") > (maxb("nodes")+1.0)/2.0):
+                if minb("nodeCover") != 'undt' and minb("edges") != 'undt':
+                    try:
+                        set("nodes",  2.0*minb("nodeCover")+sqrt(minb("edges")-(minb("nodeCover")**2.0)), ind='Min')
+                    except:
+                        pass
+                if minb("nodes") != 'undt' and minb("nodeCover") != 'undt':
+                    try:
+                        set("edges",  minb("nodes")**2.0/5.0+(5.0*minb("nodeCover")-(2.0*minb("nodes")))**2.0/5.0, ind='Max')
+                    except:
+                        pass
         return
 
 class Theorem205(Theorem):
