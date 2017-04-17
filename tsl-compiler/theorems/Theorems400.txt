@@ -1,4 +1,3 @@
-
 {
     "theorems":[
 {
@@ -155,7 +154,25 @@
             "disp": ""
         },
         {
-            "text": "if diameter == 2 and (maxdeg >= (2*nodes-2)/3 and maxdeg < nodes - 4 or maxdeg == nodes-2) then {edges >= 2*nodes-4} else if diameter == 2 and (maxdeg >= (3*nodes-5)/5 and maxdeg < (2*nodes-2)/3) then {edges >= 3*nodes - maxdeg - 6} else if diameter == 2 and (maxdeg >= (5*nodes - 3)/9 and maxdeg < (3*nodes-5)/5) then {edges >= 5*nodes - 4*maxdeg - 10} else if diameter == 2 and (maxdeg >= (nodes + 1)/2 and maxdeg < (5*nodes - 3)/9) then {edges >= 4*nodes - 2*maxdeg -13};",
+            "text": "if diameter == 2 and nodes <= 2*maxdeg-1 and maxdeg < nodes-1 then
+{
+    if (maxdeg >= (2*nodes-2)/3 and maxdeg < nodes - 4) or maxdeg == nodes-2 then 
+    {
+        edges >= 2*nodes-4
+        
+    } else if maxdeg >= (3*nodes-5)/5 and maxdeg < (2*nodes-2)/3 then 
+    {
+        edges >= 3*nodes - maxdeg - 6
+        
+    } else if maxdeg >= (5*nodes - 3)/9 and maxdeg < (3*nodes-5)/5 then 
+    {
+        edges >= 5*nodes - 4*maxdeg - 10
+        
+    } else if maxdeg >= (nodes + 1)/2 and maxdeg < (5*nodes - 3)/9 then 
+    {
+        edges >= 4*nodes - 2*maxdeg -13
+    }
+};",
             "name": "Theorem",
             "idnum": 400,
             "disp": ""
