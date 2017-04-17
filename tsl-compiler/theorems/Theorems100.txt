@@ -20,7 +20,10 @@ if regular then
             "disp": ""
         },
         {
-            "text": "if exists genus and genus > 0 then { arboricity <= 9 + (1+48*genus)**(1/2)/4 };",
+            "text": "if exists genus and genus > 0 then 
+{ 
+    arboricity <= (9 + (1+48*genus)**(1/2))/4 
+};",
             "name": "Theorem",
             "idnum": 83,
             "disp": ""
