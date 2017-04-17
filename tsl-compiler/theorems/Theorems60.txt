@@ -143,7 +143,9 @@ if not forest or edges > nodes - numOfComponents or arboricity > 1 or exists gir
             "disp": ""
         },
         {
-            "text": "arboricity >= chromaticNum / 2;",
+            "text": "
+arboricity >= (minb(chromaticNum)+1) / 2;
+chromaticNum <= maxb(arboricity)*2;",
             "name": "Theorem",
             "idnum": 51,
             "disp": ""
