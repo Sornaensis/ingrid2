@@ -4123,7 +4123,7 @@ class Theorem120(Theorem):
 
 class Theorem121(Theorem):
     def __init__(self):
-        super(Theorem121, self).__init__(121, "if exists diameter then \n{\n    _nodeConnec is minb(nodeConnec),\n    if minb(diameter) < 3.0 then \n    {\n        _nodeConnec is maxb(nodeConnec)\n    },\n    chromaticNum <= maxb(nodes)-(_nodeConnec*(minb(diameter)-(3.0)))-(2.0),\n    nodes >= minb(chromaticNum)+minb(diameter)*_nodeConnec-(3.0*_nodeConnec)+2.0,\n    if minb(diameter) > 3.0 then \n    {\n        nodeConnec <= (-(minb(chromaticNum))+maxb(nodes)-(2.0))/(minb(diameter)-(3.0))\n    }\n    else if maxb(diameter) < 3.0 then \n    {\n        nodeConnec >= (minb(chromaticNum)-(maxb(nodes))+1.0)/(3.0-(minb(diameter)))+1.0\n    },\n    if minb(nodeConnec) > 0.0 then \n    {\n        diameter <= (-(minb(chromaticNum))+3.0*maxb(nodeConnec)+maxb(nodes)-(2.0))/maxb(nodeConnec)\n    }\n};\n", "")
+        super(Theorem121, self).__init__(121, "if exists diameter then \n{\n    if minb(diameter) < 3.0 then \n    {\n        _nodeConnec is maxb(nodeConnec)\n    }\n    else  \n    {\n        _nodeConnec is minb(nodeConnec)\n    },\n    chromaticNum <= maxb(nodes)-(_nodeConnec*(minb(diameter)-(3.0)))-(2.0),\n    nodes >= minb(chromaticNum)+minb(diameter)*_nodeConnec-(3.0*_nodeConnec)+2.0,\n    if minb(diameter) > 3.0 then \n    {\n        nodeConnec <= (-(minb(chromaticNum))+maxb(nodes)-(2.0))/(minb(diameter)-(3.0))\n    }\n    else if maxb(diameter) < 3.0 then \n    {\n        nodeConnec >= (minb(chromaticNum)-(maxb(nodes))+1.0)/(3.0-(minb(diameter)))+1.0\n    },\n    if minb(nodeConnec) > 0.0 then \n    {\n        diameter <= (-(minb(chromaticNum))+3.0*maxb(nodeConnec)+maxb(nodes)-(2.0))/maxb(nodeConnec)\n    }\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["diameter","nodeConnec","chromaticNum","nodes"]
     def run(self):
@@ -4135,15 +4135,16 @@ class Theorem121(Theorem):
         oddInvar = self.oddInvar
         congruent = self.congruent
         if maxb("diameter") != 'undt':
-            if minb("nodeConnec") != 'undt':
-                try:
-                    _nodeConnec = minb("nodeConnec")
-                except:
-                    pass
             if (minb("diameter") != 'undt' and minb("diameter") < 3.0):
                 if maxb("nodeConnec") != 'undt':
                     try:
                         _nodeConnec = maxb("nodeConnec")
+                    except:
+                        pass
+            elif True:
+                if minb("nodeConnec") != 'undt':
+                    try:
+                        _nodeConnec = minb("nodeConnec")
                     except:
                         pass
             if maxb("nodes") != 'undt' and minb("diameter") != 'undt' and '_nodeConnec' in vars():
