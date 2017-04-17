@@ -12278,9 +12278,9 @@ class Theorem399(Theorem):
 
 class Theorem400(Theorem):
     def __init__(self):
-        super(Theorem400, self).__init__(400, "if diameter == 2.0 and (maxdeg >= (2.0*nodes-(2.0))/3.0 and maxdeg < nodes-(4.0) or maxdeg == nodes-(2.0)) then \n{\n    edges >= 2.0*nodes-(4.0)\n}\nelse if diameter == 2.0 and (maxdeg >= (3.0*nodes-(5.0))/5.0 and maxdeg < (2.0*nodes-(2.0))/3.0) then \n{\n    edges >= 3.0*nodes-(maxdeg)-(6.0)\n}\nelse if diameter == 2.0 and (maxdeg >= (5.0*nodes-(3.0))/9.0 and maxdeg < (3.0*nodes-(5.0))/5.0) then \n{\n    edges >= 5.0*nodes-(4.0*maxdeg)-(10.0)\n}\nelse if diameter == 2.0 and (maxdeg >= (nodes+1.0)/2.0 and maxdeg < (5.0*nodes-(3.0))/9.0) then \n{\n    edges >= 4.0*nodes-(2.0*maxdeg)-(13.0)\n};\n", "")
+        super(Theorem400, self).__init__(400, "if diameter == 2.0 and nodes <= 2.0*maxdeg-(1.0) and maxdeg < nodes-(1.0) then \n{\n    if (maxdeg >= (2.0*nodes-(2.0))/3.0 and maxdeg < nodes-(4.0)) or maxdeg == nodes-(2.0) then \n    {\n        edges >= 2.0*nodes-(4.0)\n    }\n    else if maxdeg >= (3.0*nodes-(5.0))/5.0 and maxdeg < (2.0*nodes-(2.0))/3.0 then \n    {\n        edges >= 3.0*nodes-(maxdeg)-(6.0)\n    }\n    else if maxdeg >= (5.0*nodes-(3.0))/9.0 and maxdeg < (3.0*nodes-(5.0))/5.0 then \n    {\n        edges >= 5.0*nodes-(4.0*maxdeg)-(10.0)\n    }\n    else if maxdeg >= (nodes+1.0)/2.0 and maxdeg < (5.0*nodes-(3.0))/9.0 then \n    {\n        edges >= 4.0*nodes-(2.0*maxdeg)-(13.0)\n    }\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["diameter","maxdeg","nodes","edges"]
+        return str_invar in ["diameter","nodes","maxdeg","edges"]
     def run(self):
         get = self.get
         set = self.set
@@ -12289,65 +12289,66 @@ class Theorem400(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if ((minb("diameter") != 'undt' and minb("diameter") >= 2.0) and (maxb("diameter") != 'undt' and maxb("diameter") <= 2.0)) and ((maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("maxdeg") >= (2.0*maxb("nodes")-(2.0))/3.0) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") < minb("nodes")-(4.0)) or ((maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("maxdeg") >= maxb("nodes")-(2.0)) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") <= minb("nodes")-(2.0)))):
-            if minb("nodes") != 'undt':
-                try:
-                    set("edges",  2.0*minb("nodes")-(4.0), ind='Min')
-                except:
-                    pass
-            if maxb("edges") != 'undt':
-                try:
-                    set("nodes",  maxb("edges")/2.0+2.0, ind='Max')
-                except:
-                    pass
-        elif ((minb("diameter") != 'undt' and minb("diameter") >= 2.0) and (maxb("diameter") != 'undt' and maxb("diameter") <= 2.0)) and ((maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("maxdeg") >= (3.0*maxb("nodes")-(5.0))/5.0) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") < (2.0*minb("nodes")-(2.0))/3.0)):
-            if minb("nodes") != 'undt' and maxb("maxdeg") != 'undt':
-                try:
-                    set("edges",  3.0*minb("nodes")-(maxb("maxdeg"))-(6.0), ind='Min')
-                except:
-                    pass
-            if maxb("edges") != 'undt' and maxb("maxdeg") != 'undt':
-                try:
-                    set("nodes",  maxb("edges")/3.0+maxb("maxdeg")/3.0+2.0, ind='Max')
-                except:
-                    pass
-            if maxb("edges") != 'undt' and minb("nodes") != 'undt':
-                try:
-                    set("maxdeg",  -(maxb("edges"))+3.0*minb("nodes")-(6.0), ind='Min')
-                except:
-                    pass
-        elif ((minb("diameter") != 'undt' and minb("diameter") >= 2.0) and (maxb("diameter") != 'undt' and maxb("diameter") <= 2.0)) and ((maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("maxdeg") >= (5.0*maxb("nodes")-(3.0))/9.0) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") < (3.0*minb("nodes")-(5.0))/5.0)):
-            if minb("nodes") != 'undt' and maxb("maxdeg") != 'undt':
-                try:
-                    set("edges",  5.0*minb("nodes")-(4.0*maxb("maxdeg"))-(10.0), ind='Min')
-                except:
-                    pass
-            if maxb("edges") != 'undt' and maxb("maxdeg") != 'undt':
-                try:
-                    set("nodes",  maxb("edges")/5.0+4.0*maxb("maxdeg")/5.0+2.0, ind='Max')
-                except:
-                    pass
-            if maxb("edges") != 'undt' and minb("nodes") != 'undt':
-                try:
-                    set("maxdeg",  -(maxb("edges")/4.0)+5.0*minb("nodes")/4.0-(5.0/2.0), ind='Min')
-                except:
-                    pass
-        elif ((minb("diameter") != 'undt' and minb("diameter") >= 2.0) and (maxb("diameter") != 'undt' and maxb("diameter") <= 2.0)) and ((maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("maxdeg") >= (maxb("nodes")+1.0)/2.0) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") < (5.0*minb("nodes")-(3.0))/9.0)):
-            if minb("nodes") != 'undt' and maxb("maxdeg") != 'undt':
-                try:
-                    set("edges",  4.0*minb("nodes")-(2.0*maxb("maxdeg"))-(13.0), ind='Min')
-                except:
-                    pass
-            if maxb("edges") != 'undt' and maxb("maxdeg") != 'undt':
-                try:
-                    set("nodes",  maxb("edges")/4.0+maxb("maxdeg")/2.0+13.0/4.0, ind='Max')
-                except:
-                    pass
-            if maxb("edges") != 'undt' and minb("nodes") != 'undt':
-                try:
-                    set("maxdeg",  -(maxb("edges")/2.0)+2.0*minb("nodes")-(13.0/2.0), ind='Min')
-                except:
-                    pass
+        if ((minb("diameter") != 'undt' and minb("diameter") >= 2.0) and (maxb("diameter") != 'undt' and maxb("diameter") <= 2.0)) and (minb("maxdeg") != 'undt' and maxb("nodes") != 'undt' and maxb("nodes") <= 2.0*minb("maxdeg")-(1.0)) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") < minb("nodes")-(1.0)):
+            if ((maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("maxdeg") >= (2.0*maxb("nodes")-(2.0))/3.0) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") < minb("nodes")-(4.0))) or ((maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("maxdeg") >= maxb("nodes")-(2.0)) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") <= minb("nodes")-(2.0))):
+                if minb("nodes") != 'undt':
+                    try:
+                        set("edges",  2.0*minb("nodes")-(4.0), ind='Min')
+                    except:
+                        pass
+                if maxb("edges") != 'undt':
+                    try:
+                        set("nodes",  maxb("edges")/2.0+2.0, ind='Max')
+                    except:
+                        pass
+            elif (maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("maxdeg") >= (3.0*maxb("nodes")-(5.0))/5.0) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") < (2.0*minb("nodes")-(2.0))/3.0):
+                if minb("nodes") != 'undt' and maxb("maxdeg") != 'undt':
+                    try:
+                        set("edges",  3.0*minb("nodes")-(maxb("maxdeg"))-(6.0), ind='Min')
+                    except:
+                        pass
+                if maxb("edges") != 'undt' and maxb("maxdeg") != 'undt':
+                    try:
+                        set("nodes",  maxb("edges")/3.0+maxb("maxdeg")/3.0+2.0, ind='Max')
+                    except:
+                        pass
+                if maxb("edges") != 'undt' and minb("nodes") != 'undt':
+                    try:
+                        set("maxdeg",  -(maxb("edges"))+3.0*minb("nodes")-(6.0), ind='Min')
+                    except:
+                        pass
+            elif (maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("maxdeg") >= (5.0*maxb("nodes")-(3.0))/9.0) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") < (3.0*minb("nodes")-(5.0))/5.0):
+                if minb("nodes") != 'undt' and maxb("maxdeg") != 'undt':
+                    try:
+                        set("edges",  5.0*minb("nodes")-(4.0*maxb("maxdeg"))-(10.0), ind='Min')
+                    except:
+                        pass
+                if maxb("edges") != 'undt' and maxb("maxdeg") != 'undt':
+                    try:
+                        set("nodes",  maxb("edges")/5.0+4.0*maxb("maxdeg")/5.0+2.0, ind='Max')
+                    except:
+                        pass
+                if maxb("edges") != 'undt' and minb("nodes") != 'undt':
+                    try:
+                        set("maxdeg",  -(maxb("edges")/4.0)+5.0*minb("nodes")/4.0-(5.0/2.0), ind='Min')
+                    except:
+                        pass
+            elif (maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("maxdeg") >= (maxb("nodes")+1.0)/2.0) and (minb("nodes") != 'undt' and maxb("maxdeg") != 'undt' and maxb("maxdeg") < (5.0*minb("nodes")-(3.0))/9.0):
+                if minb("nodes") != 'undt' and maxb("maxdeg") != 'undt':
+                    try:
+                        set("edges",  4.0*minb("nodes")-(2.0*maxb("maxdeg"))-(13.0), ind='Min')
+                    except:
+                        pass
+                if maxb("edges") != 'undt' and maxb("maxdeg") != 'undt':
+                    try:
+                        set("nodes",  maxb("edges")/4.0+maxb("maxdeg")/2.0+13.0/4.0, ind='Max')
+                    except:
+                        pass
+                if maxb("edges") != 'undt' and minb("nodes") != 'undt':
+                    try:
+                        set("maxdeg",  -(maxb("edges")/2.0)+2.0*minb("nodes")-(13.0/2.0), ind='Min')
+                    except:
+                        pass
         return
 
 class Theorem401(Theorem):
