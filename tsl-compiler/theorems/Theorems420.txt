@@ -61,7 +61,11 @@ if isset nodes then
             "disp": ""
         },
         {
-            "text": "if nodes >= 4 and maxClique == 2 and hamiltonian then {edges <= floor((nodes - 4)/2)*floor(nodes/2) + 2};",
+            "text": "if nodes >= 4.0 and maxClique == 2.0 and hamiltonian then 
+{
+    _z is floor(maxb(nodes)/2),
+    edges <= _z*_z-2*_z+maxb(nodes)
+};",
             "name": "Theorem",
             "idnum": 409,
             "disp": ""
