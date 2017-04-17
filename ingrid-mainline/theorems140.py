@@ -6078,9 +6078,9 @@ class Theorem183(Theorem):
 
 class Theorem184(Theorem):
     def __init__(self):
-        super(Theorem184, self).__init__(184, "let e1 = ((maxb(nodes)*(maxb(nodes)-(1.0))+1.0)/(2.0-((maxb(nodes)-(minb(mindeg))-(1.0))*(maxb(nodes)-(minb(maxClique))))));\nlet e2 = ((minb(nodes)*(minb(nodes)-(1.0))+1.0)/(2.0-((minb(nodes)-(minb(mindeg))-(1.0))*(minb(nodes)-(minb(maxClique))))));\nedges >= minimum(e1, e2);\nlet c1 = (floor(minb(nodes)-((minb(nodes)*(minb(nodes)-(1.0))-(2.0*maxb(edges)))/(2.0*(minb(nodes)-(minb(mindeg))-(1.0))))));\nlet c2 = (floor(maxb(nodes)-((maxb(nodes)*(maxb(nodes)-(1.0))-(2.0*maxb(edges)))/(2.0*(maxb(nodes)-(minb(mindeg))-(1.0))))));\nif minb(nodes) > minb(mindeg)+1.0 and maxb(nodes) > minb(mindeg)+1.0 then \n{\n    maxClique <= minimum(c1, c2)\n};\n", "")
+        super(Theorem184, self).__init__(184, "_e1 is ((maxb(nodes)*(maxb(nodes)-(1.0))+1.0)/2.0-((maxb(nodes)-(minb(mindeg))-(1.0))*(maxb(nodes)-(minb(maxClique)))));\n_e2 is ((minb(nodes)*(minb(nodes)-(1.0))+1.0)/2.0-((minb(nodes)-(minb(mindeg))-(1.0))*(minb(nodes)-(minb(maxClique)))));\nedges >= minimum(_e1, _e2);\n_c1 is (floor(minb(nodes)-((minb(nodes)*(minb(nodes)-(1.0))-(2.0*maxb(edges)))/(2.0*(minb(nodes)-(minb(mindeg))-(1.0))))));\n_c2 is (floor(maxb(nodes)-((maxb(nodes)*(maxb(nodes)-(1.0))-(2.0*maxb(edges)))/(2.0*(maxb(nodes)-(minb(mindeg))-(1.0))))));\nif minb(nodes) > minb(mindeg)+1.0 then \n{\n    maxClique <= minimum(_c1, _c2)\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["edges","nodes","mindeg","maxClique"]
+        return str_invar in ["nodes","mindeg","maxClique","edges"]
     def run(self):
         get = self.get
         set = self.set
@@ -6089,18 +6089,39 @@ class Theorem184(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if maxb("nodes") != 'undt' and minb("mindeg") != 'undt' and minb("maxClique") != 'undt' and minb("nodes") != 'undt':
+        if maxb("nodes") != 'undt' and minb("mindeg") != 'undt' and minb("maxClique") != 'undt':
             try:
-                set("edges",  minimum(((maxb("nodes")*(maxb("nodes")-(1.0))+1.0)/(2.0-((maxb("nodes")-(minb("mindeg"))-(1.0))*(maxb("nodes")-(minb("maxClique")))))), ((minb("nodes")*(minb("nodes")-(1.0))+1.0)/(2.0-((minb("nodes")-(minb("mindeg"))-(1.0))*(minb("nodes")-(minb("maxClique"))))))), ind='Min')
+                _e1 = ((maxb("nodes")*(maxb("nodes")-(1.0))+1.0)/2.0-((maxb("nodes")-(minb("mindeg"))-(1.0))*(maxb("nodes")-(minb("maxClique")))))
             except:
                 pass
-        if (minb("mindeg") != 'undt' and minb("nodes") != 'undt' and minb("nodes") > minb("mindeg")+1.0) and (minb("mindeg") != 'undt' and maxb("nodes") != 'undt' and maxb("nodes") > minb("mindeg")+1.0):
-            if minb("nodes") != 'undt' and maxb("edges") != 'undt' and minb("mindeg") != 'undt' and maxb("nodes") != 'undt':
+        if minb("nodes") != 'undt' and minb("mindeg") != 'undt' and minb("maxClique") != 'undt':
+            try:
+                _e2 = ((minb("nodes")*(minb("nodes")-(1.0))+1.0)/2.0-((minb("nodes")-(minb("mindeg"))-(1.0))*(minb("nodes")-(minb("maxClique")))))
+            except:
+                pass
+        if '_e1' in vars() and '_e2' in vars():
+            try:
+                set("edges",  minimum(_e1, _e2), ind='Min')
+            except:
+                pass
+        if minb("nodes") != 'undt' and maxb("edges") != 'undt' and minb("mindeg") != 'undt':
+            try:
+                _c1 = (floor(minb("nodes")-((minb("nodes")*(minb("nodes")-(1.0))-(2.0*maxb("edges")))/(2.0*(minb("nodes")-(minb("mindeg"))-(1.0))))))
+            except:
+                pass
+        if maxb("nodes") != 'undt' and maxb("edges") != 'undt' and minb("mindeg") != 'undt':
+            try:
+                _c2 = (floor(maxb("nodes")-((maxb("nodes")*(maxb("nodes")-(1.0))-(2.0*maxb("edges")))/(2.0*(maxb("nodes")-(minb("mindeg"))-(1.0))))))
+            except:
+                pass
+        if (minb("mindeg") != 'undt' and minb("nodes") != 'undt' and minb("nodes") > minb("mindeg")+1.0):
+            if '_c1' in vars() and '_c2' in vars():
                 try:
-                    set("maxClique",  minimum((floor(minb("nodes")-((minb("nodes")*(minb("nodes")-(1.0))-(2.0*maxb("edges")))/(2.0*(minb("nodes")-(minb("mindeg"))-(1.0)))))), (floor(maxb("nodes")-((maxb("nodes")*(maxb("nodes")-(1.0))-(2.0*maxb("edges")))/(2.0*(maxb("nodes")-(minb("mindeg"))-(1.0))))))), ind='Max')
+                    set("maxClique",  minimum(_c1, _c2), ind='Max')
                 except:
                     pass
         return
+
 
 class Theorem185(Theorem):
     def __init__(self):
