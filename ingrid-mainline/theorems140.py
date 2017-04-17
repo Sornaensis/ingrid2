@@ -9174,7 +9174,7 @@ class Theorem292(Theorem):
 
 class Theorem293(Theorem):
     def __init__(self):
-        super(Theorem293, self).__init__(293, "if connected and maxdeg == 2.0 then \n{\n    nodes >= mindeg*diameter-(mindeg)+2.0,\n    nodes <= mindeg*diameter+1.0\n};\n", "")
+        super(Theorem293, self).__init__(293, "null;", "")
     def involves(self, str_invar):
         return str_invar in ["connected","maxdeg","nodes","mindeg","diameter"]
     def run(self):
@@ -9185,37 +9185,6 @@ class Theorem293(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if get("connected") == True and ((minb("maxdeg") != 'undt' and minb("maxdeg") >= 2.0) and (maxb("maxdeg") != 'undt' and maxb("maxdeg") <= 2.0)):
-            if minb("mindeg") != 'undt' and minb("diameter") != 'undt':
-                try:
-                    set("nodes",  minb("mindeg")*minb("diameter")-(minb("mindeg"))+2.0, ind='Min')
-                except:
-                    pass
-            if maxb("nodes") != 'undt' and minb("diameter") != 'undt':
-                try:
-                    set("mindeg",  (maxb("nodes")-(2.0))/(minb("diameter")-(1.0)), ind='Max')
-                except:
-                    pass
-            if maxb("mindeg") != 'undt' and maxb("nodes") != 'undt':
-                try:
-                    set("diameter",  (maxb("mindeg")+maxb("nodes")-(2.0))/maxb("mindeg"), ind='Max')
-                except:
-                    pass
-            if maxb("mindeg") != 'undt' and maxb("diameter") != 'undt':
-                try:
-                    set("nodes",  maxb("mindeg")*maxb("diameter")+1.0, ind='Max')
-                except:
-                    pass
-            if minb("nodes") != 'undt' and maxb("diameter") != 'undt':
-                try:
-                    set("mindeg",  (minb("nodes")-(1.0))/maxb("diameter"), ind='Min')
-                except:
-                    pass
-            if minb("nodes") != 'undt' and maxb("mindeg") != 'undt':
-                try:
-                    set("diameter",  (minb("nodes")-(1.0))/maxb("mindeg"), ind='Min')
-                except:
-                    pass
         return
 
 class Theorem294(Theorem):
