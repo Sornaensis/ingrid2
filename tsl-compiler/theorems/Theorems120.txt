@@ -35,14 +35,7 @@ chromaticNum <= maxb(circumference)-(maxb(circumference)/maxb(maxClique))+1.0;",
             "disp": ""
         },
         {
-            "text": "
-           if exists nodeCover and exists chromaticNum and exists nodeInd then 
-{
-    edges <= maxb(nodeCover)*(maxb(nodeInd)+maxb(nodeCover)*(maxb(chromaticNum)-(1.0))/(2.0*maxb(chromaticNum))),
-    nodeCover >= -((maxb(chromaticNum)*maxb(nodeInd)+sqrt(maxb(chromaticNum)*(2.0*maxb(chromaticNum)*maxb(edges)+maxb(chromaticNum)*maxb(nodeInd)**2.0-(2.0*maxb(edges)))))/(maxb(chromaticNum)-(1.0))),
-    nodeInd >= minb(edges)/maxb(nodeCover)-(maxb(nodeCover)/2.0)+maxb(nodeCover)/(2.0*maxb(chromaticNum)),
-    chromaticNum >= maxb(nodeCover)**2.0/(-(2.0*minb(edges))+maxb(nodeCover)**2.0+2.0*maxb(nodeCover)*maxb(nodeInd))
-};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 106,
             "disp": ""
