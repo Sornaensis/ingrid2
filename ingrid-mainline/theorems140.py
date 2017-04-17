@@ -5870,7 +5870,7 @@ class Theorem177(Theorem):
 
 class Theorem178(Theorem):
     def __init__(self):
-        super(Theorem178, self).__init__(178, "_k is maximum(4.0, maxb(nodeInd)+1.0);\nnodeCliqueCover <= maxb(nodes)-(minb(mindeg))-((maxb(nodes)-(minb(mindeg)))/_k);\nnodes >= minb(mindeg)+floor((_k*minb(nodeCliqueCover)-(1.0))/(_k-(1.0)));\nmindeg <= (-(_k*minb(nodeCliqueCover))+_k*maxb(nodes)-(maxb(nodes)))/(_k-(1.0));\n", "")
+        super(Theorem178, self).__init__(178, "_k is maximum(4.0, maxb(nodeInd)+1.0);\nnodeCliqueCover <= maxb(nodes)-(minb(mindeg))-((maxb(nodes)-(minb(mindeg)))/_k);\nnodes >= minb(mindeg)+floor((_k*minb(nodeCliqueCover)-(1.0))/(_k-(1.0)));\nmindeg <= floor(maxb(nodes)+1.0-(_k*min(nodeCliqueCover)/(_k-(1.0))));\n", "")
     def involves(self, str_invar):
         return str_invar in ["nodeInd","nodeCliqueCover","nodes","mindeg"]
     def run(self):
@@ -5896,9 +5896,9 @@ class Theorem178(Theorem):
                 set("nodes",  minb("mindeg")+floor((_k*minb("nodeCliqueCover")-(1.0))/(_k-(1.0))), ind='Min')
             except:
                 pass
-        if minb("nodeCliqueCover") != 'undt' and maxb("nodes") != 'undt' and '_k' in vars():
+        if maxb("nodes") != 'undt' and minb("nodeCliqueCover") != 'undt' and '_k' in vars():
             try:
-                set("mindeg",  (-(_k*minb("nodeCliqueCover"))+_k*maxb("nodes")-(maxb("nodes")))/(_k-(1.0)), ind='Max')
+                set("mindeg",  floor(maxb("nodes")+1.0-(_k*min(minb("nodeCliqueCover"))/(_k-(1.0)))), ind='Max')
             except:
                 pass
         return
