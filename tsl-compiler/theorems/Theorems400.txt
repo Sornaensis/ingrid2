@@ -124,7 +124,7 @@
             "disp": ""
         },
         {
-            "text": "let k = (1+(-1)**girth)/2; let t = floor(girth/2); if connected and not tree and mindeg == 1 then {nodes >= ceil((diameter + 1)/(girth + k))*(1 + mindeg - k*(mindeg - 1)**t)} else if connected and not tree and mindeg == 2 then {nodes >= ceil((diameter + 1)/(girth + k))*(1 + mindeg*t - k*(mindeg - 1)**t)} else if connected and not tree and mindeg >= 3 then {nodes >= ceil((diameter + 1)/(girth + k))*(1 + mindeg*(((mindeg - 1)**t - 1)/(mindeg - 2)) - k*(mindeg - 1)**t)};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 395,
             "disp": ""
