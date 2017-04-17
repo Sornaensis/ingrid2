@@ -3034,7 +3034,7 @@ class Theorem82(Theorem):
 
 class Theorem83(Theorem):
     def __init__(self):
-        super(Theorem83, self).__init__(83, "if exists genus and genus > 0.0 then \n{\n    arboricity <= 9.0+(1.0+48.0*genus)**(1.0/2.0)/4.0\n};\n", "")
+        super(Theorem83, self).__init__(83, "if exists genus and genus > 0.0 then \n{\n    arboricity <= (9.0+(1.0+48.0*genus)**(1.0/2.0))/4.0\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["genus","arboricity"]
     def run(self):
@@ -3048,12 +3048,12 @@ class Theorem83(Theorem):
         if maxb("genus") != 'undt' and (minb("genus") != 'undt' and minb("genus") > 0.0):
             if maxb("genus") != 'undt':
                 try:
-                    set("arboricity",  9.0+(1.0+48.0*maxb("genus"))**(1.0/2.0)/4.0, ind='Max')
+                    set("arboricity",  (9.0+(1.0+48.0*maxb("genus"))**(1.0/2.0))/4.0, ind='Max')
                 except:
                     pass
             if minb("arboricity") != 'undt':
                 try:
-                    set("genus",  (minb("arboricity")-(9.0))**2.0/3.0-(1.0/48.0), ind='Min')
+                    set("genus",  (4.0*minb("arboricity")-(9.0))**2.0/48.0-(1.0/48.0), ind='Min')
                 except:
                     pass
         return
