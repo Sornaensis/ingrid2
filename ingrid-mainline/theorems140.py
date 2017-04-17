@@ -13018,7 +13018,7 @@ class Theorem422(Theorem):
 
 class Theorem423(Theorem):
     def __init__(self):
-        super(Theorem423, self).__init__(423, "nodeCover <= maxb(nodes)-(minb(maxdeg)/(maxb(chromaticNum)-(1.0)));\nnodes >= (maxb(chromaticNum)*minb(nodeCover)+minb(maxdeg)-(minb(nodeCover)))/(maxb(chromaticNum)-(1.0));\nmaxdeg <= -(maxb(chromaticNum)*minb(nodeCover))+maxb(chromaticNum)*maxb(nodes)+minb(nodeCover)-(maxb(nodes));\nchromaticNum >= (-(minb(maxdeg))+minb(nodeCover)-(maxb(nodes)))/(minb(nodeCover)-(maxb(nodes)));\n", "")
+        super(Theorem423, self).__init__(423, "null;", "")
     def involves(self, str_invar):
         return str_invar in ["nodeCover","nodes","maxdeg","chromaticNum"]
     def run(self):
@@ -13029,26 +13029,6 @@ class Theorem423(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and maxb("chromaticNum") != 'undt':
-            try:
-                set("nodeCover",  maxb("nodes")-(minb("maxdeg")/(maxb("chromaticNum")-(1.0))), ind='Max')
-            except:
-                pass
-        if maxb("chromaticNum") != 'undt' and minb("nodeCover") != 'undt' and minb("maxdeg") != 'undt':
-            try:
-                set("nodes",  (maxb("chromaticNum")*minb("nodeCover")+minb("maxdeg")-(minb("nodeCover")))/(maxb("chromaticNum")-(1.0)), ind='Min')
-            except:
-                pass
-        if maxb("chromaticNum") != 'undt' and minb("nodeCover") != 'undt' and maxb("nodes") != 'undt':
-            try:
-                set("maxdeg",  -(maxb("chromaticNum")*minb("nodeCover"))+maxb("chromaticNum")*maxb("nodes")+minb("nodeCover")-(maxb("nodes")), ind='Max')
-            except:
-                pass
-        if minb("maxdeg") != 'undt' and minb("nodeCover") != 'undt' and maxb("nodes") != 'undt':
-            try:
-                set("chromaticNum",  (-(minb("maxdeg"))+minb("nodeCover")-(maxb("nodes")))/(minb("nodeCover")-(maxb("nodes"))), ind='Min')
-            except:
-                pass
         return
 
 class Theorem424(Theorem):
