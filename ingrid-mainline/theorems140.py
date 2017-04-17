@@ -12245,9 +12245,9 @@ class Theorem398(Theorem):
 
 class Theorem399(Theorem):
     def __init__(self):
-        super(Theorem399, self).__init__(399, "if nodeConnec > 0.0 then \n{\n    nodeConnec >= (nodes*(maxdeg-(2.0)))/((maxdeg-(1.0))**diameter+maxdeg-(3.0))\n};\n", "")
+        super(Theorem399, self).__init__(399, "null;", "")
     def involves(self, str_invar):
-        return str_invar in ["nodeConnec","nodes","maxdeg","diameter"]
+        return str_invar in []
     def run(self):
         get = self.get
         set = self.set
@@ -12256,17 +12256,6 @@ class Theorem399(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("nodeConnec") != 'undt' and minb("nodeConnec") > 0.0):
-            if minb("nodes") != 'undt' and minb("maxdeg") != 'undt' and maxb("diameter") != 'undt':
-                try:
-                    set("nodeConnec",  (minb("nodes")*(minb("maxdeg")-(2.0)))/((minb("maxdeg")-(1.0))**maxb("diameter")+minb("maxdeg")-(3.0)), ind='Min')
-                except:
-                    pass
-            if maxb("nodeConnec") != 'undt' and maxb("maxdeg") != 'undt' and maxb("diameter") != 'undt':
-                try:
-                    set("nodes",  maxb("nodeConnec")*(maxb("maxdeg")+(maxb("maxdeg")-(1.0))**maxb("diameter")-(3.0))/(maxb("maxdeg")-(2.0)), ind='Max')
-                except:
-                    pass
         return
 
 class Theorem400(Theorem):
