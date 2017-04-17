@@ -4,10 +4,12 @@
             "text": "
             if exists diameter then 
             {
-                _nodeConnec is minb(nodeConnec),
                 if minb(diameter) < 3 then
                 {
                     _nodeConnec is maxb(nodeConnec)
+                } else 
+                {
+                     _nodeConnec is minb(nodeConnec)
                 },
                 chromaticNum <= maxb(nodes)-(_nodeConnec*(minb(diameter)-(3.0)))-(2.0),
                 nodes >= minb(chromaticNum)+minb(diameter)*_nodeConnec-(3.0*_nodeConnec)+2.0,
