@@ -21,11 +21,18 @@
         {
             "text": "if (minb(maxClique) >= 2.0 and maxb(maxClique) <= 2.0) and maxb(nodes) < 2.0*minb(nodeCover) and maxb(nodeCover) <= 3.0*minb(nodes)/5.0 then 
 {
-    nodeCover <= (2.0*maxb(nodes)-(sqrt(5.0*minb(edges)-(maxb(nodes)**2.0))))/5.0,
-    nodes >= 2.0*minb(nodeCover)+sqrt(minb(edges)-(minb(nodeCover)**2.0)),
-    edges <= minb(nodes)**2.0/5.0+(5.0*minb(nodeCover)-(2.0*minb(nodes)))**2.0/5.0
+    _z is 5*minb(edges)-maxb(nodes)*maxb(nodes),
+    if _z > 0 then
+    {
+        _z is maximum(floor((3*maxb(nodes)-sqrt(_z))/5), floor((maxb(nodes)+1)/2)),
+        nodeCover <= _z
+    },
+    if minb(nodeCover) > (maxb(nodes)+1)/2 then
+    {
+        nodes >= 2.0*minb(nodeCover)+sqrt(minb(edges)-(minb(nodeCover)**2.0)),
+        edges <= minb(nodes)**2.0/5.0+(5.0*minb(nodeCover)-(2.0*minb(nodes)))**2.0/5.0
+    }
 };
-
 ",
             "name": "Theorem",
             "idnum": 204,

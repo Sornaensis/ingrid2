@@ -94,12 +94,7 @@ if isset chromaticNum then
             "disp": ""
         },
         {
-            "text": "if connected and maxdeg == 2 then
-{
-    nodes >= mindeg * diameter - mindeg + 2,
-    nodes <= mindeg * diameter + 1
-};
-",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 293,
             "disp": ""

@@ -17,10 +17,7 @@
             "disp": ""
         },
         {
-            "text": "nodeCover <= maxb(nodes)-(minb(maxdeg)/(maxb(chromaticNum)-(1.0)));
-nodes >= (maxb(chromaticNum)*minb(nodeCover)+minb(maxdeg)-(minb(nodeCover)))/(maxb(chromaticNum)-(1.0));
-maxdeg <= -(maxb(chromaticNum)*minb(nodeCover))+maxb(chromaticNum)*maxb(nodes)+minb(nodeCover)-(maxb(nodes));
-chromaticNum >= (-(minb(maxdeg))+minb(nodeCover)-(maxb(nodes)))/(minb(nodeCover)-(maxb(nodes)));",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 423,
             "disp": ""

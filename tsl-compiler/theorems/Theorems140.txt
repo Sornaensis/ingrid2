@@ -4,10 +4,12 @@
             "text": "
             if exists diameter then 
             {
-                _nodeConnec is minb(nodeConnec),
                 if minb(diameter) < 3 then
                 {
                     _nodeConnec is maxb(nodeConnec)
+                } else 
+                {
+                     _nodeConnec is minb(nodeConnec)
                 },
                 chromaticNum <= maxb(nodes)-(_nodeConnec*(minb(diameter)-(3.0)))-(2.0),
                 nodes >= minb(chromaticNum)+minb(diameter)*_nodeConnec-(3.0*_nodeConnec)+2.0,
@@ -152,7 +154,7 @@ maxdeg >= (_k*minb(chromaticNum)-(1.0))/(_k-(1.0))-(1.0);",
         },
         {
             "text": "edges <= nodes*(nodes-1)/2;
-                     edges >= (nodes+1)/2;",
+                     edges >= ceiling(nodes/2);",
             "name": "Theorem", 
             "idnum": 137,
             "disp": ""
