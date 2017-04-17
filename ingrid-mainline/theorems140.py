@@ -13019,9 +13019,9 @@ class Theorem421(Theorem):
 
 class Theorem422(Theorem):
     def __init__(self):
-        super(Theorem422, self).__init__(422, "\n", "")
+        super(Theorem422, self).__init__(422, "if genus > 0.0 or crossing > 0.0 or not planar then \n{\n    genus >= 1.0,\n    crossing >= 1.0,\n    not planar\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in []
+        return str_invar in ["genus","crossing","planar"]
     def run(self):
         get = self.get
         set = self.set
@@ -13030,13 +13030,23 @@ class Theorem422(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
+        if (minb("genus") != 'undt' and minb("genus") > 0.0) or (minb("crossing") != 'undt' and minb("crossing") > 0.0) or get("planar") == False:
+            try:
+                set("genus",  1.0, ind='Min')
+            except:
+                pass
+            try:
+                set("crossing",  1.0, ind='Min')
+            except:
+                pass
+            set("planar", False)
         return
 
 class Theorem423(Theorem):
     def __init__(self):
         super(Theorem423, self).__init__(423, "null;", "")
     def involves(self, str_invar):
-        return str_invar in ["nodeCover","nodes","maxdeg","chromaticNum"]
+        return str_invar in []
     def run(self):
         get = self.get
         set = self.set
