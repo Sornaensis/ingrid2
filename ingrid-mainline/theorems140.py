@@ -3694,9 +3694,9 @@ class Theorem105(Theorem):
 
 class Theorem106(Theorem):
     def __init__(self):
-        super(Theorem106, self).__init__(106, "null;", "")
+        super(Theorem106, self).__init__(106, "if exists nodeCover and exists chromaticNum and exists nodeInd then \n{\n    edges <= maxb(nodeCover)*(maxb(nodeInd)+maxb(nodeCover)*(maxb(chromaticNum)-(1.0))/(2.0*maxb(chromaticNum))),\n    nodeCover >= -((maxb(chromaticNum)*maxb(nodeInd)+sqrt(maxb(chromaticNum)*(2.0*maxb(chromaticNum)*maxb(edges)+maxb(chromaticNum)*maxb(nodeInd)**2.0-(2.0*maxb(edges)))))/(maxb(chromaticNum)-(1.0))),\n    nodeInd >= minb(edges)/maxb(nodeCover)-(maxb(nodeCover)/2.0)+maxb(nodeCover)/(2.0*maxb(chromaticNum)),\n    chromaticNum >= maxb(nodeCover)**2.0/(-(2.0*minb(edges))+maxb(nodeCover)**2.0+2.0*maxb(nodeCover)*maxb(nodeInd))\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in []
+        return str_invar in ["nodeCover","chromaticNum","nodeInd","edges"]
     def run(self):
         get = self.get
         set = self.set
@@ -3705,6 +3705,27 @@ class Theorem106(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
+        if maxb("nodeCover") != 'undt' and maxb("chromaticNum") != 'undt' and maxb("nodeInd") != 'undt':
+            if maxb("nodeCover") != 'undt' and maxb("nodeInd") != 'undt' and maxb("chromaticNum") != 'undt':
+                try:
+                    set("edges",  maxb("nodeCover")*(maxb("nodeInd")+maxb("nodeCover")*(maxb("chromaticNum")-(1.0))/(2.0*maxb("chromaticNum"))), ind='Max')
+                except:
+                    pass
+            if maxb("chromaticNum") != 'undt' and maxb("nodeInd") != 'undt' and maxb("edges") != 'undt':
+                try:
+                    set("nodeCover",  -((maxb("chromaticNum")*maxb("nodeInd")+sqrt(maxb("chromaticNum")*(2.0*maxb("chromaticNum")*maxb("edges")+maxb("chromaticNum")*maxb("nodeInd")**2.0-(2.0*maxb("edges")))))/(maxb("chromaticNum")-(1.0))), ind='Min')
+                except:
+                    pass
+            if minb("edges") != 'undt' and maxb("nodeCover") != 'undt' and maxb("chromaticNum") != 'undt':
+                try:
+                    set("nodeInd",  minb("edges")/maxb("nodeCover")-(maxb("nodeCover")/2.0)+maxb("nodeCover")/(2.0*maxb("chromaticNum")), ind='Min')
+                except:
+                    pass
+            if maxb("nodeCover") != 'undt' and minb("edges") != 'undt' and maxb("nodeInd") != 'undt':
+                try:
+                    set("chromaticNum",  maxb("nodeCover")**2.0/(-(2.0*minb("edges"))+maxb("nodeCover")**2.0+2.0*maxb("nodeCover")*maxb("nodeInd")), ind='Min')
+                except:
+                    pass
         return
 
 class Theorem107(Theorem):
