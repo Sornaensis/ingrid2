@@ -90,7 +90,11 @@
             "disp": ""
         },
         {
-            "text": "if tree then {radius == ((diameter+1)/2)};",
+            "text": "
+if tree then 
+{
+    radius <= ((diameter+1)/2)
+};",
             "name": "Theorem",
             "idnum": 273,
             "disp": ""
