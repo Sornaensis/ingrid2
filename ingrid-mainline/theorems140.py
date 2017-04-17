@@ -6327,7 +6327,7 @@ class Theorem191(Theorem):
 
 class Theorem192(Theorem):
     def __init__(self):
-        super(Theorem192, self).__init__(192, "if maxClique == 2.0 and exists diameter then \n{\n    nodeInd >= mindeg*(diameter+4.0)/4.0\n};\n", "")
+        super(Theorem192, self).__init__(192, "if maxClique == 2.0 and exists diameter then \n{\n    nodeInd >= minb(mindeg)*(minb(diameter)+4.0)/4.0,\n    mindeg <= 4.0*maxb(nodeInd)/(minb(diameter)+1.0),\n    diameter <= -(1.0)+4.0*maxb(nodeInd)/minb(mindeg)\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["maxClique","diameter","nodeInd","mindeg"]
     def run(self):
@@ -6346,16 +6346,16 @@ class Theorem192(Theorem):
                     pass
             if maxb("nodeInd") != 'undt' and minb("diameter") != 'undt':
                 try:
-                    set("mindeg",  4.0*maxb("nodeInd")/(minb("diameter")+4.0), ind='Max')
+                    set("mindeg",  4.0*maxb("nodeInd")/(minb("diameter")+1.0), ind='Max')
                 except:
                     pass
             if maxb("nodeInd") != 'undt' and minb("mindeg") != 'undt':
                 try:
-                    set("diameter",  -(4.0)+4.0*maxb("nodeInd")/minb("mindeg"), ind='Max')
+                    set("diameter",  -(1.0)+4.0*maxb("nodeInd")/minb("mindeg"), ind='Max')
                 except:
                     pass
         return
-
+    
 class Theorem193(Theorem):
     def __init__(self):
         super(Theorem193, self).__init__(193, "thickness <= (1.0/2.0)*(nodeCover+1.0);\n", "")
