@@ -99,7 +99,10 @@ nosolve edges >= m*(nodes - chromaticNum) + chromaticNum*(chromaticNum - 1)/2 - 
             "disp": ""
         },
         {
-            "text": "if nodeInd <= 2 and mindeg >= nodes - 4 then {edges <= nodes*(nodes - 14)/2 + 14*maxClique};",
+            "text": "if nodeInd <= 2.0 and mindeg >= nodes-(4.0) and nodes > 14 then 
+{
+    edges <= nodes*(nodes-(14.0))/2.0+14.0*maxClique
+};",
             "name": "Theorem",
             "idnum": 454,
             "disp": ""
