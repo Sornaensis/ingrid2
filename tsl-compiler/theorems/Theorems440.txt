@@ -132,19 +132,7 @@ else if girth >= 4.0 and mindeg == 2.0 and istrue odd(_t) then
             "disp": ""
         },
         {
-            "text": "let t = ((girth-2)/2); 
-if girth >= 4 and mindeg >= 3 and odd t  then 
-{
-    nodeCover <= maxb(nodes)-(minb(maxdeg)*((minb(mindeg)-(1.0))**(((minb(girth)-(2.0))/2.0)-(1.0))-(1.0))/(minb(mindeg)*(minb(mindeg)-(2.0)))),
-    nodes >= (minb(maxdeg)*(minb(mindeg)-(1.0))**(minb(girth)/2.0-(2.0))-(minb(maxdeg))+minb(mindeg)**2.0*minb(nodeCover)-(2.0*minb(mindeg)*minb(nodeCover)))/(minb(mindeg)*(minb(mindeg)-(2.0))),
-    maxdeg <= minb(mindeg)*(-(minb(mindeg)*minb(nodeCover))+minb(mindeg)*maxb(nodes)+2.0*minb(nodeCover)-(2.0*maxb(nodes)))/((minb(mindeg)-(1.0))**(minb(girth)/2.0-(2.0))-(1.0))
-} 
-else if girth >= 4 and mindeg >= 3 and even t  then 
-{
-    nodeCover <= maxb(nodes)-(minb(maxdeg)*(minb(mindeg)-(1.0))*((minb(mindeg)-(1.0))**((minb(girth)-(2.0))/2.0)-(1.0))/(minb(mindeg)*(minb(mindeg)-(2.0))))-(1.0),
-    nodes >= (-(minb(maxdeg)*minb(mindeg))+minb(maxdeg)*(minb(mindeg)-(1.0))**(minb(girth)/2.0)+minb(maxdeg)+minb(mindeg)**2.0*minb(nodeCover)+minb(mindeg)**2.0-(2.0*minb(mindeg)*minb(nodeCover))-(2.0*minb(mindeg)))/(minb(mindeg)*(minb(mindeg)-(2.0))),
-    maxdeg <= -(minb(mindeg)*(minb(mindeg)*minb(nodeCover)-(minb(mindeg)*maxb(nodes))+minb(mindeg)-(2.0*minb(nodeCover))+2.0*maxb(nodes)-(2.0))/(-(minb(mindeg))+(minb(mindeg)-(1.0))**(minb(girth)/2.0)+1.0))
-};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 437,
             "disp": ""
