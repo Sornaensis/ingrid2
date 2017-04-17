@@ -85,7 +85,9 @@ else if girth >= 4 and mindeg >= 3 and istrue even(_t) then
             "disp": ""
         },
         {
-            "text": "if genus <= 1 then { thickness == genus + 1 };",
+            "text": "
+if genus <= 1 then { thickness == genus + 1 };
+if thickness >= 3 then { genus >= 2 };",
             "name": "Theorem",
             "idnum": 370,
             "disp": ""
