@@ -101,9 +101,8 @@ postRPCRunR = do
                                              { std_in = CreatePipe, std_out = CreatePipe, std_err = CreatePipe }
         hPutStrLn stdin . C.unpack . encode $ val
         hFlush stdin
-        forkIO $ threadDelay 500000 >> terminateProcess ingrid
-        code <- waitForProcess ingrid
-        print code
+        threadDelay 500000 
+        terminateProcess ingrid
         putStrLn =<< hGetContents stderr
         reply <- hGetContents stdout
         putStrLn reply
