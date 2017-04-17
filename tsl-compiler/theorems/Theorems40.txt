@@ -23,7 +23,7 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if edges < maxb(nodes)*(maxb(nodes)-1)/2 then { not complete };",
             "name": "Theorem",
             "idnum": 24,
             "disp": ""
