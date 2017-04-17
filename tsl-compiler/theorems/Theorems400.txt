@@ -148,7 +148,7 @@
             "disp": ""
         },
         {
-            "text": "if nodeConnec > 0 then {nodeConnec >= (nodes *(maxdeg - 2))/((maxdeg-1)**diameter + maxdeg - 3)};",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 399,
             "disp": ""
