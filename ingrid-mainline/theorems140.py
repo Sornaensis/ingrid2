@@ -2011,7 +2011,7 @@ class Theorem50(Theorem):
 
 class Theorem51(Theorem):
     def __init__(self):
-        super(Theorem51, self).__init__(51, "arboricity >= chromaticNum/2.0;\n", "")
+        super(Theorem51, self).__init__(51, "arboricity >= (minb(chromaticNum)+1.0)/2.0;\nchromaticNum <= maxb(arboricity)*2.0;\n", "")
     def involves(self, str_invar):
         return str_invar in ["arboricity","chromaticNum"]
     def run(self):
@@ -2024,12 +2024,12 @@ class Theorem51(Theorem):
         congruent = self.congruent
         if minb("chromaticNum") != 'undt':
             try:
-                set("arboricity",  minb("chromaticNum")/2.0, ind='Min')
+                set("arboricity",  (minb("chromaticNum")+1.0)/2.0, ind='Min')
             except:
                 pass
         if maxb("arboricity") != 'undt':
             try:
-                set("chromaticNum",  2.0*maxb("arboricity"), ind='Max')
+                set("chromaticNum",  maxb("arboricity")*2.0, ind='Max')
             except:
                 pass
         return
