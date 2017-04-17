@@ -93,10 +93,7 @@
             "disp": ""
         },
         {
-            "text": "_k is maximum(4.0, maxb(maxClique)+1.0);
-_z is (maxb(maxdeg)+1)/_k;
-chromaticNum <= maxb(maxdeg)+1-_z;
-maxdeg >= (_k*minb(chromaticNum)-(1.0))/(_k-(1.0))-(1.0);",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 131,
             "disp": ""
