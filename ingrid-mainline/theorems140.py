@@ -13453,9 +13453,9 @@ class Theorem436(Theorem):
 
 class Theorem437(Theorem):
     def __init__(self):
-        super(Theorem437, self).__init__(437, "null;", "")
+        super(Theorem437, self).__init__(437, "if chromaticNum > 2.0 then \n{\n    not cycle\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in []
+        return str_invar in ["chromaticNum","cycle"]
     def run(self):
         get = self.get
         set = self.set
@@ -13464,6 +13464,8 @@ class Theorem437(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
+        if (minb("chromaticNum") != 'undt' and minb("chromaticNum") > 2.0):
+            set("cycle", False)
         return
 
 class Theorem438(Theorem):
