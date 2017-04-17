@@ -13453,9 +13453,9 @@ class Theorem436(Theorem):
 
 class Theorem437(Theorem):
     def __init__(self):
-        super(Theorem437, self).__init__(437, "let t = (((girth-(2.0))/2.0));\nif girth >= 4.0 and mindeg >= 3.0 and odd t then \n{\n    nodeCover <= maxb(nodes)-(minb(maxdeg)*((minb(mindeg)-(1.0))**(((minb(girth)-(2.0))/2.0)-(1.0))-(1.0))/(minb(mindeg)*(minb(mindeg)-(2.0)))),\n    nodes >= (minb(maxdeg)*(minb(mindeg)-(1.0))**(minb(girth)/2.0-(2.0))-(minb(maxdeg))+minb(mindeg)**2.0*minb(nodeCover)-(2.0*minb(mindeg)*minb(nodeCover)))/(minb(mindeg)*(minb(mindeg)-(2.0))),\n    maxdeg <= minb(mindeg)*(-(minb(mindeg)*minb(nodeCover))+minb(mindeg)*maxb(nodes)+2.0*minb(nodeCover)-(2.0*maxb(nodes)))/((minb(mindeg)-(1.0))**(minb(girth)/2.0-(2.0))-(1.0))\n}\nelse if girth >= 4.0 and mindeg >= 3.0 and even t then \n{\n    nodeCover <= maxb(nodes)-(minb(maxdeg)*(minb(mindeg)-(1.0))*((minb(mindeg)-(1.0))**((minb(girth)-(2.0))/2.0)-(1.0))/(minb(mindeg)*(minb(mindeg)-(2.0))))-(1.0),\n    nodes >= (-(minb(maxdeg)*minb(mindeg))+minb(maxdeg)*(minb(mindeg)-(1.0))**(minb(girth)/2.0)+minb(maxdeg)+minb(mindeg)**2.0*minb(nodeCover)+minb(mindeg)**2.0-(2.0*minb(mindeg)*minb(nodeCover))-(2.0*minb(mindeg)))/(minb(mindeg)*(minb(mindeg)-(2.0))),\n    maxdeg <= -(minb(mindeg)*(minb(mindeg)*minb(nodeCover)-(minb(mindeg)*maxb(nodes))+minb(mindeg)-(2.0*minb(nodeCover))+2.0*maxb(nodes)-(2.0))/(-(minb(mindeg))+(minb(mindeg)-(1.0))**(minb(girth)/2.0)+1.0))\n};\n", "")
+        super(Theorem437, self).__init__(437, "null;", "")
     def involves(self, str_invar):
-        return str_invar in ["girth","mindeg","nodeCover","nodes","maxdeg"]
+        return str_invar in []
     def run(self):
         get = self.get
         set = self.set
@@ -13464,38 +13464,6 @@ class Theorem437(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("girth") != 'undt' and minb("girth") >= 4.0) and (minb("mindeg") != 'undt' and minb("mindeg") >= 3.0) and oddInvar(((("girth"-(2.0))/2.0))):
-            if maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("mindeg") != 'undt' and minb("girth") != 'undt':
-                try:
-                    set("nodeCover",  maxb("nodes")-(minb("maxdeg")*((minb("mindeg")-(1.0))**(((minb("girth")-(2.0))/2.0)-(1.0))-(1.0))/(minb("mindeg")*(minb("mindeg")-(2.0)))), ind='Max')
-                except:
-                    pass
-            if minb("maxdeg") != 'undt' and minb("mindeg") != 'undt' and minb("girth") != 'undt' and minb("nodeCover") != 'undt':
-                try:
-                    set("nodes",  (minb("maxdeg")*(minb("mindeg")-(1.0))**(minb("girth")/2.0-(2.0))-(minb("maxdeg"))+minb("mindeg")**2.0*minb("nodeCover")-(2.0*minb("mindeg")*minb("nodeCover")))/(minb("mindeg")*(minb("mindeg")-(2.0))), ind='Min')
-                except:
-                    pass
-            if minb("mindeg") != 'undt' and minb("nodeCover") != 'undt' and maxb("nodes") != 'undt' and minb("girth") != 'undt':
-                try:
-                    set("maxdeg",  minb("mindeg")*(-(minb("mindeg")*minb("nodeCover"))+minb("mindeg")*maxb("nodes")+2.0*minb("nodeCover")-(2.0*maxb("nodes")))/((minb("mindeg")-(1.0))**(minb("girth")/2.0-(2.0))-(1.0)), ind='Max')
-                except:
-                    pass
-        elif (minb("girth") != 'undt' and minb("girth") >= 4.0) and (minb("mindeg") != 'undt' and minb("mindeg") >= 3.0) and evenInvar(((("girth"-(2.0))/2.0))):
-            if maxb("nodes") != 'undt' and minb("maxdeg") != 'undt' and minb("mindeg") != 'undt' and minb("girth") != 'undt':
-                try:
-                    set("nodeCover",  maxb("nodes")-(minb("maxdeg")*(minb("mindeg")-(1.0))*((minb("mindeg")-(1.0))**((minb("girth")-(2.0))/2.0)-(1.0))/(minb("mindeg")*(minb("mindeg")-(2.0))))-(1.0), ind='Max')
-                except:
-                    pass
-            if minb("maxdeg") != 'undt' and minb("mindeg") != 'undt' and minb("girth") != 'undt' and minb("nodeCover") != 'undt':
-                try:
-                    set("nodes",  (-(minb("maxdeg")*minb("mindeg"))+minb("maxdeg")*(minb("mindeg")-(1.0))**(minb("girth")/2.0)+minb("maxdeg")+minb("mindeg")**2.0*minb("nodeCover")+minb("mindeg")**2.0-(2.0*minb("mindeg")*minb("nodeCover"))-(2.0*minb("mindeg")))/(minb("mindeg")*(minb("mindeg")-(2.0))), ind='Min')
-                except:
-                    pass
-            if minb("mindeg") != 'undt' and minb("nodeCover") != 'undt' and maxb("nodes") != 'undt' and minb("girth") != 'undt':
-                try:
-                    set("maxdeg",  -(minb("mindeg")*(minb("mindeg")*minb("nodeCover")-(minb("mindeg")*maxb("nodes"))+minb("mindeg")-(2.0*minb("nodeCover"))+2.0*maxb("nodes")-(2.0))/(-(minb("mindeg"))+(minb("mindeg")-(1.0))**(minb("girth")/2.0)+1.0)), ind='Max')
-                except:
-                    pass
         return
 
 class Theorem438(Theorem):
