@@ -8634,7 +8634,7 @@ class Theorem272(Theorem):
 
 class Theorem273(Theorem):
     def __init__(self):
-        super(Theorem273, self).__init__(273, "if tree then \n{\n    radius == ((diameter+1.0)/2.0)\n};\n", "")
+        super(Theorem273, self).__init__(273, "if tree then \n{\n    radius <= ((diameter+1.0)/2.0)\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["tree","radius","diameter"]
     def run(self):
@@ -8646,16 +8646,6 @@ class Theorem273(Theorem):
         oddInvar = self.oddInvar
         congruent = self.congruent
         if get("tree") == True:
-            if minb("diameter") != 'undt':
-                try:
-                    set("radius",  ((minb("diameter")+1.0)/2.0), ind='Min')
-                except:
-                    pass
-            if maxb("radius") != 'undt':
-                try:
-                    set("diameter",  2.0*maxb("radius")-(1.0), ind='Max')
-                except:
-                    pass
             if maxb("diameter") != 'undt':
                 try:
                     set("radius",  ((maxb("diameter")+1.0)/2.0), ind='Max')
