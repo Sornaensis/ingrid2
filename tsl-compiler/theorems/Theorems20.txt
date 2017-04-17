@@ -95,7 +95,8 @@ numOfComponents <= (-(minb(maxdeg))+minb(mindeg)+maxb(nodes))/(minb(mindeg)+1.0)
             "name": "Theorem",
             "disp": "",
             "idnum": 11,
-            "text": "edgeInd <= nodes / 2;" 
+            "text": "edgeInd <= floor(maxb(nodes)/2.0);
+nodes >= 2.0*minb(edgeInd);" 
         }, 
         { 
             "name": "Theorem",
