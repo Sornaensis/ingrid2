@@ -5521,7 +5521,7 @@ class Theorem165(Theorem):
 
 class Theorem166(Theorem):
     def __init__(self):
-        super(Theorem166, self).__init__(166, "if diameter > 1.0 and nodeConnec > 1.0 and maxb(nodeConnec) > 1.0 then \n{\n    edges >= (nodes*maxb(diameter)-(2.0*maxb(diameter))-(1.0))/(maxb(diameter)-(1.0)),\n    diameter >= (maxb(edges)+1.0)/(maxb(edges)-(minb(nodes))+2.0)\n};\n", "")
+        super(Theorem166, self).__init__(166, "if diameter > 1.0 and nodeConnec > 1.0 then \n{\n    edges >= (nodes*maxb(diameter)-(2.0*maxb(diameter))-(1.0))/(maxb(diameter)-(1.0)),\n    diameter >= floor((2.0*maxb(edges)-(minb(nodes)))/(maxb(edges)-(minb(nodes))+2.0))\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["diameter","nodeConnec","edges","nodes"]
     def run(self):
@@ -5532,7 +5532,7 @@ class Theorem166(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (minb("diameter") != 'undt' and minb("diameter") > 1.0) and (minb("nodeConnec") != 'undt' and minb("nodeConnec") > 1.0) and (maxb("nodeConnec") != 'undt' and maxb("nodeConnec") > 1.0):
+        if (minb("diameter") != 'undt' and minb("diameter") > 1.0) and (minb("nodeConnec") != 'undt' and minb("nodeConnec") > 1.0):
             if minb("nodes") != 'undt' and maxb("diameter") != 'undt':
                 try:
                     set("edges",  (minb("nodes")*maxb("diameter")-(2.0*maxb("diameter"))-(1.0))/(maxb("diameter")-(1.0)), ind='Min')
@@ -5545,7 +5545,7 @@ class Theorem166(Theorem):
                     pass
             if maxb("edges") != 'undt' and minb("nodes") != 'undt':
                 try:
-                    set("diameter",  (maxb("edges")+1.0)/(maxb("edges")-(minb("nodes"))+2.0), ind='Min')
+                    set("diameter",  floor((2.0*maxb("edges")-(minb("nodes")))/(maxb("edges")-(minb("nodes"))+2.0)), ind='Min')
                 except:
                     pass
         return
