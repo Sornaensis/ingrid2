@@ -142,8 +142,8 @@ bandwidth >= (1/2)*(2*_P-1-sqrt((2*_P-1)**2-8*edges));",
             "text": "
 _k is maximum(4.0, maxb(nodeInd)+1.0);
 nodeCliqueCover <= maxb(nodes)-(minb(mindeg))-((maxb(nodes)-(minb(mindeg)))/_k);
-nodes >= minb(mindeg)+floor((_k*minb(nodeCliqueCover)-1)/(_k-(1.0)));
-mindeg <= (-(_k*minb(nodeCliqueCover))+_k*maxb(nodes)-(maxb(nodes)))/(_k-(1.0));",
+nodes >= minb(mindeg)+floor((_k*minb(nodeCliqueCover)-(1.0))/(_k-(1.0)));
+mindeg <= floor(maxb(nodes)+1-_k*min(nodeCliqueCover)/(_k-1));",
             "name": "Theorem",
             "idnum": 178,
             "disp": ""
