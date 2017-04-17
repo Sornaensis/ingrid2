@@ -12564,9 +12564,9 @@ class Theorem407(Theorem):
 
 class Theorem408(Theorem):
     def __init__(self):
-        super(Theorem408, self).__init__(408, "let s = (floor((maxdeg+2.0-(sqrt((maxdeg+2.0)**2.0-(4.0*nodes))))/2.0));\nif diameter == 3.0 and s <= floor((nodes/2.0)**(1.0/3.0)) then \n{\n    edges >= nodes+s*(s-(1.0))/2.0-(1.0)\n};\n", "")
+        super(Theorem408, self).__init__(408, "_s is floor((minb(maxdeg)+2.0-(sqrt((minb(maxdeg)+2.0)**2.0-(4.0*minb(nodes)))))/2.0);\nif diameter == 3.0 and _s <= floor((nodes/2.0)**(1.0/3.0)) then \n{\n    edges >= nodes+_s*(_s-(1.0))/2.0-(1.0)\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in ["diameter","maxdeg","nodes","edges"]
+        return str_invar in ["maxdeg","nodes","diameter","edges"]
     def run(self):
         get = self.get
         set = self.set
@@ -12575,15 +12575,20 @@ class Theorem408(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if ((minb("diameter") != 'undt' and minb("diameter") >= 3.0) and (maxb("diameter") != 'undt' and maxb("diameter") <= 3.0)) and (floor(("maxdeg"+2.0-(sqrt(("maxdeg"+2.0)**2.0-(4.0*"nodes"))))/2.0)) <= floor(("nodes"/2.0)**(1.0/3.0)):
-            if minb("nodes") != 'undt' and minb("maxdeg") != 'undt':
+        if minb("maxdeg") != 'undt' and minb("nodes") != 'undt':
+            try:
+                _s = floor((minb("maxdeg")+2.0-(sqrt((minb("maxdeg")+2.0)**2.0-(4.0*minb("nodes")))))/2.0)
+            except:
+                pass
+        if ((minb("diameter") != 'undt' and minb("diameter") >= 3.0) and (maxb("diameter") != 'undt' and maxb("diameter") <= 3.0)) and ('_s' in vars() and _s <= floor(("nodes"/2.0)**(1.0/3.0))):
+            if minb("nodes") != 'undt' and '_s' in vars():
                 try:
-                    set("edges",  minb("nodes")+(floor((minb("maxdeg")+2.0-(sqrt((minb("maxdeg")+2.0)**2.0-(4.0*minb("nodes")))))/2.0))*((floor((minb("maxdeg")+2.0-(sqrt((minb("maxdeg")+2.0)**2.0-(4.0*minb("nodes")))))/2.0))-(1.0))/2.0-(1.0), ind='Min')
+                    set("edges",  minb("nodes")+_s*(_s-(1.0))/2.0-(1.0), ind='Min')
                 except:
                     pass
-            if minb("maxdeg") != 'undt' and minb("nodes") != 'undt' and maxb("edges") != 'undt':
+            if maxb("edges") != 'undt' and '_s' in vars():
                 try:
-                    set("nodes",  -(floor((minb("maxdeg")+2.0-(sqrt((minb("maxdeg")+2.0)**2.0-(4.0*minb("nodes")))))/2.0)**2.0/2.0)+floor((minb("maxdeg")+2.0-(sqrt((minb("maxdeg")+2.0)**2.0-(4.0*minb("nodes")))))/2.0)/2.0+maxb("edges")+1.0, ind='Max')
+                    set("nodes",  -(_s**2.0/2.0)+_s/2.0+maxb("edges")+1.0, ind='Max')
                 except:
                     pass
         return
