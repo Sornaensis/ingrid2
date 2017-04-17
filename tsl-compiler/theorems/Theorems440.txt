@@ -11,7 +11,13 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "
+if genus > 0 or crossing > 0 or not planar then
+{
+   genus >= 1,
+   crossing >= 1,
+   not planar
+};",
             "name": "Theorem",
             "idnum": 422,
             "disp": ""
