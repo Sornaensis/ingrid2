@@ -94,6 +94,10 @@
 if tree then 
 {
     radius <= ((diameter+1)/2)
+};
+if diameter < radius*2 - 1 then
+{
+    not tree
 };",
             "name": "Theorem",
             "idnum": 273,
