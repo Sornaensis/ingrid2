@@ -8238,7 +8238,7 @@ class Theorem256(Theorem):
 
 class Theorem257(Theorem):
     def __init__(self):
-        super(Theorem257, self).__init__(257, "if (even diameter and minb(nodeConnec) >= 2.0) then \n{\n    _k is 2.0\n}\nelse  \n{\n    _k is 1.0\n};\nif minb(diameter) >= 3.0 then \n{\n    edgeInd >= (nodeConnec)*(minb(diameter)-(1.0))/2.0+_k,\n    diameter <= (-(2.0*_k)+2.0*maxb(edgeInd)+minb(nodeConnec))/minb(nodeConnec)\n};\n", "")
+        super(Theorem257, self).__init__(257, "if (even diameter and minb(nodeConnec) >= 2.0) then \n{\n    _k is 2.0\n}\nelse if (odd diameter or minb(nodeConnec) == 1.0) then \n{\n    _k is 1.0\n};\nif minb(diameter) >= 3.0 and minb(nodeConnec) > 0.0 then \n{\n    edgeInd >= (nodeConnec)*(minb(diameter)-(1.0))/2.0+_k,\n    diameter <= maximum((-(2.0*_k)+2.0*maxb(edgeInd)+minb(nodeConnec))/minb(nodeConnec), 2.0)\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["diameter","nodeConnec","edgeInd"]
     def run(self):
@@ -8254,12 +8254,12 @@ class Theorem257(Theorem):
                 _k = 2.0
             except:
                 pass
-        elif True:
+        elif (oddInvar("diameter") or ((minb("nodeConnec") != 'undt' and minb("nodeConnec") >= 1.0) and (minb("nodeConnec") != 'undt' and minb("nodeConnec") <= 1.0))):
             try:
                 _k = 1.0
             except:
                 pass
-        if (minb("diameter") != 'undt' and minb("diameter") >= 3.0):
+        if (minb("diameter") != 'undt' and minb("diameter") >= 3.0) and (minb("nodeConnec") != 'undt' and minb("nodeConnec") > 0.0):
             if minb("nodeConnec") != 'undt' and minb("diameter") != 'undt' and '_k' in vars():
                 try:
                     set("edgeInd",  (minb("nodeConnec"))*(minb("diameter")-(1.0))/2.0+_k, ind='Min')
@@ -8272,7 +8272,7 @@ class Theorem257(Theorem):
                     pass
             if maxb("edgeInd") != 'undt' and minb("nodeConnec") != 'undt' and '_k' in vars():
                 try:
-                    set("diameter",  (-(2.0*_k)+2.0*maxb("edgeInd")+minb("nodeConnec"))/minb("nodeConnec"), ind='Max')
+                    set("diameter",  maximum((-(2.0*_k)+2.0*maxb("edgeInd")+minb("nodeConnec"))/minb("nodeConnec"), 2.0), ind='Max')
                 except:
                     pass
         return
