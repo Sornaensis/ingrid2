@@ -778,9 +778,9 @@ class Theorem23(Theorem):
 
 class Theorem24(Theorem):
     def __init__(self):
-        super(Theorem24, self).__init__(24, "\n", "")
+        super(Theorem24, self).__init__(24, "if edges < maxb(nodes)*(maxb(nodes)-(1.0))/2.0 then \n{\n    not complete\n};\n", "")
     def involves(self, str_invar):
-        return str_invar in []
+        return str_invar in ["edges","nodes","complete"]
     def run(self):
         get = self.get
         set = self.set
@@ -789,6 +789,8 @@ class Theorem24(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
+        if (maxb("nodes") != 'undt' and maxb("edges") != 'undt' and maxb("edges") < maxb("nodes")*(maxb("nodes")-(1.0))/2.0):
+            set("complete", False)
         return
 
 class Theorem25(Theorem):
