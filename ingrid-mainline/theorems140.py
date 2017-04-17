@@ -346,7 +346,7 @@ class Theorem10(Theorem):
 
 class Theorem11(Theorem):
     def __init__(self):
-        super(Theorem11, self).__init__(11, "edgeInd <= nodes/2.0;\n", "")
+        super(Theorem11, self).__init__(11, "edgeInd <= floor(maxb(nodes)/2.0);\nnodes >= 2.0*minb(edgeInd);\n", "")
     def involves(self, str_invar):
         return str_invar in ["edgeInd","nodes"]
     def run(self):
@@ -359,7 +359,7 @@ class Theorem11(Theorem):
         congruent = self.congruent
         if maxb("nodes") != 'undt':
             try:
-                set("edgeInd",  maxb("nodes")/2.0, ind='Max')
+                set("edgeInd",  floor(maxb("nodes")/2.0), ind='Max')
             except:
                 pass
         if minb("edgeInd") != 'undt':
