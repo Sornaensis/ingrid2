@@ -12551,7 +12551,7 @@ class Theorem407(Theorem):
 
 class Theorem408(Theorem):
     def __init__(self):
-        super(Theorem408, self).__init__(408, "_s is floor((minb(maxdeg)+2.0-(sqrt((minb(maxdeg)+2.0)**2.0-(4.0*minb(nodes)))))/2.0);\nif diameter == 3.0 and _s <= floor((nodes/2.0)**(1.0/3.0)) then \n{\n    edges >= nodes+_s*(_s-(1.0))/2.0-(1.0)\n};\n", "")
+        super(Theorem408, self).__init__(408, "_s is floor((minb(maxdeg)+2.0-(sqrt((minb(maxdeg)+2.0)**2.0-(4.0*minb(nodes)))))/2.0);\nif diameter == 3.0 and _s <= floor((minb(nodes)/2.0)**(1.0/3.0)) then \n{\n    edges >= nodes+_s*(_s-(1.0))/2.0-(1.0)\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["maxdeg","nodes","diameter","edges"]
     def run(self):
@@ -12567,7 +12567,7 @@ class Theorem408(Theorem):
                 _s = floor((minb("maxdeg")+2.0-(sqrt((minb("maxdeg")+2.0)**2.0-(4.0*minb("nodes")))))/2.0)
             except:
                 pass
-        if ((minb("diameter") != 'undt' and minb("diameter") >= 3.0) and (maxb("diameter") != 'undt' and maxb("diameter") <= 3.0)) and ('_s' in vars() and _s <= floor(("nodes"/2.0)**(1.0/3.0))):
+        if ((minb("diameter") != 'undt' and minb("diameter") >= 3.0) and (maxb("diameter") != 'undt' and maxb("diameter") <= 3.0)) and (minb("nodes") != 'undt' and '_s' in vars() and _s <= floor((minb("nodes")/2.0)**(1.0/3.0))):
             if minb("nodes") != 'undt' and '_s' in vars():
                 try:
                     set("edges",  minb("nodes")+_s*(_s-(1.0))/2.0-(1.0), ind='Min')
