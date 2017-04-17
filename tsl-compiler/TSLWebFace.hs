@@ -8,6 +8,7 @@
 {-# LANGUAGE QuasiQuotes                #-}
 {-# LANGUAGE TemplateHaskell            #-}
 {-# LANGUAGE TypeFamilies               #-}
+import           Control.Concurrent
 import           Control.Exception          (SomeException)
 import qualified Control.Exception          as E
 import           Control.Exception.Lifted   (handle)
@@ -100,6 +101,7 @@ postRPCRunR = do
                                              { std_in = CreatePipe, std_out = CreatePipe, std_err = CreatePipe }
         hPutStrLn stdin . C.unpack . encode $ val
         hFlush stdin
+        forkIO $ threadDelay 5000000 >> terminateProcess ingrid
         code <- waitForProcess ingrid
         print code
         putStrLn =<< hGetContents stderr
