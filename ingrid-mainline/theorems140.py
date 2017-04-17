@@ -4468,9 +4468,9 @@ class Theorem130(Theorem):
 
 class Theorem131(Theorem):
     def __init__(self):
-        super(Theorem131, self).__init__(131, "_k is maximum(4.0, maxb(maxClique)+1.0);\n_z is (maxb(maxdeg)+1.0)/_k;\nchromaticNum <= maxb(maxdeg)+1.0-(_z);\nmaxdeg >= (_k*minb(chromaticNum)-(1.0))/(_k-(1.0))-(1.0);\n", "")
+        super(Theorem131, self).__init__(131, "null;", "")
     def involves(self, str_invar):
-        return str_invar in ["maxClique","maxdeg","chromaticNum"]
+        return str_invar in []
     def run(self):
         get = self.get
         set = self.set
@@ -4479,26 +4479,6 @@ class Theorem131(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if maxb("maxClique") != 'undt':
-            try:
-                _k = maximum(4.0, maxb("maxClique")+1.0)
-            except:
-                pass
-        if maxb("maxdeg") != 'undt':
-            try:
-                _z = (maxb("maxdeg")+1.0)/_k
-            except:
-                pass
-        if maxb("maxdeg") != 'undt' and '_z' in vars():
-            try:
-                set("chromaticNum",  maxb("maxdeg")+1.0-(_z), ind='Max')
-            except:
-                pass
-        if minb("chromaticNum") != 'undt' and '_k' in vars():
-            try:
-                set("maxdeg",  (_k*minb("chromaticNum")-(1.0))/(_k-(1.0))-(1.0), ind='Min')
-            except:
-                pass
         return
 
 class Theorem132(Theorem):
