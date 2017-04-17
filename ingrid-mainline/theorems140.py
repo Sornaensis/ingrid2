@@ -8005,7 +8005,7 @@ class Theorem250(Theorem):
 
 class Theorem251(Theorem):
     def __init__(self):
-        super(Theorem251, self).__init__(251, "if defined girth then \n{\n    edges >= (girth-(1.0))*(arboricity-(1.0))**2.0+(arboricity-(1.0))\n};\n", "")
+        super(Theorem251, self).__init__(251, "if defined girth then \n{\n    nosolve edges >= (girth-(1.0))*(arboricity-(1.0))**2.0+(arboricity-(1.0))\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["girth","edges","arboricity"]
     def run(self):
@@ -8020,16 +8020,6 @@ class Theorem251(Theorem):
             if minb("girth") != 'undt' and minb("arboricity") != 'undt':
                 try:
                     set("edges",  (minb("girth")-(1.0))*(minb("arboricity")-(1.0))**2.0+(minb("arboricity")-(1.0)), ind='Min')
-                except:
-                    pass
-            if minb("arboricity") != 'undt' and maxb("edges") != 'undt':
-                try:
-                    set("girth",  (-(minb("arboricity"))+maxb("edges")+(minb("arboricity")-(1.0))**2.0+1.0)/(minb("arboricity")-(1.0))**2.0, ind='Max')
-                except:
-                    pass
-            if maxb("girth") != 'undt' and maxb("edges") != 'undt':
-                try:
-                    set("arboricity",  (2.0*maxb("girth")+sqrt(4.0*maxb("edges")*maxb("girth")-(4.0*maxb("edges"))+1.0)-(3.0))/(2.0*(maxb("girth")-(1.0))), ind='Max')
                 except:
                     pass
         return
