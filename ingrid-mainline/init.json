@@ -199,7 +199,7 @@
             "Value": {"Max" : "undt", "Min" : "1"},
             "Trace"  : [],
             "Changed" : "False",
-            "Name": "Number of Components"
+            "Name": "Num of Components"
         },
         "bandwidth":
         {
