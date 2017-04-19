@@ -179,7 +179,7 @@ chromaticNum <= maxb(arboricity)*2;",
             "disp": ""
         },
         {
-            "text": "edges >= (minb(maxdeg)+(minb(nodes)-(1.0))*minb(mindeg))/2.0;
+            "text": "edges >= (minb(maxdeg)+(minb(nodes)-(1.0))*minb(mindeg)+1)/2.0;
 maxdeg <= 2.0*maxb(edges)-(minb(mindeg)*minb(nodes))+minb(mindeg);
 nodes <= (2.0*maxb(edges)-(minb(maxdeg))+minb(mindeg))/minb(mindeg);
 mindeg <= (2.0*maxb(edges)-(minb(maxdeg)))/(minb(nodes)-(1.0));
