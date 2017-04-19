@@ -163,7 +163,7 @@
             "disp": ""
         },
         {
-            "text": "if edges >= (1/4) * (circumference*(2*nodes - circumference)+1) then {girth == 3};",
+            "text": "if edges >= (1/4) * (circumference*(2*nodes - circumference)+4) then {girth == 3};",
             "name": "Theorem",
             "idnum": 139,
             "disp": ""
