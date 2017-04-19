@@ -2160,7 +2160,7 @@ class Theorem54(Theorem):
 
 class Theorem55(Theorem):
     def __init__(self):
-        super(Theorem55, self).__init__(55, "edges >= (minb(maxdeg)+(minb(nodes)-(1.0))*minb(mindeg))/2.0;\nmaxdeg <= 2.0*maxb(edges)-(minb(mindeg)*minb(nodes))+minb(mindeg);\nnodes <= (2.0*maxb(edges)-(minb(maxdeg))+minb(mindeg))/minb(mindeg);\nmindeg <= (2.0*maxb(edges)-(minb(maxdeg)))/(minb(nodes)-(1.0));\n", "")
+        super(Theorem55, self).__init__(55, "edges >= (minb(maxdeg)+(minb(nodes)-(1.0))*minb(mindeg)+1)/2.0;\nmaxdeg <= 2.0*maxb(edges)-(minb(mindeg)*minb(nodes))+minb(mindeg);\nnodes <= (2.0*maxb(edges)-(minb(maxdeg))+minb(mindeg))/minb(mindeg);\nmindeg <= (2.0*maxb(edges)-(minb(maxdeg)))/(minb(nodes)-(1.0));\n", "")
     def involves(self, str_invar):
         return str_invar in ["edges","maxdeg","nodes","mindeg"]
     def run(self):
@@ -2173,7 +2173,7 @@ class Theorem55(Theorem):
         congruent = self.congruent
         if minb("maxdeg") != 'undt' and minb("nodes") != 'undt' and minb("mindeg") != 'undt':
             try:
-                set("edges",  (minb("maxdeg")+(minb("nodes")-(1.0))*minb("mindeg"))/2.0, ind='Min')
+                set("edges",  (minb("maxdeg")+(minb("nodes")-(1.0))*minb("mindeg")+1)/2.0, ind='Min')
             except:
                 pass
         if maxb("edges") != 'undt' and minb("mindeg") != 'undt' and minb("nodes") != 'undt':
