@@ -64,16 +64,16 @@ Finally, the language also allows for both imperative, mutable variables, and im
 
 Mutable variables must begin with an underscore (_) and have special syntax for assigning values:
 
-`_mut is <expr>`
+`_var is <expr>`
 
 ```haskell
 if nodeConnec >= 2 then
 {
-    _minpd is minimum(nodes, 2*mindeg);
+    _minpd is minimum(nodes, 2*mindeg)
 } 
 else
 {
-    _minpd is 6,
+    _minpd is 6
 };
 circumference >= _minpd;
 ```
@@ -171,21 +171,37 @@ Built In Functions
 ==================
 
 `minimum(x,y)`
+
 `maximum(x,y)`
+
 `even(x)`
+
 `odd(x)`
+
 `not(x)`
+
 `ceiling(x)`
+
 `floor(x)`
+
 `log(x,[y])`
+
 `ln(x)`
+
 `cos(x)`
+
 `sin(x)`
+
 `congruent(invar,x,y)`
+
 `pi()`
+
 `setmin(invar, x)*`
+
 `setmax(invar, x)*`
+
 `minb(invar)`
+
 `maxb(invar)`
 
 * Note: `invar` in the functions above indicates that the function must take an invariant as a parameter rather than an expression, while brackets [] indicate an optional argument
