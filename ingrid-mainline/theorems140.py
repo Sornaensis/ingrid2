@@ -4700,7 +4700,7 @@ class Theorem138(Theorem):
 
 class Theorem139(Theorem):
     def __init__(self):
-        super(Theorem139, self).__init__(139, "if edges >= (1.0/4.0)*(circumference*(2.0*nodes-(circumference))+1.0) then \n{\n    girth == 3.0\n};\n", "")
+        super(Theorem139, self).__init__(139, "if edges >= (1.0/4.0)*(circumference*(2.0*nodes-(circumference))+4.0) then \n{\n    girth == 3.0\n};\n", "")
     def involves(self, str_invar):
         return str_invar in ["edges","circumference","nodes","girth"]
     def run(self):
@@ -4711,7 +4711,7 @@ class Theorem139(Theorem):
         evenInvar = self.evenInvar
         oddInvar = self.oddInvar
         congruent = self.congruent
-        if (maxb("circumference") != 'undt' and maxb("nodes") != 'undt' and minb("edges") != 'undt' and minb("edges") >= (1.0/4.0)*(maxb("circumference")*(2.0*maxb("nodes")-(maxb("circumference")))+1.0)):
+        if (maxb("circumference") != 'undt' and maxb("nodes") != 'undt' and minb("edges") != 'undt' and minb("edges") >= (1.0/4.0)*(maxb("circumference")*(2.0*maxb("nodes")-(maxb("circumference")))+4.0)):
             try:
                 set("girth",  3.0, ind='Min')
             except:
