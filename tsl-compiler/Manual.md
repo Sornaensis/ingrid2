@@ -69,7 +69,7 @@ Mutable variables must begin with an underscore (_) and have special syntax for 
 ```haskell
 if nodeConnec >= 2 then
 {
-    _minpd is minimum(nodes, 2*mindeg)
+    _minpd is minimum(minb(nodes), 2*minb(mindeg))
 } 
 else
 {
