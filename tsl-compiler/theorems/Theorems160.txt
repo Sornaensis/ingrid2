@@ -127,7 +127,7 @@ nodes >= (maxb(circumference)+2.0*minb(edges))/maxb(circumference);",
         {
             "text": "if connected then
 {
-    if edges <= nodes + 3 then 
+    if edges <= nodes + 2 then 
     { 
         genus <= 0 
     } else if edges <= nodes + 6 then 

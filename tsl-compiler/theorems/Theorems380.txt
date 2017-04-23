@@ -1,14 +1,38 @@
-
 {
     "theorems":[
 {
-            "text": "let t = ((girth-1)/2); if g >= 4 and mindeg == 2 and even t then {nodeInd >= maxdeg*((t + 1)/2) + 1} else if g >= 4 and mindeg == 2 and odd t then {nodeInd >= maxdeg*((t + 1)/2)};",
+            "text": "
+let t = ((((minb(girth)-(2.0))/2.0)));
+if girth >= 4.0 and mindeg == 2.0 and istrue even(t) then 
+{
+    nodeInd >= maxdeg*floor(t/2.0)+1.0
+}
+else if girth >= 4.0 and mindeg == 2.0 and istrue odd(t) then 
+{
+    nodeInd >= maxdeg*floor((t+1.0)/2.0)
+};",
             "name": "Theorem",
             "idnum": 361,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "_t is floor((minb(girth) - 2)/2);
+if girth >= 4 and mindeg >= 3 and istrue odd(_t) then 
+{
+    if _t == 1 then
+    {
+        nodeInd >= maxdeg
+    }
+    else
+    {
+        nodeInd >= maxdeg*((minb(mindeg)-1)**(_t+1)-1)/(minb(mindeg)*(minb(mindeg)-2))
+    }
+} 
+else if girth >= 4 and mindeg >= 3 and istrue even(_t) then 
+{
+    nodeInd >= minb(maxdeg)*(minb(mindeg)-(1.0))*((minb(mindeg)-(1.0))**_t-(1.0))/(minb(mindeg)*(minb(mindeg)-(2.0)))+1.0,
+    maxdeg <= minb(mindeg)*(minb(mindeg)*maxb(nodeInd)-(minb(mindeg))-(2.0*maxb(nodeInd))+2.0)/(minb(mindeg)*(minb(mindeg)-(1.0))**_t-(minb(mindeg))-((minb(mindeg)-(1.0))**_t)+1.0)
+};",
             "name": "Theorem",
             "idnum": 362,
             "disp": ""
@@ -20,13 +44,18 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if diameter == 2 and nodeConnec >= 3 and nodes >= 3*nodeConnec**2 + 6 then 
+{ 
+    edges >= (minb(nodes)-(1.0))*(minb(nodeConnec)+1.0)/2.0,
+    nodes <= (2.0*maxb(edges)+minb(nodeConnec)+1.0)/(minb(nodeConnec)+1.0),
+    nodeConnec <= (2.0*maxb(edges)-(minb(nodes))+1.0)/(minb(nodes)-(1.0))
+};",
             "name": "Theorem",
             "idnum": 364,
             "disp": ""
         },
         {
-            "text": "if bipartite then { if odd nodes then { crossing <= (nodes/4)**2*((nodes-2)/4)**2 } else { crossing <= ((nodes+1)/4)*((nodes-1)/4)**2*(nodes-3)/4 } };",
+            "text": "if bipartite then { if odd nodes then { crossing <= (nodes/4)**2*((nodes-2)/4)**2 } else if even nodes then { crossing <= ((nodes+1)/4)*((nodes-1)/4)**2*(nodes-3)/4 } };",
             "name": "Theorem",
             "idnum": 365,
             "disp": ""
@@ -50,13 +79,17 @@
             "disp": ""
         },
         {
-            "text": "if maxClique <= 2 then { thickness <= genus + 1 };",
+            "text": "
+if maxClique <= 2 then { thickness <= genus + 1 };
+if minb(thickness) > maxb(genus) + 1 then { maxClique >= 3};",
             "name": "Theorem",
             "idnum": 369,
             "disp": ""
         },
         {
-            "text": "if genus <= 1 then { thickness == genus + 1 };",
+            "text": "
+if genus <= 1 then { thickness == genus + 1 };
+if thickness >= 3 then { genus >= 2 };",
             "name": "Theorem",
             "idnum": 370,
             "disp": ""
@@ -80,19 +113,33 @@
             "disp": ""
         },
         {
-            "text": "thickness <= 5 + sqrt(2*genus - 2);",
+            "text": "thickness <= 5.0+sqrt(2.0*maxb(genus)-(2.0));
+if minb(thickness) >= 5 then
+{
+    genus >= (minb(thickness)-(5.0))**2.0/2.0+1.0
+};",
             "name": "Theorem",
             "idnum": 374,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if connected and regular then 
+{
+    edgeArboricity <= 4.0+(6.0*maxb(genus)+2.0)/(minb(nodes)-(1.0)),
+    genus >= minb(edgeArboricity)*minb(nodes)/6.0-(minb(edgeArboricity)/6.0)-(2.0*minb(nodes)/3.0)+1.0/3.0,
+    if minb(edgeArboricity) > 4 then
+    {
+        nodes <= (minb(edgeArboricity)+6.0*maxb(genus)-(2.0))/(minb(edgeArboricity)-(4.0))
+    }
+};",
             "name": "Theorem",
             "idnum": 375,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "genus <= (maxb(thickness)-(1.0))*(maxb(nodes)-(1.0));
+thickness >= (minb(genus)+maxb(nodes)-(1.0))/(maxb(nodes)-(1.0));
+nodes >= (minb(genus)+maxb(thickness)-(1.0))/(maxb(thickness)-(1.0));",
             "name": "Theorem",
             "idnum": 376,
             "disp": ""

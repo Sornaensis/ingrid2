@@ -1,12 +1,13 @@
 {
     "theorems":[
 {
-            "text": "if regular then 
+            "text": "
+if regular then
 {
-    nodeInd <= maxb(nodes)/2.0+(minb(maxClique)**2.0+3.0*minb(maxClique)-(2.0))/(2.0*maxb(mindeg)),
-    nodes >= (-(minb(maxClique)**2.0)-(3.0*minb(maxClique))+2.0*minb(mindeg)*minb(nodeInd)+2.0)/maxb(mindeg),
-    maxClique <= sqrt(8.0*maxb(mindeg)*minb(nodeInd)-(4.0*maxb(mindeg)*maxb(nodes))+17.0)/2.0-(3.0/2.0),
-    mindeg >= (minb(maxClique)**2.0+3.0*minb(maxClique)-(2.0))/(2.0*minb(nodeInd)-(maxb(nodes)))
+    nodeInd <= maxb(nodes)/2.0+(minb(maxClique)**2.0-(3.0*minb(maxClique))+2.0)/(2.0*maxb(mindeg)),
+    nodes >= (-(minb(maxClique)**2.0)+3.0*minb(maxClique)+2.0*maxb(mindeg)*minb(nodeInd)-(2.0))/maxb(mindeg),
+    maxClique <= sqrt(8.0*maxb(mindeg)*minb(nodeInd)-(4.0*maxb(mindeg)*maxb(nodes))+1.0)/2.0+3.0/2.0,
+    mindeg >= (minb(maxClique)**2.0-(3.0*minb(maxClique))+2.0)/(2.0*minb(nodeInd)-(maxb(nodes)))
 };",
             "name": "Theorem",
             "idnum": 81,
@@ -19,7 +20,10 @@
             "disp": ""
         },
         {
-            "text": "if exists genus and genus > 0 then { arboricity <= 9 + (1+48*genus)**(1/2)/4 };",
+            "text": "if exists genus and genus > 0 then 
+{ 
+    arboricity <= (9 + (1+48*genus)**(1/2))/4 
+};",
             "name": "Theorem",
             "idnum": 83,
             "disp": ""

@@ -4,10 +4,12 @@
             "text": "
             if exists diameter then 
             {
-                _nodeConnec is minb(nodeConnec),
                 if minb(diameter) < 3 then
                 {
                     _nodeConnec is maxb(nodeConnec)
+                } else 
+                {
+                     _nodeConnec is minb(nodeConnec)
                 },
                 chromaticNum <= maxb(nodes)-(_nodeConnec*(minb(diameter)-(3.0)))-(2.0),
                 nodes >= minb(chromaticNum)+minb(diameter)*_nodeConnec-(3.0*_nodeConnec)+2.0,
@@ -91,10 +93,7 @@
             "disp": ""
         },
         {
-            "text": "_k is maximum(4.0, maxb(maxClique)+1.0);
-_z is (maxb(maxdeg)+1)/_k;
-chromaticNum <= maxb(maxdeg)+1-_z;
-maxdeg >= (_k*minb(chromaticNum)-(1.0))/(_k-(1.0))-(1.0);",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 131,
             "disp": ""
@@ -152,7 +151,7 @@ maxdeg >= (_k*minb(chromaticNum)-(1.0))/(_k-(1.0))-(1.0);",
         },
         {
             "text": "edges <= nodes*(nodes-1)/2;
-                     edges >= (nodes+1)/2;",
+                     edges >= ceiling(nodes/2);",
             "name": "Theorem", 
             "idnum": 137,
             "disp": ""
@@ -164,7 +163,7 @@ maxdeg >= (_k*minb(chromaticNum)-(1.0))/(_k-(1.0))-(1.0);",
             "disp": ""
         },
         {
-            "text": "if edges >= (1/4) * (circumference*(2*nodes - circumference)+1) then {girth == 3};",
+            "text": "if edges >= (1/4) * (circumference*(2*nodes - circumference)+4) then {girth == 3};",
             "name": "Theorem",
             "idnum": 139,
             "disp": ""

@@ -1,8 +1,16 @@
-
 {
     "theorems":[
 {
-            "text": "null;",
+            "text": "if connected and regular and not complete and mindeg <= 3 then 
+{
+    edgeCliqueCover >= 3*nodes/(mindeg+1)
+} 
+else if connected and regular and not complete and mindeg >= 5 then 
+{
+    edgeCliqueCover >= maxb(mindeg)*minb(nodes)/((maxb(mindeg)+1.0)*(maxb(mindeg)-(2.0))),
+    mindeg >= (maxb(edgeCliqueCover)+minb(nodes)+sqrt(9.0*maxb(edgeCliqueCover)**2.0+2.0*maxb(edgeCliqueCover)*minb(nodes)+minb(nodes)**2.0))/(2.0*maxb(edgeCliqueCover)),
+    nodes <= maxb(edgeCliqueCover)*(maxb(mindeg)*(maxb(mindeg)-(1.0))-(2.0))/maxb(mindeg)
+};",
             "name": "Theorem",
             "idnum": 321,
             "disp": ""
@@ -14,7 +22,12 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if girth >= 6 then 
+{
+    nodeInd >= (2.0*maxb(maxdeg)-(1.0))*minb(nodes)/(maxb(maxdeg)*maxb(maxdeg)+2.0*maxb(maxdeg)-(1.0)),
+    maxdeg >= (-(maxb(nodeInd))+minb(nodes)+sqrt((maxb(nodeInd)-(minb(nodes)))*(2.0*maxb(nodeInd)-(minb(nodes)))))/maxb(nodeInd),
+    nodes <= maxb(nodeInd)*(maxb(maxdeg)**2.0+2.0*maxb(maxdeg)-(1.0))/(2.0*maxb(maxdeg)-(1.0))
+};",
             "name": "Theorem",
             "idnum": 323,
             "disp": ""
@@ -26,7 +39,17 @@
             "disp": ""
         },
         {
-            "text": "if regular and even girth  and girth >= 6 and connected and nodes <= (mindeg*(mindeg-3)+2*(mindeg-1)**(girth/2))/(mindeg-2) then {bipartite, diameter == girth/2 + 1};",
+            "text": "
+if regular 
+   and even girth  
+   and girth >= 6 
+   and connected 
+   and mindeg >= 3
+   and nodes <= (mindeg*(mindeg-3)+2*(mindeg-1)**(girth/2))/(mindeg-2) then 
+{
+    bipartite, 
+    diameter == girth/2 + 1
+};",
             "name": "Theorem",
             "idnum": 325,
             "disp": ""
@@ -44,7 +67,7 @@
             "disp": ""
         },
         {
-            "text": "nodeConnec <= 3*thickness - 1;",
+            "text": "nodeConnec <= 6*thickness - 1;",
             "name": "Theorem",
             "idnum": 328,
             "disp": ""
@@ -56,7 +79,13 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "_z1 is ((maxb(nodes) - maxb(mindeg))*(maxb(nodes) - maxb(mindeg) - 1))/2 + maxb(mindeg)*maxb(mindeg) + 1;
+_z2 is ((maxb(nodes) - minb(mindeg))*(maxb(nodes) - minb(mindeg) - 1))/2 + minb(mindeg)*minb(mindeg) + 1;
+if edges >= maximum(maximum(_z1, _z2), (floor((nodes+2)/2)*(floor((nodes+2)/2)-1))/2 + floor((nodes-1)/2)**2 +1) then 
+{
+    hamiltonian
+    
+};",
             "name": "Theorem",
             "idnum": 330,
             "disp": ""
@@ -80,25 +109,50 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if connected and mindeg >= 3 and girth >= 5 then 
+{
+    domination <= (maxb(nodes)-((minb(diameter)/3.0)*(minb(mindeg)-(1.0)))-(1.0)-((minb(mindeg)-(1.0))*(minb(mindeg)-(2.0))/2.0))/2.0,
+    nodes >= minb(diameter)*minb(mindeg)/3.0-(minb(diameter)/3.0)+2.0*minb(domination)+minb(mindeg)**2.0/2.0-(3.0*minb(mindeg)/2.0)+2.0,
+    diameter <= 3.0*(-(4.0*minb(domination))-(minb(mindeg)**2.0)+3.0*minb(mindeg)+2.0*maxb(nodes)-(4.0))/(2.0*(minb(mindeg)-(1.0))),
+    mindeg <= -(minb(diameter)/3.0)+sqrt(4.0*minb(diameter)**2.0-(12.0*minb(diameter))-(144.0*minb(domination))+72.0*maxb(nodes)-(63.0))/6.0+3.0/2.0
+
+};",
             "name": "Theorem",
             "idnum": 334,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if bandwidth >= nodes/2 then 
+{
+    nosolve edges >= (2*floor(maxb(nodes)/2) - 1)*(maxb(nodes)/(maxb(nodes) - 2))**(bandwidth - floor(maxb(nodes)/2))
+};",
             "name": "Theorem",
             "idnum": 335,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if bandwidth >= nodes/2 then 
+{
+    edges >= maxb(nodes)*(maxb(nodes)-(1.0))/(2.0*(maxb(nodes)-(minb(bandwidth)))),
+    nodes <= maxb(edges)+sqrt(-(8.0*minb(bandwidth)*maxb(edges))+4.0*maxb(edges)**2.0+4.0*maxb(edges)+1.0)/2.0+1.0/2.0,
+    bandwidth <= maxb(nodes)*(2.0*maxb(edges)-(maxb(nodes))+1.0)/(2.0*maxb(edges))
+};",
             "name": "Theorem",
             "idnum": 336,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if girth >= 5 then 
+{
+    nosolve domination <= (2*nodes - (mindeg - 1)*(4*edges/nodes - mindeg - 2))/4,
+    _z is maxb(nodes),
+    _rz is 4*minb(edges)/_z-3,
+    _rhb is _rz**2-8*_z+16*minb(domination),
+    if _rhb > 1 then 
+    {
+        mindeg <= 1+floor(_rz-sqrt(_rhb)/2)
+    }
+};",
             "name": "Theorem",
             "idnum": 337,
             "disp": ""

@@ -1,4 +1,3 @@
-
 {
     "theorems":[
 {
@@ -8,13 +7,13 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "bandwidth <= nodes - (mindeg + 1)*(numOfComponents -1) - 1 - (nodeInd - numOfComponents + 1)/2;",
             "name": "Theorem",
             "idnum": 402,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if chromaticNum > 2 then { not bipartite };",
             "name": "Theorem",
             "idnum": 403,
             "disp": ""
@@ -32,29 +31,45 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if edges > (nodes - 1)**2/4 and edges <= (nodes-1)*(nodes-2)/2 then {mindeg <= edgeConnec - 1 + (nodes - sqrt(4*edges + 2*nodes - nodes**2))/2};",
             "name": "Theorem",
             "idnum": 406,
             "disp": ""
         },
         {
             "text": "domination <= (nodes - minb(maxdeg) - 1)*(nodes - minb(mindeg) - 2)/(nodes - 1) + 2;
-nosolve maxdeg <= (domination*nodes-(domination)+mindeg*nodes-(mindeg)-(nodes**2.0)+nodes)/(mindeg-(nodes)+2.0) : useMinFor(domination) : useMaxFor(nodes) : useMinFor(mindeg);
-nosolve mindeg <= (domination*nodes-(domination)+maxdeg*nodes-(2.0*maxdeg)-(nodes**2.0)+nodes)/(maxdeg-(nodes)+1.0) : useMinFor(domination) : useMaxFor(nodes) : useMinFor(maxdeg);
-
+if isset nodes then
+{ 
+    if maxb(nodes) > minb(mindeg)+2 then
+    {
+        nosolve maxdeg <= (domination*nodes-(domination)+mindeg*nodes-(mindeg)-(nodes**2.0)+nodes)/(mindeg-(nodes)+2.0) : useMinFor(domination) : useMaxFor(nodes) : useMinFor(mindeg)
+    },
+    if maxb(nodes) > minb(maxdeg) + 1 then
+    {
+        nosolve mindeg <= (domination*nodes-(domination)+maxdeg*nodes-(2.0*maxdeg)-(nodes**2.0)+nodes)/(maxdeg-(nodes)+1.0) : useMinFor(domination) : useMaxFor(nodes) : useMinFor(maxdeg)
+    }
+};
 ",
             "name": "Theorem",
             "idnum": 407,
             "disp": ""
         },
         {
-            "text": "let s = floor((maxdeg+2-sqrt((maxdeg+2)**2-4*nodes))/2); if diameter == 3 and s <= floor((nodes/2)**(1/3)) then {edges >= nodes + s*(s-1)/2 - 1};",
+            "text": "_s is floor((minb(maxdeg)+2-sqrt((minb(maxdeg)+2)**2-4*minb(nodes)))/2); 
+if diameter == 3 and _s <= floor((nodes/2)**(1/3)) then 
+{
+    edges >= nodes + _s*(_s-1)/2 - 1
+};",
             "name": "Theorem",
             "idnum": 408,
             "disp": ""
         },
         {
-            "text": "if nodes >= 4 and maxClique == 2 and hamiltonian then {edges <= floor((nodes - 4)/2)*floor(nodes/2) + 2};",
+            "text": "if nodes >= 4.0 and maxClique == 2.0 and hamiltonian then 
+{
+    _z is floor(maxb(nodes)/2),
+    edges <= _z*_z-2*_z+maxb(nodes)
+};",
             "name": "Theorem",
             "idnum": 409,
             "disp": ""
@@ -95,13 +110,32 @@ if connected and nodes >= 2*mindeg + 2 then
             "disp": ""
         },
         {
-            "text": "nosolve edges >= (nodes - chromaticNum)**2/(nodeInd-1) + chromaticNum *(chromaticNum - 1)/2 - (nodeInd-1)*((nodes-chromaticNum)/(nodeInd-1)) * ((nodes-chromaticNum)/(nodeInd-1))/2 : useMinFor(chromaticNum);",
+            "text": "null;",
             "name": "Theorem",
             "idnum": 413,
             "disp": ""
         },
         {
-            "text": "if diameter <= 4 then {nosolve edges <= ((nodes-2)*(nodes - 3) - 2*(nodes-2)*(diameter-4)*nodeConnec - 4 * nodeConnec * (nodeConnec+1) + nodeConnec**2*(diameter-2)*(diameter-3))/2 : useMinFor(diameter) : useMinFor(nodeConnec), nosolve edges <= ((nodes-2)*(nodes - 3) - 2*(nodes-2)*(diameter-4)*nodeConnec - 4 * nodeConnec * (nodeConnec+1) + nodeConnec**2*(diameter-2)*(diameter-3))/2 : useMinFor(diameter) : useMaxFor(nodeConnec)};",
+            "text": "
+if maxb(diameter) <= 4.0 then 
+{
+    
+    _z is maxb(nodes),
+    _zz is minb(diameter),
+    _k is minb(nodeConnec),
+    _zzz is ((_z-2)*(_z-3)-2*(_z-2)*(_zz-4)*_k-4*_k*(_k-1)+_k*_k*(_zz-2)*(_zz-3)) / 2,
+    _k is maxb(nodeConnec),
+    _zzzz is ((_z-2)*(_z-3)-2*(_z-2)*(_zz-4)*_k-4*_k*(_k-1)+_k*_k*(_zz-2)*(_zz-3)) / 2,
+    _z is maximum(_zzz, _zzzz),
+    if _z < minb(edges) then
+    {
+        diameter >= 5
+    } else 
+    {
+        edges <= _z
+    }
+};
+",
             "name": "Theorem",
             "idnum": 414,
             "disp": ""
@@ -131,13 +165,13 @@ if connected and nodes >= 2*mindeg + 2 then
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if maxClique <= 2 and nodeCover <= 3*nodes/5 then {nodeCover <= (3*nodes - sqrt(5*edges - nodes**2))/5};",
             "name": "Theorem",
             "idnum": 419,
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if maxClique <= 2 and nodeInd <= 2*nodes/5 then {nodeInd >= (2*nodes + sqrt(5*edges - nodes**2))/5};",
             "name": "Theorem",
             "idnum": 420,
             "disp": ""

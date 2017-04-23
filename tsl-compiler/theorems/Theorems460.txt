@@ -14,7 +14,13 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "bandwidth <= maxb(nodes)-((minb(mindeg)+1.0)*(minb(numOfComponents)-(1.0)))-(1.0)-floor((maxb(nodes)-(maxb(nodeCover))-(minb(numOfComponents))+1.0)/2.0);
+nodes >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodeCover))+minb(numOfComponents);
+_z is maxb(nodes)-maxb(nodeCover)-minb(numOfComponents)+1;
+mindeg <= floor((maxb(nodes)-minb(bandwidth)-1-floor(_z/2))/(minb(numOfComponents)-1))-1;
+numOfComponents <= floor((-(2.0*minb(bandwidth))+maxb(nodeCover)+maxb(nodes)-(1.0))/(2.0*minb(mindeg)+1.0))+1;
+nodeCover >= 2.0*minb(bandwidth)+2.0*minb(mindeg)*minb(numOfComponents)-(2.0*minb(mindeg))-(maxb(nodes))+minb(numOfComponents);
+",
             "name": "Theorem",
             "idnum": 443,
             "disp": ""
@@ -26,7 +32,8 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "let m = (nodes - chromaticNum)/(nodes - nodeCover - 1); 
+nosolve edges >= m*(nodes - chromaticNum) + chromaticNum*(chromaticNum - 1)/2 - (nodes - nodeCover - 1)*m*(m+1)/2 : useMinFor(chromaticNum) : useMinFor(nodeCover);",
             "name": "Theorem",
             "idnum": 445,
             "disp": ""
@@ -50,7 +57,11 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if (minb(nodeInd) >= 2.0 and maxb(nodeInd) <= 2.0) and minb(mindeg) >= maxb(nodes)-(5.0) then 
+{
+    edges <= maxb(nodes)*(maxb(nodes)-(13.0))/2.0+13.0*maxb(maxClique),
+    maxClique >= minb(edges)/13.0-(maxb(nodes)**2.0/26.0)+maxb(nodes)/2.0
+};",
             "name": "Theorem",
             "idnum": 449,
             "disp": ""
@@ -61,11 +72,16 @@
             "idnum": 450,
             "disp": "Original Code is WRONG!"
         },
-        {
-            "text": "null;",
+{
+            "text": "if mindeg <= minimum(nodes-7, nodes - nodeInd - 2) then 
+{
+    mindeg <= ((maxb(nodes)-(1.0))*(maxb(maxClique)-(1.0))-(2.0))/maxb(maxClique),
+    nodes >= (maxb(maxClique)*minb(mindeg)+maxb(maxClique)+1.0)/(maxb(maxClique)-(1.0)),
+    maxClique >= -((maxb(nodes)+1.0)/(minb(mindeg)-(maxb(nodes))+1.0))
+};",
             "name": "Theorem",
             "idnum": 451,
-            "disp": ""
+            "disp": "Incorrect bounds"
         },
         {
             "text": "null;",
@@ -74,19 +90,25 @@
             "disp": ""
         },
         {
-            "text": "null;",
+            "text": "if isset nodeCliqueCover and isset maxClique then
+{
+    nosolve edges <= nodes*(nodes - 1)/2 - ((nodes-nodeCliqueCover)/(maxClique-1))*(nodes-nodeCliqueCover) - nodeCliqueCover*(nodeCliqueCover - 1)/2 + (maxClique - 1)*((nodes-nodeCliqueCover)/(maxClique-1))*(((nodes-nodeCliqueCover)/(maxClique-1))+1)/2 : useMaxFor(nodes)
+};",
             "name": "Theorem",
             "idnum": 453,
             "disp": ""
         },
         {
-            "text": "if nodeInd <= 2 and mindeg >= nodes - 4 then {edges <= nodes*(nodes - 14)/2 + 14*maxClique};",
+            "text": "if nodeInd <= 2.0 and mindeg >= nodes-(4.0) and nodes > 14 then 
+{
+    edges <= nodes*(nodes-(14.0))/2.0+14.0*maxClique
+};",
             "name": "Theorem",
             "idnum": 454,
             "disp": ""
         },
         {
-            "text": "if nodeInd <= 2 and mindeg >= nodes - 3 then {edges <= nodes*(nodes - 15)/2 + 15*maxClique};",
+            "text": "if nodeInd <= 2 and mindeg >= nodes - 3 and nodes > 15 then {edges <= nodes*(nodes - 15)/2 + 15*maxClique};",
             "name": "Theorem",
             "idnum": 455,
             "disp": ""

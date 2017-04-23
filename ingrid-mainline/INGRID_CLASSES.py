@@ -115,6 +115,9 @@ class Invariant:
         elif val == 'undt' or val > self.value['Min']:
             trace_msg = 'The minimum of ' + self.name + ' from ' + str(self.value['Min']) + ' to ' + str(val)
             self.value['Min'] = val
+            if val == 'undt':
+                trace_msg = 'The maximum of ' + self.name + ' from ' + str(self.value['Max']) + ' to ' + str(val)
+                self.value['Max'] = val
         else:
             return True, False
 
@@ -214,7 +217,7 @@ class Invariant:
                 trace_msg = 'Error: ' + self.name + ' was changed from ' + str(self.value) + ' to ' + str(val)
                 self.trace.append({'Message': trace_msg, 'TheoremId': thm_id})
                 self.value = val
-                return False, False
+                return False, True
         else:
             return True, False
 

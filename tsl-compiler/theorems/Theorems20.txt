@@ -41,20 +41,32 @@ edges <= maxb(nodes)**2.0*(maxb(maxClique)-(1.0))/(2.0*maxb(maxClique));"
             "name": "Theorem",
             "disp": "",
             "idnum": 7,
-            "text": "
-if exists diameter then 
+            "text": "if exists diameter then 
 {
-    if mindeg > 3*nodeConnec - 1 then 
+    if mindeg > 3.0*nodeConnec-(1.0) then 
     {
-        nodes >= 1 + mindeg + diameter*nodeConnec + (diameter/3)*(mindeg - 3*nodeConnec + 1)
+        nodes >= 1.0+mindeg+diameter*nodeConnec+(diameter/3.0)*(mindeg-(3.0*nodeConnec)+1.0)
     },
-    if minb(diameter) < 3 then 
-    { 
-        nodes >= nodeConnec * (diameter-3) + 2*mindeg + 2 : useMaxFor(nodeConnec)
-    }
-    else
+    
+    if minb(nodeConnec) > 0 then
     {
-        nodes >= nodeConnec * (diameter-3) + 2*mindeg + 2
+        _z is maxb(nodes)-2*minb(mindeg)-2,
+        if _z >= 0 then
+        {
+            diameter <= _z/minb(nodeConnec)+3
+        }
+        else
+        {
+            diameter <= 2
+        }
+    },
+    if minb(diameter) < 3.0 then 
+    {
+        nodes >= maxb(nodeConnec)*(minb(diameter)-(3.0))+2.0*mindeg+2.0
+    }
+    else  
+    {
+        nodes >= minb(nodeConnec)*(minb(diameter)-(3.0))+2.0*mindeg+2.0
     }
 };" 
         }, 
@@ -83,7 +95,8 @@ numOfComponents <= (-(minb(maxdeg))+minb(mindeg)+maxb(nodes))/(minb(mindeg)+1.0)
             "name": "Theorem",
             "disp": "",
             "idnum": 11,
-            "text": "edgeInd <= nodes / 2;" 
+            "text": "edgeInd <= floor(maxb(nodes)/2.0);
+nodes >= 2.0*minb(edgeInd);" 
         }, 
         { 
             "name": "Theorem",

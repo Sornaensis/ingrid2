@@ -13,7 +13,13 @@
             "disp": ""
         },
         {
-            "text": "if (forest and connected) or tree then { tree, forest, connected };",
+            "text": "
+      if (forest and connected) or tree then 
+      { tree, forest, connected };
+      if not forest or not connected then 
+      {  
+          not tree
+      };",
             "name": "Theorem",
             "idnum": 43,
             "disp": ""
@@ -43,7 +49,12 @@
             "disp": ""
         },
         {
-            "text": "if forest then { planar, chromaticNum == 2, mindeg == 1 };",
+            "text": "
+if forest then { planar, chromaticNum == 2, mindeg == 1 };
+if not planar or chromaticNum > 2 or mindeg > 1 then 
+{
+   not forest
+};",
             "name": "Theorem",
             "idnum": 48,
             "disp": ""
@@ -53,7 +64,8 @@
   if cycle then 
             { 
                 planar, 
-                not forest, 
+                not forest,
+                not tree,
                 crossing == 0, 
                 nodes >= 3, 
                 edges >= 3, 
@@ -119,13 +131,21 @@
             "disp": ""
         },
         {
-            "text": "if forest or edges == nodes - numOfComponents or arboricity == 1 or undefined girth or undefined circumference then { forest, edges == nodes - numOfComponents, arboricity == 1, undefined girth, undefined circumference };",
+            "text": "if forest or edges == nodes - numOfComponents or arboricity == 1 or undefined girth or undefined circumference then { forest, edges == nodes - numOfComponents, arboricity == 1, undefined girth, undefined circumference };
+if not forest or edges > nodes - numOfComponents or arboricity > 1 or exists girth or exists circumference then
+{
+    not forest,
+    edges >= nodes - numOfComponents + 1,
+    arboricity >= 2
+};",
             "name": "Theorem",
             "idnum": 50,
             "disp": ""
         },
         {
-            "text": "arboricity >= chromaticNum / 2;",
+            "text": "
+arboricity >= (minb(chromaticNum)+1) / 2;
+chromaticNum <= maxb(arboricity)*2;",
             "name": "Theorem",
             "idnum": 51,
             "disp": ""
@@ -137,11 +157,16 @@
             "disp": ""
         },
         {
-            "text": "if defined girth then
+            "text": "if exists girth then 
 {
     _P is maxb(nodes),
-    arboricity <= chromaticNum - chromaticNum/(1 + _P/((girth - 1)/2)*chromaticNum),
-    nodes >= minb(arboricity)*(-(minb(girth))+1.0)/(2.0*maxb(chromaticNum)*(minb(arboricity)-(maxb(chromaticNum))))
+    arboricity <= maxb(chromaticNum)-(maxb(chromaticNum)/(1.0+_P/((minb(girth)-(1.0))/2.0)*maxb(chromaticNum))),
+    if minb(arboricity) > 2 then
+    {
+        chromaticNum >= (_P*minb(arboricity)+sqrt(_P*minb(arboricity)*(_P*minb(arboricity)+2.0*minb(girth)-(2.0))))/(2.0*_P),
+        girth <= -(2.0*_P*maxb(chromaticNum))+2.0*_P*maxb(chromaticNum)**2.0/minb(arboricity)+1.0,
+        nodes >= minb(arboricity)*(-(minb(girth))+1.0)/(2.0*maxb(chromaticNum)*(minb(arboricity)-(maxb(chromaticNum))))
+    }
 };",
             "name": "Theorem",
             "idnum": 53,
@@ -154,7 +179,7 @@
             "disp": ""
         },
         {
-            "text": "edges >= (minb(maxdeg)+(minb(nodes)-(1.0))*minb(mindeg))/2.0;
+            "text": "edges >= (minb(maxdeg)+(minb(nodes)-(1.0))*minb(mindeg)+1)/2.0;
 maxdeg <= 2.0*maxb(edges)-(minb(mindeg)*minb(nodes))+minb(mindeg);
 nodes <= (2.0*maxb(edges)-(minb(maxdeg))+minb(mindeg))/minb(mindeg);
 mindeg <= (2.0*maxb(edges)-(minb(maxdeg)))/(minb(nodes)-(1.0));
@@ -193,7 +218,7 @@ nodes >= minb(spectralRadius)*(3.0*maxb(maxClique)+1.0)/(3.0*maxb(maxClique)-(2.
             "disp": ""
         },
         {
-            "text": "if defined girth and (minb(nodeConnec) > 0.0 or minb(mindeg) > 1.0) then 
+            "text": "if exists girth and (minb(nodeConnec) > 0.0 or minb(mindeg) > 1.0) then 
 {
     genus >= (1.0/2.0)*minb(edges)*(1.0-(2.0/minb(girth)))-(maxb(nodes)/2.0)+minb(numOfComponents),
     edges <= minb(girth)*(2.0*maxb(genus)+maxb(nodes)-(2.0*minb(numOfComponents)))/(minb(girth)-(2.0)),

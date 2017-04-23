@@ -46,8 +46,12 @@ if genus > 2 and girth >= 4 then
         },
         {
             "text": "
-            if diameter > 1 and nodeConnec > 1 and maxb(nodeConnec) > 1 then { edges >= (nodes*maxb(diameter)-2*maxb(diameter) + 1)/(maxb(diameter) - 1),
-diameter >= (maxb(edges)+1.0)/(maxb(edges)-(minb(nodes))+2.0) };",
+if diameter > 1.0 and nodeConnec > 1.0 then 
+{
+    edges >= (nodes*maxb(diameter)-(2.0*maxb(diameter))-1.0)/(maxb(diameter)-(1.0)),
+    diameter >= floor((2*maxb(edges)-minb(nodes))/(maxb(edges)-minb(nodes)+2))
+};
+",
             "name": "Theorem",
             "idnum": 166,
             "disp": ""
@@ -136,8 +140,10 @@ bandwidth >= (1/2)*(2*_P-1-sqrt((2*_P-1)**2-8*edges));",
         },
         {
             "text": "
-_k is maximum(4,maxb(nodeInd) + 1);
-nodeCliqueCover <= nodes - mindeg - (nodes - mindeg)/_k : useMinFor(mindeg);",
+_k is maximum(4.0, maxb(nodeInd)+1.0);
+nodeCliqueCover <= maxb(nodes)-(minb(mindeg))-((maxb(nodes)-(minb(mindeg)))/_k);
+nodes >= minb(mindeg)+floor((_k*minb(nodeCliqueCover)-(1.0))/(_k-(1.0)));
+mindeg <= floor(maxb(nodes)+1-_k*min(nodeCliqueCover)/(_k-1));",
             "name": "Theorem",
             "idnum": 178,
             "disp": ""
@@ -148,7 +154,7 @@ if minb(domination) >= 2.0 then
 {
     edges <= (1.0/2.0)*(maxb(nodes)-(minb(nodeInd)))*(maxb(nodes)+minb(nodeInd)-(2.0*minb(domination))+2.0),
     nodes >= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*minb(nodeInd))-(2.0*minb(domination))+2.0*minb(edges)+minb(nodeInd)**2.0+2.0*minb(nodeInd)+1.0)-(1.0),
-    nodeInd <= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*minb(nodes))-(2.0*minb(domination))-(2.0*minb(edges))+minb(nodes)**2.0+2.0*minb(nodes)+1.0)-(1.0),
+    nodeInd <= minb(domination)+sqrt(minb(domination)**2.0-(2.0*minb(domination)*maxb(nodes))-(2.0*minb(domination))-(2.0*minb(edges))+maxb(nodes)**2.0+2.0*maxb(nodes)+1.0)-(1.0),
     _k is maxb(nodes)-2*minb(edges),
     if minb(nodeInd) > _k then
     {

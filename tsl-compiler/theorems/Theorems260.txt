@@ -1,4 +1,3 @@
-
 {
     "theorems":[
 {
@@ -73,7 +72,9 @@ bandwidth >= -(minb(nodeCover)/(minb(nodeCover)-(maxb(nodes))));
             "disp": ""
         },
         {
-            "text": "if defined girth then {edges >= (girth - 1)*(arboricity - 1) ** 2 + (arboricity - 1)};",
+            "text": "if defined girth then {
+    nosolve edges >= (girth - 1)*(arboricity - 1) ** 2 + (arboricity - 1)
+};",
             "name": "Theorem",
             "idnum": 251,
             "disp": ""
@@ -99,7 +100,14 @@ bandwidth >= -(minb(nodeCover)/(minb(nodeCover)-(maxb(nodes))));
             "disp": ""
         },
         {
-            "text": "if nodeConnec >= 1 then { maxdeg <= (nodes - 1)/((girth-4)/4 *(nodeConnec-1)+1) };",
+            "text": "_temp is floor((minb(girth)-3)/2);
+
+if nodeConnec >= 1 and _temp > 0 then 
+{ 
+    maxdeg <= (maxb(nodes)-(1.0))/((minb(girth)-(4.0))/4.0*(minb(nodeConnec)-(1.0))+1.0),
+    nodes >= minb(girth)*minb(maxdeg)*minb(nodeConnec)/4.0-(minb(girth)*minb(maxdeg)/4.0)-(minb(maxdeg)*minb(nodeConnec))+2.0*minb(maxdeg)+1.0,
+    nodeConnec <= (minb(girth)*minb(maxdeg)-(8.0*minb(maxdeg))+4.0*maxb(nodes)-(4.0))/(minb(maxdeg)*(minb(girth)-(4.0)))
+};",
             "name": "Theorem",
             "idnum": 253,
             "disp": ""
@@ -137,19 +145,18 @@ bandwidth >= -(minb(nodeCover)/(minb(nodeCover)-(maxb(nodes))));
             "disp": ""
         },
         {
-            "text": "
-if (even diameter and minb(nodeConnec) >= 2.0) then 
+            "text": "if (even diameter and minb(nodeConnec) >= 2.0) then 
 {
     _k is 2.0
 }
-else  
+else if (odd diameter or minb(nodeConnec) == 1.0) then 
 {
     _k is 1.0
 };
-if minb(diam) >= 3.0 then 
+if minb(diameter) >= 3.0 and minb(nodeConnec) > 0.0 then 
 {
-    edgeInd >= (nodeConnec)*(minb(diameter)-(1.0))/2.0+_k,
-    diameter <= (-(2.0*_k)+2.0*maxb(edgeInd)+minb(nodeConnec))/minb(nodeConnec)
+    edgeInd >= (nodeConnec)*ceiling((minb(diameter)-(2.0))/2.0)+_k,
+    diameter <= maximum((-(2.0*_k)+2.0*maxb(edgeInd)+minb(nodeConnec))/minb(nodeConnec), 2.0)
 };",
             "name": "Theorem",
             "idnum": 257,
@@ -168,8 +175,8 @@ if minb(diam) >= 3.0 then
             "disp": ""
         },
         {
-            "text": "let c = edges - nodes + numOfComponents; 
-nosolve genus <= c/2-c/(4*log(c)/log(2));",
+            "text": "_c is maxb(edges)-minb(nodes)+maxb(numOfComponents);
+genus <= _c/2.0-(_c/(4.0*log(_c)/log(2.0)));",
             "name": "Theorem",
             "idnum": 260,
             "disp": ""
