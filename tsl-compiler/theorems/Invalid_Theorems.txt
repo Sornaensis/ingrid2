@@ -1,9 +1,5 @@
 {
     "theorems":[
-<<<<<<< HEAD
-
-=======
->>>>>>> d4d7ca52b16f6477d415fcb191118ed5412b521a
 {
             "text": "_z1 is (maxb(nodes) - maxb(nodeCliqueCover))*(maxb(nodeCliqueCover) + maxb(maxdeg) - 1);
 _z2 is (maxb(nodes) - minb(nodeCliqueCover))*(minb(nodeCliqueCover) + maxb(maxdeg) - 1);
