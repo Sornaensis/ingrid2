@@ -11,7 +11,7 @@ module TSL.AST.AST (
 
 -- Functions we can solve for
 solveableFunctions :: [String]
-solveableFunctions = ["log","ln","sqrt","cos","sin"]
+solveableFunctions = ["log","ln","exp","asin","acos","tan","cotan","atan","sqrt","cos","sin"]
 
 -- Functions that are a part of our language
 validFunctions :: [String]
@@ -24,6 +24,12 @@ arityOfFns :: [(String, (Int, Int))]
 arityOfFns = [
         ("log",       (1, 2))
     ,   ("ln",        (1, 1))
+    ,   ("acos",        (1, 1))
+    ,   ("asin",        (1, 1))
+    ,   ("tan",        (1, 1))
+    ,   ("atan",        (1, 1))
+    ,   ("cot",        (1, 1))
+    ,   ("exp",       (1, 1))
     ,   ("sqrt",      (1, 1))
     ,   ("floor",     (1, 1))
     ,   ("ceil",   (1, 1))
